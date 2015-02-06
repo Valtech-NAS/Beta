@@ -60,6 +60,9 @@ Scenario: As a candidate I am on the registration page and all required fields a
 		| Phonenumber     | 07999999999   |
 		| Password        | ?Password01!  |
 		| ConfirmPassword | !10drowssaP?  |
+	And I choose AddressLine1
+	And I choose Postcode
+	And I choose AddressLine3
 	And I choose HasAcceptedTermsAndConditions
 	Then I see 
 		| Field                     | Rule   | Value |

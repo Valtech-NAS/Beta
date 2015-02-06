@@ -229,6 +229,12 @@ this.FeatureBackground();
 #line 52
  testRunner.And("I enter data", ((string)(null)), table6, "And ");
 #line 63
+ testRunner.And("I choose AddressLine1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 64
+ testRunner.And("I choose Postcode", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 65
+ testRunner.And("I choose AddressLine3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 66
  testRunner.And("I choose HasAcceptedTermsAndConditions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
@@ -239,7 +245,7 @@ this.FeatureBackground();
                         "ValidationFieldErrorCount",
                         "Equals",
                         "0"});
-#line 64
+#line 67
  testRunner.Then("I see", ((string)(null)), table7, "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -254,13 +260,13 @@ this.FeatureBackground();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate on the registration page I want to be able to pick my address from" +
                     " a list returned from the postcode search", new string[] {
                         "SmokeTests"});
-#line 69
+#line 72
 this.ScenarioSetup(scenarioInfo);
 #line 7
 this.FeatureBackground();
-#line 70
+#line 73
  testRunner.Given("I navigated to the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 71
+#line 74
  testRunner.When("I am on the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
@@ -269,11 +275,11 @@ this.FeatureBackground();
             table8.AddRow(new string[] {
                         "PostcodeSearch",
                         "N7 8LS"});
-#line 72
- testRunner.And("I enter data", ((string)(null)), table8, "And ");
 #line 75
+ testRunner.And("I enter data", ((string)(null)), table8, "And ");
+#line 78
  testRunner.And("I choose FindAddresses", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 76
+#line 79
  testRunner.And("I wait 3 seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
@@ -316,11 +322,11 @@ this.FeatureBackground();
                         "Longitude",
                         "Equals",
                         "-0.10660693737952387"});
-#line 77
+#line 80
  testRunner.And("I am on AddressDropdown list item matching criteria", ((string)(null)), table9, "And ");
-#line 88
+#line 91
  testRunner.And("I choose WrappedElement", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 89
+#line 92
  testRunner.And("I am on the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
@@ -359,7 +365,7 @@ this.FeatureBackground();
                         "Longitude",
                         "Equals",
                         "-0.10660693737952387"});
-#line 90
+#line 93
  testRunner.Then("I see", ((string)(null)), table10, "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -372,15 +378,15 @@ this.FeatureBackground();
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I want to be told quickly that my email/username is available", new string[] {
                         "SmokeTests"});
-#line 102
+#line 105
 this.ScenarioSetup(scenarioInfo);
 #line 7
 this.FeatureBackground();
-#line 103
+#line 106
  testRunner.Given("I navigated to the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 104
+#line 107
  testRunner.And("I have created a new email address", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 105
+#line 108
  testRunner.When("I am on the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
@@ -389,11 +395,11 @@ this.FeatureBackground();
             table11.AddRow(new string[] {
                         "EmailAddress",
                         "{EmailToken}"});
-#line 106
- testRunner.And("I enter data", ((string)(null)), table11, "And ");
 #line 109
+ testRunner.And("I enter data", ((string)(null)), table11, "And ");
+#line 112
  testRunner.And("I choose Phonenumber", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 110
+#line 113
  testRunner.And("I am on the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
@@ -404,7 +410,7 @@ this.FeatureBackground();
                         "EmailAddressAvailableMessage",
                         "Does Not Exist",
                         ""});
-#line 111
+#line 114
  testRunner.Then("I see", ((string)(null)), table12, "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -417,13 +423,13 @@ this.FeatureBackground();
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I want to be told quickly that my email/username is not available " +
                     "if I have already registered", ((string[])(null)));
-#line 115
+#line 118
 this.ScenarioSetup(scenarioInfo);
 #line 7
 this.FeatureBackground();
-#line 116
+#line 119
  testRunner.Given("I navigated to the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 117
+#line 120
  testRunner.When("I am on the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
@@ -432,15 +438,15 @@ this.FeatureBackground();
             table13.AddRow(new string[] {
                         "EmailAddress",
                         "nas.exemplar+acceptancetests@gmail.com"});
-#line 118
- testRunner.And("I enter data", ((string)(null)), table13, "And ");
 #line 121
- testRunner.And("I choose Phonenumber", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 122
- testRunner.Then("I am on the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 123
- testRunner.Given("I waited for 30 seconds to see EmailAddressAvailableMessage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.And("I enter data", ((string)(null)), table13, "And ");
 #line 124
+ testRunner.And("I choose Phonenumber", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 125
+ testRunner.Then("I am on the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 126
+ testRunner.Given("I waited for 30 seconds to see EmailAddressAvailableMessage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 127
  testRunner.When("I am on the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table14 = new TechTalk.SpecFlow.Table(new string[] {
@@ -452,7 +458,7 @@ this.FeatureBackground();
                         "Equals",
                         "Your email address has already been activated. Please try signing in again. If yo" +
                             "u’ve forgotten your password you can reset it."});
-#line 125
+#line 128
  testRunner.Then("I see", ((string)(null)), table14, "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -465,15 +471,15 @@ this.FeatureBackground();
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I must confirm my password", new string[] {
                         "Ignore"});
-#line 131
+#line 134
 this.ScenarioSetup(scenarioInfo);
 #line 7
 this.FeatureBackground();
-#line 132
+#line 135
  testRunner.Given("I navigated to the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 133
+#line 136
  testRunner.And("I have created a new email address", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 134
+#line 137
  testRunner.When("I am on the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table15 = new TechTalk.SpecFlow.Table(new string[] {
@@ -482,11 +488,11 @@ this.FeatureBackground();
             table15.AddRow(new string[] {
                         "PostcodeSearch",
                         "N7 8LS"});
-#line 135
- testRunner.And("I enter data", ((string)(null)), table15, "And ");
 #line 138
+ testRunner.And("I enter data", ((string)(null)), table15, "And ");
+#line 141
  testRunner.And("I choose FindAddresses", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 139
+#line 142
  testRunner.And("I wait 3 seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table16 = new TechTalk.SpecFlow.Table(new string[] {
@@ -497,11 +503,11 @@ this.FeatureBackground();
                         "Text",
                         "Equals",
                         "Flat A, 6 Furlong Road"});
-#line 140
- testRunner.And("I am on AddressDropdown list item matching criteria", ((string)(null)), table16, "And ");
 #line 143
+ testRunner.And("I am on AddressDropdown list item matching criteria", ((string)(null)), table16, "And ");
+#line 146
  testRunner.And("I choose WrappedElement", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 144
+#line 147
  testRunner.And("I am on the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table17 = new TechTalk.SpecFlow.Table(new string[] {
@@ -534,15 +540,15 @@ this.FeatureBackground();
             table17.AddRow(new string[] {
                         "ConfirmPassword",
                         "!10drowssaP?"});
-#line 145
+#line 148
  testRunner.And("I enter data", ((string)(null)), table17, "And ");
-#line 156
- testRunner.And("I choose HasAcceptedTermsAndConditions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 157
- testRunner.And("I am on the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 158
- testRunner.And("I choose CreateAccountButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 159
+ testRunner.And("I choose HasAcceptedTermsAndConditions", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 160
+ testRunner.And("I am on the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 161
+ testRunner.And("I choose CreateAccountButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 162
  testRunner.Then("I am on the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table18 = new TechTalk.SpecFlow.Table(new string[] {
@@ -553,7 +559,7 @@ this.FeatureBackground();
                         "ValidationSummaryCount",
                         "Equals",
                         "1"});
-#line 160
+#line 163
  testRunner.And("I see", ((string)(null)), table18, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table19 = new TechTalk.SpecFlow.Table(new string[] {
@@ -568,7 +574,7 @@ this.FeatureBackground();
                         "Href",
                         "Equals",
                         "#Password"});
-#line 163
+#line 166
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table19, "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -581,13 +587,13 @@ this.FeatureBackground();
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("I cannot enter letters on day, month and year", new string[] {
                         "SmokeTests"});
-#line 169
+#line 172
 this.ScenarioSetup(scenarioInfo);
 #line 7
 this.FeatureBackground();
-#line 170
+#line 173
  testRunner.Given("I navigated to the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 171
+#line 174
  testRunner.When("I am on the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table20 = new TechTalk.SpecFlow.Table(new string[] {
@@ -602,11 +608,11 @@ this.FeatureBackground();
             table20.AddRow(new string[] {
                         "Year",
                         "aaaa"});
-#line 172
+#line 175
  testRunner.And("I enter data", ((string)(null)), table20, "And ");
-#line 177
+#line 180
  testRunner.And("I choose Phonenumber", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 178
+#line 181
  testRunner.Then("I am on the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table21 = new TechTalk.SpecFlow.Table(new string[] {
@@ -617,7 +623,7 @@ this.FeatureBackground();
                         "ValidationFieldErrorCount",
                         "Equals",
                         "3"});
-#line 179
+#line 182
  testRunner.And("I see", ((string)(null)), table21, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table22 = new TechTalk.SpecFlow.Table(new string[] {
@@ -628,9 +634,9 @@ this.FeatureBackground();
                         "Text",
                         "Equals",
                         "The field Day must be a number."});
-#line 182
- testRunner.And("I am on ValidationFieldErrorItems list item matching criteria", ((string)(null)), table22, "And ");
 #line 185
+ testRunner.And("I am on ValidationFieldErrorItems list item matching criteria", ((string)(null)), table22, "And ");
+#line 188
  testRunner.And("I am on the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table23 = new TechTalk.SpecFlow.Table(new string[] {
@@ -641,9 +647,9 @@ this.FeatureBackground();
                         "Text",
                         "Equals",
                         "The field Month must be a number."});
-#line 186
- testRunner.And("I am on ValidationFieldErrorItems list item matching criteria", ((string)(null)), table23, "And ");
 #line 189
+ testRunner.And("I am on ValidationFieldErrorItems list item matching criteria", ((string)(null)), table23, "And ");
+#line 192
   testRunner.And("I am on the RegisterCandidatePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table24 = new TechTalk.SpecFlow.Table(new string[] {
@@ -654,7 +660,7 @@ this.FeatureBackground();
                         "Text",
                         "Equals",
                         "The field Year must be a number."});
-#line 190
+#line 193
  testRunner.And("I am on ValidationFieldErrorItems list item matching criteria", ((string)(null)), table24, "And ");
 #line hidden
             this.ScenarioCleanup();
