@@ -13,6 +13,8 @@
 
         public bool AllowMobile { get; set; }
 
+        //todo: mobile verification number here?
+
         public bool VerifiedMobile { get; set; }
 
         public bool AllowTraineeshipPrompts { get; set; }
