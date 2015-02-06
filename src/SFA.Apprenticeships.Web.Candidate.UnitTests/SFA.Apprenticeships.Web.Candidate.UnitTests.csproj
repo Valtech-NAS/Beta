@@ -163,6 +163,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Builders\ApprenticeshipApplicationDetailBuilder.cs" />
+    <Compile Include="Builders\ApprenticeshipApplicationViewModelBuilder.cs" />
     <Compile Include="Builders\ApprenticeshipSummaryBuilder.cs" />
     <Compile Include="Extensions\CollectionExtensionsTests.cs" />
     <Compile Include="Helpers\BaseExtensionTests.cs" />
@@ -218,8 +219,12 @@
     <Compile Include="Mediators\TraineeshipSearch\ResultsTests.cs" />
     <Compile Include="Mediators\TraineeshipSearch\TestsBase.cs" />
     <Compile Include="Mocks\HttpContextFactory.cs" />
+    <Compile Include="Providers\ApplicationProvider\ApprenticeshipApplicationProviderTestsBase.cs" />
     <Compile Include="Providers\ApplicationProvider\GetOrCreateApplicationViewModel.cs" />
     <Compile Include="Providers\ApplicationProvider\GetApplicationViewModel.cs" />
+    <Compile Include="Providers\ApplicationProvider\PatchApplicationViewModelTests.cs" />
+    <Compile Include="Providers\ApplicationProvider\SaveApplicationTests.cs" />
+    <Compile Include="Providers\ApplicationProvider\SubmitApplicationTests.cs" />
     <Compile Include="Providers\ApplicationProvider\TraineeshipsFeatureViewModel.cs" />
     <Compile Include="Providers\SearchProviderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
