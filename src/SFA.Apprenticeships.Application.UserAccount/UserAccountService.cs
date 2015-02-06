@@ -72,8 +72,6 @@
             _logger.Info("Calling ActivateUserStrategy to activate the user {0}.", username);
 
             _activateUserStrategy.Activate(username, activationCode);
-
-            _logger.Info("ActivateUserStrategy activated the user {0}.", username);
         }
 
         public void ResendActivationCode(string username)
