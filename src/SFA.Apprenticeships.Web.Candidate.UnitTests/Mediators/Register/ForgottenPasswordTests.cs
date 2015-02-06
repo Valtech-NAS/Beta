@@ -1,11 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Register
 {
+    using Candidate.Mediators;
+    using Candidate.ViewModels.Register;
+    using Common.Constants;
+    using Constants.Pages;
     using Moq;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Web.Candidate.Constants.Pages;
-    using SFA.Apprenticeships.Web.Candidate.Mediators;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.Register;
-    using SFA.Apprenticeships.Web.Common.Constants;
 
     [TestFixture]
     public class ForgottenPasswordTests : RegisterBaseTests
@@ -14,16 +14,20 @@
         private const string ValidEmailAddress = "ValidEmailAddress@gmail.com";
 
         [Test]
-        public void ValidationErrors()
+        public void PasswordNotSent()
         {
             var forgottenPasswordViewModel = new ForgottenPasswordViewModel
             {
-                EmailAddress = InvalidEmailAddress
+                EmailAddress = ValidEmailAddress
             };
+
+            _candidateServiceProvider.Setup(
+                csp => csp.RequestForgottenPasswordResetCode(It.IsAny<ForgottenPasswordViewModel>())).Returns(false);
 
             var response = _registerMediator.ForgottenPassword(forgottenPasswordViewModel);
 
-            response.AssertValidationResult(Codes.RegisterMediatorCodes.ForgottenPassword.FailedValidation, true);
+            response.AssertMessage(Codes.RegisterMediatorCodes.ForgottenPassword.FailedToSendResetCode,
+                PasswordResetPageMessages.FailedToSendPasswordResetCode, UserMessageLevel.Warning, true);
         }
 
         [Test]
@@ -43,20 +47,16 @@
         }
 
         [Test]
-        public void PasswordNotSent()
+        public void ValidationErrors()
         {
             var forgottenPasswordViewModel = new ForgottenPasswordViewModel
             {
-                EmailAddress = ValidEmailAddress
+                EmailAddress = InvalidEmailAddress
             };
-
-            _candidateServiceProvider.Setup(
-                csp => csp.RequestForgottenPasswordResetCode(It.IsAny<ForgottenPasswordViewModel>())).Returns(false);
 
             var response = _registerMediator.ForgottenPassword(forgottenPasswordViewModel);
 
-            response.AssertMessage(Codes.RegisterMediatorCodes.ForgottenPassword.FailedToSendResetCode,
-                PasswordResetPageMessages.FailedToSendPasswordResetCode, UserMessageLevel.Warning, true);
+            response.AssertValidationResult(Codes.RegisterMediatorCodes.ForgottenPassword.FailedValidation, true);
         }
     }
 }

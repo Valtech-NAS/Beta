@@ -35,8 +35,8 @@ Scenario: Find traineeships and test ordering
 Scenario: Find traineeships and change distance
 	Given I navigated to the TraineeshipSearchPage page
 	When I enter data
-		 | Field    | Value  |
-		 | Location | London |
+		 | Field    | Value    |
+		 | Location | WC2E 9RZ |
 	And I choose Search
 	And I am on the TraineeshipSearchResultPage page
 	Then I see
@@ -166,15 +166,3 @@ Scenario: Different results per page
 	And I see
         | Field                  | Rule   | Value |
         | SearchResultItemsCount | Equals | 50    |
-
-@SmokeTests
-Scenario: Find traineeship by partial postcode returns results
-	Given I navigated to the TraineeshipSearchPage page
-	When I enter data
-		 | Field          | Value    |
-		 | Location       | B1       |
-	And I choose Search
-	And I am on the TraineeshipSearchResultPage page
-	Then I see
-        | Field                           | Rule   | Value |
-        | SearchResultItemsCount          | Equals | 5     |

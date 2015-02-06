@@ -99,52 +99,8 @@ Scenario: As a candidate I want to be told quickly that my email/username is not
 		| Field                        | Rule   | Value                                                                                                                           |
 		| EmailAddressAvailableMessage | Equals | Your email address has already been activated. Please try signing in again. If you’ve forgotten your password you can reset it. |
 
-Scenario: As a candidate I want to submit my registration details so that I can apply for vacancies 
-	Given I navigated to the RegisterCandidatePage page
-	And I have created a new email address
-	When I am on the RegisterCandidatePage page
-	And I enter data
-		 | Field          | Value  |
-		 | PostcodeSearch | N7 8LS |
-	And I choose FindAddresses
-	And I wait 3 seconds
-	And I am on AddressDropdown list item matching criteria
-		| Field | Rule   | Value                  |
-		| Text  | Equals | Flat A, 6 Furlong Road |
-	And I choose WrappedElement
-	And I am on the RegisterCandidatePage page
-	And I enter data
-		| Field           | Value         |
-		| Firstname       | FirstnameTest |
-		| Lastname        | LastnameTest  |
-		| Day             | 01            |
-		| Month           | 01            |
-		| Year            | 1999          |
-		| EmailAddress    | {EmailToken}  |
-		| Phonenumber     | 07999999999   |
-		| Password        | ?Password01!  |
-		| ConfirmPassword | ?Password01!  |
-	And I choose HasAcceptedTermsAndConditions
-	And I am on the RegisterCandidatePage page
-	And I choose CreateAccountButton
-	And I wait 120 second for the ActivationPage page
-	And I get the token for my newly created account
-	And I am on the ActivationPage page
-	And I wait to see EmailAddress
-	And I am on the ActivationPage page
-	And I enter data
-		| Field          | Value                 |
-		| ActivationCode | {ActivationCodeToken} |
-	And I am on the ActivationPage page
-	And I choose ActivateButton
-	And I am on the ApprenticeshipSearchPage page
-	When I select the "first" apprenticeship vacancy in location "N7 8LS" that can apply by this website
-	Then I am on the ApprenticeshipDetailsPage page
-	When I choose ApplyButton
-	Then I am on the ApprenticeshipApplicationPage page
-	When I choose MyApplicationsLink
-	Then I am on the MyApplicationsPage page
-
+@Ignore
+#TODO: test server validations?
 Scenario: As a candidate I must confirm my password
 	Given I navigated to the RegisterCandidatePage page
 	And I have created a new email address
@@ -183,6 +139,8 @@ Scenario: As a candidate I must confirm my password
 		| Href  | Equals | #Password                         |
 
 @SmokeTests
+@Ignore
+#TODO: test server validations?
 Scenario: I cannot enter letters on day, month and year
 	Given I navigated to the RegisterCandidatePage page
 	When I am on the RegisterCandidatePage page

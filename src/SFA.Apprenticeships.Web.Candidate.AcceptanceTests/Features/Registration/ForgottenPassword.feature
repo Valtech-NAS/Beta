@@ -39,55 +39,6 @@ Scenario: Reset password successful
 		| Field              | Rule   | Value                                   |
 		| SuccessMessageText | Equals | You've successfully reset your password |
 
-Scenario: Reset password with an invalid email
-	Given I registered an account and activated it
-	And I navigated to the ForgottenPasswordPage page
-	When I am on the ForgottenPasswordPage page
-	And I enter data
-		| Field        | Value                             |
-		| EmailAddress | invalid.email.address@invalid.com |
-	And I choose SendCodeButton
-	Then I am on the ResetPasswordPage page
-	And I don't receive an email with the token to reset the password
-
-Scenario: Reset password with a mismatching password
-	Given I have registered a new candidate
-	When I navigate to the ForgottenPasswordPage page
-	Then I am on the ForgottenPasswordPage page
-	When I enter data
-		| Field        | Value        |
-		| EmailAddress | {EmailToken} |
-	And I choose SendCodeButton
-	
-	Then I am on the ResetPasswordPage page
-	When I get the token to reset the password
-	And I navigate to the ForgottenPasswordPage page
-	When I am on the ForgottenPasswordPage page
-	And I enter data
-		| Field        | Value        |
-		| EmailAddress | {EmailToken} |
-	And I choose SendCodeButton
-
-	Then I am on the ResetPasswordPage page
-	And I get the same token to reset the password
-	When I enter data
-		| Field             | Value                    |
-		| PasswordResetCode | {PasswordResetCodeToken} |
-		| Password          | {NewPasswordToken}       |
-		| ConfirmPassword   | !CannotPossiblyM4tch!    |
-	And I choose ResetPasswordButton
-
-	Then I am on the ResetPasswordPage page
-	And I see
-    | Field                  | Rule   | Value |
-    | ValidationSummaryCount | Equals | 1     |
-	
-	And I am on the ResetPasswordPage page
-	And I am on ValidationSummaryItems list item matching criteria
-	| Field | Rule   | Value                             |
-	| Text  | Equals | Sorry, your passwords don’t match |
-	| Href  | Equals | #Password                         |
-
 Scenario: Reset password in an unactivated account
 	Given I navigated to the RegisterCandidatePage page
 	When I have created a new email address

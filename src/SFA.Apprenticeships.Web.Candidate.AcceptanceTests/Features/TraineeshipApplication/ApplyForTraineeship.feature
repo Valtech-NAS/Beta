@@ -10,19 +10,6 @@ Background:
 	And I navigated to the TraineeshipSearchPage page
 	Then I am on the TraineeshipSearchPage page
 
-Scenario: As a candidate I would like to apply for a traineeship
-	Given I have registered a new candidate
-	When I select the "first" traineeship vacancy in location "N7 8LS" that can apply by this website
-	Then I am on the TraineeshipDetailsPage page
-	When I choose ApplyButton
-	Then I am on the TraineeshipApplicationPage page
-	When I enter employer question data if present
-		| Field                                              | Value |
-		| Candidate_EmployerQuestionAnswers_CandidateAnswer1 | Emp 1 |
-		| Candidate_EmployerQuestionAnswers_CandidateAnswer2 | Emp 2 |
-	And I choose ApplyButton
-	Then I am on the TraineeshipWhatsNextPage page
-
 @US592
 Scenario: As a candidate I am taken to login or create an account when viewing traineeship details
 	Given I select the "first" traineeship vacancy in location "N7 8LS" that can apply by this website

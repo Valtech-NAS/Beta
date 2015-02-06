@@ -171,7 +171,7 @@ this.FeatureBackground();
                         "Value"});
             table5.AddRow(new string[] {
                         "Location",
-                        "London"});
+                        "WC2E 9RZ"});
 #line 37
  testRunner.When("I enter data", ((string)(null)), table5, "When ");
 #line 40
@@ -589,47 +589,6 @@ this.FeatureBackground();
                         "50"});
 #line 166
  testRunner.And("I see", ((string)(null)), table29, "And ");
-#line hidden
-            this.ScenarioCleanup();
-        }
-        
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Find traineeship by partial postcode returns results")]
-        [NUnit.Framework.CategoryAttribute("SmokeTests")]
-        public virtual void FindTraineeshipByPartialPostcodeReturnsResults()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Find traineeship by partial postcode returns results", new string[] {
-                        "SmokeTests"});
-#line 171
-this.ScenarioSetup(scenarioInfo);
-#line 7
-this.FeatureBackground();
-#line 172
- testRunner.Given("I navigated to the TraineeshipSearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-            TechTalk.SpecFlow.Table table30 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Field",
-                        "Value"});
-            table30.AddRow(new string[] {
-                        "Location",
-                        "B1"});
-#line 173
- testRunner.When("I enter data", ((string)(null)), table30, "When ");
-#line 176
- testRunner.And("I choose Search", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 177
- testRunner.And("I am on the TraineeshipSearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-            TechTalk.SpecFlow.Table table31 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Field",
-                        "Rule",
-                        "Value"});
-            table31.AddRow(new string[] {
-                        "SearchResultItemsCount",
-                        "Equals",
-                        "5"});
-#line 178
- testRunner.Then("I see", ((string)(null)), table31, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
