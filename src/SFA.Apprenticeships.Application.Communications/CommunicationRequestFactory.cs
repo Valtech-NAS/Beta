@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
+    using System.Net;
     using Domain.Entities.Candidates;
     using Domain.Entities.Communication;
     using Interfaces.Communications;
@@ -23,7 +24,7 @@
             commTokens.Add(new CommunicationToken(CommunicationTokens.CandidateMobileNumber, candidate.RegistrationDetails.PhoneNumber));
             commTokens.Add(new CommunicationToken(CommunicationTokens.ExpiringDraftsCount, candidateDailyDigest.Count().ToString(CultureInfo.InvariantCulture)));
 
-            var drafts = string.Join("~", candidateDailyDigest.Select(d => string.Join("|", d.Title, d.EmployerName, d.ClosingDate.ToLongDateString())));
+            var drafts = string.Join("~", candidateDailyDigest.Select(d => string.Join("|", WebUtility.UrlEncode(d.Title), WebUtility.UrlEncode(d.EmployerName), d.ClosingDate.ToLongDateString())));
             commTokens.Add(new CommunicationToken(CommunicationTokens.ExpiringDrafts, drafts));
 
             communicationMessage.Tokens = commTokens;

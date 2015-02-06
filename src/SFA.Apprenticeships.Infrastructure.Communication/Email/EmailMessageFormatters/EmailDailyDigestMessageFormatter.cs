@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Net;
     using Application.Interfaces.Communications;
     using SendGrid;
 
@@ -77,8 +78,8 @@
 
         private static void ExtractVacancyDataFrom(string line, out string apprenticeshipName, out string companyName, out string closingDate)
         {
-            apprenticeshipName = line.Split(new[] {Pipe}, StringSplitOptions.RemoveEmptyEntries)[0];
-            companyName = line.Split(new[] {Pipe}, StringSplitOptions.RemoveEmptyEntries)[1];
+            apprenticeshipName = WebUtility.UrlDecode(line.Split(new[] {Pipe}, StringSplitOptions.RemoveEmptyEntries)[0]);
+            companyName = WebUtility.UrlDecode(line.Split(new[] {Pipe}, StringSplitOptions.RemoveEmptyEntries)[1]);
             closingDate = line.Split(new[] {Pipe}, StringSplitOptions.RemoveEmptyEntries)[2];
         }
     }
