@@ -106,14 +106,14 @@
         // [TestCase("\"email\"@domain.com", true)] The regex doesn't support this scenario
         [TestCase("1234567890@domain.com", true)]
         [TestCase("email@domain-one.com", true)]
-        // [TestCase("_______@domain.com", true)] The regex doesn't support this scenario
+        //[TestCase("_______@domain.com", true)] //The regex doesn't support this scenario
         [TestCase("email@domain.name", true)]
         [TestCase("email@domain.co.jp", true)]
         [TestCase("emailAddress@gmail.com", true)]
         [TestCase("firstname-lastname@domain.com", true)]
         [TestCase("plainaddress", false)]
         [TestCase("#@%^%#$@#$@#.com", false)]
-        // [TestCase("@domain.com", false)] The regex doesn't support this scenario
+        [TestCase("@domain.com", false)] //The regex doesn't support this scenario
         [TestCase("Joe Smith <email@domain.com>", false)]
         [TestCase("email.domain.com", false)]
         [TestCase("email@domain@domain.com", false)]
@@ -124,9 +124,10 @@
         [TestCase("email@domain.com (Joe Smith)", false)]
         [TestCase("email@domain", false)]
         [TestCase("email@-domain.com", false)]
-        // [TestCase("email@domain.web", false)] The regex doesn't support this scenario
+        //[TestCase("email@domain.web", false)] //The regex doesn't support this scenario
         [TestCase("email@111.222.333.44444", false)]
         [TestCase("email@domain..com", false)]
+        [TestCase("email_email@domain.com", true)]
         public void ValidateEmail(string email, bool isValid)
         {
             _candidateServiceProvider.Setup(x => x.IsUsernameAvailable(It.IsAny<string>()))

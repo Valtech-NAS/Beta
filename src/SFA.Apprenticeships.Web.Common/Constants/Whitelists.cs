@@ -15,7 +15,8 @@
         {
             // Note: The following OWASP email regular expression is wrong and doesn't allow simple emails with underscores in the 
             // name section https://www.owasp.org/index.php/OWASP_Validation_Regex_Repository
-            public const string RegularExpression = @"^[a-zA-Z0-9+&*-]+(?:\.[a-zA-Z0-9_+&*-]+)*@((?!\-).)(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,7}$";
+            //public const string RegularExpression = @"^[a-zA-Z0-9+&*-]+(?:\.[a-zA-Z0-9_+&*-]+)*@((?!\-).)(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,7}$";
+            public const string RegularExpression = @"^([a-zA-Z0-9+&*-]+)+(?:(\.|_)[a-zA-Z0-9_+&*-]+)*@((?!\-).)(?:[a-zA-Z0-9-]+\.)+([a-zA-Z]{2,7})$";
 
             // This Regex is stronger, but doesn't works well in javascript.
             // http://haacked.com/archive/2007/08/21/i-knew-how-to-validate-an-email-address-until-i.aspx/
