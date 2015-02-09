@@ -15,18 +15,11 @@
     using RazorGenerator.Testing;
 
     [TestFixture]
-    public class DetailsTests
+    public class DetailsTests : ViewUnitTest
     {
         private const string NoValue = null;
         private const string SomeString = "some string";
         private const int SomeInteger = 1;
-
-        [SetUp]
-        public void SetUp()
-        {
-            RouteTable.Routes.Clear();
-            RouteConfig.RegisterRoutes(RouteTable.Routes);            
-        }
 
         [Test]
         public void ShouldShowSearchReturnUrlLink()

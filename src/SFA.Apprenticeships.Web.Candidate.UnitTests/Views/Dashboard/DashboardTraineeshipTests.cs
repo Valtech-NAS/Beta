@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Views.Dashboard
 {
     using System;
-    using System.Web.Routing;
     using Candidate.ViewModels.Applications;
     using Candidate.Views.Account;
     using FluentAssertions;
@@ -9,14 +8,8 @@
     using RazorGenerator.Testing;
 
     [TestFixture]
-    public class DashboardTraineeshipTests
+    public class DashboardTraineeshipTests : ViewUnitTest
     {
-        [SetUp]
-        public void SetUp()
-        {
-            RouteTable.Routes.Clear();
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-        }
 
         [TestCase(true)]
         [TestCase(false)]

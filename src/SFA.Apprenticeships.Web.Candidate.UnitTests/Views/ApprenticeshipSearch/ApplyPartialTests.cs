@@ -15,15 +15,8 @@
     using RazorGenerator.Testing;
 
     [TestFixture]
-    public class ApplyPartialTests
+    public class ApplyPartialTests : ViewUnitTest
     {
-        [SetUp]
-        public void SetUp()
-        {
-            RouteTable.Routes.Clear();
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-        }
-
         [Test]
         public void ShouldAllowCandidateToApplyViaEmployerWebsiteWithWellFormedUrl()
         {

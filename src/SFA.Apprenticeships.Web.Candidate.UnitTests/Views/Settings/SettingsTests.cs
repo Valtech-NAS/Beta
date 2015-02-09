@@ -1,7 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Views.Settings
 {
-    using System;
-    using System.Web.Routing;
     using Candidate.ViewModels.Account;
     using Candidate.ViewModels.Applications;
     using Candidate.Views.Account;
@@ -10,15 +8,8 @@
     using RazorGenerator.Testing;
 
     [TestFixture]
-    public class SettingsTests
+    public class SettingsTests : ViewUnitTest
     {
-        [SetUp]
-        public void SetUp()
-        {
-            RouteTable.Routes.Clear();
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-        }
-
         [TestCase(true)]
         [TestCase(false)]
         public void ShowFindTraineeshipLink(bool shouldShow)

@@ -259,6 +259,7 @@
     <Compile Include="Views\TraineeshipSearch\ApplyPartialTests.cs" />
     <Compile Include="Views\TraineeshipSearch\DetailsTests.cs" />
     <Compile Include="Views\ApprenticeshipSearch\DetailsTests.cs" />
+    <Compile Include="Views\ViewUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
