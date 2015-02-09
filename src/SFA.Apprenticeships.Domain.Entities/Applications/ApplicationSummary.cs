@@ -13,6 +13,8 @@
 
         public int LegacyVacancyId { get; set; }
 
+        public int LegacyApplicationId { get; set; }
+
         public string Title { get; set; }
 
         public string EmployerName { get; set; }

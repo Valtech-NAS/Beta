@@ -89,7 +89,7 @@
             
             if (!ProcessApprenticeshipsApplication(applicationStatusSummary) && !ProcessTraineeshipsApplication(applicationStatusSummary))
             {
-                _logger.Warn("Unable to find/update apprenticeship of traineeship application status for application with legacy application ID '{0}'", applicationStatusSummary.LegacyApplicationId);
+                _logger.Warn("Unable to find/update apprenticeship or traineeship application status for application with legacy application ID '{0}'", applicationStatusSummary.LegacyApplicationId);
             }
         }
 
@@ -115,7 +115,7 @@
                         new ApplicationStatusSummary
                         {
                             ApplicationId = x.ApplicationId,
-                            LegacyApplicationId = x.LegacyVacancyId,
+                            LegacyApplicationId = x.LegacyApplicationId,
                             ApplicationStatus = x.Status,
                             VacancyStatus = vacancyStatus,
                             LegacyVacancyId = x.LegacyVacancyId,
@@ -139,7 +139,7 @@
                         new ApplicationStatusSummary
                         {
                             ApplicationId = x.ApplicationId,
-                            LegacyApplicationId = x.LegacyVacancyId,
+                            LegacyApplicationId = x.LegacyApplicationId,
                             ApplicationStatus = ApplicationStatuses.Submitted,
                             VacancyStatus = vacancyStatus,
                             LegacyVacancyId = x.LegacyVacancyId,
