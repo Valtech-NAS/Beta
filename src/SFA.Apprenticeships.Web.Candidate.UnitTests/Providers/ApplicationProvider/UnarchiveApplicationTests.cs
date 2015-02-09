@@ -1,30 +1,30 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers.ApplicationProvider
 {
     using System;
+    using Application.Interfaces.Candidates;
     using Common.Models.Application;
     using Domain.Entities.Applications;
     using FluentAssertions;
+    using Moq;
     using NUnit.Framework;
 
     [TestFixture]
-    public class UnarchiveApplicationTests : ApprenticeshipApplicationProviderTestsBase
+    public class UnarchiveApplicationTests
     {
-        private Guid _candidateId;
-
-        [SetUp]
-        public override void SetUp()
-        {
-            base.SetUp();
-
-            _candidateId = Guid.NewGuid();
-        }
+        const int ValidVacancyId = 1;
 
         [Test]
         public void GivenException_ThenFailedApplicationViewModelIsReturned()
         {
-            CandidateService.Setup(cs => cs.UnarchiveApplication(_candidateId, ValidVacancyId)).Throws<Exception>();
+            var candidateId = Guid.NewGuid();
+            var candidateService = new Mock<ICandidateService>();
 
-            var returnedViewModel = ApprenticeshipApplicationProvider.UnarchiveApplication(_candidateId, ValidVacancyId);
+            candidateService.Setup(cs => cs.UnarchiveApplication(candidateId, ValidVacancyId)).Throws<Exception>();
+
+            var returnedViewModel = new ApprenticeshipApplicationProviderBuilder()
+                .With(candidateService).Build()
+                .UnarchiveApplication(candidateId, ValidVacancyId);
+
             returnedViewModel.HasError().Should().BeTrue();
             returnedViewModel.ViewModelStatus.Should().Be(ApplicationViewModelStatus.Error);
             returnedViewModel.ViewModelMessage.Should().NotBeNullOrEmpty();
@@ -34,7 +34,11 @@
         [Test]
         public void GivenSuccessfulUnarchive_ThenSuccessfulViewModelIsReturned()
         {
-            var returnedViewModel = ApprenticeshipApplicationProvider.UnarchiveApplication(_candidateId, ValidVacancyId);
+            var candidateId = Guid.NewGuid();
+
+            var returnedViewModel = new ApprenticeshipApplicationProviderBuilder().Build()
+                .UnarchiveApplication(candidateId, ValidVacancyId);
+
             returnedViewModel.HasError().Should().BeFalse();
             returnedViewModel.ViewModelStatus.Should().Be(ApplicationViewModelStatus.Ok);
             returnedViewModel.ViewModelMessage.Should().BeNullOrEmpty();

@@ -8,12 +8,12 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class PatchApplicationViewModelTests : ApprenticeshipApplicationProviderTestsBase
+    public class PatchApplicationViewModelTests
     {
         [Test]
         public void GivenNullViewModels_ThenExceptionIsThrown()
         {
-            Action patchApplicationViewModelAction = () => ApprenticeshipApplicationProvider.PatchApplicationViewModel(Guid.NewGuid(), null, null);
+            Action patchApplicationViewModelAction = () => new ApprenticeshipApplicationProviderBuilder().Build().PatchApplicationViewModel(Guid.NewGuid(), null, null);
             patchApplicationViewModelAction.ShouldThrow<Exception>();
         }
 
@@ -24,7 +24,7 @@
             {
                 Candidate = null
             };
-            Action patchApplicationViewModelAction = () => ApprenticeshipApplicationProvider.PatchApplicationViewModel(Guid.NewGuid(), null, viewModel);
+            Action patchApplicationViewModelAction = () => new ApprenticeshipApplicationProviderBuilder().Build().PatchApplicationViewModel(Guid.NewGuid(), null, viewModel);
             patchApplicationViewModelAction.ShouldThrow<Exception>();
         }
 
@@ -38,7 +38,7 @@
                     AboutYou = null
                 }
             };
-            Action patchApplicationViewModelAction = () => ApprenticeshipApplicationProvider.PatchApplicationViewModel(Guid.NewGuid(), null, viewModel);
+            Action patchApplicationViewModelAction = () => new ApprenticeshipApplicationProviderBuilder().Build().PatchApplicationViewModel(Guid.NewGuid(), null, viewModel);
             patchApplicationViewModelAction.ShouldThrow<Exception>();
         }
 
@@ -51,7 +51,7 @@
                 .CanBeSupportedAtInterviewBy("Should be blanked")
                 .Build();
 
-            var patchedViewModel = ApprenticeshipApplicationProvider.PatchApplicationViewModel(Guid.NewGuid(), savedModel, submittedModel);
+            var patchedViewModel = new ApprenticeshipApplicationProviderBuilder().Build().PatchApplicationViewModel(Guid.NewGuid(), savedModel, submittedModel);
             patchedViewModel.Candidate.AboutYou.AnythingWeCanDoToSupportYourInterview.Should().BeNullOrEmpty();
         }
 
@@ -65,7 +65,7 @@
                 .CanBeSupportedAtInterviewBy(anythingWeCanDoToSupportYourInterview)
                 .Build();
 
-            var patchedViewModel = ApprenticeshipApplicationProvider.PatchApplicationViewModel(Guid.NewGuid(), savedModel, submittedModel);
+            var patchedViewModel = new ApprenticeshipApplicationProviderBuilder().Build().PatchApplicationViewModel(Guid.NewGuid(), savedModel, submittedModel);
             patchedViewModel.Candidate.AboutYou.AnythingWeCanDoToSupportYourInterview.Should().Be(anythingWeCanDoToSupportYourInterview);
         }
     }

@@ -1,33 +1,30 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers.ApplicationProvider
 {
     using System;
+    using Application.Interfaces.Candidates;
     using Builders;
+    using Candidate.Providers;
     using Candidate.ViewModels.VacancySearch;
     using Constants.Pages;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using FluentAssertions;
+    using Moq;
     using NUnit.Framework;
 
     [TestFixture]
-    public class GetWhatHappensNextViewModelTests : ApprenticeshipApplicationProviderTestsBase
+    public class GetWhatHappensNextViewModelTests
     {
-        private Guid _candidateId;
-
-        [SetUp]
-        public override void SetUp()
-        {
-            base.SetUp();
-
-            _candidateId = Guid.NewGuid();
-        }
+        const int ValidVacancyId = 1;
 
         [Test]
         public void GivenException_ThenCreateOrRetrieveApplicationFailedIsReturned()
         {
-            CandidateService.Setup(cs => cs.GetApplication(_candidateId, ValidVacancyId)).Throws<Exception>();
+            var candidateId = Guid.NewGuid();
+            var candidateService = new Mock<ICandidateService>();
+            candidateService.Setup(cs => cs.GetApplication(candidateId, ValidVacancyId)).Throws<Exception>();
 
-            var returnedViewModel = ApprenticeshipApplicationProvider.GetWhatHappensNextViewModel(_candidateId, ValidVacancyId);
+            var returnedViewModel = new ApprenticeshipApplicationProviderBuilder().With(candidateService).Build().GetWhatHappensNextViewModel(candidateId, ValidVacancyId);
             returnedViewModel.HasError().Should().BeTrue();
             returnedViewModel.ViewModelMessage.Should().NotBeNullOrEmpty();
             returnedViewModel.ViewModelMessage.Should().Be(MyApplicationsPageMessages.CreateOrRetrieveApplicationFailed);
@@ -37,10 +34,12 @@
         [Test]
         public void GivenNoApplicationFound_ThenApplicationNotFoundIsReturned()
         {
-            CandidateService.Setup(cs => cs.GetApplication(_candidateId, ValidVacancyId)).Returns((ApprenticeshipApplicationDetail) null);
-            CandidateService.Setup(cs => cs.GetCandidate(_candidateId)).Returns(new CandidateBuilder().Build);
+            var candidateId = Guid.NewGuid();
+            var candidateService = new Mock<ICandidateService>();
+            candidateService.Setup(cs => cs.GetApplication(candidateId, ValidVacancyId)).Returns((ApprenticeshipApplicationDetail) null);
+            candidateService.Setup(cs => cs.GetCandidate(candidateId)).Returns(new CandidateBuilder().Build);
 
-            var returnedViewModel = ApprenticeshipApplicationProvider.GetWhatHappensNextViewModel(_candidateId, ValidVacancyId);
+            var returnedViewModel = new ApprenticeshipApplicationProviderBuilder().With(candidateService).Build().GetWhatHappensNextViewModel(candidateId, ValidVacancyId);
             returnedViewModel.HasError().Should().BeTrue();
             returnedViewModel.ViewModelMessage.Should().NotBeNullOrEmpty();
             returnedViewModel.ViewModelMessage.Should().Be(MyApplicationsPageMessages.ApplicationNotFound);
@@ -50,10 +49,12 @@
         [Test]
         public void GivenNoCandidateFound_ThenApplicationNotFoundIsReturned()
         {
-            CandidateService.Setup(cs => cs.GetApplication(_candidateId, ValidVacancyId)).Returns(new ApprenticeshipApplicationDetailBuilder(_candidateId, ValidVacancyId).Build);
-            CandidateService.Setup(cs => cs.GetCandidate(_candidateId)).Returns((Candidate) null);
+            var candidateId = Guid.NewGuid();
+            var candidateService = new Mock<ICandidateService>();
+            candidateService.Setup(cs => cs.GetApplication(candidateId, ValidVacancyId)).Returns(new ApprenticeshipApplicationDetailBuilder(candidateId, ValidVacancyId).Build);
+            candidateService.Setup(cs => cs.GetCandidate(candidateId)).Returns((Candidate) null);
 
-            var returnedViewModel = ApprenticeshipApplicationProvider.GetWhatHappensNextViewModel(_candidateId, ValidVacancyId);
+            var returnedViewModel = new ApprenticeshipApplicationProviderBuilder().With(candidateService).Build().GetWhatHappensNextViewModel(candidateId, ValidVacancyId);
             returnedViewModel.HasError().Should().BeTrue();
             returnedViewModel.ViewModelMessage.Should().NotBeNullOrEmpty();
             returnedViewModel.ViewModelMessage.Should().Be(MyApplicationsPageMessages.ApplicationNotFound);
@@ -63,11 +64,18 @@
         [Test]
         public void GivenPatchWithVacancyDetailHasError_ThenMessageIsReturned()
         {
-            CandidateService.Setup(cs => cs.GetApplication(_candidateId, ValidVacancyId)).Returns(new ApprenticeshipApplicationDetailBuilder(_candidateId, ValidVacancyId).Build);
-            CandidateService.Setup(cs => cs.GetCandidate(_candidateId)).Returns(new CandidateBuilder().Build);
-            ApprenticeshipVacancyDetailProvider.Setup(cs => cs.GetVacancyDetailViewModel(_candidateId, ValidVacancyId)).Returns((VacancyDetailViewModel)null);
+            var candidateId = Guid.NewGuid();
+            var candidateService = new Mock<ICandidateService>();
+            var apprenticeshipVacancyDetailProvider = new Mock<IApprenticeshipVacancyDetailProvider>();
+            candidateService.Setup(cs => cs.GetApplication(candidateId, ValidVacancyId)).Returns(new ApprenticeshipApplicationDetailBuilder(candidateId, ValidVacancyId).Build);
+            candidateService.Setup(cs => cs.GetCandidate(candidateId)).Returns(new CandidateBuilder().Build);
+
+            apprenticeshipVacancyDetailProvider.Setup(cs => cs.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns((VacancyDetailViewModel)null);
             
-            var returnedViewModel = ApprenticeshipApplicationProvider.GetWhatHappensNextViewModel(_candidateId, ValidVacancyId);
+            var returnedViewModel = new ApprenticeshipApplicationProviderBuilder()
+                .With(candidateService).With(apprenticeshipVacancyDetailProvider).Build()
+                .GetWhatHappensNextViewModel(candidateId, ValidVacancyId);
+
             returnedViewModel.HasError().Should().BeTrue();
             returnedViewModel.ViewModelMessage.Should().NotBeNullOrEmpty();
             returnedViewModel.ViewModelMessage.Should().Be(MyApplicationsPageMessages.ApprenticeshipNoLongerAvailable);
@@ -77,11 +85,17 @@
         [Test]
         public void GivenGetWhatHappensNextViewModelIsSuccessful_ThenViewModelIsReturned()
         {
-            CandidateService.Setup(cs => cs.GetApplication(_candidateId, ValidVacancyId)).Returns(new ApprenticeshipApplicationDetailBuilder(_candidateId, ValidVacancyId).Build);
-            CandidateService.Setup(cs => cs.GetCandidate(_candidateId)).Returns(new CandidateBuilder().Build);
-            ApprenticeshipVacancyDetailProvider.Setup(cs => cs.GetVacancyDetailViewModel(_candidateId, ValidVacancyId)).Returns(new VacancyDetailViewModelBuilder().Build());
+            var candidateId = Guid.NewGuid();
+            var candidateService = new Mock<ICandidateService>();
+            var apprenticeshipVacancyDetailProvider = new Mock<IApprenticeshipVacancyDetailProvider>();
+            candidateService.Setup(cs => cs.GetApplication(candidateId, ValidVacancyId)).Returns(new ApprenticeshipApplicationDetailBuilder(candidateId, ValidVacancyId).Build);
+            candidateService.Setup(cs => cs.GetCandidate(candidateId)).Returns(new CandidateBuilder().Build);
+            apprenticeshipVacancyDetailProvider.Setup(cs => cs.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(new VacancyDetailViewModelBuilder().Build());
             
-            var returnedViewModel = ApprenticeshipApplicationProvider.GetWhatHappensNextViewModel(_candidateId, ValidVacancyId);
+            var returnedViewModel = new ApprenticeshipApplicationProviderBuilder()
+                .With(candidateService).With(apprenticeshipVacancyDetailProvider).Build()
+                .GetWhatHappensNextViewModel(candidateId, ValidVacancyId);
+
             returnedViewModel.HasError().Should().BeFalse();
             returnedViewModel.ViewModelMessage.Should().BeNullOrEmpty();
             returnedViewModel.Status.Should().Be(ApplicationStatuses.Unknown);

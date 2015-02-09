@@ -1,31 +1,30 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers.ApplicationProvider
 {
     using System;
+    using Application.Interfaces.Candidates;
     using Common.Models.Application;
     using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
     using FluentAssertions;
+    using Moq;
     using NUnit.Framework;
 
     [TestFixture]
-    public class DeleteApplicationTests : ApprenticeshipApplicationProviderTestsBase
+    public class DeleteApplicationTests
     {
-        private Guid _candidateId;
-
-        [SetUp]
-        public override void SetUp()
-        {
-            base.SetUp();
-
-            _candidateId = Guid.NewGuid();
-        }
+        const int ValidVacancyId = 1;
 
         [Test]
         public void GivenException_ThenFailedApplicationViewModelIsReturned()
         {
-            CandidateService.Setup(cs => cs.DeleteApplication(_candidateId, ValidVacancyId)).Throws<Exception>();
+            var candidateId = Guid.NewGuid();
+            var candidateService = new Mock<ICandidateService>();
+            candidateService.Setup(cs => cs.DeleteApplication(candidateId, ValidVacancyId)).Throws<Exception>();
 
-            var returnedViewModel = ApprenticeshipApplicationProvider.DeleteApplication(_candidateId, ValidVacancyId);
+            var returnedViewModel = new ApprenticeshipApplicationProviderBuilder().With(candidateService)
+                .Build()
+                .DeleteApplication(candidateId, ValidVacancyId);
+
             returnedViewModel.HasError().Should().BeTrue();
             returnedViewModel.ViewModelStatus.Should().Be(ApplicationViewModelStatus.Error);
             returnedViewModel.ViewModelMessage.Should().NotBeNullOrEmpty();
@@ -35,7 +34,8 @@
         [Test]
         public void GivenSuccessfulDeleteApplication_ThenSuccessfulViewModelIsReturned()
         {
-            var returnedViewModel = ApprenticeshipApplicationProvider.DeleteApplication(_candidateId, ValidVacancyId);
+            var candidateId = Guid.NewGuid();
+            var returnedViewModel = new ApprenticeshipApplicationProviderBuilder().Build().DeleteApplication(candidateId, ValidVacancyId);
             returnedViewModel.HasError().Should().BeFalse();
             returnedViewModel.ViewModelStatus.Should().Be(ApplicationViewModelStatus.Ok);
             returnedViewModel.ViewModelMessage.Should().BeNullOrEmpty();
@@ -45,9 +45,14 @@
         [Test]
         public void GivenEntityStateError_ThenDefaultViewModelIsReturned()
         {
-            CandidateService.Setup(cs => cs.DeleteApplication(_candidateId, ValidVacancyId)).Throws(new CustomException(Domain.Entities.ErrorCodes.EntityStateError));
+            var candidateId = Guid.NewGuid();
+            var candidateService = new Mock<ICandidateService>();
+            candidateService.Setup(cs => cs.DeleteApplication(candidateId, ValidVacancyId)).Throws(new CustomException(Domain.Entities.ErrorCodes.EntityStateError));
 
-            var returnedViewModel = ApprenticeshipApplicationProvider.DeleteApplication(_candidateId, ValidVacancyId);
+            var returnedViewModel = new ApprenticeshipApplicationProviderBuilder().With(candidateService)
+                .Build()
+                .DeleteApplication(candidateId, ValidVacancyId);
+
             returnedViewModel.HasError().Should().BeFalse();
             returnedViewModel.ViewModelStatus.Should().Be(ApplicationViewModelStatus.Ok);
             returnedViewModel.ViewModelMessage.Should().BeNullOrEmpty();
@@ -57,9 +62,14 @@
         [Test]
         public void GivenApplicationNotFoundError_ThenFailedApplicationViewModelIsReturned()
         {
-            CandidateService.Setup(cs => cs.DeleteApplication(_candidateId, ValidVacancyId)).Throws(new CustomException(Application.Interfaces.Applications.ErrorCodes.ApplicationNotFoundError));
+            var candidateId = Guid.NewGuid();
+            var candidateService = new Mock<ICandidateService>();
+            candidateService.Setup(cs => cs.DeleteApplication(candidateId, ValidVacancyId)).Throws(new CustomException(Application.Interfaces.Applications.ErrorCodes.ApplicationNotFoundError));
 
-            var returnedViewModel = ApprenticeshipApplicationProvider.DeleteApplication(_candidateId, ValidVacancyId);
+            var returnedViewModel = new ApprenticeshipApplicationProviderBuilder().With(candidateService)
+                .Build()
+                .DeleteApplication(candidateId, ValidVacancyId);
+
             returnedViewModel.HasError().Should().BeTrue();
             returnedViewModel.ViewModelStatus.Should().Be(ApplicationViewModelStatus.Error);
             returnedViewModel.ViewModelMessage.Should().NotBeNullOrEmpty();

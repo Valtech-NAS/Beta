@@ -24,7 +24,7 @@
         {
             CandidateService.Setup(cs => cs.GetApprenticeshipApplications(_candidateId)).Throws<Exception>();
 
-            Action action = () => { ApprenticeshipApplicationProvider.GetTraineeshipFeatureViewModel(_candidateId); };
+            Action action = () => ApprenticeshipApplicationProvider.GetTraineeshipFeatureViewModel(_candidateId);;
             action.ShouldThrow<Exception>();
         }
 
