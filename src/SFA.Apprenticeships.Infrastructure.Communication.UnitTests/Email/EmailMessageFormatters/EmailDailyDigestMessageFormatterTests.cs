@@ -134,7 +134,7 @@
                 .CreateListOfSize(noOfDrafts)
                 .All()
                 .With(ed => ed.ClosingDate = new DateTime(2015, 01, 31))
-                .Build().ToList();
+                .Build().OrderBy(p => p.ClosingDate).ToList();
             return drafts;
         }
 

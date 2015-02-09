@@ -24,7 +24,7 @@
             commTokens.Add(new CommunicationToken(CommunicationTokens.CandidateMobileNumber, candidate.RegistrationDetails.PhoneNumber));
             commTokens.Add(new CommunicationToken(CommunicationTokens.ExpiringDraftsCount, candidateDailyDigest.Count().ToString(CultureInfo.InvariantCulture)));
 
-            var drafts = string.Join("~", candidateDailyDigest.Select(d => string.Join("|", WebUtility.UrlEncode(d.Title), WebUtility.UrlEncode(d.EmployerName), d.ClosingDate.ToLongDateString())));
+            var drafts = string.Join("~", candidateDailyDigest.OrderBy(p => p.ClosingDate).Select(d => string.Join("|", WebUtility.UrlEncode(d.Title), WebUtility.UrlEncode(d.EmployerName), d.ClosingDate.ToLongDateString())));
             commTokens.Add(new CommunicationToken(CommunicationTokens.ExpiringDrafts, drafts));
 
             communicationMessage.Tokens = commTokens;
