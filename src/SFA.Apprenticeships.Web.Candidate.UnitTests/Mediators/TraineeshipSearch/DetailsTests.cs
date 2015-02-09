@@ -45,6 +45,7 @@
         [TestCase(" 491802")]
         [TestCase("VAC000547307")]
         [TestCase("[[imgUrl]]")]
+        [TestCase("separator.png")]
         public void GivenInvalidVacancyIdString_ThenVacancyNotFound(string vacancyId)
         {
             var mediator = GetMediator(null);
