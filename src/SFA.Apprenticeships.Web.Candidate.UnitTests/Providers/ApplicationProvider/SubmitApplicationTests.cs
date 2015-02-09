@@ -44,7 +44,7 @@
             var candidateId = Guid.NewGuid();
             ApprenticeshipVacancyDetailProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(new VacancyDetailViewModel());
             CandidateService.Setup(cs => cs.CreateApplication(candidateId, ValidVacancyId)).Returns(new ApprenticeshipApplicationDetail());
-            CandidateService.Setup(cs => cs.SubmitApplication(candidateId, ValidVacancyId)).Throws(new CustomException(ErrorCodes.ApplicationGatewayCreationError));
+            CandidateService.Setup(cs => cs.SubmitApplication(candidateId, ValidVacancyId)).Throws(new CustomException(ErrorCodes.ApplicationCreationFailed));
 
             var returnedViewModel = ApprenticeshipApplicationProvider.SubmitApplication(candidateId, ValidVacancyId);
             returnedViewModel.HasError().Should().BeTrue();

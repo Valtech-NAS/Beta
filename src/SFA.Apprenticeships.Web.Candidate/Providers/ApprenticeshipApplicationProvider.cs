@@ -170,6 +170,18 @@
                 var message =
                     string.Format(
                         "Patch application View Model failed for user {0}.", candidateId);
+                if (submittedModel == null)
+                {
+                    message += " submittedModel was null";
+                }
+                else if (submittedModel.Candidate == null)
+                {
+                    message += " submittedModel.Candidate was null";
+                }
+                else if (submittedModel.Candidate.AboutYou == null)
+                {
+                    message += " submittedModel.Candidate.AboutYou was null";
+                }
                 _logger.Error(message, e);
                 throw;
             }
