@@ -11,22 +11,10 @@
     [TestFixture]
     public class SearchConfigurationShould
     {
-        private Container _container;
-        [SetUp]
-        public void SetUp()
-        {
-            _container = new Container(x =>
-            {
-                x.AddRegistry<CommonRegistry>();
-                x.AddRegistry<LoggingRegistry>();
-                x.AddRegistry<VacancySearchRegistry>();
-            });
-        }
-
         [Test]
         public void LoadWithValuesSetFromConfig()
         {
-            var config = _container.GetInstance<SearchConfiguration>();
+            var config = SearchConfiguration.Instance;
 
             config.Should().NotBeNull();
             config.UseJobTitleTerms.Should().BeTrue();

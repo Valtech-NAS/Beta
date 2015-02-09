@@ -10,22 +10,14 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.UnitTests
     [TestFixture]
     public class GatewayVacancySummaryMapperTests
     {
-        [SetUp]
-        public void Setup()
-        {
-            _mapper = new LegacyVacancySummaryMapper();
-        }
-
-        private LegacyVacancySummaryMapper _mapper;
-
-        [TestCase]
+        [Test]
         public void ShouldCreateAMap()
         {
             // Act.
-            _mapper.Mapper.AssertConfigurationIsValid();
+            new LegacyVacancySummaryMapper().Mapper.AssertConfigurationIsValid();
         }
 
-        [TestCase]
+        [Test]
         public void ShouldMapAllOneToOneFields()
         {
             // Arrange.
@@ -40,7 +32,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.UnitTests
             };
 
             // Act.
-            var dest = _mapper.Map<GatewayServiceProxy.VacancySummary, ApprenticeshipSummary>(src);
+            var dest = new LegacyVacancySummaryMapper().Map<GatewayServiceProxy.VacancySummary, ApprenticeshipSummary>(src);
 
             // Assert.
             dest.Should().NotBeNull();
@@ -51,7 +43,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.UnitTests
             dest.Title.Should().Be(src.VacancyTitle);
         }
 
-        [TestCase]
+        [Test]
         public void ShouldMapVacancyLocationTypeStandard()
         {
             // Arrange.
@@ -62,14 +54,14 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.UnitTests
             };
 
             // Act.
-            var dest = _mapper.Map<GatewayServiceProxy.VacancySummary, ApprenticeshipSummary>(src);
+            var dest = new LegacyVacancySummaryMapper().Map<GatewayServiceProxy.VacancySummary, ApprenticeshipSummary>(src);
 
             // Assert.
             dest.Should().NotBeNull();
             dest.VacancyLocationType.Should().Be(ApprenticeshipLocationType.NonNational);
         }
 
-        [TestCase]
+        [Test]
         public void ShouldMapVacancyLocationTypeMultipleLocation()
         {
             // Arrange.
@@ -80,14 +72,14 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.UnitTests
             };
 
             // Act.
-            var dest = _mapper.Map<GatewayServiceProxy.VacancySummary, ApprenticeshipSummary>(src);
+            var dest = new LegacyVacancySummaryMapper().Map<GatewayServiceProxy.VacancySummary, ApprenticeshipSummary>(src);
 
             // Assert.
             dest.Should().NotBeNull();
             dest.VacancyLocationType.Should().Be(ApprenticeshipLocationType.NonNational);
         }
 
-        [TestCase]
+        [Test]
         public void ShouldMapVacancyLocationTypeNational()
         {
             // Arrange.
@@ -98,14 +90,14 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.UnitTests
             };
 
             // Act.
-            var dest = _mapper.Map<GatewayServiceProxy.VacancySummary, ApprenticeshipSummary>(src);
+            var dest = new LegacyVacancySummaryMapper().Map<GatewayServiceProxy.VacancySummary, ApprenticeshipSummary>(src);
 
             // Assert.
             dest.Should().NotBeNull();
             dest.VacancyLocationType.Should().Be(ApprenticeshipLocationType.National);
         }
 
-        [TestCase]
+        [Test]
         public void ShouldMapVacancyLocationWhenSpecified()
         {
             // Arrange.
@@ -121,7 +113,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.UnitTests
             };
 
             // Act.
-            var dest = _mapper.Map<GatewayServiceProxy.VacancySummary, ApprenticeshipSummary>(src);
+            var dest = new LegacyVacancySummaryMapper().Map<GatewayServiceProxy.VacancySummary, ApprenticeshipSummary>(src);
 
             // Assert.
             dest.Should().NotBeNull();
@@ -130,8 +122,8 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.UnitTests
             dest.Location.Longitude.Should().Be(2.0);
         }
 
-        [TestCase]
-        public void ShouldThrowIfUnknownVacancyLocationType()
+        [Test]
+        public void MapNullAddress()
         {
             // Arrange.
             var src = new GatewayServiceProxy.VacancySummary
@@ -142,7 +134,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.UnitTests
             };
 
             // Act.
-            var dest = _mapper.Map<GatewayServiceProxy.VacancySummary, ApprenticeshipSummary>(src);
+            var dest = new LegacyVacancySummaryMapper().Map<GatewayServiceProxy.VacancySummary, ApprenticeshipSummary>(src);
 
             // Assert.
             dest.Should().NotBeNull();

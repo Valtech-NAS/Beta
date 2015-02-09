@@ -2,7 +2,7 @@
 {
     using FluentAssertions;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Infrastructure.RabbitMq.Configuration;
+    using RabbitMq.Configuration;
 
     [TestFixture]
     public class RabbitMqConfigurationTests

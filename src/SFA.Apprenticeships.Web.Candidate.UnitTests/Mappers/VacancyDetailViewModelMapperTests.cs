@@ -11,15 +11,15 @@
     public class VacancyDetailViewModelMapperTests
     {
         [Test]
-        public void ShouldCreateMap()
+        public void ShouldCreateApprenticeshipMap()
         {
-            var apprenticeshipCandidateWebMappers = new ApprenticeshipCandidateWebMappers();
+            new ApprenticeshipCandidateWebMappers().Mapper.AssertConfigurationIsValid();
+        }
 
-            apprenticeshipCandidateWebMappers.Mapper.AssertConfigurationIsValid();
-
-            var traineeshipCandidateWebMappers = new TraineeshipCandidateWebMappers();
-
-            traineeshipCandidateWebMappers.Mapper.AssertConfigurationIsValid();
+        [Test]
+        public void ShouldCreateTraineeshipMap()
+        {
+            new TraineeshipCandidateWebMappers().Mapper.AssertConfigurationIsValid();
         }
 
         [Test]

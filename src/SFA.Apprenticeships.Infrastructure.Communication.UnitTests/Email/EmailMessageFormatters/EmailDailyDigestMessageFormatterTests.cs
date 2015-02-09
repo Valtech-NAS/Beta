@@ -5,7 +5,6 @@
     using System.Linq;
     using Application.Communications;
     using Application.Interfaces.Communications;
-    using Communication.Email;
     using Communication.Email.EmailMessageFormatters;
     using Domain.Entities.Candidates;
     using Domain.Entities.Communication;
@@ -21,24 +20,15 @@
         private const string ExpiryVacanciesCountTag = "-Expiry.Vacancies.Count-";
         private const string ExpiryVacanciesInfoTag = "-Expiry.Vacancies.Info-";
 
-        private EmailMessageFormatter _emailMessageFormatter;
-
-        [SetUp]
-        public void SetUp()
-        {
-            _emailMessageFormatter = new EmailDailyDigestMessageFormatter();
-        }
-
         [Test]
         public void GivenSingleExpiringDraft()
         {
             var emailRequest = GetEmailRequest(1);
-            var sendGridMessage = new Mock<ISendGrid>();
-            var sendGridMessageSubstitutions = new List<SendGridMessageSubstitution>();
-            sendGridMessage.Setup(m => m.AddSubstitution(It.IsAny<string>(), It.IsAny<List<string>>()))
-                .Callback<string, List<string>>((rt, sv) => sendGridMessageSubstitutions.Add(new SendGridMessageSubstitution(rt, sv)));
+            List<SendGridMessageSubstitution> sendGridMessageSubstitutions;
+            var sendGridMessage = GetSendGridMessage(out sendGridMessageSubstitutions);
 
-            _emailMessageFormatter.PopulateMessage(emailRequest, sendGridMessage.Object);
+            var emailMessageFormatter = new EmailDailyDigestMessageFormatter();
+            emailMessageFormatter.PopulateMessage(emailRequest, sendGridMessage.Object);
 
             sendGridMessageSubstitutions.Count.Should().Be(2);
             sendGridMessageSubstitutions.Count(s => s.ReplacementTag == ExpiryVacanciesCountTag).Should().Be(1);
@@ -56,12 +46,11 @@
         public void GivenMultipleExpiringDrafts(int noOfDrafts)
         {
             var emailRequest = GetEmailRequest(noOfDrafts);
-            var sendGridMessage = new Mock<ISendGrid>();
-            var sendGridMessageSubstitutions = new List<SendGridMessageSubstitution>();
-            sendGridMessage.Setup(m => m.AddSubstitution(It.IsAny<string>(), It.IsAny<List<string>>()))
-                .Callback<string, List<string>>((rt, sv) => sendGridMessageSubstitutions.Add(new SendGridMessageSubstitution(rt, sv)));
+            List<SendGridMessageSubstitution> sendGridMessageSubstitutions;
+            var sendGridMessage = GetSendGridMessage(out sendGridMessageSubstitutions);
 
-            _emailMessageFormatter.PopulateMessage(emailRequest, sendGridMessage.Object);
+            var emailMessageFormatter = new EmailDailyDigestMessageFormatter();
+            emailMessageFormatter.PopulateMessage(emailRequest, sendGridMessage.Object);
 
             sendGridMessageSubstitutions.Count.Should().Be(2);
             sendGridMessageSubstitutions.Count(s => s.ReplacementTag == ExpiryVacanciesCountTag).Should().Be(1);
@@ -80,12 +69,11 @@
         {
             var expiringDrafts = GetExpiringDraftsSpecialCharacters(noOfDrafts);
             var emailRequest = GetEmailRequest(expiringDrafts);
-            var sendGridMessage = new Mock<ISendGrid>();
-            var sendGridMessageSubstitutions = new List<SendGridMessageSubstitution>();
-            sendGridMessage.Setup(m => m.AddSubstitution(It.IsAny<string>(), It.IsAny<List<string>>()))
-                .Callback<string, List<string>>((rt, sv) => sendGridMessageSubstitutions.Add(new SendGridMessageSubstitution(rt, sv)));
+            List<SendGridMessageSubstitution> sendGridMessageSubstitutions;
+            var sendGridMessage = GetSendGridMessage(out sendGridMessageSubstitutions);
 
-            _emailMessageFormatter.PopulateMessage(emailRequest, sendGridMessage.Object);
+            var emailMessageFormatter = new EmailDailyDigestMessageFormatter();
+            emailMessageFormatter.PopulateMessage(emailRequest, sendGridMessage.Object);
 
             sendGridMessageSubstitutions.Count.Should().Be(2);
             sendGridMessageSubstitutions.Count(s => s.ReplacementTag == ExpiryVacanciesCountTag).Should().Be(1);
@@ -97,13 +85,25 @@
             infoSubstitution.SubstitutionValues.Single().Should().Be(GetExpectedInfoSubstitution(expiringDrafts));
         }
 
+        private static Mock<ISendGrid> GetSendGridMessage(out List<SendGridMessageSubstitution> sendGridMessageSubstitutions)
+        {
+            var sendGridMessage = new Mock<ISendGrid>();
+            var substitutions = new List<SendGridMessageSubstitution>();
+            sendGridMessage.Setup(m => m.AddSubstitution(It.IsAny<string>(), It.IsAny<List<string>>()))
+                .Callback<string, List<string>>(
+                    (rt, sv) => substitutions.Add(new SendGridMessageSubstitution(rt, sv)));
+
+            sendGridMessageSubstitutions = substitutions;
+            return sendGridMessage;
+        }
+
         private string GetExpectedInfoSubstitution(int noOfDrafts)
         {
             var drafts = GetExpiringDrafts(noOfDrafts);
             return GetExpectedInfoSubstitution(drafts);
         }
 
-        private string GetExpectedInfoSubstitution(List<ExpiringApprenticeshipApplicationDraft> expiringDrafts)
+        private static string GetExpectedInfoSubstitution(IEnumerable<ExpiringApprenticeshipApplicationDraft> expiringDrafts)
         {
             var lineItems = expiringDrafts.Select(d => string.Format("<li>{0} with {1}<br>Closing date: {2}</li>", d.Title, d.EmployerName, d.ClosingDate.ToLongDateString()));
             return string.Format("<ul>{0}</ul>", string.Join("", lineItems));

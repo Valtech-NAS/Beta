@@ -12,23 +12,14 @@
     [TestFixture]
     public class GatewayApprenticeshipVacancyDetailMapperTests
     {
-        private LegacyApprenticeshipVacancyDetailMapper _mapper;
-
-        [SetUp]
-        public void Setup()
-        {
-            _mapper = new LegacyApprenticeshipVacancyDetailMapper();
-        }
-
-        [TestCase]
+        [Test]
         public void ShouldCreateAMap()
         {
             // Act.
-            _mapper.Mapper.AssertConfigurationIsValid();
+            new LegacyApprenticeshipVacancyDetailMapper().Mapper.AssertConfigurationIsValid();
         }
 
-        [TestCase]
-        [ExpectedException(typeof(AutoMapperMappingException))]
+        [Test]
         public void ShouldThrowIfNotApprenticeship()
         {
             // Arrange.
@@ -37,13 +28,11 @@
                 VacancyType = "Traineeship"
             };
 
-            // Act.
-            _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
-
-            // Assert: throws.
+            Action action = () => new LegacyApprenticeshipVacancyDetailMapper().Map<Vacancy, ApprenticeshipVacancyDetail>(src);
+            action.ShouldThrow<AutoMapperMappingException>();
         }
 
-        [TestCase]
+        [Test]
         public void ShouldMapAllOneToOneFields()
         {
             // Arrange.
@@ -91,7 +80,7 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
+            var dest = new LegacyApprenticeshipVacancyDetailMapper().Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert.
             dest.Should().NotBeNull();
@@ -135,7 +124,7 @@
             dest.WorkingWeek.Should().Be(src.WorkingWeek);
         }
 
-        [TestCase]
+        [Test]
         public void ShouldMapApplyViaEmployerWebsiteWhenNotSpecified()
         {
             // Arrange.
@@ -150,14 +139,14 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
+            var dest = new LegacyApprenticeshipVacancyDetailMapper().Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert.
             dest.Should().NotBeNull();
             dest.ApplyViaEmployerWebsite.Should().Be(false);
         }
 
-        [TestCase]
+        [Test]
         public void ShouldMapApplyViaEmployerWebsiteWhenSpecified()
         {
             // Arrange.
@@ -172,14 +161,14 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
+            var dest = new LegacyApprenticeshipVacancyDetailMapper().Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert.
             dest.Should().NotBeNull();
             dest.ApplyViaEmployerWebsite.Should().Be(true);
         }
 
-        [TestCase]
+        [Test]
         public void ShouldMapEmployerAnonymousWhenNotSpecified()
         {
             // Arrange.
@@ -194,14 +183,14 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
+            var dest = new LegacyApprenticeshipVacancyDetailMapper().Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert.
             dest.Should().NotBeNull();
             dest.IsEmployerAnonymous.Should().Be(false);
         }
 
-        [TestCase]
+        [Test]
         public void ShouldMapEmployerAnonymousWhenSpecified()
         {
             // Arrange.
@@ -216,14 +205,14 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
+            var dest = new LegacyApprenticeshipVacancyDetailMapper().Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert.
             dest.Should().NotBeNull();
             dest.IsEmployerAnonymous.Should().Be(true);
         }
 
-        [TestCase]
+        [Test]
         public void ShouldMapApprFrameworkSuccessRateWhenNotSpecified()
         {
             // Arrange.
@@ -238,14 +227,14 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
+            var dest = new LegacyApprenticeshipVacancyDetailMapper().Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert.
             dest.Should().NotBeNull();
             dest.ProviderSectorPassRate.Should().Be(null);
         }
 
-        [TestCase]
+        [Test]
         public void ShouldMapApprFrameworkSuccessRateWhenSpecified()
         {
             // Arrange.
@@ -260,14 +249,14 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
+            var dest = new LegacyApprenticeshipVacancyDetailMapper().Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert.
             dest.Should().NotBeNull();
             dest.ProviderSectorPassRate.Should().Be(42);
         }
 
-        [TestCase]
+        [Test]
         public void ShouldMapVacancyAddressWhenNotSpecified()
         {
             // Arrange.
@@ -281,7 +270,7 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
+            var dest = new LegacyApprenticeshipVacancyDetailMapper().Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert.
             dest.Should().NotBeNull();
@@ -301,7 +290,7 @@
         }
 
 
-        [TestCase]
+        [Test]
         public void ShouldMapVacancyAddressWhenSpecified()
         {
             // Arrange.
@@ -329,7 +318,7 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
+            var dest = new LegacyApprenticeshipVacancyDetailMapper().Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert.
             dest.Should().NotBeNull();
@@ -348,7 +337,7 @@
             dest.VacancyAddress.GeoPoint.Longitude.Should().Be(2.0);
         }
 
-        [TestCase]
+        [Test]
         public void ShouldMapVacancyLocationTypeStandard()
         {
             // Arrange.
@@ -361,14 +350,14 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
+            var dest = new LegacyApprenticeshipVacancyDetailMapper().Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert.
             dest.Should().NotBeNull();
             dest.VacancyLocationType.Should().Be(ApprenticeshipLocationType.NonNational);
         }
 
-        [TestCase]
+        [Test]
         public void ShouldMapVacancyLocationTypeMultipleLocation()
         {
             // Arrange.
@@ -381,14 +370,14 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
+            var dest = new LegacyApprenticeshipVacancyDetailMapper().Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert.
             dest.Should().NotBeNull();
             dest.VacancyLocationType.Should().Be(ApprenticeshipLocationType.NonNational);
         }
 
-        [TestCase]
+        [Test]
         public void ShouldMapVacancyLocationTypeNational()
         {
             // Arrange.
@@ -401,15 +390,14 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
+            var dest = new LegacyApprenticeshipVacancyDetailMapper().Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert.
             dest.Should().NotBeNull();
             dest.VacancyLocationType.Should().Be(ApprenticeshipLocationType.National);
         }
 
-        [TestCase]
-        [ExpectedException(typeof(AutoMapperMappingException))]
+        [Test]
         public void ShouldThrowIfUnknownVacancyLocationType()
         {
             // Arrange.
@@ -422,12 +410,13 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
+            Action action = () => new LegacyApprenticeshipVacancyDetailMapper().Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert: exception expected.
+            action.ShouldThrow<AutoMapperMappingException>();
         }
 
-        [TestCase]
+        [Test]
         public void ShouldMapWageTypeWeekly()
         {
             // Arrange.
@@ -440,14 +429,14 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
+            var dest = new LegacyApprenticeshipVacancyDetailMapper().Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert.
             dest.Should().NotBeNull();
             dest.WageType.Should().Be(WageType.Weekly);
         }
 
-        [TestCase]
+        [Test]
         public void ShouldMapWageTypeText()
         {
             // Arrange.
@@ -460,15 +449,14 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
+            var dest = new LegacyApprenticeshipVacancyDetailMapper().Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert.
             dest.Should().NotBeNull();
             dest.WageType.Should().Be(WageType.Text);
         }
 
-        [TestCase]
-        [ExpectedException(typeof(AutoMapperMappingException))]
+        [Test]
         public void ShouldThrowIfUnknownWageType()
         {
             // Arrange.
@@ -481,12 +469,13 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
+            Action action = () => new LegacyApprenticeshipVacancyDetailMapper().Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert: exception expected.
+            action.ShouldThrow<AutoMapperMappingException>();
         }
 
-        [TestCase]
+        [Test]
         public void ShouldMapVacancyTypeIntermediateLevelApprenticeship()
         {
             // Arrange.
@@ -499,15 +488,14 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
+            var dest = new LegacyApprenticeshipVacancyDetailMapper().Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert.
             dest.Should().NotBeNull();
             dest.ApprenticeshipLevel.Should().Be(ApprenticeshipLevel.Intermediate);
         }
 
-        [TestCase]
-        [ExpectedException(typeof(AutoMapperMappingException))]
+        [Test]
         public void ShouldThrowIfUnknownVacancyType()
         {
             // Arrange.
@@ -520,12 +508,13 @@
             };
 
             // Act.
-            _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
+            Action action = () =>new LegacyApprenticeshipVacancyDetailMapper().Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert: exception expected.
+            action.ShouldThrow<AutoMapperMappingException>();
         }
 
-        [TestCase]
+        [Test]
         public void ShouldMapVacancyTypeAdvancedLevelApprenticeship()
         {
             // Arrange.
@@ -538,7 +527,7 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
+            var dest = new LegacyApprenticeshipVacancyDetailMapper().Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert.
             dest.Should().NotBeNull();
@@ -564,15 +553,14 @@
             };
 
             // Act.
-            var dest = _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
+            var dest = new LegacyApprenticeshipVacancyDetailMapper().Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert.
             dest.Should().NotBeNull();
             dest.VacancyStatus.Should().Be(vacancyStatus);
         }
 
-        [TestCase]
-        [ExpectedException(typeof(AutoMapperMappingException))]
+        [Test]
         public void ShouldThrowIfUnknownVacancyStatus()
         {
             // Arrange.
@@ -585,9 +573,10 @@
             };
 
             // Act.
-            _mapper.Map<Vacancy, ApprenticeshipVacancyDetail>(src);
+            Action action = () => new LegacyApprenticeshipVacancyDetailMapper().Map<Vacancy, ApprenticeshipVacancyDetail>(src);
 
             // Assert: exception expected.
+            action.ShouldThrow<AutoMapperMappingException>();
         }
    }
 }

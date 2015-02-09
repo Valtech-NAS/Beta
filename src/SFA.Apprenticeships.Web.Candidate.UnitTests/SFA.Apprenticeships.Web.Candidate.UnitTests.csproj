@@ -162,9 +162,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Builders\ApprenticeshipApplicationDetailBuilder.cs" />
     <Compile Include="Builders\ApprenticeshipApplicationViewModelBuilder.cs" />
-    <Compile Include="Builders\ApprenticeshipSummaryBuilder.cs" />
     <Compile Include="Builders\CandidateBuilder.cs" />
     <Compile Include="Builders\VacancyDetailViewModelBuilder.cs" />
     <Compile Include="Extensions\CollectionExtensionsTests.cs" />

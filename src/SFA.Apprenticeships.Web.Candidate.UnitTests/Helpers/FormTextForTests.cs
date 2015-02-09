@@ -21,9 +21,8 @@
         {
             // Arrange
             var helper = CreateHtmlHelper(new TestModel());
-            Expression<Func<TestModel, string>> expression;
 
-            expression = null;
+            Expression<Func<TestModel, string>> expression = null;
 
             // Act
             Action s = () => helper.FormTextFor(expression);
@@ -39,10 +38,7 @@
         public void TestFormTextForThrowsExceptionWhenHelperIsNull()
         {
             // Arrange
-            var helper = CreateHtmlHelper(new TestModel());
-            Expression<Func<TestModel, string>> expression;
-
-            expression = m => m.Value;
+            Expression<Func<TestModel, string>> expression = m => m.Value;
 
             // Act
             Action s = () => HtmlExtensions.FormTextFor(null, expression);
@@ -59,9 +55,7 @@
         {
             // Arrange
             var helper = CreateHtmlHelper(new TestModel());
-            Expression<Func<TestModel, string>> expression;
-
-            expression = m => m.Value;
+            Expression<Func<TestModel, string>> expression = m => m.Value;
 
             // Act
             var s = helper.FormTextFor(expression);
@@ -78,9 +72,7 @@
         {
             // Arrange
             var helper = CreateHtmlHelper(new TestModel());
-            Expression<Func<TestModel, string>> expression;
-
-            expression = m => m.HasAttribute;
+            Expression<Func<TestModel, string>> expression = m => m.HasAttribute;
 
             // Act
             var s = helper.FormTextFor(expression);
