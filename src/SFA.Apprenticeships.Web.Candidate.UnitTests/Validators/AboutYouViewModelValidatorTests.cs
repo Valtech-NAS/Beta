@@ -8,34 +8,28 @@
     [TestFixture]
     public class AboutYouViewModelValidatorTests
     {
-        private AboutYouViewModelServerValidator _viewModelServerValidator;
-        private AboutYouViewModelSaveValidator _viewModelSaveValidator;
-
-        [SetUp]
-        public void Setup()
-        {
-            _viewModelSaveValidator = new AboutYouViewModelSaveValidator();
-            _viewModelServerValidator = new AboutYouViewModelServerValidator();
-        }
-
         [Test]
         public void ShouldNotHaveErrorsOnSaveWhenBlank()
         {
             var viewModel = new AboutYouViewModel();
-            _viewModelSaveValidator.ShouldNotHaveValidationErrorFor(x => x.WhatAreYourStrengths, viewModel);
-            _viewModelSaveValidator.ShouldNotHaveValidationErrorFor(x => x.WhatDoYouFeelYouCouldImprove, viewModel);
-            _viewModelSaveValidator.ShouldNotHaveValidationErrorFor(x => x.WhatAreYourHobbiesInterests, viewModel);
-            _viewModelSaveValidator.ShouldNotHaveValidationErrorFor(x => x.AnythingWeCanDoToSupportYourInterview, viewModel);
+            var viewModelSaveValidator = new AboutYouViewModelSaveValidator();
+
+            viewModelSaveValidator.ShouldNotHaveValidationErrorFor(x => x.WhatAreYourStrengths, viewModel);
+            viewModelSaveValidator.ShouldNotHaveValidationErrorFor(x => x.WhatDoYouFeelYouCouldImprove, viewModel);
+            viewModelSaveValidator.ShouldNotHaveValidationErrorFor(x => x.WhatAreYourHobbiesInterests, viewModel);
+            viewModelSaveValidator.ShouldNotHaveValidationErrorFor(x => x.AnythingWeCanDoToSupportYourInterview, viewModel);
         }
 
         [Test]
         public void ShouldHaveErrorsOnServerWhenBlank()
         {
-            var viewModel = new AboutYouViewModel { RequiresSupportForInterview = true };
-            _viewModelServerValidator.ShouldHaveValidationErrorFor(x => x.WhatAreYourStrengths, viewModel);
-            _viewModelServerValidator.ShouldHaveValidationErrorFor(x => x.WhatDoYouFeelYouCouldImprove, viewModel);
-            _viewModelServerValidator.ShouldHaveValidationErrorFor(x => x.WhatAreYourHobbiesInterests, viewModel);
-            _viewModelServerValidator.ShouldHaveValidationErrorFor(x => x.AnythingWeCanDoToSupportYourInterview, viewModel);
+            var viewModel = new AboutYouViewModel {RequiresSupportForInterview = true};
+            var viewModelServerValidator = new AboutYouViewModelServerValidator();
+
+            viewModelServerValidator.ShouldHaveValidationErrorFor(x => x.WhatAreYourStrengths, viewModel);
+            viewModelServerValidator.ShouldHaveValidationErrorFor(x => x.WhatDoYouFeelYouCouldImprove, viewModel);
+            viewModelServerValidator.ShouldHaveValidationErrorFor(x => x.WhatAreYourHobbiesInterests, viewModel);
+            viewModelServerValidator.ShouldHaveValidationErrorFor(x => x.AnythingWeCanDoToSupportYourInterview, viewModel);
         }
     }
 }

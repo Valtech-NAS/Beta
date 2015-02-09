@@ -8,16 +8,6 @@
     [TestFixture]
     public class RegisterViewModelValidatorTests
     {
-        private RegisterViewModelClientValidator _viewModelClientValidator;
-        private RegisterViewModelServerValidator _viewModelServerValidator;
-
-        [SetUp]
-        public void Setup()
-        {
-            _viewModelClientValidator = new RegisterViewModelClientValidator();
-            _viewModelServerValidator = new RegisterViewModelServerValidator();
-        }
-
         [TestCase("Password1")]
         [TestCase("Password1$%")]
         public void ShouldNotHaveErrorsWhenPasswordComplexitySatisfied(string password)
@@ -27,8 +17,9 @@
                 Password = password,
                 ConfirmPassword = password
             };
+            var viewModelClientValidator = new RegisterViewModelClientValidator();
 
-            _viewModelClientValidator.ShouldNotHaveValidationErrorFor(x => x.Password, viewModel);
+            viewModelClientValidator.ShouldNotHaveValidationErrorFor(x => x.Password, viewModel);
         }
 
         [TestCase("abc")]
@@ -42,8 +33,9 @@
                 Password = password,
                 ConfirmPassword = password
             };
+            var viewModelClientValidator = new RegisterViewModelClientValidator();
 
-            _viewModelClientValidator.ShouldHaveValidationErrorFor(x => x.Password, viewModel);
+            viewModelClientValidator.ShouldHaveValidationErrorFor(x => x.Password, viewModel);
         }
 
         [TestCase("krister.bone_@gmail.com", "?Password01!")]
@@ -60,8 +52,9 @@
                 Password = password,
                 ConfirmPassword = password
             };
+            var viewModelClientValidator = new RegisterViewModelClientValidator();
 
-            _viewModelClientValidator.ShouldNotHaveValidationErrorFor(x => x.EmailAddress, viewModel);
+            viewModelClientValidator.ShouldNotHaveValidationErrorFor(x => x.EmailAddress, viewModel);
         }
 
         [TestCase(".krister.bone@gmail.com", "?Password01!")]
@@ -74,8 +67,9 @@
                 Password = password,
                 ConfirmPassword = password
             };
+            var viewModelClientValidator = new RegisterViewModelClientValidator();
 
-            _viewModelClientValidator.ShouldHaveValidationErrorFor(x => x.EmailAddress, viewModel);
+            viewModelClientValidator.ShouldHaveValidationErrorFor(x => x.EmailAddress, viewModel);
         }
 
         [TestCase("?Password01!", "?Password02!")]
@@ -86,8 +80,9 @@
                 Password = password,
                 ConfirmPassword = confirmPassword
             };
+            var viewModelServerValidator = new RegisterViewModelServerValidator();
 
-            _viewModelServerValidator.ShouldHaveValidationErrorFor(x => x.Password, viewModel);
+            viewModelServerValidator.ShouldHaveValidationErrorFor(x => x.Password, viewModel);
         }
 
         [TestCase("?Password01!")]
@@ -98,8 +93,9 @@
                 Password = password,
                 ConfirmPassword = password
             };
+            var viewModelServerValidator = new RegisterViewModelServerValidator();
 
-            _viewModelServerValidator.ShouldNotHaveValidationErrorFor(x => x.Password, viewModel);
+            viewModelServerValidator.ShouldNotHaveValidationErrorFor(x => x.Password, viewModel);
         }
     }
 }

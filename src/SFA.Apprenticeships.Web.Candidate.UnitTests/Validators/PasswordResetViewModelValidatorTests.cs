@@ -8,23 +8,14 @@
     [TestFixture]
     public class PasswordResetViewModelValidatorTests
     {
-        private PasswordResetViewModelClientValidator _viewModelClientValidator;
-        private PasswordResetViewModelServerValidator _viewModelServerValidator;
-
-        [SetUp]
-        public void Setup()
-        {
-            _viewModelClientValidator = new PasswordResetViewModelClientValidator();
-            _viewModelServerValidator = new PasswordResetViewModelServerValidator();
-        }
-
         [TestCase("Password1")]
         [TestCase("Password1$%")]
         public void ShouldNotHaveErrorsWhenPasswordComplexitySatisfied(string password)
         {
             var viewModel = new PasswordResetViewModel { Password = password, ConfirmPassword = password};
+            var viewModelClientValidator = new PasswordResetViewModelClientValidator();
 
-            _viewModelClientValidator.ShouldNotHaveValidationErrorFor(x => x.Password, viewModel);
+            viewModelClientValidator.ShouldNotHaveValidationErrorFor(x => x.Password, viewModel);
         }
 
         [TestCase("abc")]
@@ -34,7 +25,9 @@
         public void ShouldHaveErrorsWhenPasswordComplexitySatisfied(string password)
         {
             var viewModel = new PasswordResetViewModel { Password = password, ConfirmPassword = password};
-            _viewModelClientValidator.ShouldHaveValidationErrorFor(x => x.Password, viewModel);
+            var viewModelClientValidator = new PasswordResetViewModelClientValidator();
+
+            viewModelClientValidator.ShouldHaveValidationErrorFor(x => x.Password, viewModel);
         }
 
         [TestCase("?Password01!", "?Password02!")]
@@ -45,8 +38,9 @@
                 Password = password,
                 ConfirmPassword = confirmPassword
             };
+            var viewModelServerValidator = new PasswordResetViewModelServerValidator();
 
-            _viewModelServerValidator.ShouldHaveValidationErrorFor(x => x.Password, viewModel);
+            viewModelServerValidator.ShouldHaveValidationErrorFor(x => x.Password, viewModel);
         }
 
         [TestCase("?Password01!")]
@@ -57,8 +51,9 @@
                 Password = password,
                 ConfirmPassword = password
             };
+            var viewModelServerValidator = new PasswordResetViewModelServerValidator();
 
-            _viewModelServerValidator.ShouldNotHaveValidationErrorFor(x => x.Password, viewModel);
+            viewModelServerValidator.ShouldNotHaveValidationErrorFor(x => x.Password, viewModel);
         }
     }
 }
