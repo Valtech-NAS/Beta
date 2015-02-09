@@ -28,7 +28,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 
             if (user != null && user.Status != UserStatuses.PendingActivation)
             {
-                throw new CustomException("Username already in use and is not in pending activation status", ErrorCodes.UserInIncorrectStateError);
+                throw new CustomException("Username already in use and is not in pending activation status", Domain.Entities.ErrorCodes.EntityStateError);
             }
 
             var newUser = new User

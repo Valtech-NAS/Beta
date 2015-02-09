@@ -162,6 +162,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builders\AccountUnlockViewModelBuilder.cs" />
     <Compile Include="Builders\ApprenticeshipApplicationDetailBuilder.cs" />
     <Compile Include="Builders\ApprenticeshipApplicationViewModelBuilder.cs" />
     <Compile Include="Builders\ApprenticeshipSummaryBuilder.cs" />
@@ -232,6 +233,8 @@
     <Compile Include="Providers\ApplicationProvider\SubmitApplicationTests.cs" />
     <Compile Include="Providers\ApplicationProvider\TraineeshipsFeatureViewModel.cs" />
     <Compile Include="Providers\ApplicationProvider\UnarchiveApplicationTests.cs" />
+    <Compile Include="Providers\CandidateServiceProvider\CandidateServiceProviderTestsBase.cs" />
+    <Compile Include="Providers\CandidateServiceProvider\VerifyAccountUnlockCodeTests.cs" />
     <Compile Include="Providers\SearchProviderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\Traineeships\TraineeshipApplicationProviderTest.cs" />

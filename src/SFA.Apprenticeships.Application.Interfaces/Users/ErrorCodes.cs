@@ -2,7 +2,6 @@
 {
     public static class ErrorCodes
     {
-        public const string UserInIncorrectStateError = "User.UserInIncorrectStateError";
         public const string UserPasswordResetCodeExpiredError = "User.UserPasswordResetCodeExpiredError";
         public const string UserAccountLockedError = "User.UserAccountLockedError";
         public const string UserActivationCodeError = "User.UserActivationCodeError";

@@ -144,7 +144,7 @@
             {
                 var message = string.Format("Candidate registration failed for {0}.", model.EmailAddress);
 
-                if (e.Code == Application.Interfaces.Users.ErrorCodes.UserInIncorrectStateError)
+                if (e.Code == Domain.Entities.ErrorCodes.EntityStateError)
                 {
                     _logger.Info(message, e);
                 }
@@ -266,7 +266,7 @@
             {
                 switch (e.Code)
                 {
-                    case Application.Interfaces.Users.ErrorCodes.UserInIncorrectStateError:
+                    case Domain.Entities.ErrorCodes.EntityStateError:
                     case Application.Interfaces.Users.ErrorCodes.UnknownUserError:
                         _logger.Info(e.Message, e);
                         break;
@@ -299,7 +299,7 @@
             {
                 switch (e.Code)
                 {
-                    case Application.Interfaces.Users.ErrorCodes.UserInIncorrectStateError:
+                    case Domain.Entities.ErrorCodes.EntityStateError:
                     case Application.Interfaces.Users.ErrorCodes.UnknownUserError:
                         _logger.Info(e.Message, e);
                         break;
@@ -338,7 +338,7 @@
                 switch (e.Code)
                 {
                     case UserErrorCodes.UnknownUserError:
-                    case Application.Interfaces.Users.ErrorCodes.UserInIncorrectStateError:
+                    case Domain.Entities.ErrorCodes.EntityStateError:
                     case Application.Interfaces.Users.ErrorCodes.UserPasswordResetCodeExpiredError:
                     case Application.Interfaces.Users.ErrorCodes.UserPasswordResetCodeIsInvalid:
                         passwordResetViewModel.IsPasswordResetCodeValid = false;
@@ -377,7 +377,7 @@
             {
                 switch (e.Code)
                 {
-                    case Application.Interfaces.Users.ErrorCodes.UserInIncorrectStateError:
+                    case Domain.Entities.ErrorCodes.EntityStateError:
                         _logger.Info(e.Message, e);
                         return new AccountUnlockViewModel {Status = AccountUnlockState.UserInIncorrectState};
                     case Application.Interfaces.Users.ErrorCodes.AccountUnlockCodeExpired:
