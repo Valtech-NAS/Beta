@@ -47,7 +47,7 @@
                 var message = string.Format("Unknown candidate with Id={0}", id);
                 _logger.Debug(message);
 
-                throw new CustomException(message, CandidateErrorCodes.UnknownCandidateError);
+                throw new CustomException(message, CandidateErrorCodes.CandidateNotFoundError);
             }
 
             LogOutcome(id, mongoEntity);
@@ -66,7 +66,7 @@
                 var message = string.Format("Unknown candidate with EmailAddress={0}", username);
                 _logger.Debug(message, username);
 
-                throw new CustomException(message, CandidateErrorCodes.UnknownCandidateError); 
+                throw new CustomException(message, CandidateErrorCodes.CandidateNotFoundError); 
             }
 
             LogOutcome(username, mongoEntity);

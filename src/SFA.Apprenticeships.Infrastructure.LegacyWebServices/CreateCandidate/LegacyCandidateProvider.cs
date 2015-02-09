@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.CreateCandidate
 {
+    using System;
     using System.Linq;
     using Application.Candidate;
     using Application.Interfaces.Logging;
@@ -7,10 +8,9 @@
     using GatewayServiceProxy;
     using Newtonsoft.Json;
     using Wcf;
-    using Candidate = Domain.Entities.Candidates.Candidate;
-    using CreateCandidateRequest = GatewayServiceProxy.CreateCandidateRequest;
-    using CandidateErrorCodes = Application.Interfaces.Candidates.ErrorCodes;
 
+    using CandidateErrorCodes = Application.Interfaces.Candidates.ErrorCodes;
+    
     public class LegacyCandidateProvider : ILegacyCandidateProvider
     {
         private readonly ILogService _logger;
@@ -22,11 +22,33 @@
             _logger = logger;
         }
 
-        public int CreateCandidate(Candidate candidate)
+        public int CreateCandidate(Domain.Entities.Candidates.Candidate candidate)
         {
-            var request = new CreateCandidateRequest
+            try
             {
-                Candidate = new GatewayServiceProxy.Candidate
+                _logger.Debug("Calling Legacy.CreateCandidate for candidate id='{0}'", candidate.EntityId);
+
+                var legacyCandidateId = InternalCreateCandidate(candidate);
+
+                _logger.Debug(
+                    "Legacy.CreateCandidate succeeded for candidate id='{0}', legacy candidate id='{1}'",
+                    candidate.EntityId, legacyCandidateId);
+
+                return legacyCandidateId;
+            }
+            catch (Exception e)
+            {
+                _logger.Error("Legacy.CreateCandidate failed for candidate '{0}'",
+                    e, candidate.EntityId);
+                throw;
+            }
+        }
+
+        private int InternalCreateCandidate(Domain.Entities.Candidates.Candidate candidate)
+        {
+            var request = new GatewayServiceProxy.CreateCandidateRequest
+            {
+                Candidate = new Candidate
                 {
                     EmailAddress = candidate.RegistrationDetails.EmailAddress,
                     FirstName = candidate.RegistrationDetails.FirstName,
@@ -46,34 +68,26 @@
 
             var response = default(CreateCandidateResponse);
 
-            _logger.Debug("Calling Legacy.CreateCandidate for candidate '{0}'", candidate.EntityId);
-
             _service.Use("SecureService", client => response = client.CreateCandidate(request));
 
             if (response == null || (response.ValidationErrors != null && response.ValidationErrors.Any()))
             {
-                if (response != null)
-                {
-                    var responseAsJson = JsonConvert.SerializeObject(response, Formatting.None);
+                string message;
 
-                    _logger.Error("Legacy.CreateCandidate reported {0} validation error(s): {1} for NAS candidate id: {2}", 
-                        response.ValidationErrors.Count(), 
-                        responseAsJson,
-                        candidate.EntityId);
+                if (response == null)
+                {
+                    message = "No response";
                 }
                 else
                 {
-                    _logger.Error("Legacy.CreateCandidate did not respond");
+                    message = string.Format("{0} validation error(s): {1}",
+                        response.ValidationErrors.Count(), JsonConvert.SerializeObject(response, Formatting.None));
                 }
 
-                throw new CustomException("Failed to create candidate in Legacy.CreateCandidate", CandidateErrorCodes.CandidateCreationError);
+                throw new CustomException(message, CandidateErrorCodes.CandidateCreationFailed);
             }
 
-            var legacyCandidateId = response.CandidateId;
-
-            _logger.Debug("Candidate created in Legacy.CreateCandidate (candidate '{0}'/'{1}')", candidate.EntityId, legacyCandidateId);
-
-            return legacyCandidateId;
+            return response.CandidateId;
         }
     }
 }
