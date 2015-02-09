@@ -19,6 +19,8 @@
     {
         private const string ExpiryVacanciesCountTag = "-Expiry.Vacancies.Count-";
         private const string ExpiryVacanciesInfoTag = "-Expiry.Vacancies.Info-";
+        private const string Pipe = "|";
+        private const char Tilda = '~';
 
         [Test]
         public void GivenSingleExpiringDraft()
@@ -83,6 +85,44 @@
             sendGridMessageSubstitutions.Count(s => s.ReplacementTag == ExpiryVacanciesInfoTag).Should().Be(1);
             var infoSubstitution = sendGridMessageSubstitutions.Single(s => s.ReplacementTag == ExpiryVacanciesInfoTag);
             infoSubstitution.SubstitutionValues.Single().Should().Be(GetExpectedInfoSubstitution(expiringDrafts));
+        }
+
+        public void GivenMultipleExpiringDrafts_ThenOrderedByClosingDate()
+        {
+            var drafts = GetExpiringDrafts(3);
+            //todo:modify dates
+            drafts[0].ClosingDate = new DateTime(2015, 02, 1);
+            drafts[1].ClosingDate = new DateTime(2015, 01, 1);
+            drafts[2].ClosingDate = new DateTime(2015, 04, 1);
+            var emailRequest = GetEmailRequest(drafts);
+
+            //Assert the asc ordering by ClosingDate of apprenticeships about to expire
+            if (emailRequest.Tokens.Count() > 1)
+            {
+                var orderedList = ConvertToExpiringApprenticeshipApplicationDraftModel(emailRequest);
+
+                Assert.That(orderedList, Is.Ordered.By("ClosingDate"));
+            }
+        }
+
+        private List<ExpiringApprenticeshipApplicationDraft> ConvertToExpiringApprenticeshipApplicationDraftModel(EmailRequest request)
+        {
+            var drafts = request.Tokens.First(t => t.Key == CommunicationTokens.ExpiringDrafts).Value;
+
+            List<ExpiringApprenticeshipApplicationDraft> list = new List<ExpiringApprenticeshipApplicationDraft>();
+            foreach (var draft in drafts.Split(Tilda))
+            {
+                string closingDate;
+                ExtractVacancyDataFrom(draft, out closingDate);
+                list.Add(new ExpiringApprenticeshipApplicationDraft { ClosingDate = Convert.ToDateTime(closingDate) });
+            }
+
+            return list;
+        }
+
+        private void ExtractVacancyDataFrom(string line, out string closingDate)
+        {
+            closingDate = line.Split(new[] { Pipe }, StringSplitOptions.RemoveEmptyEntries)[2];
         }
 
         private static Mock<ISendGrid> GetSendGridMessage(out List<SendGridMessageSubstitution> sendGridMessageSubstitutions)
