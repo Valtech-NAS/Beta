@@ -319,7 +319,9 @@
 
         public PasswordResetViewModel VerifyPasswordReset(PasswordResetViewModel passwordResetViewModel)
         {
-            _logger.Debug("Calling CandidateServiceProvider to verify password reset for user {0}", passwordResetViewModel.EmailAddress);
+            _logger.Debug("Calling CandidateServiceProvider to verify password reset for user {0}", 
+                passwordResetViewModel.EmailAddress);
+
             passwordResetViewModel.IsPasswordResetCodeValid = false;
 
             try
@@ -476,9 +478,7 @@
 
         private void SetUserCookies(Candidate candidate, params string[] roles)
         {
-            _authenticationTicketService.SetAuthenticationCookie(_httpContext.Response.Cookies,
-                candidate.EntityId.ToString(),
-                roles);
+            _authenticationTicketService.SetAuthenticationCookie(_httpContext.Response.Cookies, candidate.EntityId.ToString(), roles);
         }
 
 
