@@ -108,24 +108,24 @@
             if (response == null || (response.ValidationErrors != null && response.ValidationErrors.Any()))
             {
                 string message;
-                string faultCode;
+                string errorCode;
 
                 if (response == null)
                 {
                     message = "No response";
-                    faultCode = ApplicationErrorCodes.ApplicationCreationFailed;
+                    errorCode = ApplicationErrorCodes.ApplicationCreationFailed;
                 }
                 else if (IsDuplicateError(response))
                 {
                     message = string.Format("Duplicate application");
-                    faultCode = ApplicationErrorCodes.ApplicationDuplicatedError;
+                    errorCode = ApplicationErrorCodes.ApplicationDuplicatedError;
                 }
                 else
                 {
-                    ParseValidationError(response, out message, out faultCode);
+                    ParseValidationError(response, out message, out errorCode);
                 }
 
-                throw new CustomException(message, faultCode);
+                throw new CustomException(message, errorCode);
             }
 
             return response.ApplicationId;
@@ -137,7 +137,7 @@
             return response.ValidationErrors.Any(e => e.ErrorCode == ValidationErrorCodes.DuplicateApplication);
         }
 
-        private static void ParseValidationError(CreateApplicationResponse response, out string message, out string faultCode)
+        private static void ParseValidationError(CreateApplicationResponse response, out string message, out string errorCode)
         {
             var map = new Dictionary<string, string>
             {
@@ -154,7 +154,7 @@
                 if (validationError != null)
                 {
                     message = string.Format("{0} (ErrorCode='{1}')", validationError.Message, pair.Key);
-                    faultCode = pair.Value;
+                    errorCode = pair.Value;
                     return;
                 }
             }
@@ -163,7 +163,7 @@
             message = string.Format("{0} unexpected validation error(s): {1}",
                 response.ValidationErrors.Count(), JsonConvert.SerializeObject(response, Formatting.None));
 
-            faultCode = ApplicationErrorCodes.ApplicationCreationFailed;
+            errorCode = ApplicationErrorCodes.ApplicationCreationFailed;
         }
 
         private static CreateApplicationRequest MapApplicationToLegacyRequest(
