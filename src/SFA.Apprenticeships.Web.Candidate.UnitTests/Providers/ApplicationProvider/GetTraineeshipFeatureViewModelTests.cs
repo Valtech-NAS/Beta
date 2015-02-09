@@ -1,41 +1,44 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers.ApplicationProvider
 {
     using System;
+    using Application.Interfaces.Candidates;
     using Builders;
     using Domain.Entities.Applications;
     using FluentAssertions;
+    using Moq;
     using NUnit.Framework;
 
     [TestFixture]
-    public class GetTraineeshipFeatureViewModelTests : ApprenticeshipApplicationProviderTestsBase
+    public class GetTraineeshipFeatureViewModelTests// : ApprenticeshipApplicationProviderTestsBase
     {
-        private Guid _candidateId;
-
-        [SetUp]
-        public override void SetUp()
-        {
-            base.SetUp();
-
-            _candidateId = Guid.NewGuid();
-        }
-
         [Test]
         public void GivenException_ThenExceptionIsRethrown()
         {
-            CandidateService.Setup(cs => cs.GetApprenticeshipApplications(_candidateId)).Throws<Exception>();
+            var candidateId = Guid.NewGuid();
+            var candidateService = new Mock<ICandidateService>();
 
-            Action action = () => ApprenticeshipApplicationProvider.GetTraineeshipFeatureViewModel(_candidateId);;
+            candidateService.Setup(cs => cs.GetApprenticeshipApplications(candidateId)).Throws<Exception>();
+
+            Action action = () => new ApprenticeshipApplicationProviderBuilder()
+                .With(candidateService).Build()
+                .GetTraineeshipFeatureViewModel(candidateId);;
+
             action.ShouldThrow<Exception>();
         }
 
         [Test]
         public void GivenSuccess_ThenViewModelIsReturned()
         {
-            CandidateService.Setup(cs => cs.GetApprenticeshipApplications(_candidateId)).Returns(new ApprenticeshipApplicationSummary[0]);
-            CandidateService.Setup(cs => cs.GetTraineeshipApplications(_candidateId)).Returns(new TraineeshipApplicationSummary[0]);
-            CandidateService.Setup(cs => cs.GetCandidate(_candidateId)).Returns(new CandidateBuilder().Build());
+            var candidateId = Guid.NewGuid();
+            var candidateService = new Mock<ICandidateService>();
 
-            var returnedViewModel = ApprenticeshipApplicationProvider.GetTraineeshipFeatureViewModel(_candidateId);
+            candidateService.Setup(cs => cs.GetApprenticeshipApplications(candidateId)).Returns(new ApprenticeshipApplicationSummary[0]);
+            candidateService.Setup(cs => cs.GetTraineeshipApplications(candidateId)).Returns(new TraineeshipApplicationSummary[0]);
+            candidateService.Setup(cs => cs.GetCandidate(candidateId)).Returns(new CandidateBuilder().Build());
+
+            var returnedViewModel = new ApprenticeshipApplicationProviderBuilder()
+                .With(candidateService).Build()
+                .GetTraineeshipFeatureViewModel(candidateId);
             returnedViewModel.Should().NotBeNull();
         }
     }
