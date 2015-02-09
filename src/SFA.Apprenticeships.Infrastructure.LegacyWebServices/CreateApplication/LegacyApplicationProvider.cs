@@ -12,8 +12,7 @@
     using GatewayServiceProxy;
     using Newtonsoft.Json;
     using Wcf;
-    using Candidate = Domain.Entities.Candidates.Candidate;
-    using WorkExperience = GatewayServiceProxy.WorkExperience;
+
     using ApplicationErrorCodes = Application.Interfaces.Applications.ErrorCodes;
     using CandidateErrorCodes = Application.Interfaces.Candidates.ErrorCodes;
     using VacancyErrorCodes = Application.Interfaces.Vacancies.ErrorCodes;
@@ -35,7 +34,8 @@
 
         public LegacyApplicationProvider(
             IWcfService<GatewayServiceContract> service,
-            ICandidateReadRepository candidateReadRepository, ILogService logger)
+            ICandidateReadRepository candidateReadRepository,
+            ILogService logger)
         {
             _service = service;
             _candidateReadRepository = candidateReadRepository;
@@ -44,122 +44,130 @@
 
         public int CreateApplication(ApprenticeshipApplicationDetail apprenticeshipApplicationDetail)
         {
-            var candidate = _candidateReadRepository.Get(apprenticeshipApplicationDetail.CandidateId);
-            var legacyRequest = MapApplicationToLegacyRequest(apprenticeshipApplicationDetail, candidate);
+            var legacyCandidateId = GetLegacyCandidateId(apprenticeshipApplicationDetail.CandidateId);
+            var legacyRequest = MapApplicationToLegacyRequest(apprenticeshipApplicationDetail, legacyCandidateId);
 
-            CreateApplicationResponse response = null;
-
-            _logger.Debug("Calling Legacy.CreateApplication for candidate '{0}' and apprenticeship vacancy '{1}'",
-                apprenticeshipApplicationDetail.CandidateId,
-                apprenticeshipApplicationDetail.Vacancy.Id);
-
-            _service.Use("SecureService", client => response = client.CreateApplication(legacyRequest));
-
-            if (response != null && (response.ValidationErrors == null || !response.ValidationErrors.Any()))
-            {
-                return response.ApplicationId;
-            }
-
-            if (response != null)
-            {
-                CheckDuplicateError(apprenticeshipApplicationDetail, apprenticeshipApplicationDetail.Vacancy.Id, response);
-                CheckValidationErrors(apprenticeshipApplicationDetail, response, ValidationErrorCodes.InvalidCandidateState, CandidateErrorCodes.LegacyCandidateStateError);
-                CheckValidationErrors(apprenticeshipApplicationDetail, response, ValidationErrorCodes.CandidateNotFound, CandidateErrorCodes.LegacyCandidateNotFoundError);
-                CheckValidationErrors(apprenticeshipApplicationDetail, response, ValidationErrorCodes.UnknownCandidate, CandidateErrorCodes.LegacyCandidateNotFoundError);
-                CheckValidationErrors(apprenticeshipApplicationDetail, response, ValidationErrorCodes.InvalidVacancyState, VacancyErrorCodes.LegacyVacancyStateError);
-
-                var responseAsJson = JsonConvert.SerializeObject(response, Formatting.None);
-
-                _logger.Error("Legacy CreateApplication for apprenticeship reported {0} validation error(s): {1}",
-                    response.ValidationErrors.Count(),
-                    responseAsJson);
-            }
-            else
-            {
-                _logger.Error("Legacy.CreateApplication did not respond");
-            }
-
-            throw new CustomException(
-                string.Format("Failed to create apprenticeship application for candidate '{0}' and vacancy '{1}' in Legacy.CreateApplication",
-                    apprenticeshipApplicationDetail.CandidateId, 
-                    apprenticeshipApplicationDetail.Vacancy.Id), 
-                    ApplicationErrorCodes.ApplicationGatewayCreationError);
+            return InternalCreateApplication(apprenticeshipApplicationDetail.CandidateId, legacyRequest);
         }
 
         public int CreateApplication(TraineeshipApplicationDetail traineeshipApplicationDetail)
         {
-            var candidate = _candidateReadRepository.Get(traineeshipApplicationDetail.CandidateId);
-            var legacyRequest = MapApplicationToLegacyRequest(traineeshipApplicationDetail, candidate);
+            var legacyCandidateId = GetLegacyCandidateId(traineeshipApplicationDetail.CandidateId);
+            var legacyRequest = MapApplicationToLegacyRequest(traineeshipApplicationDetail, legacyCandidateId);
 
+            return InternalCreateApplication(traineeshipApplicationDetail.CandidateId, legacyRequest);
+        }
+
+        #region Helpers
+
+        private int InternalCreateApplication(Guid candidateId, CreateApplicationRequest legacyRequest)
+        {
+            try
+            {
+                _logger.Debug(
+                    "Calling Legacy.CreateApplication for candidate id='{0}' and apprenticeship vacancy id='{1}'",
+                    candidateId, legacyRequest.Application.VacancyId);
+
+                var legacyApplicationId = SendLegacyRequest(legacyRequest);
+
+                _logger.Debug(
+                    "Legacy.CreateApplication succeeded for candidate id='{0}', apprenticeship vacancy id='{1}', legacy application id='{2}'",
+                    candidateId, legacyRequest.Application.VacancyId,
+                    legacyApplicationId);
+
+                return legacyApplicationId;
+            }
+            catch (CustomException e)
+            {
+                var message = FormatErrorMessage(candidateId, legacyRequest);
+
+                if (e.Code == ApplicationErrorCodes.ApplicationCreationFailed)
+                {
+                    _logger.Error(message, e);
+                }
+                else
+                {
+                    _logger.Warn(message, e);                    
+                }
+
+                throw;
+            }
+            catch (Exception e)
+            {
+                _logger.Error(FormatErrorMessage(candidateId, legacyRequest), e);
+                throw;
+            }
+        }
+
+        private int SendLegacyRequest(CreateApplicationRequest legacyRequest)
+        {
             CreateApplicationResponse response = null;
-
-            _logger.Debug("Calling Legacy.CreateApplication for candidate '{0}' and traineeship vacancy '{1}'",
-                traineeshipApplicationDetail.CandidateId,
-                traineeshipApplicationDetail.Vacancy.Id);
 
             _service.Use("SecureService", client => response = client.CreateApplication(legacyRequest));
 
-            if (response != null && (response.ValidationErrors == null || !response.ValidationErrors.Any()))
+            if (response == null || (response.ValidationErrors != null && response.ValidationErrors.Any()))
             {
-                return response.ApplicationId;
+                string message;
+                string errorCode;
+
+                if (response == null)
+                {
+                    message = "No response";
+                    errorCode = ApplicationErrorCodes.ApplicationCreationFailed;
+                }
+                else if (IsDuplicateError(response))
+                {
+                    message = string.Format("Duplicate application");
+                    errorCode = ApplicationErrorCodes.ApplicationDuplicatedError;
+                }
+                else
+                {
+                    ParseValidationError(response, out message, out errorCode);
+                }
+
+                throw new CustomException(message, errorCode);
             }
 
-            if (response != null)
-            {
-                CheckDuplicateError(traineeshipApplicationDetail, traineeshipApplicationDetail.Vacancy.Id, response);
-                CheckValidationErrors(traineeshipApplicationDetail, response, ValidationErrorCodes.InvalidCandidateState, CandidateErrorCodes.LegacyCandidateStateError);
-                CheckValidationErrors(traineeshipApplicationDetail, response, ValidationErrorCodes.CandidateNotFound, CandidateErrorCodes.LegacyCandidateNotFoundError);
-                CheckValidationErrors(traineeshipApplicationDetail, response, ValidationErrorCodes.UnknownCandidate, CandidateErrorCodes.LegacyCandidateNotFoundError);
-                CheckValidationErrors(traineeshipApplicationDetail, response, ValidationErrorCodes.InvalidVacancyState, VacancyErrorCodes.LegacyVacancyStateError);
-
-                var responseAsJson = JsonConvert.SerializeObject(response, Formatting.None);
-
-                _logger.Error("Legacy CreateApplication for traineeship reported {0} validation error(s): {1}",
-                    response.ValidationErrors.Count(),
-                    responseAsJson);
-            }
-            else
-            {
-                _logger.Error("Legacy.CreateApplication did not respond");
-            }
-
-            throw new CustomException(
-                string.Format("Failed to create traineeship application for candidate '{0}' and vacancy '{1}' in Legacy.CreateApplication",
-                    traineeshipApplicationDetail.CandidateId,
-                    traineeshipApplicationDetail.Vacancy.Id),
-                    ApplicationErrorCodes.ApplicationGatewayCreationError);
+            return response.ApplicationId;
         }
 
-        private void CheckDuplicateError(ApplicationDetail applicationDetail, int vacancyId, CreateApplicationResponse response)
-        {
-            if (response.ValidationErrors.Any(e => e.ErrorCode == ValidationErrorCodes.DuplicateApplication))
-            {
-                var warnMessage = string.Format("Duplicate application for candidate '{0}' and vacancy '{1}'",
-                    applicationDetail.CandidateId, vacancyId);
 
-                throw new CustomException(warnMessage, Apprenticeships.Application.Interfaces.Applications.ErrorCodes.ApplicationDuplicatedError);
-            }
+        private static bool IsDuplicateError(CreateApplicationResponse response)
+        {
+            return response.ValidationErrors.Any(e => e.ErrorCode == ValidationErrorCodes.DuplicateApplication);
         }
 
-        private void CheckValidationErrors(ApplicationDetail apprenticeshipApplicationDetail, CreateApplicationResponse response, string validationErrorCode, string errorCode)
+        private static void ParseValidationError(CreateApplicationResponse response, out string message, out string errorCode)
         {
-            if (response.ValidationErrors.Any(e => e.ErrorCode == validationErrorCode))
+            var map = new Dictionary<string, string>
             {
-                var validationError = response.ValidationErrors
-                    .First(e => e.ErrorCode == validationErrorCode);
+                { ValidationErrorCodes.InvalidCandidateState, CandidateErrorCodes.CandidateStateError },
+                { ValidationErrorCodes.CandidateNotFound, CandidateErrorCodes.CandidateNotFoundError },
+                { ValidationErrorCodes.UnknownCandidate, CandidateErrorCodes.CandidateNotFoundError },
+                { ValidationErrorCodes.InvalidVacancyState, VacancyErrorCodes.LegacyVacancyStateError }
+            };
 
-                var warnMessage = string.Format("Unable to create application {0} for candidate {1} in legacy system: \"{2}\".",
-                    apprenticeshipApplicationDetail.EntityId, apprenticeshipApplicationDetail.CandidateId, validationError.Message);
+            foreach (var pair in map)
+            {
+                var validationError = response.ValidationErrors.FirstOrDefault(each => each.ErrorCode == pair.Key);
 
-                _logger.Warn(warnMessage);
-
-                throw new CustomException(warnMessage, errorCode);
+                if (validationError != null)
+                {
+                    message = string.Format("{0} (ErrorCode='{1}')", validationError.Message, pair.Key);
+                    errorCode = pair.Value;
+                    return;
+                }
             }
+
+            // Failed to parse expected validation error.
+            message = string.Format("{0} unexpected validation error(s): {1}",
+                response.ValidationErrors.Count(), JsonConvert.SerializeObject(response, Formatting.None));
+
+            errorCode = ApplicationErrorCodes.ApplicationCreationFailed;
         }
 
         private static CreateApplicationRequest MapApplicationToLegacyRequest(
-            ApprenticeshipApplicationDetail apprenticeshipApplicationDetail,
-            Candidate candidate)
+            ApprenticeshipApplicationDetail apprenticeshipApplicationDetail, int legacyCandidateId)
         {
             return new CreateApplicationRequest
             {
@@ -167,7 +175,7 @@
                 {
                     VacancyId = apprenticeshipApplicationDetail.Vacancy.Id,
                     VacancyRef = null, // not required if VacancyId is supplied.
-                    CandidateId = candidate.LegacyCandidateId,
+                    CandidateId = legacyCandidateId,
                     School = MapSchool(apprenticeshipApplicationDetail),
                     EducationResults = MapQualifications(apprenticeshipApplicationDetail.CandidateInformation.Qualifications),
                     WorkExperiences = MapWorkExperience(apprenticeshipApplicationDetail.CandidateInformation.WorkExperience),
@@ -182,8 +190,7 @@
         }
 
         private static CreateApplicationRequest MapApplicationToLegacyRequest(
-            TraineeshipApplicationDetail traineeshipApplicationDetail,
-            Candidate candidate)
+            TraineeshipApplicationDetail traineeshipApplicationDetail, int legacyCandidateId)
         {
             return new CreateApplicationRequest
             {
@@ -191,7 +198,7 @@
                 {
                     VacancyId = traineeshipApplicationDetail.Vacancy.Id,
                     VacancyRef = null, // not required if VacancyId is supplied.
-                    CandidateId = candidate.LegacyCandidateId,
+                    CandidateId = legacyCandidateId,
                     School = MapSchool(),
                     EducationResults = MapQualifications(traineeshipApplicationDetail.CandidateInformation.Qualifications),
                     WorkExperiences = MapWorkExperience(traineeshipApplicationDetail.CandidateInformation.WorkExperience),
@@ -249,12 +256,12 @@
             return isPredicted ? string.Format("{0}-Pred", grade) : grade;
         }
 
-        private static WorkExperience[] MapWorkExperience(
+        private static GatewayServiceProxy.WorkExperience[] MapWorkExperience(
             IEnumerable<Domain.Entities.Candidates.WorkExperience> workExperience)
         {
             const int maxTypeOfWorkLength = 200;
 
-            return workExperience.Select(each => new WorkExperience
+            return workExperience.Select(each => new GatewayServiceProxy.WorkExperience
             {
                 Employer = each.Employer,
                 FromDate = each.FromDate,
@@ -269,5 +276,18 @@
         {
             return new DateTime(year, 1, 1);
         }
+
+        private static string FormatErrorMessage(Guid candidateId, CreateApplicationRequest legacyRequest)
+        {
+            return string.Format("Legacy.CreateCandidate failed for candidate id='{0}' and vacancy id='{1}'",
+                candidateId, legacyRequest.Application.VacancyId);
+        }
+
+        private int GetLegacyCandidateId(Guid candidateId)
+        {
+            return _candidateReadRepository.Get(candidateId, true).LegacyCandidateId;
+        }
+
+        #endregion
     }
 }

@@ -73,7 +73,7 @@
             // Arrange.
             var candidate = CreateCandidate();
             _candidateReadRepositoryMock.ResetCalls();
-            _candidateReadRepositoryMock.Setup(cr => cr.Get(It.IsAny<Guid>())).Returns(candidate);
+            _candidateReadRepositoryMock.Setup(cr => cr.Get(It.IsAny<Guid>(), It.IsAny<bool>())).Returns(candidate);
 
             var applicationDetail = CreateApplicationForCandidate(candidate);
 

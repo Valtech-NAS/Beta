@@ -103,11 +103,11 @@
                     _logger.Warn("Traineeship application has already been submitted to legacy system: Application Id: \"{0}\"", request.ApplicationId);
                     break;
 
-                case CandidatesErrorCodes.LegacyCandidateStateError:
+                case CandidatesErrorCodes.CandidateStateError:
                     _logger.Error("Legacy candidate is in an invalid state. Traineeship application cannot be processed: Application Id: \"{0}\"", request.ApplicationId);
                     break;
 
-                case CandidatesErrorCodes.LegacyCandidateNotFoundError:
+                case CandidatesErrorCodes.CandidateNotFoundError:
                     _logger.Error("Legacy candidate was not found. Traineeship application cannot be processed: Application Id: \"{0}\"", request.ApplicationId);
                     break;
 

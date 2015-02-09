@@ -107,11 +107,11 @@
                     SetApplicationStateSubmitted(apprenticeshipApplication);
                     break;
 
-                case CandidatesErrorCodes.LegacyCandidateStateError:
+                case CandidatesErrorCodes.CandidateStateError:
                     _logger.Error("Legacy candidate is in an invalid state. Apprenticeship application cannot be processed: Application Id: \"{0}\"", request.ApplicationId);
                     break;
 
-                case CandidatesErrorCodes.LegacyCandidateNotFoundError:
+                case CandidatesErrorCodes.CandidateNotFoundError:
                     _logger.Error("Legacy candidate was not found. Apprenticeship application cannot be processed: Application Id: \"{0}\"", request.ApplicationId);
                     break;
 

@@ -44,7 +44,7 @@
         public void ShouldCreateApplicationForAValidApplication()
         {
             _candidateRepositoryMock.ResetCalls();
-            _candidateRepositoryMock.Setup(cr => cr.Get(It.IsAny<Guid>())).Returns(new Candidate
+            _candidateRepositoryMock.Setup(cr => cr.Get(It.IsAny<Guid>(), It.IsAny<bool>())).Returns(new Candidate
             {
                 LegacyCandidateId = CreateLegacyCandidateId()
             });
@@ -61,7 +61,7 @@
         public void ShouldThrowAnErrorIfTheCandidateDoesntExistInNasGateway()
         {
             _candidateRepositoryMock.ResetCalls();
-            _candidateRepositoryMock.Setup(cr => cr.Get(It.IsAny<Guid>())).Returns(new Candidate
+            _candidateRepositoryMock.Setup(cr => cr.Get(It.IsAny<Guid>(), It.IsAny<bool>())).Returns(new Candidate
             {
                 LegacyCandidateId = CandidateId
             });
@@ -78,7 +78,7 @@
         public void ShouldGetAnErrorWhenCreatinganApplication()
         {
             _candidateRepositoryMock.ResetCalls();
-            _candidateRepositoryMock.Setup(cr => cr.Get(It.IsAny<Guid>())).Returns(new Candidate
+            _candidateRepositoryMock.Setup(cr => cr.Get(It.IsAny<Guid>(), It.IsAny<bool>())).Returns(new Candidate
             {
                 LegacyCandidateId = CreateLegacyCandidateId()
             });
@@ -99,7 +99,7 @@
         public void ShouldGetACustomExceptionWhenResubmittingAnApplication()
         {
            _candidateRepositoryMock.ResetCalls();
-            _candidateRepositoryMock.Setup(cr => cr.Get(It.IsAny<Guid>())).Returns(new Candidate
+           _candidateRepositoryMock.Setup(cr => cr.Get(It.IsAny<Guid>(), It.IsAny<bool>())).Returns(new Candidate
             {
                 LegacyCandidateId = CreateLegacyCandidateId()
             });
@@ -142,7 +142,7 @@
 
             var cex = ex as CustomException;
 // ReSharper disable once PossibleNullReferenceException
-            cex.Code.Should().Be(ApplicationErrorCodes.ApplicationGatewayCreationError);
+            cex.Code.Should().Be(ApplicationErrorCodes.ApplicationCreationFailed);
         }
 
         public void CheckForLegacyCandidateNotFoundErrorException(Exception ex)
@@ -151,7 +151,7 @@
 
             var cex = ex as CustomException;
 // ReSharper disable once PossibleNullReferenceException
-            cex.Code.Should().Be(CandidateErrorCodes.LegacyCandidateNotFoundError);
+            cex.Code.Should().Be(CandidateErrorCodes.CandidateNotFoundError);
         }
 
         private int CreateLegacyCandidateId()

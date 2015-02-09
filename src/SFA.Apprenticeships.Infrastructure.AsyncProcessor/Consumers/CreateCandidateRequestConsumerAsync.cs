@@ -73,7 +73,7 @@
                     var legacyCandidateId = _legacyCandidateProvider.CreateCandidate(candidate);
                     candidate.LegacyCandidateId = legacyCandidateId;
                     _candidateWriteRepository.Save(candidate);
-                    _logger.Info("Candidate created in legacy system: Candidate Id: \"{0}\", Legacy Candidate Id: \"{1}\"", request.CandidateId);
+                    _logger.Info("Candidate created in legacy system: Candidate Id: \"{0}\", Legacy Candidate Id: \"{1}\"", request.CandidateId, legacyCandidateId);
                 }
                 else
                 {

@@ -153,6 +153,22 @@
             results.TraineeshipFeature.ShowTraineeshipsLink.Should().BeTrue();
         }
 
+        [Test]
+        public void GivenException_ThenExceptionIsRethrown()
+        {
+            //Arrange
+            _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>()))
+                .Returns(GetUnsuccessfulApplicationSummaries(UnsuccessfulApplications));
+
+            _candidateService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>())).Throws<Exception>();
+
+            //Act
+            Action action = () => { _apprenticeshipApplicationProvider.GetMyApplications(Guid.NewGuid()); };
+
+            //Assert
+            action.ShouldThrow<Exception>();
+        }
+
         private static List<ApprenticeshipApplicationSummary> GetUnsuccessfulApplicationSummaries(int applicationSummariesCount)
         {
             return Enumerable.Range(1, applicationSummariesCount)

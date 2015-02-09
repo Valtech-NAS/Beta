@@ -27,9 +27,23 @@
         {
             ApprenticeshipApplicationProvider.Setup(p => p.GetWhatHappensNextViewModel(_someCandidateId, SomeVacancyId)).Returns(new WhatHappensNextViewModel());
 
-            var response = Mediator.WhatHappensNext(_someCandidateId, SomeVacancyId, VacancyReference, VacancyTitle);
+            var response = Mediator.WhatHappensNext(_someCandidateId, SomeVacancyId.ToString(), VacancyReference, VacancyTitle);
 
             response.AssertCode(ApprenticeshipApplicationMediatorCodes.WhatHappensNext.Ok, true);
+        }
+
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase(" ")]
+        [TestCase(" 491802")]
+        [TestCase("VAC000547307")]
+        [TestCase("[[imgUrl]]")]
+        [TestCase("separator.png")]
+        public void GivenInvalidVacancyIdString_ThenVacancyNotFound(string vacancyId)
+        {
+            var response = Mediator.WhatHappensNext(_someCandidateId, vacancyId, VacancyReference, VacancyTitle);
+
+            response.AssertCode(ApprenticeshipApplicationMediatorCodes.WhatHappensNext.VacancyNotFound, false);
         }
 
         [Test]
@@ -40,7 +54,7 @@
                 Status = ApplicationStatuses.ExpiredOrWithdrawn
             });
 
-            var response = Mediator.WhatHappensNext(_someCandidateId, SomeVacancyId, VacancyReference, VacancyTitle);
+            var response = Mediator.WhatHappensNext(_someCandidateId, SomeVacancyId.ToString(), VacancyReference, VacancyTitle);
 
             response.Code.Should().Be(ApprenticeshipApplicationMediatorCodes.WhatHappensNext.VacancyNotFound);
         }
@@ -50,7 +64,7 @@
         {
             ApprenticeshipApplicationProvider.Setup(p => p.GetWhatHappensNextViewModel(_someCandidateId, SomeVacancyId)).Returns(new WhatHappensNextViewModel(SomeErrorMessage));
 
-            var response = Mediator.WhatHappensNext(_someCandidateId, SomeVacancyId, VacancyReference, VacancyTitle);
+            var response = Mediator.WhatHappensNext(_someCandidateId, SomeVacancyId.ToString(), VacancyReference, VacancyTitle);
             response.AssertCode(ApprenticeshipApplicationMediatorCodes.WhatHappensNext.Ok, true);
             response.ViewModel.VacancyTitle = VacancyTitle;
             response.ViewModel.VacancyReference = VacancyReference;

@@ -92,8 +92,15 @@
             return GetMediatorResponse(TraineeshipApplicationMediatorCodes.AddEmptyWorkExperienceRows.Ok, viewModel);
         }
 
-        public MediatorResponse<WhatHappensNextViewModel> WhatHappensNext(Guid candidateId, int vacancyId, string vacancyReference, string vacancyTitle)
+        public MediatorResponse<WhatHappensNextViewModel> WhatHappensNext(Guid candidateId, string vacancyIdString, string vacancyReference, string vacancyTitle)
         {
+            int vacancyId;
+
+            if (!TryParseVacancyId(vacancyIdString, out vacancyId))
+            {
+                return GetMediatorResponse<WhatHappensNextViewModel>(TraineeshipApplicationMediatorCodes.WhatHappensNext.VacancyNotFound);
+            }
+
             var model = _traineeshipApplicationProvider.GetWhatHappensNextViewModel(candidateId, vacancyId);
 
             // TODO: change to something specific to traineeships?

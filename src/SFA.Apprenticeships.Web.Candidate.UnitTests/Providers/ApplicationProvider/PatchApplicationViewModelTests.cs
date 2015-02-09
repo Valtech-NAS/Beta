@@ -2,6 +2,8 @@
 {
     using System;
     using Builders;
+    using Candidate.ViewModels.Applications;
+    using Candidate.ViewModels.Candidate;
     using FluentAssertions;
     using NUnit.Framework;
 
@@ -12,6 +14,31 @@
         public void GivenNullViewModels_ThenExceptionIsThrown()
         {
             Action patchApplicationViewModelAction = () => ApprenticeshipApplicationProvider.PatchApplicationViewModel(Guid.NewGuid(), null, null);
+            patchApplicationViewModelAction.ShouldThrow<Exception>();
+        }
+
+        [Test]
+        public void GivenNullCandidateViewModel_ThenExceptionIsThrown()
+        {
+            var viewModel = new ApprenticeshipApplicationViewModel
+            {
+                Candidate = null
+            };
+            Action patchApplicationViewModelAction = () => ApprenticeshipApplicationProvider.PatchApplicationViewModel(Guid.NewGuid(), null, viewModel);
+            patchApplicationViewModelAction.ShouldThrow<Exception>();
+        }
+
+        [Test]
+        public void GivenNullAboutYouViewModel_ThenExceptionIsThrown()
+        {
+            var viewModel = new ApprenticeshipApplicationViewModel
+            {
+                Candidate = new ApprenticeshipCandidateViewModel
+                {
+                    AboutYou = null
+                }
+            };
+            Action patchApplicationViewModelAction = () => ApprenticeshipApplicationProvider.PatchApplicationViewModel(Guid.NewGuid(), null, viewModel);
             patchApplicationViewModelAction.ShouldThrow<Exception>();
         }
 

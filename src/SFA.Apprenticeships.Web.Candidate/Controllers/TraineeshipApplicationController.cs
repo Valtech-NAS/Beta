@@ -112,7 +112,7 @@
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [ApplyWebTrends]
-        public async Task<ActionResult> WhatHappensNext(int id, string vacancyReference, string vacancyTitle)
+        public async Task<ActionResult> WhatHappensNext(string id, string vacancyReference, string vacancyTitle)
         {
             return await Task.Run<ActionResult>(() =>
             {

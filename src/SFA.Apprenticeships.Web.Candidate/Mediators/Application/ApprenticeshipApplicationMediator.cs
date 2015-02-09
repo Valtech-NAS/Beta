@@ -253,8 +253,15 @@
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.Preview.Ok, model);
         }
 
-        public MediatorResponse<WhatHappensNextViewModel> WhatHappensNext(Guid candidateId, int vacancyId, string vacancyReference, string vacancyTitle)
+        public MediatorResponse<WhatHappensNextViewModel> WhatHappensNext(Guid candidateId, string vacancyIdString, string vacancyReference, string vacancyTitle)
         {
+            int vacancyId;
+
+            if (!TryParseVacancyId(vacancyIdString, out vacancyId))
+            {
+                return GetMediatorResponse<WhatHappensNextViewModel>(ApprenticeshipApplicationMediatorCodes.WhatHappensNext.VacancyNotFound);
+            }
+
             var model = _apprenticeshipApplicationProvider.GetWhatHappensNextViewModel(candidateId, vacancyId);
 
             if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn)

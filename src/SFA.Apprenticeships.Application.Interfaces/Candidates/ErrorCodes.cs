@@ -2,9 +2,8 @@
 {
     public static class ErrorCodes
     {
-        public const string UnknownCandidateError = "Candidate.UnknownCandidateError";
-        public const string CandidateCreationError = "Candidate.CandidateCreationError";
-        public const string LegacyCandidateStateError = "Candidate.LegacyCandidateStateError";
-        public const string LegacyCandidateNotFoundError = "Candidate.LegacyCandidateNotFoundError";
+        public const string CandidateCreationFailed = "Candidate.CandidateCreationFailed";
+        public const string CandidateStateError = "Candidate.CandidateStateError";
+        public const string CandidateNotFoundError = "Candidate.CandidateNotFoundError";
     }
 }
