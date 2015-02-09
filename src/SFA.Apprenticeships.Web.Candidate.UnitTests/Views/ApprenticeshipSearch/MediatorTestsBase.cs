@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Web.Routing;
     using Application.Interfaces.ReferenceData;
-    using Candidate.Mediators;
+    using Candidate.Mediators.Search;
     using Candidate.Providers;
     using Candidate.Validators;
     using Common.Providers;

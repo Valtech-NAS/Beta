@@ -59,17 +59,17 @@
 
                 if (!validationResult.IsValid)
                 {
-                    return GetMediatorResponse(Codes.RegisterMediatorCodes.Register.ValidationFailed, registerViewModel, validationResult);
+                    return GetMediatorResponse(RegisterMediatorCodes.Register.ValidationFailed, registerViewModel, validationResult);
                 }
 
                 var registered = _candidateServiceProvider.Register(registerViewModel);
                 if (registered)
                 {
-                    return GetMediatorResponse(Codes.RegisterMediatorCodes.Register.SuccessfullyRegistered, registerViewModel);
+                    return GetMediatorResponse(RegisterMediatorCodes.Register.SuccessfullyRegistered, registerViewModel);
                 }
             }
 
-            return GetMediatorResponse(Codes.RegisterMediatorCodes.Register.RegistrationFailed, registerViewModel, RegisterPageMessages.RegistrationFailed, UserMessageLevel.Warning);
+            return GetMediatorResponse(RegisterMediatorCodes.Register.RegistrationFailed, registerViewModel, RegisterPageMessages.RegistrationFailed, UserMessageLevel.Warning);
         }
 
         public MediatorResponse<ActivationViewModel> Activate(Guid candidateId, ActivationViewModel activationViewModel)
@@ -78,7 +78,7 @@
 
             if (!activatedResult.IsValid)
             {
-                return GetMediatorResponse(Codes.RegisterMediatorCodes.Activate.FailedValidation, activationViewModel, activatedResult);
+                return GetMediatorResponse(RegisterMediatorCodes.Activate.FailedValidation, activationViewModel, activatedResult);
             }
 
             activationViewModel = _candidateServiceProvider.Activate(activationViewModel, candidateId);
@@ -86,12 +86,12 @@
             switch (activationViewModel.State)
             {
                 case ActivateUserState.Activated:
-                    return GetMediatorResponse(Codes.RegisterMediatorCodes.Activate.SuccessfullyActivated, activationViewModel, ActivationPageMessages.AccountActivated, UserMessageLevel.Success);
+                    return GetMediatorResponse(RegisterMediatorCodes.Activate.SuccessfullyActivated, activationViewModel, ActivationPageMessages.AccountActivated, UserMessageLevel.Success);
                 case ActivateUserState.Error:
-                    return GetMediatorResponse(Codes.RegisterMediatorCodes.Activate.SuccessfullyActivated, activationViewModel, activationViewModel.ViewModelMessage, UserMessageLevel.Success);
+                    return GetMediatorResponse(RegisterMediatorCodes.Activate.SuccessfullyActivated, activationViewModel, activationViewModel.ViewModelMessage, UserMessageLevel.Success);
                 case ActivateUserState.InvalidCode:
                     activatedResult = _activationViewModelServerValidator.Validate(activationViewModel);
-                    return GetMediatorResponse(Codes.RegisterMediatorCodes.Activate.InvalidActivationCode, activationViewModel, activatedResult);
+                    return GetMediatorResponse(RegisterMediatorCodes.Activate.InvalidActivationCode, activationViewModel, activatedResult);
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -103,15 +103,15 @@
 
             if (!validationResult.IsValid)
             {
-                return GetMediatorResponse(Codes.RegisterMediatorCodes.ForgottenPassword.FailedValidation, forgottenPasswordViewModel, validationResult);
+                return GetMediatorResponse(RegisterMediatorCodes.ForgottenPassword.FailedValidation, forgottenPasswordViewModel, validationResult);
             }
 
             if (_candidateServiceProvider.RequestForgottenPasswordResetCode(forgottenPasswordViewModel))
             {
-                return GetMediatorResponse(Codes.RegisterMediatorCodes.ForgottenPassword.PasswordSent, forgottenPasswordViewModel);
+                return GetMediatorResponse(RegisterMediatorCodes.ForgottenPassword.PasswordSent, forgottenPasswordViewModel);
             }
 
-            return GetMediatorResponse(Codes.RegisterMediatorCodes.ForgottenPassword.FailedToSendResetCode, forgottenPasswordViewModel, PasswordResetPageMessages.FailedToSendPasswordResetCode, UserMessageLevel.Warning);
+            return GetMediatorResponse(RegisterMediatorCodes.ForgottenPassword.FailedToSendResetCode, forgottenPasswordViewModel, PasswordResetPageMessages.FailedToSendPasswordResetCode, UserMessageLevel.Warning);
         }
 
         public MediatorResponse<PasswordResetViewModel> ResetPassword(PasswordResetViewModel resetViewModel)
@@ -124,28 +124,28 @@
 
             if (!validationResult.IsValid)
             {
-                return GetMediatorResponse(Codes.RegisterMediatorCodes.ResetPassword.FailedValidation, resetViewModel, validationResult);
+                return GetMediatorResponse(RegisterMediatorCodes.ResetPassword.FailedValidation, resetViewModel, validationResult);
             }
             
             resetViewModel = _candidateServiceProvider.VerifyPasswordReset(resetViewModel);
 
             if (resetViewModel.HasError())
             {
-                return GetMediatorResponse(Codes.RegisterMediatorCodes.ResetPassword.FailedToResetPassword, resetViewModel, resetViewModel.ViewModelMessage, UserMessageLevel.Warning);
+                return GetMediatorResponse(RegisterMediatorCodes.ResetPassword.FailedToResetPassword, resetViewModel, resetViewModel.ViewModelMessage, UserMessageLevel.Warning);
             }
 
             if (resetViewModel.UserStatus == UserStatuses.Locked)
             {
-                return GetMediatorResponse(Codes.RegisterMediatorCodes.ResetPassword.UserAccountLocked, resetViewModel);
+                return GetMediatorResponse(RegisterMediatorCodes.ResetPassword.UserAccountLocked, resetViewModel);
             }
 
             if (!resetViewModel.IsPasswordResetCodeValid)
             {
                 validationResult = _passwordResetViewModelServerValidator.Validate(resetViewModel);
-                return GetMediatorResponse(Codes.RegisterMediatorCodes.ResetPassword.InvalidResetCode, resetViewModel, validationResult);
+                return GetMediatorResponse(RegisterMediatorCodes.ResetPassword.InvalidResetCode, resetViewModel, validationResult);
             }
 
-            return GetMediatorResponse(Codes.RegisterMediatorCodes.ResetPassword.SuccessfullyResetPassword, resetViewModel, PasswordResetPageMessages.SuccessfulPasswordReset, UserMessageLevel.Success);
+            return GetMediatorResponse(RegisterMediatorCodes.ResetPassword.SuccessfullyResetPassword, resetViewModel, PasswordResetPageMessages.SuccessfulPasswordReset, UserMessageLevel.Success);
         }
     }
 }

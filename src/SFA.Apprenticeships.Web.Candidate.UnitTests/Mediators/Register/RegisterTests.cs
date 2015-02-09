@@ -1,13 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Register
 {
     using System.Linq;
+    using Candidate.Mediators.Register;
     using Candidate.ViewModels;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
     using Constants.Pages;
     using Constants.ViewModels;
-    using Candidate.Mediators;
     using Candidate.ViewModels.Register;
     using Common.Constants;
 
@@ -37,7 +37,7 @@
             };
             var response = _registerMediator.Register(registerViewModel);
 
-            response.AssertMessage(Codes.RegisterMediatorCodes.Register.RegistrationFailed,
+            response.AssertMessage(RegisterMediatorCodes.Register.RegistrationFailed,
                 RegisterPageMessages.RegistrationFailed, UserMessageLevel.Warning, true);
         }
 
@@ -62,7 +62,7 @@
 
             var response = _registerMediator.Register(registerViewModel);
 
-            response.AssertMessage(Codes.RegisterMediatorCodes.Register.RegistrationFailed,
+            response.AssertMessage(RegisterMediatorCodes.Register.RegistrationFailed,
                 RegisterPageMessages.RegistrationFailed, UserMessageLevel.Warning, true);
         }
 
@@ -75,7 +75,7 @@
             var registerViewModel = new RegisterViewModel {EmailAddress = ValidEmailAddress};
             var response = _registerMediator.Register(registerViewModel);
 
-            response.Code.Should().Be(Codes.RegisterMediatorCodes.Register.ValidationFailed);
+            response.Code.Should().Be(RegisterMediatorCodes.Register.ValidationFailed);
             response.ViewModel.Should().Be(registerViewModel);
             response.Message.Should().BeNull();
             response.ValidationResult.IsValid.Should().BeFalse();
@@ -94,7 +94,7 @@
             var registerViewModel = new RegisterViewModel { EmailAddress = null };
             var response = _registerMediator.Register(registerViewModel);
 
-            response.AssertValidationResult(Codes.RegisterMediatorCodes.Register.ValidationFailed, true);
+            response.AssertValidationResult(RegisterMediatorCodes.Register.ValidationFailed, true);
         }
 
         [TestCase("email@domain.com", true)]
@@ -147,7 +147,7 @@
             };
             var response = _registerMediator.Register(registerViewModel);
 
-            Assert.AreEqual(isValid, response.Code == Codes.RegisterMediatorCodes.Register.SuccessfullyRegistered);
+            Assert.AreEqual(isValid, response.Code == RegisterMediatorCodes.Register.SuccessfullyRegistered);
         }
 
         [Test]
@@ -170,7 +170,7 @@
             };
             var response = _registerMediator.Register(registerViewModel);
 
-            response.AssertCode(Codes.RegisterMediatorCodes.Register.SuccessfullyRegistered, true);
+            response.AssertCode(RegisterMediatorCodes.Register.SuccessfullyRegistered, true);
         }
     }
 }

@@ -12,6 +12,7 @@
     using Constants.Pages;
     using FluentValidation.Mvc;
     using Mediators;
+    using Mediators.Login;
     using ViewModels.Login;
 
     public class LoginController : CandidateControllerBase
@@ -66,34 +67,34 @@
 
                 switch (response.Code)
                 {
-                    case Codes.Login.Index.ValidationError:
+                    case LoginMediatorCodes.Index.ValidationError:
                         ModelState.Clear();
                         response.ValidationResult.AddToModelState(ModelState, string.Empty);
                         return View(model);
 
-                    case Codes.Login.Index.AccountLocked:
+                    case LoginMediatorCodes.Index.AccountLocked:
                         return RedirectToAction("Unlock");
 
-                    case Codes.Login.Index.ApprenticeshipApply:
+                    case LoginMediatorCodes.Index.ApprenticeshipApply:
                         return RedirectToRoute(CandidateRouteNames.ApprenticeshipApply, new { id = response.Parameters.ToString() });
 
-                    case Codes.Login.Index.ApprenticeshipDetails:
+                    case LoginMediatorCodes.Index.ApprenticeshipDetails:
                         return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new { id = response.Parameters.ToString() });
 
-                    case Codes.Login.Index.ReturnUrl:
+                    case LoginMediatorCodes.Index.ReturnUrl:
                         return Redirect(HttpUtility.UrlDecode(response.Parameters.ToString()));
 
-                    case Codes.Login.Index.Ok:
+                    case LoginMediatorCodes.Index.Ok:
                         return RedirectToRoute(CandidateRouteNames.MyApplications);
 
-                    case Codes.Login.Index.PendingActivation:
+                    case LoginMediatorCodes.Index.PendingActivation:
                         return RedirectToAction("Activation", "Register");
 
-                    case Codes.Login.Index.LoginFailed:
+                    case LoginMediatorCodes.Index.LoginFailed:
                         ModelState.AddModelError(string.Empty, response.Parameters.ToString());
                         return View(model);
 
-                    case Codes.Login.Index.TermsAndConditionsNeedAccepted:
+                    case LoginMediatorCodes.Index.TermsAndConditionsNeedAccepted:
                         if (response.Parameters != null)
                         {
                             var returnUrl = new { ReturnUrl = HttpUtility.UrlDecode(response.Parameters.ToString())};
@@ -133,28 +134,28 @@
 
                 switch (response.Code)
                 {
-                    case Codes.Login.Unlock.ValidationError:
+                    case LoginMediatorCodes.Unlock.ValidationError:
                         ModelState.Clear();
                         response.ValidationResult.AddToModelState(ModelState, string.Empty);
                         return View(model);
 
-                    case Codes.Login.Unlock.UnlockedSuccessfully:
+                    case LoginMediatorCodes.Unlock.UnlockedSuccessfully:
                         UserData.Pop(UserDataItemNames.EmailAddress);
                         SetUserMessage(AccountUnlockPageMessages.AccountUnlockedText);
                         return RedirectToRoute(RouteNames.SignIn);
 
-                    case Codes.Login.Unlock.UserInIncorrectState:
+                    case LoginMediatorCodes.Unlock.UserInIncorrectState:
                         return RedirectToRoute(RouteNames.SignIn);
 
-                    case Codes.Login.Unlock.AccountEmailAddressOrUnlockCodeInvalid:
+                    case LoginMediatorCodes.Unlock.AccountEmailAddressOrUnlockCodeInvalid:
                         SetUserMessage(AccountUnlockPageMessages.WrongEmailAddressOrAccountUnlockCodeErrorText, UserMessageLevel.Error);
                         return View(model);
 
-                    case Codes.Login.Unlock.AccountUnlockCodeExpired:
+                    case LoginMediatorCodes.Unlock.AccountUnlockCodeExpired:
                         SetUserMessage(AccountUnlockPageMessages.AccountUnlockCodeExpired, UserMessageLevel.Warning);
                         return View(model);
 
-                    case Codes.Login.Unlock.AccountUnlockFailed:
+                    case LoginMediatorCodes.Unlock.AccountUnlockFailed:
                         SetUserMessage(AccountUnlockPageMessages.AccountUnlockFailed, UserMessageLevel.Warning);
                         return View(model);
 
@@ -177,13 +178,13 @@
 
                 switch (response.Code)
                 {
-                    case Codes.Login.Resend.ValidationError:
+                    case LoginMediatorCodes.Resend.ValidationError:
                         ModelState.Clear();
                         response.ValidationResult.AddToModelState(ModelState, string.Empty);
                         return View(model);
 
-                    case Codes.Login.Resend.ResendFailed:
-                    case Codes.Login.Resend.ResentSuccessfully:
+                    case LoginMediatorCodes.Resend.ResendFailed:
+                    case LoginMediatorCodes.Resend.ResentSuccessfully:
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return RedirectToAction("Unlock");
 

@@ -9,6 +9,7 @@
     using Constants;
     using FluentValidation.Mvc;
     using Mediators;
+    using Mediators.Application;
     using ViewModels.Applications;
 
     public class ApprenticeshipApplicationController : CandidateControllerBase
@@ -32,10 +33,10 @@
 
                 switch (response.Code)
                 {
-                    case Codes.ApprenticeshipApplication.Resume.HasError:
+                    case ApprenticeshipApplicationMediatorCodes.Resume.HasError:
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return RedirectToRoute(CandidateRouteNames.MyApplications);
-                    case Codes.ApprenticeshipApplication.Resume.Ok:
+                    case ApprenticeshipApplicationMediatorCodes.Resume.Ok:
                         return RedirectToAction("Apply", response.Parameters);
                 }
 
@@ -55,11 +56,11 @@
 
                 switch (response.Code)
                 {
-                    case Codes.ApprenticeshipApplication.Apply.VacancyNotFound:
+                    case ApprenticeshipApplicationMediatorCodes.Apply.VacancyNotFound:
                         return new ApprenticeshipNotFoundResult();
-                    case Codes.ApprenticeshipApplication.Apply.HasError:
+                    case ApprenticeshipApplicationMediatorCodes.Apply.HasError:
                         return RedirectToRoute(CandidateRouteNames.MyApplications);
-                    case Codes.ApprenticeshipApplication.Apply.Ok:
+                    case ApprenticeshipApplicationMediatorCodes.Apply.Ok:
                         return View(response.ViewModel);
                 }
 
@@ -82,19 +83,19 @@
 
                 switch (response.Code)
                 {
-                    case Codes.ApprenticeshipApplication.PreviewAndSubmit.VacancyNotFound:
+                    case ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.VacancyNotFound:
                         return new ApprenticeshipNotFoundResult();
-                    case Codes.ApprenticeshipApplication.PreviewAndSubmit.IncorrectState:
+                    case ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.IncorrectState:
                         return RedirectToRoute(CandidateRouteNames.MyApplications);
-                    case Codes.ApprenticeshipApplication.PreviewAndSubmit.Error:
+                    case ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.Error:
                         ModelState.Clear();
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return View(response.ViewModel);
-                    case Codes.ApprenticeshipApplication.PreviewAndSubmit.ValidationError:
+                    case ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.ValidationError:
                         ModelState.Clear();
                         response.ValidationResult.AddToModelState(ModelState, string.Empty);
                         return View(response.ViewModel);
-                    case Codes.ApprenticeshipApplication.PreviewAndSubmit.Ok:
+                    case ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.Ok:
                         ModelState.Clear();
                         return RedirectToAction("Preview", response.Parameters);
                 }
@@ -118,17 +119,17 @@
 
                 switch (response.Code)
                 {
-                    case Codes.ApprenticeshipApplication.Save.VacancyNotFound:
+                    case ApprenticeshipApplicationMediatorCodes.Save.VacancyNotFound:
                         return new ApprenticeshipNotFoundResult();
-                    case Codes.ApprenticeshipApplication.Save.Error:
+                    case ApprenticeshipApplicationMediatorCodes.Save.Error:
                         ModelState.Clear();
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return View("Apply", response.ViewModel);
-                    case Codes.ApprenticeshipApplication.Save.ValidationError:
+                    case ApprenticeshipApplicationMediatorCodes.Save.ValidationError:
                         ModelState.Clear();
                         response.ValidationResult.AddToModelState(ModelState, string.Empty);
                         return View("Apply", response.ViewModel);
-                    case Codes.ApprenticeshipApplication.Save.Ok:
+                    case ApprenticeshipApplicationMediatorCodes.Save.Ok:
                         ModelState.Clear();
                         return View("Apply", response.ViewModel);
                 }
@@ -150,15 +151,15 @@
 
                 switch (response.Code)
                 {
-                    case Codes.ApprenticeshipApplication.AutoSave.VacancyNotFound:
+                    case ApprenticeshipApplicationMediatorCodes.AutoSave.VacancyNotFound:
                         return new JsonResult { Data = response.ViewModel };
-                    case Codes.ApprenticeshipApplication.AutoSave.HasError:
+                    case ApprenticeshipApplicationMediatorCodes.AutoSave.HasError:
                         ModelState.Clear();
                         return new JsonResult { Data = response.ViewModel };
-                    case Codes.ApprenticeshipApplication.AutoSave.ValidationError:
+                    case ApprenticeshipApplicationMediatorCodes.AutoSave.ValidationError:
                         ModelState.Clear();
                         return new JsonResult { Data = response.ViewModel };
-                    case Codes.ApprenticeshipApplication.AutoSave.Ok:
+                    case ApprenticeshipApplicationMediatorCodes.AutoSave.Ok:
                         ModelState.Clear();
                         return new JsonResult { Data = response.ViewModel };
                 }
@@ -217,11 +218,11 @@
 
                 switch (response.Code)
                 {
-                    case Codes.ApprenticeshipApplication.Preview.VacancyNotFound:
+                    case ApprenticeshipApplicationMediatorCodes.Preview.VacancyNotFound:
                         return new ApprenticeshipNotFoundResult();
-                    case Codes.ApprenticeshipApplication.Preview.HasError:
+                    case ApprenticeshipApplicationMediatorCodes.Preview.HasError:
                         return RedirectToRoute(CandidateRouteNames.MyApplications);
-                    case Codes.ApprenticeshipApplication.Preview.Ok:
+                    case ApprenticeshipApplicationMediatorCodes.Preview.Ok:
                         // ViewBag.VacancyId is used to provide 'Amend Details' backlinks to the Apply view.
                         ViewBag.VacancyId = id;
                         return View(response.ViewModel);
@@ -243,19 +244,19 @@
 
                 switch (response.Code)
                 {
-                    case Codes.ApprenticeshipApplication.PreviewAndSubmit.ValidationError:
+                    case ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.ValidationError:
                         ModelState.Clear();
                         response.ValidationResult.AddToModelState(ModelState, string.Empty);
                         return View("Apply", response.ViewModel);
-                    case Codes.ApprenticeshipApplication.Submit.VacancyNotFound:
+                    case ApprenticeshipApplicationMediatorCodes.Submit.VacancyNotFound:
                         return new ApprenticeshipNotFoundResult();
-                    case Codes.ApprenticeshipApplication.Submit.IncorrectState:
+                    case ApprenticeshipApplicationMediatorCodes.Submit.IncorrectState:
                         return RedirectToRoute(CandidateRouteNames.MyApplications);
-                    case Codes.ApprenticeshipApplication.Submit.Error:
+                    case ApprenticeshipApplicationMediatorCodes.Submit.Error:
                         ModelState.Clear();
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return RedirectToAction("Preview", response.Parameters);
-                    case Codes.ApprenticeshipApplication.Submit.Ok:
+                    case ApprenticeshipApplicationMediatorCodes.Submit.Ok:
                         return RedirectToAction("WhatHappensNext", response.Parameters);
                 }
 
@@ -274,9 +275,9 @@
 
                 switch (response.Code)
                 {
-                    case Codes.ApprenticeshipApplication.WhatHappensNext.VacancyNotFound:
+                    case ApprenticeshipApplicationMediatorCodes.WhatHappensNext.VacancyNotFound:
                         return new ApprenticeshipNotFoundResult();
-                    case Codes.ApprenticeshipApplication.WhatHappensNext.Ok:
+                    case ApprenticeshipApplicationMediatorCodes.WhatHappensNext.Ok:
                         return View(response.ViewModel);
                 }
 

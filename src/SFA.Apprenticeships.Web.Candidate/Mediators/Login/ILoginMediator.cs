@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators
+﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators.Login
 {
     using ViewModels.Login;
 

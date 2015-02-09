@@ -4,8 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Vacancies;
-    using Candidate.Mediators;
-    using Candidate.Mediators.Traineeships;
+    using Candidate.Mediators.Search;
     using Candidate.Providers;
     using Candidate.ViewModels.VacancySearch;
     using Common.Constants;
@@ -42,7 +41,7 @@
             };
 
             var response = mediator.Results(searchViewModel);
-            response.AssertCode(Codes.TraineeshipSearch.Results.Ok, true);
+            response.AssertCode(TraineeshipSearchMediatorCodes.Results.Ok, true);
 
             var viewModel = response.ViewModel;
             viewModel.Vacancies.Should().NotBeNullOrEmpty();
@@ -63,7 +62,7 @@
             };
 
             var response = mediator.Results(searchViewModel);
-            response.AssertCode(Codes.TraineeshipSearch.Results.Ok, true);
+            response.AssertCode(TraineeshipSearchMediatorCodes.Results.Ok, true);
 
             var viewModel = response.ViewModel;
             
@@ -85,7 +84,7 @@
             };
 
             var response = mediator.Results(searchViewModel);
-            response.AssertCode(Codes.TraineeshipSearch.Results.Ok, true);
+            response.AssertCode(TraineeshipSearchMediatorCodes.Results.Ok, true);
 
             var viewModel = response.ViewModel;
             viewModel.SortTypes.Should().NotBeNull();
@@ -109,7 +108,7 @@
 
             var response = mediator.Results(searchViewModel);
 
-            response.AssertCode(Codes.TraineeshipSearch.Results.Ok, true);
+            response.AssertCode(TraineeshipSearchMediatorCodes.Results.Ok, true);
 
             var viewModel = response.ViewModel;
 
@@ -129,7 +128,7 @@
 
             var response = mediator.Results(searchViewModel);
 
-            response.AssertCode(Codes.TraineeshipSearch.Results.Ok, true);
+            response.AssertCode(TraineeshipSearchMediatorCodes.Results.Ok, true);
 
             var viewModel = response.ViewModel;
             viewModel.LocationSearches.Should().NotBeNull();
@@ -148,7 +147,7 @@
 
             var response = mediator.Results(searchViewModel);
 
-            response.AssertCode(Codes.TraineeshipSearch.Results.Ok, true);
+            response.AssertCode(TraineeshipSearchMediatorCodes.Results.Ok, true);
 
             var viewModel = response.ViewModel;
             viewModel.Vacancies.Should().NotBeNull();
@@ -168,7 +167,7 @@
 
             var response = mediator.Results(searchViewModel);
 
-            response.AssertValidationResult(Codes.TraineeshipSearch.Results.ValidationError, true);
+            response.AssertValidationResult(TraineeshipSearchMediatorCodes.Results.ValidationError, true);
         }
 
         [Test]
@@ -183,7 +182,7 @@
 
             var response = mediator.Results(searchViewModel);
 
-            response.AssertCode(Codes.TraineeshipSearch.Results.Ok, true);
+            response.AssertCode(TraineeshipSearchMediatorCodes.Results.Ok, true);
 
             var viewModel = response.ViewModel;
             viewModel.VacancySearch.ShouldBeEquivalentTo(searchViewModel);

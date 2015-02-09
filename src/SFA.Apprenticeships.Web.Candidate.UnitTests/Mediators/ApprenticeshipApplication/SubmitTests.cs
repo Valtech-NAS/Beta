@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipApplication
 {
     using System;
-    using Candidate.Mediators;
+    using Candidate.Mediators.Application;
     using Candidate.ViewModels.Applications;
     using Candidate.ViewModels.Candidate;
     using Candidate.ViewModels.VacancySearch;
@@ -31,7 +31,7 @@
             
             var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId);
 
-            response.AssertCode(Codes.ApprenticeshipApplication.Submit.VacancyNotFound, false);
+            response.AssertCode(ApprenticeshipApplicationMediatorCodes.Submit.VacancyNotFound, false);
         }
 
         [Test]
@@ -48,7 +48,7 @@
             
             var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId);
 
-            response.AssertCode(Codes.ApprenticeshipApplication.Submit.IncorrectState, false);
+            response.AssertCode(ApprenticeshipApplicationMediatorCodes.Submit.IncorrectState, false);
         }
 
         [Test]
@@ -65,7 +65,7 @@
             
             var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId);
 
-            response.AssertMessage(Codes.ApprenticeshipApplication.Submit.Error, ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning, false, true);
+            response.AssertMessage(ApprenticeshipApplicationMediatorCodes.Submit.Error, ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning, false, true);
         }
 
         [Test]
@@ -90,7 +90,7 @@
             
             var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId);
 
-            response.AssertValidationResult(Codes.ApprenticeshipApplication.Submit.ValidationError);
+            response.AssertValidationResult(ApprenticeshipApplicationMediatorCodes.Submit.ValidationError);
         }
 
         [Test]
@@ -108,7 +108,7 @@
             
             var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId);
 
-            response.AssertCode(Codes.ApprenticeshipApplication.Submit.Ok, false, true);
+            response.AssertCode(ApprenticeshipApplicationMediatorCodes.Submit.Ok, false, true);
         }
     }
 }

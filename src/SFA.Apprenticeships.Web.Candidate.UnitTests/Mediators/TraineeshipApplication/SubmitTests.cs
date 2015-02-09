@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.TraineeshipApplication
 {
     using System;
-    using Candidate.Mediators;
+    using Candidate.Mediators.Application;
     using Candidate.ViewModels.Applications;
     using Candidate.ViewModels.Candidate;
     using Candidate.ViewModels.VacancySearch;
@@ -31,7 +31,7 @@
             
             var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId, viewModel);
 
-            response.AssertCode(Codes.TraineeshipApplication.Submit.IncorrectState, false);
+            response.AssertCode(TraineeshipApplicationMediatorCodes.Submit.IncorrectState, false);
         }
 
         [Test]
@@ -49,7 +49,7 @@
             
             var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId, viewModel);
 
-            response.AssertMessage(Codes.TraineeshipApplication.Submit.Error, ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning, true, true);
+            response.AssertMessage(TraineeshipApplicationMediatorCodes.Submit.Error, ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning, true, true);
         }
 
         [Test]
@@ -66,7 +66,7 @@
             
             var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId, viewModel);
 
-            response.AssertCode(Codes.TraineeshipApplication.Submit.Ok, false, true);
+            response.AssertCode(TraineeshipApplicationMediatorCodes.Submit.Ok, false, true);
         }
 
         [Test]
@@ -84,7 +84,7 @@
             
             var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId, viewModel);
 
-            response.AssertCode(Codes.TraineeshipApplication.Submit.Ok, false, true);
+            response.AssertCode(TraineeshipApplicationMediatorCodes.Submit.Ok, false, true);
         }
     }
 }

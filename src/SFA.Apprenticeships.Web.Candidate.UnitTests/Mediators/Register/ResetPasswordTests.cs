@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Register
 {
-    using Candidate.Mediators;
+    using Candidate.Mediators.Register;
     using Candidate.ViewModels.Register;
     using Common.Constants;
     using Constants.Pages;
@@ -42,7 +42,7 @@
 
             var response = _registerMediator.ResetPassword(resetPasswordViewModel);
 
-            response.AssertMessage(Codes.RegisterMediatorCodes.ResetPassword.FailedToResetPassword, ErrorMessage,
+            response.AssertMessage(RegisterMediatorCodes.ResetPassword.FailedToResetPassword, ErrorMessage,
                 UserMessageLevel.Warning, true);
         }
 
@@ -59,7 +59,7 @@
 
             var response = _registerMediator.ResetPassword(resetPasswordViewModel);
 
-            response.AssertValidationResult(Codes.RegisterMediatorCodes.ResetPassword.InvalidResetCode);
+            response.AssertValidationResult(RegisterMediatorCodes.ResetPassword.InvalidResetCode);
         }
 
         [Test]
@@ -75,7 +75,7 @@
 
             var response = _registerMediator.ResetPassword(resetPasswordViewModel);
 
-            response.AssertMessage(Codes.RegisterMediatorCodes.ResetPassword.SuccessfullyResetPassword,
+            response.AssertMessage(RegisterMediatorCodes.ResetPassword.SuccessfullyResetPassword,
                 PasswordResetPageMessages.SuccessfulPasswordReset, UserMessageLevel.Success, true);
         }
 
@@ -92,7 +92,7 @@
 
             var response = _registerMediator.ResetPassword(resetPasswordViewModel);
 
-            response.AssertCode(Codes.RegisterMediatorCodes.ResetPassword.UserAccountLocked, true);
+            response.AssertCode(RegisterMediatorCodes.ResetPassword.UserAccountLocked, true);
         }
 
         [Test]
@@ -105,7 +105,7 @@
 
             var response = _registerMediator.ResetPassword(resetPasswordViewModel);
 
-            response.AssertValidationResult(Codes.RegisterMediatorCodes.ResetPassword.FailedValidation, true);
+            response.AssertValidationResult(RegisterMediatorCodes.ResetPassword.FailedValidation, true);
         }
 
         [Test]
@@ -122,7 +122,7 @@
 
             var response = _registerMediator.ResetPassword(resetPasswordViewModel);
 
-            response.AssertMessage(Codes.RegisterMediatorCodes.ResetPassword.SuccessfullyResetPassword,
+            response.AssertMessage(RegisterMediatorCodes.ResetPassword.SuccessfullyResetPassword,
                 PasswordResetPageMessages.SuccessfulPasswordReset, UserMessageLevel.Success, true);
         }
     }

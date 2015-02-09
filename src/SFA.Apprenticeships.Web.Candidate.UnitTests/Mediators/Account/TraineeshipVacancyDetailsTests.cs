@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
 {
     using System;
-    using Candidate.Mediators;
     using Candidate.Mediators.Account;
     using Candidate.Providers;
     using Candidate.Validators;
@@ -62,7 +61,7 @@
 
             var response = _accountMediator.TraineeshipVacancyDetails(Guid.NewGuid(), 42);
 
-            response.Code.Should().Be(Codes.AccountMediator.VacancyDetails.Available);
+            response.Code.Should().Be(AccountMediatorCodes.VacancyDetails.Available);
             response.Message.Should().BeNull();
         }
 
@@ -80,7 +79,7 @@
 
             var response = _accountMediator.TraineeshipVacancyDetails(Guid.NewGuid(), 42);
 
-            response.Code.Should().Be(Codes.AccountMediator.VacancyDetails.Available);
+            response.Code.Should().Be(AccountMediatorCodes.VacancyDetails.Available);
             response.Message.Should().BeNull();
         }
 
@@ -98,7 +97,7 @@
 
             var response = _accountMediator.TraineeshipVacancyDetails(Guid.NewGuid(), 42);
 
-            response.Code.Should().Be(Codes.AccountMediator.VacancyDetails.Unavailable);
+            response.Code.Should().Be(AccountMediatorCodes.VacancyDetails.Unavailable);
             response.Message.Should().NotBeNull();
             response.Message.Text.Should().Be(MyApplicationsPageMessages.ApprenticeshipNoLongerAvailable);
             response.Message.Level.Should().Be(UserMessageLevel.Warning);
@@ -113,7 +112,7 @@
 
             var response = _accountMediator.TraineeshipVacancyDetails(Guid.NewGuid(), 42);
 
-            response.Code.Should().Be(Codes.AccountMediator.VacancyDetails.Unavailable);
+            response.Code.Should().Be(AccountMediatorCodes.VacancyDetails.Unavailable);
             response.Message.Should().NotBeNull();
             response.Message.Text.Should().Be(MyApplicationsPageMessages.ApprenticeshipNoLongerAvailable);
             response.Message.Level.Should().Be(UserMessageLevel.Warning);
@@ -133,7 +132,7 @@
 
             var response = _accountMediator.TraineeshipVacancyDetails(Guid.NewGuid(), 42);
 
-            response.Code.Should().Be(Codes.AccountMediator.VacancyDetails.Error);
+            response.Code.Should().Be(AccountMediatorCodes.VacancyDetails.Error);
             response.Message.Should().NotBeNull();
             response.Message.Text.Should().Be(vacancyDetailViewModel.ViewModelMessage);
             response.Message.Level.Should().Be(UserMessageLevel.Error);

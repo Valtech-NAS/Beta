@@ -56,13 +56,13 @@
 
                 switch (response.Code)
                 {
-                    case Codes.RegisterMediatorCodes.Register.ValidationFailed:
+                    case RegisterMediatorCodes.Register.ValidationFailed:
                         response.ValidationResult.AddToModelState(ModelState, string.Empty);
                         return View(model);
-                    case Codes.RegisterMediatorCodes.Register.RegistrationFailed:
+                    case RegisterMediatorCodes.Register.RegistrationFailed:
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return View(model);
-                    case Codes.RegisterMediatorCodes.Register.SuccessfullyRegistered:
+                    case RegisterMediatorCodes.Register.SuccessfullyRegistered:
                         UserData.SetUserContext(model.EmailAddress, model.Firstname + " " + model.Lastname, _configurationManager.GetAppSetting<string>(Settings.TermsAndConditionsVersion));
                         return RedirectToAction("Activation");
                     default:
@@ -103,14 +103,14 @@
 
                 switch (response.Code)
                 {
-                    case Codes.RegisterMediatorCodes.Activate.SuccessfullyActivated:
+                    case RegisterMediatorCodes.Activate.SuccessfullyActivated:
                         SetUserMessage(response.Message.Text);
                         return SetAuthenticationCookieAndRedirectToAction(model.EmailAddress);
-                    case Codes.RegisterMediatorCodes.Activate.InvalidActivationCode:
-                    case Codes.RegisterMediatorCodes.Activate.FailedValidation:
+                    case RegisterMediatorCodes.Activate.InvalidActivationCode:
+                    case RegisterMediatorCodes.Activate.FailedValidation:
                         response.ValidationResult.AddToModelState(ModelState, string.Empty);
                         break;
-                    case Codes.RegisterMediatorCodes.Activate.ErrorActivating:
+                    case RegisterMediatorCodes.Activate.ErrorActivating:
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         break;
                     default:
@@ -152,13 +152,13 @@
 
                 switch (response.Code)
                 {
-                    case Codes.RegisterMediatorCodes.ForgottenPassword.FailedValidation:
+                    case RegisterMediatorCodes.ForgottenPassword.FailedValidation:
                         response.ValidationResult.AddToModelState(ModelState, string.Empty);
                         return View(response.ViewModel);
-                    case Codes.RegisterMediatorCodes.ForgottenPassword.FailedToSendResetCode:
+                    case RegisterMediatorCodes.ForgottenPassword.FailedToSendResetCode:
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return View(response.ViewModel);
-                    case Codes.RegisterMediatorCodes.ForgottenPassword.PasswordSent:
+                    case RegisterMediatorCodes.ForgottenPassword.PasswordSent:
                         UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
                         return RedirectToAction("ResetPassword");
                     default:
@@ -201,20 +201,20 @@
 
                 switch (response.Code)
                 {
-                    case Codes.RegisterMediatorCodes.ResetPassword.FailedValidation:
-                    case Codes.RegisterMediatorCodes.ResetPassword.InvalidResetCode:
+                    case RegisterMediatorCodes.ResetPassword.FailedValidation:
+                    case RegisterMediatorCodes.ResetPassword.InvalidResetCode:
                         response.ValidationResult.AddToModelState(ModelState, string.Empty);
                         return View(response.ViewModel);
                     
-                    case Codes.RegisterMediatorCodes.ResetPassword.FailedToResetPassword:
+                    case RegisterMediatorCodes.ResetPassword.FailedToResetPassword:
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return View(model);
 
-                    case Codes.RegisterMediatorCodes.ResetPassword.UserAccountLocked:
+                    case RegisterMediatorCodes.ResetPassword.UserAccountLocked:
                         UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
                         return RedirectToAction("Unlock", "Login");
 
-                    case Codes.RegisterMediatorCodes.ResetPassword.SuccessfullyResetPassword:
+                    case RegisterMediatorCodes.ResetPassword.SuccessfullyResetPassword:
                         SetUserMessage(response.Message.Text);
                         return SetAuthenticationCookieAndRedirectToAction(model.EmailAddress);
 

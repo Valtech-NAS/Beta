@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSearch
 {
     using System;
-    using Candidate.Mediators;
+    using Candidate.Mediators.Search;
     using Candidate.ViewModels.VacancySearch;
     using Common.Constants;
     using Constants;
@@ -21,7 +21,7 @@
         {
             var response = Mediator.Details(Id, null);
 
-            response.AssertCode(Codes.ApprenticeshipSearch.Details.VacancyNotFound, false);
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound, false);
         }
 
         [TestCase(null)]
@@ -34,7 +34,7 @@
         {
             var response = Mediator.Details(vacancyId, null);
 
-            response.AssertCode(Codes.ApprenticeshipSearch.Details.VacancyNotFound, false);
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound, false);
         }
 
         [Test]
@@ -52,7 +52,7 @@
             
             var response = Mediator.Details(Id, null);
 
-            response.AssertMessage(Codes.ApprenticeshipSearch.Details.VacancyHasError, message, UserMessageLevel.Warning, true);
+            response.AssertMessage(ApprenticeshipSearchMediatorCodes.Details.VacancyHasError, message, UserMessageLevel.Warning, true);
         }
 
         [Test]
@@ -68,7 +68,7 @@
 
             var response = Mediator.Details(Id, null);
 
-            response.AssertCode(Codes.ApprenticeshipSearch.Details.VacancyNotFound);
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound);
         }
 
         [Test]
@@ -84,7 +84,7 @@
 
             var response = Mediator.Details(Id, Guid.NewGuid());
 
-            response.AssertCode(Codes.ApprenticeshipSearch.Details.VacancyNotFound);
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound);
         }
 
         [Test]
@@ -101,7 +101,7 @@
 
             var response = Mediator.Details(Id, Guid.NewGuid());
 
-            response.AssertCode(Codes.ApprenticeshipSearch.Details.VacancyNotFound);
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound);
         }
 
         [Test]
@@ -116,7 +116,7 @@
 
             var response = Mediator.Details(Id, null);
 
-            response.AssertCode(Codes.ApprenticeshipSearch.Details.Ok, true);
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.Details.Ok, true);
         }
 
         [Test]
@@ -134,7 +134,7 @@
 
             var response = Mediator.Details(Id, null);
 
-            response.AssertCode(Codes.ApprenticeshipSearch.Details.Ok, true);
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.Details.Ok, true);
         }
     }
 }

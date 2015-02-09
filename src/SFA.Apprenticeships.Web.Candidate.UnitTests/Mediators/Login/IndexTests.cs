@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Login
 {
     using System;
-    using Candidate.Mediators;
+    using Candidate.Mediators.Login;
     using Candidate.ViewModels.Login;
     using Common.Constants;
     using Constants;
@@ -27,7 +27,7 @@
 
             var response = Mediator.Index(viewModel);
 
-            response.AssertValidationResult(Codes.Login.Index.ValidationError);
+            response.AssertValidationResult(LoginMediatorCodes.Index.ValidationError);
         }
 
         [Test]
@@ -43,7 +43,7 @@
 
             var response = Mediator.Index(viewModel);
 
-            response.AssertCode(Codes.Login.Index.AccountLocked);
+            response.AssertCode(LoginMediatorCodes.Index.AccountLocked);
         }
 
         [Test]
@@ -64,7 +64,7 @@
 
             var response = Mediator.Index(viewModel);
 
-            response.AssertCode(Codes.Login.Index.PendingActivation);
+            response.AssertCode(LoginMediatorCodes.Index.PendingActivation);
         }
 
         [Test]
@@ -82,7 +82,7 @@
 
             var response = Mediator.Index(viewModel);
 
-            response.AssertCode(Codes.Login.Index.ReturnUrl, true);
+            response.AssertCode(LoginMediatorCodes.Index.ReturnUrl, true);
             response.Parameters.Should().Be(returnUrl);
         }
 
@@ -101,7 +101,7 @@
 
             var response = Mediator.Index(viewModel);
 
-            response.AssertCode(Codes.Login.Index.ReturnUrl, true);
+            response.AssertCode(LoginMediatorCodes.Index.ReturnUrl, true);
             response.Parameters.Should().Be(returnUrl);
         }
 
@@ -123,7 +123,7 @@
 
             var response = Mediator.Index(viewModel);
 
-            response.AssertCode(Codes.Login.Index.ApprenticeshipApply, true);
+            response.AssertCode(LoginMediatorCodes.Index.ApprenticeshipApply, true);
             response.Parameters.Should().Be(vacancyId);
         }
 
@@ -144,7 +144,7 @@
 
             var response = Mediator.Index(viewModel);
 
-            response.AssertCode(Codes.Login.Index.ApprenticeshipDetails, true);
+            response.AssertCode(LoginMediatorCodes.Index.ApprenticeshipDetails, true);
             response.Parameters.Should().Be(vacancyId);
         }
 
@@ -162,7 +162,7 @@
 
             var response = Mediator.Index(viewModel);
 
-            response.AssertCode(Codes.Login.Index.LoginFailed, true);
+            response.AssertCode(LoginMediatorCodes.Index.LoginFailed, true);
             response.Parameters.Should().Be(viewModelMessage);
         }
 
@@ -179,7 +179,7 @@
 
             var response = Mediator.Index(viewModel);
 
-            response.AssertCode(Codes.Login.Index.Ok);
+            response.AssertCode(LoginMediatorCodes.Index.Ok);
         }
 
         [Test]
@@ -198,7 +198,7 @@
 
             var response = Mediator.Index(viewModel);
 
-            response.AssertCode(Codes.Login.Index.TermsAndConditionsNeedAccepted, true);
+            response.AssertCode(LoginMediatorCodes.Index.TermsAndConditionsNeedAccepted, true);
             response.Parameters.Should().Be(returnUrl);
         }
     }

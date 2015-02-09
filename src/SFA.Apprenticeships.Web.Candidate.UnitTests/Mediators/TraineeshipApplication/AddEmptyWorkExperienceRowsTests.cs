@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.TraineeshipApplication
 {
-    using Candidate.Mediators;
+    using Candidate.Mediators.Application;
     using Candidate.ViewModels.Applications;
     using Candidate.ViewModels.Candidate;
     using Candidate.ViewModels.VacancySearch;
@@ -20,7 +20,7 @@
 
             var response = Mediator.AddEmptyWorkExperienceRows(viewModel);
 
-            response.AssertCode(Codes.TraineeshipApplication.AddEmptyWorkExperienceRows.Ok, true);
+            response.AssertCode(TraineeshipApplicationMediatorCodes.AddEmptyWorkExperienceRows.Ok, true);
         }
     }
 }

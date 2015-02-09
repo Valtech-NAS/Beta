@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators
+﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators.Login
 {
     using Common.Constants;
     using Common.Providers;
@@ -19,7 +19,6 @@
         private readonly LoginViewModelServerValidator _loginViewModelServerValidator;
         private readonly AccountUnlockViewModelServerValidator _accountUnlockViewModelServerValidator;
         private readonly ResendAccountUnlockCodeViewModelServerValidator _resendAccountUnlockCodeViewModelServerValidator;
-
 
         public LoginMediator(IUserDataProvider userDataProvider, 
             ICandidateServiceProvider candidateServiceProvider,
@@ -42,7 +41,7 @@
 
             if (!validationResult.IsValid)
             {
-                return GetMediatorResponse(Codes.Login.Index.ValidationError, validationResult: validationResult);
+                return GetMediatorResponse(LoginMediatorCodes.Index.ValidationError, validationResult: validationResult);
             }
 
             var result = _candidateServiceProvider.Login(viewModel);
@@ -53,7 +52,7 @@
                 {
                     _userDataProvider.Push(UserDataItemNames.UnlockEmailAddress, result.EmailAddress);
 
-                    return GetMediatorResponse(Codes.Login.Index.AccountLocked);
+                    return GetMediatorResponse(LoginMediatorCodes.Index.AccountLocked);
                 }
 
                 if (result.IsAuthenticated)
@@ -62,7 +61,7 @@
 
                     if (result.UserStatus == UserStatuses.PendingActivation)
                     {
-                        return GetMediatorResponse(Codes.Login.Index.PendingActivation);
+                        return GetMediatorResponse(LoginMediatorCodes.Index.PendingActivation);
                     }
 
                     // Redirect to session return URL (if any).
@@ -71,13 +70,13 @@
                     if (result.AcceptedTermsAndConditionsVersion != _configurationManager.GetAppSetting<string>(Settings.TermsAndConditionsVersion))
                     {
                         return !string.IsNullOrEmpty(returnUrl)
-                            ? GetMediatorResponse(Codes.Login.Index.TermsAndConditionsNeedAccepted, parameters: returnUrl)
-                            : GetMediatorResponse(Codes.Login.Index.TermsAndConditionsNeedAccepted);
+                            ? GetMediatorResponse(LoginMediatorCodes.Index.TermsAndConditionsNeedAccepted, parameters: returnUrl)
+                            : GetMediatorResponse(LoginMediatorCodes.Index.TermsAndConditionsNeedAccepted);
                     }
 
                     if (!string.IsNullOrWhiteSpace(returnUrl))
                     {
-                        return GetMediatorResponse(Codes.Login.Index.ReturnUrl, parameters: returnUrl);
+                        return GetMediatorResponse(LoginMediatorCodes.Index.ReturnUrl, parameters: returnUrl);
                     }
 
                     // Redirect to last viewed vacancy (if any).
@@ -91,17 +90,17 @@
 
                         if (applicationStatus.HasValue && applicationStatus.Value == ApplicationStatuses.Draft)
                         {
-                            return GetMediatorResponse(Codes.Login.Index.ApprenticeshipApply, parameters: lastViewedVacancyId);
+                            return GetMediatorResponse(LoginMediatorCodes.Index.ApprenticeshipApply, parameters: lastViewedVacancyId);
                         }
 
-                        return GetMediatorResponse(Codes.Login.Index.ApprenticeshipDetails, parameters: lastViewedVacancyId);
+                        return GetMediatorResponse(LoginMediatorCodes.Index.ApprenticeshipDetails, parameters: lastViewedVacancyId);
                     }
 
-                    return GetMediatorResponse(Codes.Login.Index.Ok);
+                    return GetMediatorResponse(LoginMediatorCodes.Index.Ok);
                 }                
             }
 
-            return GetMediatorResponse(Codes.Login.Index.LoginFailed, parameters: result.ViewModelMessage);
+            return GetMediatorResponse(LoginMediatorCodes.Index.LoginFailed, parameters: result.ViewModelMessage);
         }
 
 
@@ -111,22 +110,22 @@
 
             if (!validationResult.IsValid)
             {
-                return GetMediatorResponse(Codes.Login.Unlock.ValidationError, accountUnlockView, validationResult);
+                return GetMediatorResponse(LoginMediatorCodes.Unlock.ValidationError, accountUnlockView, validationResult);
             }
 
             var accountUnlockViewModel = _candidateServiceProvider.VerifyAccountUnlockCode(accountUnlockView);
             switch (accountUnlockViewModel.Status)
             {
                 case AccountUnlockState.Ok:
-                    return GetMediatorResponse(Codes.Login.Unlock.UnlockedSuccessfully, accountUnlockView);
+                    return GetMediatorResponse(LoginMediatorCodes.Unlock.UnlockedSuccessfully, accountUnlockView);
                 case AccountUnlockState.UserInIncorrectState:
-                    return GetMediatorResponse(Codes.Login.Unlock.UserInIncorrectState, accountUnlockView);
+                    return GetMediatorResponse(LoginMediatorCodes.Unlock.UserInIncorrectState, accountUnlockView);
                 case AccountUnlockState.AccountEmailAddressOrUnlockCodeInvalid:
-                    return GetMediatorResponse(Codes.Login.Unlock.AccountEmailAddressOrUnlockCodeInvalid, accountUnlockView, AccountUnlockPageMessages.WrongEmailAddressOrAccountUnlockCodeErrorText, UserMessageLevel.Error);
+                    return GetMediatorResponse(LoginMediatorCodes.Unlock.AccountEmailAddressOrUnlockCodeInvalid, accountUnlockView, AccountUnlockPageMessages.WrongEmailAddressOrAccountUnlockCodeErrorText, UserMessageLevel.Error);
                 case AccountUnlockState.AccountUnlockCodeExpired:
-                    return GetMediatorResponse(Codes.Login.Unlock.AccountUnlockCodeExpired, accountUnlockView, AccountUnlockPageMessages.AccountUnlockCodeExpired, UserMessageLevel.Warning);
+                    return GetMediatorResponse(LoginMediatorCodes.Unlock.AccountUnlockCodeExpired, accountUnlockView, AccountUnlockPageMessages.AccountUnlockCodeExpired, UserMessageLevel.Warning);
                 default:
-                    return GetMediatorResponse(Codes.Login.Unlock.AccountUnlockFailed, accountUnlockView, AccountUnlockPageMessages.AccountUnlockFailed, UserMessageLevel.Warning);
+                    return GetMediatorResponse(LoginMediatorCodes.Unlock.AccountUnlockFailed, accountUnlockView, AccountUnlockPageMessages.AccountUnlockFailed, UserMessageLevel.Warning);
             }
         }
 
@@ -136,7 +135,7 @@
 
             if (!validationResult.IsValid)
             {
-                return GetMediatorResponse(Codes.Login.Resend.ValidationError, accountUnlockViewModel, validationResult);
+                return GetMediatorResponse(LoginMediatorCodes.Resend.ValidationError, accountUnlockViewModel, validationResult);
             }
 
             accountUnlockViewModel = _candidateServiceProvider.RequestAccountUnlockCode(accountUnlockViewModel);
@@ -144,10 +143,10 @@
 
             if (accountUnlockViewModel.HasError())
             {
-                return GetMediatorResponse(Codes.Login.Resend.ResendFailed, accountUnlockViewModel, AccountUnlockPageMessages.AccountUnlockResendCodeFailed, UserMessageLevel.Warning);
+                return GetMediatorResponse(LoginMediatorCodes.Resend.ResendFailed, accountUnlockViewModel, AccountUnlockPageMessages.AccountUnlockResendCodeFailed, UserMessageLevel.Warning);
             }
 
-            return GetMediatorResponse(Codes.Login.Resend.ResentSuccessfully, accountUnlockViewModel, string.Format(AccountUnlockPageMessages.AccountUnlockCodeResent, accountUnlockViewModel.EmailAddress), UserMessageLevel.Success);
+            return GetMediatorResponse(LoginMediatorCodes.Resend.ResentSuccessfully, accountUnlockViewModel, string.Format(AccountUnlockPageMessages.AccountUnlockCodeResent, accountUnlockViewModel.EmailAddress), UserMessageLevel.Success);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSearch
 {
     using Application.Interfaces.ReferenceData;
-    using Candidate.Mediators;
+    using Candidate.Mediators.Search;
     using Candidate.Providers;
     using Candidate.Validators;
     using Common.Providers;

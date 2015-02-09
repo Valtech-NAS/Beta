@@ -1,12 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipApplication
 {
     using System;
-    using Candidate.Mediators;
+    using Candidate.Mediators.Application;
     using Candidate.ViewModels.Applications;
     using FluentAssertions;
-    using Moq;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Domain.Entities.Applications;
+    using Domain.Entities.Applications;
 
     [TestFixture]
     public class WhatHappensNextTests : TestsBase
@@ -30,7 +29,7 @@
 
             var response = Mediator.WhatHappensNext(_someCandidateId, SomeVacancyId, VacancyReference, VacancyTitle);
 
-            response.AssertCode(Codes.ApprenticeshipApplication.WhatHappensNext.Ok, true);
+            response.AssertCode(ApprenticeshipApplicationMediatorCodes.WhatHappensNext.Ok, true);
         }
 
         [Test]
@@ -43,7 +42,7 @@
 
             var response = Mediator.WhatHappensNext(_someCandidateId, SomeVacancyId, VacancyReference, VacancyTitle);
 
-            response.Code.Should().Be(Codes.ApprenticeshipApplication.WhatHappensNext.VacancyNotFound);
+            response.Code.Should().Be(ApprenticeshipApplicationMediatorCodes.WhatHappensNext.VacancyNotFound);
         }
 
         [Test]
@@ -52,7 +51,7 @@
             ApprenticeshipApplicationProvider.Setup(p => p.GetWhatHappensNextViewModel(_someCandidateId, SomeVacancyId)).Returns(new WhatHappensNextViewModel(SomeErrorMessage));
 
             var response = Mediator.WhatHappensNext(_someCandidateId, SomeVacancyId, VacancyReference, VacancyTitle);
-            response.AssertCode(Codes.ApprenticeshipApplication.WhatHappensNext.Ok, true);
+            response.AssertCode(ApprenticeshipApplicationMediatorCodes.WhatHappensNext.Ok, true);
             response.ViewModel.VacancyTitle = VacancyTitle;
             response.ViewModel.VacancyReference = VacancyReference;
         }

@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Register
 {
-    using Candidate.Mediators;
+    using Candidate.Mediators.Register;
     using Candidate.ViewModels.Register;
     using Common.Constants;
     using Constants.Pages;
@@ -26,7 +26,7 @@
 
             var response = _registerMediator.ForgottenPassword(forgottenPasswordViewModel);
 
-            response.AssertMessage(Codes.RegisterMediatorCodes.ForgottenPassword.FailedToSendResetCode,
+            response.AssertMessage(RegisterMediatorCodes.ForgottenPassword.FailedToSendResetCode,
                 PasswordResetPageMessages.FailedToSendPasswordResetCode, UserMessageLevel.Warning, true);
         }
 
@@ -43,7 +43,7 @@
 
             var response = _registerMediator.ForgottenPassword(forgottenPasswordViewModel);
 
-            response.AssertCode(Codes.RegisterMediatorCodes.ForgottenPassword.PasswordSent, true);
+            response.AssertCode(RegisterMediatorCodes.ForgottenPassword.PasswordSent, true);
         }
 
         [Test]
@@ -56,7 +56,7 @@
 
             var response = _registerMediator.ForgottenPassword(forgottenPasswordViewModel);
 
-            response.AssertValidationResult(Codes.RegisterMediatorCodes.ForgottenPassword.FailedValidation, true);
+            response.AssertValidationResult(RegisterMediatorCodes.ForgottenPassword.FailedValidation, true);
         }
     }
 }

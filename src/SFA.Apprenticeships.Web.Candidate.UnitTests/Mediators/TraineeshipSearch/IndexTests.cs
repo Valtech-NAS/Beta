@@ -2,8 +2,7 @@
 {
     using System.Linq;
     using Application.Interfaces.Vacancies;
-    using Candidate.Mediators;
-    using Candidate.Mediators.Traineeships;
+    using Candidate.Mediators.Search;
     using Candidate.Providers;
     using Common.Providers;
     using Domain.Interfaces.Configuration;
@@ -20,7 +19,7 @@
             var mediator = GetMediator();
             var response = mediator.Index();
 
-            response.AssertCode(Codes.TraineeshipSearch.Index.Ok, true);
+            response.AssertCode(TraineeshipSearchMediatorCodes.Index.Ok, true);
 
             var viewModel = response.ViewModel;
 

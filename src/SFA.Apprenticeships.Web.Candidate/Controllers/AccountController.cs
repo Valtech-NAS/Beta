@@ -62,13 +62,13 @@
 
                 switch (response.Code)
                 {
-                    case Codes.AccountMediator.Settings.ValidationError:
+                    case AccountMediatorCodes.Settings.ValidationError:
                         response.ValidationResult.AddToModelState(ModelState, string.Empty);
                         return View(response.ViewModel);
-                    case Codes.AccountMediator.Settings.SaveError:
+                    case AccountMediatorCodes.Settings.SaveError:
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return View(response.ViewModel);
-                    case Codes.AccountMediator.Settings.Success:
+                    case AccountMediatorCodes.Settings.Success:
                         UserData.SetUserContext(UserContext.UserName, response.ViewModel.Firstname + " " + response.ViewModel.Lastname, UserContext.AcceptedTermsAndConditionsVersion);
                         SetUserMessage(AccountPageMessages.SettingsUpdated);
                         return RedirectToRoute(CandidateRouteNames.Settings);
@@ -89,10 +89,10 @@
 
                 switch (response.Code)
                 {
-                    case Codes.AccountMediator.Archive.SuccessfullyArchived:
+                    case AccountMediatorCodes.Archive.SuccessfullyArchived:
                         SetUserMessage(MyApplicationsPageMessages.ApplicationArchived);
                         break;
-                    case Codes.AccountMediator.Archive.ErrorArchiving:
+                    case AccountMediatorCodes.Archive.ErrorArchiving:
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         break;
                     default:
@@ -114,13 +114,13 @@
 
                 switch (response.Code)
                 {
-                    case Codes.AccountMediator.Delete.SuccessfullyDeleted:
+                    case AccountMediatorCodes.Delete.SuccessfullyDeleted:
                         UserData.Push(CandidateDataItemNames.DeletedVacancyId, id.ToString(CultureInfo.InvariantCulture));
                         UserData.Push(CandidateDataItemNames.DeletedVacancyTitle, response.Message.Text);
                         break;
-                    case Codes.AccountMediator.Delete.AlreadyDeleted:
-                    case Codes.AccountMediator.Delete.ErrorDeleting:
-                    case Codes.AccountMediator.Delete.SuccessfullyDeletedExpiredOrWithdrawn:
+                    case AccountMediatorCodes.Delete.AlreadyDeleted:
+                    case AccountMediatorCodes.Delete.ErrorDeleting:
+                    case AccountMediatorCodes.Delete.SuccessfullyDeletedExpiredOrWithdrawn:
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         break;
                     default:
@@ -164,9 +164,9 @@
 
                 switch (response.Code)
                 {
-                    case Codes.AccountMediator.DismissTraineeshipPrompts.SuccessfullyDismissed:
+                    case AccountMediatorCodes.DismissTraineeshipPrompts.SuccessfullyDismissed:
                         break;
-                    case Codes.AccountMediator.DismissTraineeshipPrompts.ErrorDismissing:
+                    case AccountMediatorCodes.DismissTraineeshipPrompts.ErrorDismissing:
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         break;
                     default:
@@ -189,8 +189,8 @@
 
                 switch (response.Code)
                 {
-                    case Codes.AccountMediator.Track.SuccessfullyTracked:
-                    case Codes.AccountMediator.Track.ErrorTracking:
+                    case AccountMediatorCodes.Track.SuccessfullyTracked:
+                    case AccountMediatorCodes.Track.ErrorTracking:
                         // Tracking an application is 'best efforts'. Errors are not reported to the user.
                         break;
                     default:
@@ -234,10 +234,10 @@
 
                 switch (response.Code)
                 {
-                    case Codes.AccountMediator.AcceptTermsAndConditions.SuccessfullyAccepted:
-                    case Codes.AccountMediator.AcceptTermsAndConditions.AlreadyAccepted:
+                    case AccountMediatorCodes.AcceptTermsAndConditions.SuccessfullyAccepted:
+                    case AccountMediatorCodes.AcceptTermsAndConditions.AlreadyAccepted:
                         break;
-                    case Codes.AccountMediator.AcceptTermsAndConditions.ErrorAccepting:
+                    case AccountMediatorCodes.AcceptTermsAndConditions.ErrorAccepting:
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         break;
                     default:
@@ -279,11 +279,11 @@
 
                 switch (response.Code)
                 {
-                    case Codes.AccountMediator.VacancyDetails.Available:
+                    case AccountMediatorCodes.VacancyDetails.Available:
                         return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new { id });
 
-                    case Codes.AccountMediator.VacancyDetails.Unavailable:
-                    case Codes.AccountMediator.VacancyDetails.Error:
+                    case AccountMediatorCodes.VacancyDetails.Unavailable:
+                    case AccountMediatorCodes.VacancyDetails.Error:
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         break;
 
@@ -306,11 +306,11 @@
 
                 switch (response.Code)
                 {
-                    case Codes.AccountMediator.VacancyDetails.Available:
+                    case AccountMediatorCodes.VacancyDetails.Available:
                         return RedirectToRoute(CandidateRouteNames.TraineeshipDetails, new { id });
 
-                    case Codes.AccountMediator.VacancyDetails.Unavailable:
-                    case Codes.AccountMediator.VacancyDetails.Error:
+                    case AccountMediatorCodes.VacancyDetails.Unavailable:
+                    case AccountMediatorCodes.VacancyDetails.Error:
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         break;
 

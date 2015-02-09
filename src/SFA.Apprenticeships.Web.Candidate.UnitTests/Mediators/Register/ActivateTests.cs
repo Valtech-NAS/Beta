@@ -1,12 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Register
 {
     using System;
+    using Candidate.Mediators.Register;
     using Moq;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Web.Candidate.Constants.Pages;
-    using SFA.Apprenticeships.Web.Candidate.Mediators;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.Register;
-    using SFA.Apprenticeships.Web.Common.Constants;
+    using Constants.Pages;
+    using Candidate.ViewModels.Register;
+    using Common.Constants;
 
     [TestFixture]
     public class ActivateTests : RegisterBaseTests
@@ -25,7 +25,7 @@
             };
             var response = _registerMediator.Activate(Guid.NewGuid(), activationViewModel);
 
-            response.AssertValidationResult(Codes.RegisterMediatorCodes.Activate.FailedValidation, true);
+            response.AssertValidationResult(RegisterMediatorCodes.Activate.FailedValidation, true);
         }
 
         [Test]
@@ -45,7 +45,7 @@
 
             var response = _registerMediator.Activate(Guid.NewGuid(), activationViewModel);
 
-            response.AssertMessage(Codes.RegisterMediatorCodes.Activate.SuccessfullyActivated, ActivationPageMessages.AccountActivated, UserMessageLevel.Success, true);
+            response.AssertMessage(RegisterMediatorCodes.Activate.SuccessfullyActivated, ActivationPageMessages.AccountActivated, UserMessageLevel.Success, true);
         }
 
         [Test]
@@ -66,7 +66,7 @@
 
             var response = _registerMediator.Activate(Guid.NewGuid(), activationViewModel);
 
-            response.AssertMessage(Codes.RegisterMediatorCodes.Activate.SuccessfullyActivated, SomeErrorMessage, UserMessageLevel.Success, true);
+            response.AssertMessage(RegisterMediatorCodes.Activate.SuccessfullyActivated, SomeErrorMessage, UserMessageLevel.Success, true);
         }
 
         [Test]
@@ -86,7 +86,7 @@
 
             var response = _registerMediator.Activate(Guid.NewGuid(), activationViewModel);
 
-            response.AssertValidationResult(Codes.RegisterMediatorCodes.Activate.InvalidActivationCode, true);
+            response.AssertValidationResult(RegisterMediatorCodes.Activate.InvalidActivationCode, true);
         }
     }
 }

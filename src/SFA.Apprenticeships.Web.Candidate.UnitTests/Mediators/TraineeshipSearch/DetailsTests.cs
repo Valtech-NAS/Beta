@@ -3,8 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Globalization;
-    using Candidate.Mediators;
-    using Candidate.Mediators.Traineeships;
+    using Candidate.Mediators.Search;
     using Candidate.Providers;
     using Candidate.ViewModels.VacancySearch;
     using Common.Constants;
@@ -37,7 +36,7 @@
             var mediator = GetMediator(null);
             var response = mediator.Details(VacancyId, null, null);
 
-            response.AssertCode(Codes.TraineeshipSearch.Details.VacancyNotFound, false);
+            response.AssertCode(TraineeshipSearchMediatorCodes.Details.VacancyNotFound, false);
         }
 
         [TestCase(null)]
@@ -51,7 +50,7 @@
             var mediator = GetMediator(null);
             var response = mediator.Details(vacancyId, null, null);
 
-            response.AssertCode(Codes.TraineeshipSearch.Details.VacancyNotFound, false);
+            response.AssertCode(TraineeshipSearchMediatorCodes.Details.VacancyNotFound, false);
         }
 
         [Test]
@@ -65,7 +64,7 @@
             var mediator = GetMediator(vacancyDetailViewModel);
             var response = mediator.Details(VacancyId, null, null);
 
-            response.AssertCode(Codes.TraineeshipSearch.Details.VacancyNotFound, false);
+            response.AssertCode(TraineeshipSearchMediatorCodes.Details.VacancyNotFound, false);
         }
 
         [Test]
@@ -83,7 +82,7 @@
 
             var response = mediator.Details(VacancyId, null, null);
 
-            response.AssertMessage(Codes.TraineeshipSearch.Details.VacancyHasError, message, UserMessageLevel.Warning, true);
+            response.AssertMessage(TraineeshipSearchMediatorCodes.Details.VacancyHasError, message, UserMessageLevel.Warning, true);
         }
 
         [Test]
@@ -98,7 +97,7 @@
             var mediator = GetMediator(vacancyDetailViewModel);
             var response = mediator.Details(VacancyId, null, SearchReturnUrl);
 
-            response.AssertCode(Codes.TraineeshipSearch.Details.Ok, true);
+            response.AssertCode(TraineeshipSearchMediatorCodes.Details.Ok, true);
             
             response.ViewModel.Distance.Should().Be(Distance);
             response.ViewModel.SearchReturnUrl.Should().Be(SearchReturnUrl);

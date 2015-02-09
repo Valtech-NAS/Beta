@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Candidate.Mediators;
+    using Candidate.Mediators.Search;
     using Candidate.ViewModels.VacancySearch;
     using Constants;
     using Domain.Entities.ReferenceData;
@@ -18,7 +18,7 @@
         {
             var response = Mediator.Index(ApprenticeshipSearchMode.Keyword);
 
-            response.AssertCode(Codes.ApprenticeshipSearch.Index.Ok, true);
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.Index.Ok, true);
 
             var viewModel = response.ViewModel;
             viewModel.WithinDistance.Should().Be(5);
@@ -35,7 +35,7 @@
         {
             var response = Mediator.Index(ApprenticeshipSearchMode.Category);
 
-            response.AssertCode(Codes.ApprenticeshipSearch.Index.Ok, true);
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.Index.Ok, true);
 
             var viewModel = response.ViewModel;
             viewModel.WithinDistance.Should().Be(5);

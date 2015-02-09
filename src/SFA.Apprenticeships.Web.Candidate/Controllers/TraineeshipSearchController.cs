@@ -8,7 +8,7 @@
     using Constants;
     using FluentValidation.Mvc;
     using Mediators;
-    using Mediators.Traineeships;
+    using Mediators.Search;
     using ViewModels.VacancySearch;
 
     public class TraineeshipSearchController : CandidateControllerBase
@@ -55,17 +55,17 @@
 
                 switch (response.Code)
                 {
-                    case Codes.TraineeshipSearch.Results.ValidationError:
+                    case TraineeshipSearchMediatorCodes.Results.ValidationError:
                         ModelState.Clear();
                         response.ValidationResult.AddToModelState(ModelState, string.Empty);
                         return View(response.ViewModel);
 
-                    case Codes.TraineeshipSearch.Results.HasError:
+                    case TraineeshipSearchMediatorCodes.Results.HasError:
                         ModelState.Clear();
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return View(response.ViewModel);
 
-                    case Codes.TraineeshipSearch.Results.Ok:
+                    case TraineeshipSearchMediatorCodes.Results.Ok:
                         ModelState.Remove("Location");
                         ModelState.Remove("Latitude");
                         ModelState.Remove("Longitude");
@@ -107,15 +107,15 @@
 
                 switch (response.Code)
                 {
-                    case Codes.TraineeshipSearch.Details.VacancyNotFound:
+                    case TraineeshipSearchMediatorCodes.Details.VacancyNotFound:
                         return new TraineeshipNotFoundResult();
 
-                    case Codes.TraineeshipSearch.Details.VacancyHasError:
+                    case TraineeshipSearchMediatorCodes.Details.VacancyHasError:
                         ModelState.Clear();
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return View(response.ViewModel);
 
-                    case Codes.TraineeshipSearch.Details.Ok:
+                    case TraineeshipSearchMediatorCodes.Details.Ok:
                         return View(response.ViewModel);
                 }
 

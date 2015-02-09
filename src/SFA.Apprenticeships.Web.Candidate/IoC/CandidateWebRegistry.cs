@@ -27,10 +27,11 @@
     using Domain.Interfaces.Mapping;
     using Infrastructure.LegacyWebServices.ReferenceData;
     using Mappers;
-    using Mediators;
     using Mediators.Account;
+    using Mediators.Application;
+    using Mediators.Login;
     using Mediators.Register;
-    using Mediators.Traineeships;
+    using Mediators.Search;
     using Microsoft.WindowsAzure;
     using Providers;
     using StructureMap.Configuration.DSL;

@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.TraineeshipApplication
 {
     using System;
-    using Candidate.Mediators;
+    using Candidate.Mediators.Application;
     using Candidate.ViewModels.Applications;
     using Domain.Entities.Applications;
     using FluentAssertions;
@@ -18,7 +18,7 @@
             
             var response = Mediator.WhatHappensNext(Guid.NewGuid(), 1, "001", "Vacancy 001");
 
-            response.AssertCode(Codes.TraineeshipApplication.WhatHappensNext.VacancyNotFound, false);
+            response.AssertCode(TraineeshipApplicationMediatorCodes.WhatHappensNext.VacancyNotFound, false);
         }
 
         [Test]
@@ -28,7 +28,7 @@
             
             var response = Mediator.WhatHappensNext(Guid.NewGuid(), 1, "001", "Vacancy 001");
 
-            response.AssertCode(Codes.TraineeshipApplication.WhatHappensNext.Ok, true);
+            response.AssertCode(TraineeshipApplicationMediatorCodes.WhatHappensNext.Ok, true);
             var viewModel = response.ViewModel;
             viewModel.VacancyReference.Should().Be("001");
             viewModel.VacancyTitle.Should().Be("Vacancy 001");
@@ -41,7 +41,7 @@
 
             var response = Mediator.WhatHappensNext(Guid.NewGuid(), 1, "001", "Vacancy 001");
 
-            response.AssertCode(Codes.TraineeshipApplication.WhatHappensNext.Ok, true);
+            response.AssertCode(TraineeshipApplicationMediatorCodes.WhatHappensNext.Ok, true);
         }
     }
 }

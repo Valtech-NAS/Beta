@@ -8,6 +8,7 @@
     using Common.Constants;
     using Constants;
     using Mediators;
+    using Mediators.Application;
     using ViewModels.Applications;
 
     public class TraineeshipApplicationController : CandidateControllerBase
@@ -31,9 +32,9 @@
 
                 switch (response.Code)
                 {
-                    case Codes.TraineeshipApplication.Apply.HasError:
+                    case TraineeshipApplicationMediatorCodes.Apply.HasError:
                         return RedirectToRoute(CandidateRouteNames.MyApplications);
-                    case Codes.TraineeshipApplication.Apply.Ok:
+                    case TraineeshipApplicationMediatorCodes.Apply.Ok:
                         return View(response.ViewModel);
                 }
 
@@ -56,13 +57,13 @@
 
                 switch (response.Code)
                 {
-                    case Codes.TraineeshipApplication.Submit.IncorrectState:
+                    case TraineeshipApplicationMediatorCodes.Submit.IncorrectState:
                         return RedirectToRoute(CandidateRouteNames.MyApplications);
-                    case Codes.TraineeshipApplication.Submit.Error:
+                    case TraineeshipApplicationMediatorCodes.Submit.Error:
                         ModelState.Clear();
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return View(response.ViewModel);
-                    case Codes.TraineeshipApplication.Submit.Ok:
+                    case TraineeshipApplicationMediatorCodes.Submit.Ok:
                         return RedirectToAction("WhatHappensNext", response.Parameters);
                 }
 
@@ -119,9 +120,9 @@
 
                 switch (response.Code)
                 {
-                    case Codes.TraineeshipApplication.WhatHappensNext.VacancyNotFound:
+                    case TraineeshipApplicationMediatorCodes.WhatHappensNext.VacancyNotFound:
                         return new TraineeshipNotFoundResult();
-                    case Codes.TraineeshipApplication.WhatHappensNext.Ok:
+                    case TraineeshipApplicationMediatorCodes.WhatHappensNext.Ok:
                         return View(response.ViewModel);
                 }
 

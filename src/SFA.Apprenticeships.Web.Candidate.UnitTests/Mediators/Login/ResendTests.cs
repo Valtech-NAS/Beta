@@ -1,10 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Login
 {
-    using Candidate.Mediators;
+    using Candidate.Mediators.Login;
     using Candidate.ViewModels.Login;
     using Common.Constants;
     using Constants.Pages;
-    using FluentAssertions;
     using Moq;
     using NUnit.Framework;
 
@@ -16,7 +15,7 @@
         {
             var viewModel = new AccountUnlockViewModel();
             var response = Mediator.Resend(viewModel);
-            response.AssertValidationResult(Codes.Login.Resend.ValidationError);
+            response.AssertValidationResult(LoginMediatorCodes.Resend.ValidationError);
         }
 
         [Test]
@@ -28,7 +27,7 @@
 
             var response = Mediator.Resend(viewModel);
 
-            response.AssertMessage(Codes.Login.Resend.ResentSuccessfully, string.Format(AccountUnlockPageMessages.AccountUnlockCodeResent, viewModel.EmailAddress), UserMessageLevel.Success, true);
+            response.AssertMessage(LoginMediatorCodes.Resend.ResentSuccessfully, string.Format(AccountUnlockPageMessages.AccountUnlockCodeResent, viewModel.EmailAddress), UserMessageLevel.Success, true);
             UserDataProvider.Verify(x => x.Push(UserDataItemNames.EmailAddress, viewModel.EmailAddress));
         }
 
@@ -41,7 +40,7 @@
 
             var response = Mediator.Resend(viewModel);
 
-            response.AssertMessage(Codes.Login.Resend.ResendFailed, AccountUnlockPageMessages.AccountUnlockResendCodeFailed, UserMessageLevel.Warning, true);
+            response.AssertMessage(LoginMediatorCodes.Resend.ResendFailed, AccountUnlockPageMessages.AccountUnlockResendCodeFailed, UserMessageLevel.Warning, true);
         }
     }
 }

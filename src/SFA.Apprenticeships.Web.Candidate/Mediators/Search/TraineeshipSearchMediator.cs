@@ -1,9 +1,9 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators.Traineeships
+﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
 {
     using System;
     using System.Globalization;
     using System.Linq;
-    using Application.Interfaces.Vacancies;
+    using Apprenticeships.Application.Interfaces.Vacancies;
     using Common.Constants;
     using Common.Providers;
     using Constants;
@@ -46,7 +46,7 @@
                 ResultsPerPage = GetResultsPerPage()
             };
 
-            return GetMediatorResponse(Codes.TraineeshipSearch.Index.Ok, traineeshipSearchViewModel);
+            return GetMediatorResponse(TraineeshipSearchMediatorCodes.Index.Ok, traineeshipSearchViewModel);
         }
 
         public MediatorResponse<TraineeshipSearchResponseViewModel> Results(TraineeshipSearchViewModel model)
@@ -67,7 +67,7 @@
 
             if (!clientResult.IsValid)
             {
-                return GetMediatorResponse(Codes.TraineeshipSearch.Results.ValidationError, new TraineeshipSearchResponseViewModel { VacancySearch = model }, clientResult);
+                return GetMediatorResponse(TraineeshipSearchMediatorCodes.Results.ValidationError, new TraineeshipSearchResponseViewModel { VacancySearch = model }, clientResult);
             }
 
             if (!HasGeoPoint(model))
@@ -77,7 +77,7 @@
 
                 if (suggestedLocations.HasError())
                 {
-                    return GetMediatorResponse(Codes.TraineeshipSearch.Results.HasError, new TraineeshipSearchResponseViewModel { VacancySearch = model }, suggestedLocations.ViewModelMessage, UserMessageLevel.Warning);
+                    return GetMediatorResponse(TraineeshipSearchMediatorCodes.Results.HasError, new TraineeshipSearchResponseViewModel { VacancySearch = model }, suggestedLocations.ViewModelMessage, UserMessageLevel.Warning);
                 }
 
                 if (suggestedLocations.Locations.Any())
@@ -112,14 +112,14 @@
 
             if (!locationResult.IsValid)
             {
-                return GetMediatorResponse(Codes.TraineeshipSearch.Results.Ok, new TraineeshipSearchResponseViewModel { VacancySearch = model });
+                return GetMediatorResponse(TraineeshipSearchMediatorCodes.Results.Ok, new TraineeshipSearchResponseViewModel { VacancySearch = model });
             }
 
             var traineeshipSearchResponseViewModel = _searchProvider.FindVacancies(model);
 
             traineeshipSearchResponseViewModel.VacancySearch.SortTypes = GetSortTypes(model.SortType);
 
-            return GetMediatorResponse(Codes.TraineeshipSearch.Results.Ok, traineeshipSearchResponseViewModel);
+            return GetMediatorResponse(TraineeshipSearchMediatorCodes.Results.Ok, traineeshipSearchResponseViewModel);
         }
 
         public MediatorResponse<VacancyDetailViewModel> Details(string vacancyIdString, Guid? candidateId, string searchReturnUrl)
@@ -128,19 +128,19 @@
 
             if (!TryParseVacancyId(vacancyIdString, out vacancyId))
             {
-                return GetMediatorResponse<VacancyDetailViewModel>(Codes.TraineeshipSearch.Details.VacancyNotFound);
+                return GetMediatorResponse<VacancyDetailViewModel>(TraineeshipSearchMediatorCodes.Details.VacancyNotFound);
             }
 
             var vacancyDetailViewModel = _traineeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
 
             if (vacancyDetailViewModel == null || vacancyDetailViewModel.VacancyStatus == VacancyStatuses.Unavailable)
             {
-                return GetMediatorResponse<VacancyDetailViewModel>(Codes.TraineeshipSearch.Details.VacancyNotFound);
+                return GetMediatorResponse<VacancyDetailViewModel>(TraineeshipSearchMediatorCodes.Details.VacancyNotFound);
             }
 
             if (vacancyDetailViewModel.HasError())
             {
-                return GetMediatorResponse(Codes.TraineeshipSearch.Details.VacancyHasError, vacancyDetailViewModel, vacancyDetailViewModel.ViewModelMessage, UserMessageLevel.Warning);
+                return GetMediatorResponse(TraineeshipSearchMediatorCodes.Details.VacancyHasError, vacancyDetailViewModel, vacancyDetailViewModel.ViewModelMessage, UserMessageLevel.Warning);
             }
 
             var distance = UserDataProvider.Pop(CandidateDataItemNames.VacancyDistance);
@@ -156,7 +156,7 @@
 
             UserDataProvider.Push(CandidateDataItemNames.LastViewedVacancyId, vacancyId.ToString(CultureInfo.InvariantCulture));
 
-            return GetMediatorResponse(Codes.TraineeshipSearch.Details.Ok, vacancyDetailViewModel);
+            return GetMediatorResponse(TraineeshipSearchMediatorCodes.Details.Ok, vacancyDetailViewModel);
         }
     }
 }

@@ -44,7 +44,7 @@
             var model = _apprenticeshipApplicationProvider.GetMyApplications(candidateId);
             model.DeletedVacancyId = deletedVacancyId;
             model.DeletedVacancyTitle = deletedVacancyTitle;
-            return GetMediatorResponse(Codes.AccountMediator.Index.Success, model);
+            return GetMediatorResponse(AccountMediatorCodes.Index.Success, model);
         }
 
         public MediatorResponse Archive(Guid candidateId, int vacancyId)
@@ -53,10 +53,10 @@
 
             if (applicationViewModel.HasError())
             {
-                return GetMediatorResponse(Codes.AccountMediator.Archive.ErrorArchiving, applicationViewModel.ViewModelMessage, UserMessageLevel.Warning);
+                return GetMediatorResponse(AccountMediatorCodes.Archive.ErrorArchiving, applicationViewModel.ViewModelMessage, UserMessageLevel.Warning);
             }
 
-            return GetMediatorResponse(Codes.AccountMediator.Archive.SuccessfullyArchived, MyApplicationsPageMessages.ApplicationArchived, UserMessageLevel.Success);
+            return GetMediatorResponse(AccountMediatorCodes.Archive.SuccessfullyArchived, MyApplicationsPageMessages.ApplicationArchived, UserMessageLevel.Success);
         }
 
         public MediatorResponse Delete(Guid candidateId, int vacancyId)
@@ -67,7 +67,7 @@
             {
                 if (viewModel.Status != ApplicationStatuses.ExpiredOrWithdrawn)
                 {
-                    return GetMediatorResponse(Codes.AccountMediator.Delete.AlreadyDeleted, MyApplicationsPageMessages.ApplicationDeleted, UserMessageLevel.Warning);
+                    return GetMediatorResponse(AccountMediatorCodes.Delete.AlreadyDeleted, MyApplicationsPageMessages.ApplicationDeleted, UserMessageLevel.Warning);
                 }
             }
 
@@ -75,25 +75,25 @@
 
             if (applicationViewModel.HasError())
             {
-                return GetMediatorResponse(Codes.AccountMediator.Delete.ErrorDeleting, applicationViewModel.ViewModelMessage, UserMessageLevel.Warning);
+                return GetMediatorResponse(AccountMediatorCodes.Delete.ErrorDeleting, applicationViewModel.ViewModelMessage, UserMessageLevel.Warning);
             }
 
             if (viewModel.VacancyDetail == null)
             {
-                return GetMediatorResponse(Codes.AccountMediator.Delete.SuccessfullyDeletedExpiredOrWithdrawn, MyApplicationsPageMessages.ApplicationDeleted, UserMessageLevel.Success);
+                return GetMediatorResponse(AccountMediatorCodes.Delete.SuccessfullyDeletedExpiredOrWithdrawn, MyApplicationsPageMessages.ApplicationDeleted, UserMessageLevel.Success);
             }
 
-            return GetMediatorResponse(Codes.AccountMediator.Delete.SuccessfullyDeleted, viewModel.VacancyDetail.Title, UserMessageLevel.Success);
+            return GetMediatorResponse(AccountMediatorCodes.Delete.SuccessfullyDeleted, viewModel.VacancyDetail.Title, UserMessageLevel.Success);
         }
 
         public MediatorResponse DismissTraineeshipPrompts(Guid candidateId)
         {
             if (_accountProvider.DismissTraineeshipPrompts(candidateId))
             {
-                return GetMediatorResponse(Codes.AccountMediator.DismissTraineeshipPrompts.SuccessfullyDismissed);                
+                return GetMediatorResponse(AccountMediatorCodes.DismissTraineeshipPrompts.SuccessfullyDismissed);                
             }
 
-            return GetMediatorResponse(Codes.AccountMediator.DismissTraineeshipPrompts.ErrorDismissing, MyApplicationsPageMessages.DismissTraineeshipPromptsFailed, UserMessageLevel.Error);
+            return GetMediatorResponse(AccountMediatorCodes.DismissTraineeshipPrompts.ErrorDismissing, MyApplicationsPageMessages.DismissTraineeshipPromptsFailed, UserMessageLevel.Error);
         }
 
         public MediatorResponse<SettingsViewModel> Settings(Guid candidateId)
@@ -101,7 +101,7 @@
             var model = _accountProvider.GetSettingsViewModel(candidateId);
             var traineeshipFeature = _apprenticeshipApplicationProvider.GetTraineeshipFeatureViewModel(candidateId);
             model.TraineeshipFeature = traineeshipFeature;
-            return GetMediatorResponse(Codes.AccountMediator.Settings.Success, model);
+            return GetMediatorResponse(AccountMediatorCodes.Settings.Success, model);
         }
 
         public MediatorResponse<SettingsViewModel> SaveSettings(Guid candidateId, SettingsViewModel settingsViewModel)
@@ -112,14 +112,14 @@
 
             if (!validationResult.IsValid)
             {
-                return GetMediatorResponse(Codes.AccountMediator.Settings.ValidationError, settingsViewModel, validationResult);
+                return GetMediatorResponse(AccountMediatorCodes.Settings.ValidationError, settingsViewModel, validationResult);
             }
 
             var saved = _accountProvider.SaveSettings(candidateId, settingsViewModel);
 
             return !saved
-                ? GetMediatorResponse(Codes.AccountMediator.Settings.SaveError, settingsViewModel, AccountPageMessages.SettingsUpdateFailed, UserMessageLevel.Warning)
-                : GetMediatorResponse(Codes.AccountMediator.Settings.Success, settingsViewModel);
+                ? GetMediatorResponse(AccountMediatorCodes.Settings.SaveError, settingsViewModel, AccountPageMessages.SettingsUpdateFailed, UserMessageLevel.Warning)
+                : GetMediatorResponse(AccountMediatorCodes.Settings.Success, settingsViewModel);
         }
 
         public MediatorResponse Track(Guid candidateId, int vacancyId)
@@ -128,10 +128,10 @@
 
             if (applicationViewModel.HasError())
             {
-                return GetMediatorResponse(Codes.AccountMediator.Track.ErrorTracking, applicationViewModel.ViewModelMessage, UserMessageLevel.Warning);
+                return GetMediatorResponse(AccountMediatorCodes.Track.ErrorTracking, applicationViewModel.ViewModelMessage, UserMessageLevel.Warning);
             }
 
-            return GetMediatorResponse(Codes.AccountMediator.Track.SuccessfullyTracked);
+            return GetMediatorResponse(AccountMediatorCodes.Track.SuccessfullyTracked);
         }
 
         public MediatorResponse AcceptTermsAndConditions(Guid candidateId)
@@ -143,14 +143,14 @@
 
                 if (candidate.RegistrationDetails.AcceptedTermsAndConditionsVersion == currentTsAndCsVersion)
                 {
-                    return GetMediatorResponse(Codes.AccountMediator.AcceptTermsAndConditions.AlreadyAccepted);
+                    return GetMediatorResponse(AccountMediatorCodes.AcceptTermsAndConditions.AlreadyAccepted);
                 }
 
                 var success = _candidateServiceProvider.AcceptTermsAndConditions(candidateId, currentTsAndCsVersion);
 
                 if (success)
                 {
-                    return GetMediatorResponse(Codes.AccountMediator.AcceptTermsAndConditions.SuccessfullyAccepted);
+                    return GetMediatorResponse(AccountMediatorCodes.AcceptTermsAndConditions.SuccessfullyAccepted);
                 }
             }
             catch
@@ -158,7 +158,7 @@
                 // returns ErrorAccepting
             }
 
-            return GetMediatorResponse(Codes.AccountMediator.AcceptTermsAndConditions.ErrorAccepting);
+            return GetMediatorResponse(AccountMediatorCodes.AcceptTermsAndConditions.ErrorAccepting);
         }
 
         public MediatorResponse ApprenticeshipVacancyDetails(Guid candidateId, int vacancyId)
@@ -167,15 +167,15 @@
 
             if (vacancyDetailViewModel == null || vacancyDetailViewModel.VacancyStatus == VacancyStatuses.Unavailable)
             {
-                return GetMediatorResponse(Codes.AccountMediator.VacancyDetails.Unavailable, MyApplicationsPageMessages.ApprenticeshipNoLongerAvailable, UserMessageLevel.Warning);
+                return GetMediatorResponse(AccountMediatorCodes.VacancyDetails.Unavailable, MyApplicationsPageMessages.ApprenticeshipNoLongerAvailable, UserMessageLevel.Warning);
             }
 
             if (vacancyDetailViewModel.HasError())
             {
-                return GetMediatorResponse(Codes.AccountMediator.VacancyDetails.Error, vacancyDetailViewModel.ViewModelMessage, UserMessageLevel.Error);
+                return GetMediatorResponse(AccountMediatorCodes.VacancyDetails.Error, vacancyDetailViewModel.ViewModelMessage, UserMessageLevel.Error);
             }
 
-            return GetMediatorResponse(Codes.AccountMediator.VacancyDetails.Available);
+            return GetMediatorResponse(AccountMediatorCodes.VacancyDetails.Available);
         }
 
         public MediatorResponse TraineeshipVacancyDetails(Guid candidateId, int vacancyId)
@@ -184,15 +184,15 @@
 
             if (vacancyDetailViewModel == null || vacancyDetailViewModel.VacancyStatus == VacancyStatuses.Unavailable)
             {
-                return GetMediatorResponse(Codes.AccountMediator.VacancyDetails.Unavailable, MyApplicationsPageMessages.ApprenticeshipNoLongerAvailable, UserMessageLevel.Warning);
+                return GetMediatorResponse(AccountMediatorCodes.VacancyDetails.Unavailable, MyApplicationsPageMessages.ApprenticeshipNoLongerAvailable, UserMessageLevel.Warning);
             }
 
             if (vacancyDetailViewModel.HasError())
             {
-                return GetMediatorResponse(Codes.AccountMediator.VacancyDetails.Error, vacancyDetailViewModel.ViewModelMessage, UserMessageLevel.Error);
+                return GetMediatorResponse(AccountMediatorCodes.VacancyDetails.Error, vacancyDetailViewModel.ViewModelMessage, UserMessageLevel.Error);
             }
 
-            return GetMediatorResponse(Codes.AccountMediator.VacancyDetails.Available);
+            return GetMediatorResponse(AccountMediatorCodes.VacancyDetails.Available);
         }
     }
 }

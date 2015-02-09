@@ -1,9 +1,9 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators
+﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
 {
     using System.Collections;
     using System.Text.RegularExpressions;
     using System.Web.Mvc;
-    using Application.Interfaces.Vacancies;
+    using Apprenticeships.Application.Interfaces.Vacancies;
     using Common.Constants;
     using Common.Providers;
     using Domain.Interfaces.Configuration;

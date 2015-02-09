@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Login
 {
-    using Candidate.Mediators;
+    using Candidate.Mediators.Login;
     using Candidate.ViewModels.Login;
     using Common.Constants;
     using Constants.Pages;
@@ -18,14 +18,14 @@
 
             var response = Mediator.Unlock(viewModel);
 
-            response.AssertValidationResult(Codes.Login.Unlock.ValidationError);
+            response.AssertValidationResult(LoginMediatorCodes.Unlock.ValidationError);
         }
 
-        [TestCase(AccountUnlockState.Ok, Codes.Login.Unlock.UnlockedSuccessfully, null, null)]
-        [TestCase(AccountUnlockState.UserInIncorrectState, Codes.Login.Unlock.UserInIncorrectState, null, null)]
-        [TestCase(AccountUnlockState.AccountEmailAddressOrUnlockCodeInvalid, Codes.Login.Unlock.AccountEmailAddressOrUnlockCodeInvalid, AccountUnlockPageMessages.WrongEmailAddressOrAccountUnlockCodeErrorText, UserMessageLevel.Error)]
-        [TestCase(AccountUnlockState.AccountUnlockCodeExpired, Codes.Login.Unlock.AccountUnlockCodeExpired, AccountUnlockPageMessages.AccountUnlockCodeExpired, UserMessageLevel.Warning)]
-        [TestCase(AccountUnlockState.Error, Codes.Login.Unlock.AccountUnlockFailed, AccountUnlockPageMessages.AccountUnlockFailed, UserMessageLevel.Warning)]
+        [TestCase(AccountUnlockState.Ok, LoginMediatorCodes.Unlock.UnlockedSuccessfully, null, null)]
+        [TestCase(AccountUnlockState.UserInIncorrectState, LoginMediatorCodes.Unlock.UserInIncorrectState, null, null)]
+        [TestCase(AccountUnlockState.AccountEmailAddressOrUnlockCodeInvalid, LoginMediatorCodes.Unlock.AccountEmailAddressOrUnlockCodeInvalid, AccountUnlockPageMessages.WrongEmailAddressOrAccountUnlockCodeErrorText, UserMessageLevel.Error)]
+        [TestCase(AccountUnlockState.AccountUnlockCodeExpired, LoginMediatorCodes.Unlock.AccountUnlockCodeExpired, AccountUnlockPageMessages.AccountUnlockCodeExpired, UserMessageLevel.Warning)]
+        [TestCase(AccountUnlockState.Error, LoginMediatorCodes.Unlock.AccountUnlockFailed, AccountUnlockPageMessages.AccountUnlockFailed, UserMessageLevel.Warning)]
         public void CheckAllOtherResponses(AccountUnlockState accountUnlockState, string code, string message, UserMessageLevel messageLevel)
         {
             var viewModel = new AccountUnlockViewModel { EmailAddress = "ab@cde.com", AccountUnlockCode = "ABC123", Status = accountUnlockState };

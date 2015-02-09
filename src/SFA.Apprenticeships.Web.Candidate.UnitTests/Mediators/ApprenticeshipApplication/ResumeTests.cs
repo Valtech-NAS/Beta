@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipApplication
 {
     using System;
-    using Candidate.Mediators;
+    using Candidate.Mediators.Application;
     using Candidate.ViewModels.Applications;
     using Common.Constants;
     using Moq;
@@ -20,7 +20,7 @@
             
             var response = Mediator.Resume(Guid.NewGuid(), InvalidVacancyId);
 
-            response.AssertMessage(Codes.ApprenticeshipApplication.Resume.HasError, "Vacancy not found", UserMessageLevel.Warning, false);
+            response.AssertMessage(ApprenticeshipApplicationMediatorCodes.Resume.HasError, "Vacancy not found", UserMessageLevel.Warning, false);
         }
 
         [Test]
@@ -30,7 +30,7 @@
             
             var response = Mediator.Resume(Guid.NewGuid(), ValidVacancyId);
 
-            response.AssertCode(Codes.ApprenticeshipApplication.Resume.Ok, false, true);
+            response.AssertCode(ApprenticeshipApplicationMediatorCodes.Resume.Ok, false, true);
         }
     }
 }

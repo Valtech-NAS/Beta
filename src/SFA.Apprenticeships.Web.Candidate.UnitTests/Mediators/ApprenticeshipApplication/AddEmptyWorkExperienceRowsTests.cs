@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipApplication
 {
     using System.Collections.Generic;
-    using Candidate.Mediators;
+    using Candidate.Mediators.Application;
     using Candidate.ViewModels.Applications;
     using Candidate.ViewModels.Candidate;
     using Candidate.ViewModels.VacancySearch;
@@ -29,7 +29,7 @@
 
             var response = Mediator.AddEmptyWorkExperienceRows(viewModel);
 
-            response.AssertCode(Codes.ApprenticeshipApplication.AddEmptyWorkExperienceRows.Ok, true);
+            response.AssertCode(ApprenticeshipApplicationMediatorCodes.AddEmptyWorkExperienceRows.Ok, true);
         }
 
         [Test]
@@ -43,7 +43,7 @@
 
             var response = Mediator.AddEmptyWorkExperienceRows(viewModel);
 
-            response.AssertCode(Codes.ApprenticeshipApplication.AddEmptyWorkExperienceRows.Ok, true);
+            response.AssertCode(ApprenticeshipApplicationMediatorCodes.AddEmptyWorkExperienceRows.Ok, true);
             response.ViewModel.Candidate.WorkExperience.Should().HaveCount(1);
         }
 

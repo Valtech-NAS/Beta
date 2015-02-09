@@ -1,12 +1,12 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators
+﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
 {
     using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
     using System.Web.Mvc;
-    using Application.Interfaces.ReferenceData;
-    using Application.Interfaces.Vacancies;
+    using Apprenticeships.Application.Interfaces.ReferenceData;
+    using Apprenticeships.Application.Interfaces.Vacancies;
     using Common.Constants;
     using Common.Providers;
     using Constants;
@@ -67,7 +67,7 @@
                 SearchMode = searchMode
             };
 
-            return GetMediatorResponse(Codes.ApprenticeshipSearch.Index.Ok, viewModel);
+            return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.Index.Ok, viewModel);
         }
 
         private static SelectList GetApprenticeshipLevels(string selectedValue = "All")
@@ -109,10 +109,10 @@
                 model.ApprenticeshipLevels = GetApprenticeshipLevels(model.ApprenticeshipLevel);
                 model.Categories = GetCategories().ToList();
 
-                return GetMediatorResponse(Codes.ApprenticeshipSearch.SearchValidation.ValidationError, model, clientResult);
+                return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.SearchValidation.ValidationError, model, clientResult);
             }
 
-            return GetMediatorResponse(Codes.ApprenticeshipSearch.SearchValidation.Ok, model);
+            return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.SearchValidation.Ok, model);
         }
 
         public MediatorResponse<ApprenticeshipSearchResponseViewModel> Results(ApprenticeshipSearchViewModel model)
@@ -149,7 +149,7 @@
 
             if (!clientResult.IsValid)
             {
-                return GetMediatorResponse(Codes.ApprenticeshipSearch.Results.ValidationError, new ApprenticeshipSearchResponseViewModel { VacancySearch = model }, clientResult);
+                return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.Results.ValidationError, new ApprenticeshipSearchResponseViewModel { VacancySearch = model }, clientResult);
             }
 
             if (!HasGeoPoint(model) && !string.IsNullOrEmpty(model.Location))
@@ -159,7 +159,7 @@
 
                 if (suggestedLocations.HasError())
                 {
-                    return GetMediatorResponse(Codes.ApprenticeshipSearch.Results.HasError, new ApprenticeshipSearchResponseViewModel { VacancySearch = model }, suggestedLocations.ViewModelMessage, UserMessageLevel.Warning);
+                    return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.Results.HasError, new ApprenticeshipSearchResponseViewModel { VacancySearch = model }, suggestedLocations.ViewModelMessage, UserMessageLevel.Warning);
                 }
 
                 if (suggestedLocations.Locations.Any())
@@ -198,7 +198,7 @@
 
             if (!locationResult.IsValid)
             {
-                return GetMediatorResponse(Codes.ApprenticeshipSearch.Results.Ok, new ApprenticeshipSearchResponseViewModel { VacancySearch = model });
+                return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.Results.Ok, new ApprenticeshipSearchResponseViewModel { VacancySearch = model });
             }
 
             RemoveInvalidSubCategories(model);
@@ -214,13 +214,13 @@
 
             if (results.HasError())
             {
-                return GetMediatorResponse(Codes.ApprenticeshipSearch.Results.HasError, new ApprenticeshipSearchResponseViewModel { VacancySearch = model }, results.ViewModelMessage, UserMessageLevel.Warning);
+                return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.Results.HasError, new ApprenticeshipSearchResponseViewModel { VacancySearch = model }, results.ViewModelMessage, UserMessageLevel.Warning);
             }
 
             if (results.ExactMatchFound)
             {
                 var id = results.Vacancies.Single().Id;
-                return GetMediatorResponse<ApprenticeshipSearchResponseViewModel>(Codes.ApprenticeshipSearch.Results.ExactMatchFound, parameters: new { id });
+                return GetMediatorResponse<ApprenticeshipSearchResponseViewModel>(ApprenticeshipSearchMediatorCodes.Results.ExactMatchFound, parameters: new { id });
             }
 
             if (model.SearchAction == SearchAction.Search && results.TotalLocalHits > 0)
@@ -232,7 +232,7 @@
             
             results.VacancySearch.SortTypes = GetSortTypes(searchModel.SortType, searchModel.Keywords, isLocalLocationType);
 
-            return GetMediatorResponse(Codes.ApprenticeshipSearch.Results.Ok, results);
+            return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.Results.Ok, results);
         }
 
         private static ApprenticeshipSearchViewModel GetSearchModel(ApprenticeshipSearchViewModel model)
@@ -306,19 +306,19 @@
 
             if (!TryParseVacancyId(vacancyIdString, out vacancyId))
             {
-                return GetMediatorResponse<VacancyDetailViewModel>(Codes.ApprenticeshipSearch.Details.VacancyNotFound);
+                return GetMediatorResponse<VacancyDetailViewModel>(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound);
             }
 
             var vacancyDetailViewModel = _apprenticeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
 
             if (vacancyDetailViewModel == null)
             {
-                return GetMediatorResponse<VacancyDetailViewModel>(Codes.ApprenticeshipSearch.Details.VacancyNotFound);
+                return GetMediatorResponse<VacancyDetailViewModel>(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound);
             }
 
             if (vacancyDetailViewModel.HasError())
             {
-                return GetMediatorResponse(Codes.ApprenticeshipSearch.Details.VacancyHasError, vacancyDetailViewModel, vacancyDetailViewModel.ViewModelMessage, UserMessageLevel.Warning);
+                return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.Details.VacancyHasError, vacancyDetailViewModel, vacancyDetailViewModel.ViewModelMessage, UserMessageLevel.Warning);
             }
 
             if ((!vacancyDetailViewModel.CandidateApplicationStatus.HasValue && vacancyDetailViewModel.VacancyStatus != VacancyStatuses.Live) ||
@@ -326,7 +326,7 @@
             {
                 // Candidate has no application for the vacancy and the vacancy is no longer live OR
                 // candidate has an application (at least a draft) but the vacancy is no longer available.
-                return GetMediatorResponse<VacancyDetailViewModel>(Codes.ApprenticeshipSearch.Details.VacancyNotFound);
+                return GetMediatorResponse<VacancyDetailViewModel>(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound);
             }
 
             var distance = UserDataProvider.Pop(CandidateDataItemNames.VacancyDistance);
@@ -340,7 +340,7 @@
 
             UserDataProvider.Push(CandidateDataItemNames.LastViewedVacancyId, vacancyId.ToString(CultureInfo.InvariantCulture));
 
-            return GetMediatorResponse(Codes.ApprenticeshipSearch.Details.Ok, vacancyDetailViewModel);
+            return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.Details.Ok, vacancyDetailViewModel);
         }
     }
 }

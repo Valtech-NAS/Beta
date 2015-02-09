@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipApplication
 {
     using System;
-    using Candidate.Mediators;
+    using Candidate.Mediators.Application;
     using Candidate.ViewModels.Applications;
     using Candidate.ViewModels.Candidate;
     using Candidate.ViewModels.VacancySearch;
@@ -28,7 +28,7 @@
             
             var response = Mediator.Save(Guid.NewGuid(), ValidVacancyId, viewModel);
 
-            response.AssertCode(Codes.ApprenticeshipApplication.Save.VacancyNotFound);
+            response.AssertCode(ApprenticeshipApplicationMediatorCodes.Save.VacancyNotFound);
         }
 
         [Test]
@@ -43,7 +43,7 @@
             
             var response = Mediator.Save(Guid.NewGuid(), ValidVacancyId, viewModel);
 
-            response.AssertMessage(Codes.ApprenticeshipApplication.Save.Error, ApplicationPageMessages.SaveFailed, UserMessageLevel.Warning, true);
+            response.AssertMessage(ApprenticeshipApplicationMediatorCodes.Save.Error, ApplicationPageMessages.SaveFailed, UserMessageLevel.Warning, true);
         }
 
         [Test]
@@ -65,7 +65,7 @@
 
             var response = Mediator.Save(Guid.NewGuid(), ValidVacancyId, viewModel);
 
-            response.AssertValidationResult(Codes.ApprenticeshipApplication.Save.ValidationError);
+            response.AssertValidationResult(ApprenticeshipApplicationMediatorCodes.Save.ValidationError);
         }
 
         [Test]
@@ -83,7 +83,7 @@
             
             var response = Mediator.Save(Guid.NewGuid(), ValidVacancyId, viewModel);
 
-            response.AssertCode(Codes.ApprenticeshipApplication.Save.Ok, true);
+            response.AssertCode(ApprenticeshipApplicationMediatorCodes.Save.Ok, true);
         }
 
         [Test]
@@ -100,7 +100,7 @@
             
             var response = Mediator.Save(Guid.NewGuid(), ValidVacancyId, viewModel);
 
-            response.AssertCode(Codes.ApprenticeshipApplication.Save.Ok, true);
+            response.AssertCode(ApprenticeshipApplicationMediatorCodes.Save.Ok, true);
         }
     }
 }

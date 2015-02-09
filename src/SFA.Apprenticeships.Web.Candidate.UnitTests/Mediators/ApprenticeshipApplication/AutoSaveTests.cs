@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipApplication
 {
     using System;
-    using Candidate.Mediators;
+    using Candidate.Mediators.Application;
     using Candidate.ViewModels.Applications;
     using Candidate.ViewModels.Candidate;
     using Candidate.ViewModels.VacancySearch;
@@ -27,7 +27,7 @@
             
             var response = Mediator.AutoSave(Guid.NewGuid(), ValidVacancyId, viewModel);
 
-            response.AssertCode(Codes.ApprenticeshipApplication.AutoSave.VacancyNotFound, true);
+            response.AssertCode(ApprenticeshipApplicationMediatorCodes.AutoSave.VacancyNotFound, true);
         }
 
         [Test]
@@ -42,7 +42,7 @@
             
             var response = Mediator.AutoSave(Guid.NewGuid(), ValidVacancyId, viewModel);
 
-            response.AssertCode(Codes.ApprenticeshipApplication.AutoSave.HasError, true);
+            response.AssertCode(ApprenticeshipApplicationMediatorCodes.AutoSave.HasError, true);
         }
 
         [Test]
@@ -64,7 +64,7 @@
             
             var response = Mediator.AutoSave(Guid.NewGuid(), ValidVacancyId, viewModel);
 
-            response.AssertValidationResult(Codes.ApprenticeshipApplication.AutoSave.ValidationError, true);
+            response.AssertValidationResult(ApprenticeshipApplicationMediatorCodes.AutoSave.ValidationError, true);
         }
 
         [Test]
@@ -81,7 +81,7 @@
             
             var response = Mediator.AutoSave(Guid.NewGuid(), ValidVacancyId, viewModel);
 
-            response.AssertCode(Codes.ApprenticeshipApplication.AutoSave.Ok, true);
+            response.AssertCode(ApprenticeshipApplicationMediatorCodes.AutoSave.Ok, true);
         }
 
         [Test]
@@ -99,7 +99,7 @@
             
             var response = Mediator.AutoSave(Guid.NewGuid(), ValidVacancyId, viewModel);
 
-            response.AssertCode(Codes.ApprenticeshipApplication.AutoSave.Ok, true);
+            response.AssertCode(ApprenticeshipApplicationMediatorCodes.AutoSave.Ok, true);
             response.ViewModel.DateTimeMessage.Should().Be("12:00:00 AM on 31/1/2015");
         }
     }

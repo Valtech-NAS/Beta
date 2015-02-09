@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators
 {
-    using Candidate.Mediators;
+    using Candidate.Mediators.Search;
     using Common.Providers;
     using Domain.Interfaces.Configuration;
     using Moq;

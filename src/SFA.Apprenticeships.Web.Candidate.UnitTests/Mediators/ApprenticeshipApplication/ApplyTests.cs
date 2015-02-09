@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipApplication
 {
     using System;
-    using Candidate.Mediators;
+    using Candidate.Mediators.Application;
     using Candidate.ViewModels.Applications;
     using Domain.Entities.Applications;
     using Moq;
@@ -20,7 +20,7 @@
             
             var response = Mediator.Apply(Guid.NewGuid(), InvalidVacancyId.ToString());
 
-            response.AssertCode(Codes.ApprenticeshipApplication.Apply.VacancyNotFound, false);
+            response.AssertCode(ApprenticeshipApplicationMediatorCodes.Apply.VacancyNotFound, false);
         }
 
         [TestCase(null)]
@@ -33,7 +33,7 @@
         {
             var response = Mediator.Apply(Guid.NewGuid(), vacancyId);
 
-            response.AssertCode(Codes.ApprenticeshipApplication.Apply.VacancyNotFound, false);
+            response.AssertCode(ApprenticeshipApplicationMediatorCodes.Apply.VacancyNotFound, false);
         }
 
         [Test]
@@ -43,7 +43,7 @@
 
             var response = Mediator.Apply(Guid.NewGuid(), InvalidVacancyId.ToString());
 
-            response.AssertCode(Codes.ApprenticeshipApplication.Apply.HasError, false);
+            response.AssertCode(ApprenticeshipApplicationMediatorCodes.Apply.HasError, false);
         }
 
         [Test]
@@ -53,7 +53,7 @@
 
             var response = Mediator.Apply(Guid.NewGuid(), ValidVacancyId.ToString());
 
-            response.AssertCode(Codes.ApprenticeshipApplication.Apply.Ok, true);
+            response.AssertCode(ApprenticeshipApplicationMediatorCodes.Apply.Ok, true);
         }
     }
 }

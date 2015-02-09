@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators
+﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
 {
     using System;
     using System.Linq;
@@ -27,19 +27,19 @@
 
             if (!TryParseVacancyId(vacancyIdString, out vacancyId))
             {
-                return GetMediatorResponse<TraineeshipApplicationViewModel>(Codes.TraineeshipApplication.Apply.VacancyNotFound);
+                return GetMediatorResponse<TraineeshipApplicationViewModel>(TraineeshipApplicationMediatorCodes.Apply.VacancyNotFound);
             }
 
             var model = _traineeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
 
             if (model.HasError())
             {
-                return GetMediatorResponse<TraineeshipApplicationViewModel>(Codes.TraineeshipApplication.Apply.HasError);
+                return GetMediatorResponse<TraineeshipApplicationViewModel>(TraineeshipApplicationMediatorCodes.Apply.HasError);
             }
 
             model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
 
-            return GetMediatorResponse(Codes.TraineeshipApplication.Apply.Ok, model);
+            return GetMediatorResponse(TraineeshipApplicationMediatorCodes.Apply.Ok, model);
         }
 
         public MediatorResponse<TraineeshipApplicationViewModel> Submit(Guid candidateId, int vacancyId, TraineeshipApplicationViewModel viewModel)
@@ -54,12 +54,12 @@
 
             if (submittedApplicationModel.ViewModelStatus == ApplicationViewModelStatus.ApplicationInIncorrectState)
             {
-                return GetMediatorResponse<TraineeshipApplicationViewModel>(Codes.TraineeshipApplication.Submit.IncorrectState);
+                return GetMediatorResponse<TraineeshipApplicationViewModel>(TraineeshipApplicationMediatorCodes.Submit.IncorrectState);
             }
             if (submittedApplicationModel.ViewModelStatus == ApplicationViewModelStatus.Error)
             {
                 // TODO: change this to something specific to traineeships?
-                return GetMediatorResponse(Codes.TraineeshipApplication.Submit.Error, viewModel, ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning, new { id = vacancyId });
+                return GetMediatorResponse(TraineeshipApplicationMediatorCodes.Submit.Error, viewModel, ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning, new { id = vacancyId });
             }
 
             var parameters = new
@@ -68,7 +68,7 @@
                 vacancyReference = submittedApplicationModel.VacancyDetail.VacancyReference,
                 vacancyTitle = submittedApplicationModel.VacancyDetail.Title
             };
-            return GetMediatorResponse<TraineeshipApplicationViewModel>(Codes.TraineeshipApplication.Submit.Ok, parameters: parameters);
+            return GetMediatorResponse<TraineeshipApplicationViewModel>(TraineeshipApplicationMediatorCodes.Submit.Ok, parameters: parameters);
         }
 
         public MediatorResponse<TraineeshipApplicationViewModel> AddEmptyQualificationRows(TraineeshipApplicationViewModel viewModel)
@@ -78,7 +78,7 @@
             viewModel.DefaultQualificationRows = 5;
             viewModel.DefaultWorkExperienceRows = 0;
 
-            return GetMediatorResponse(Codes.TraineeshipApplication.AddEmptyQualificationRows.Ok, viewModel);
+            return GetMediatorResponse(TraineeshipApplicationMediatorCodes.AddEmptyQualificationRows.Ok, viewModel);
         }
 
         public MediatorResponse<TraineeshipApplicationViewModel> AddEmptyWorkExperienceRows(TraineeshipApplicationViewModel viewModel)
@@ -89,7 +89,7 @@
             viewModel.DefaultQualificationRows = 0;
             viewModel.DefaultWorkExperienceRows = 3;
 
-            return GetMediatorResponse(Codes.TraineeshipApplication.AddEmptyWorkExperienceRows.Ok, viewModel);
+            return GetMediatorResponse(TraineeshipApplicationMediatorCodes.AddEmptyWorkExperienceRows.Ok, viewModel);
         }
 
         public MediatorResponse<WhatHappensNextViewModel> WhatHappensNext(Guid candidateId, int vacancyId, string vacancyReference, string vacancyTitle)
@@ -99,7 +99,7 @@
             // TODO: change to something specific to traineeships?
             if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
             {
-                return GetMediatorResponse<WhatHappensNextViewModel>(Codes.TraineeshipApplication.WhatHappensNext.VacancyNotFound);
+                return GetMediatorResponse<WhatHappensNextViewModel>(TraineeshipApplicationMediatorCodes.WhatHappensNext.VacancyNotFound);
             }
 
             if (model.HasError())
@@ -108,7 +108,7 @@
                 model.VacancyTitle = vacancyTitle;
             }
 
-            return GetMediatorResponse(Codes.TraineeshipApplication.WhatHappensNext.Ok, model);
+            return GetMediatorResponse(TraineeshipApplicationMediatorCodes.WhatHappensNext.Ok, model);
         }
 
         private static TraineeshipApplicationViewModel StripApplicationViewModelBeforeValidation(TraineeshipApplicationViewModel model)

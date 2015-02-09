@@ -8,6 +8,7 @@
     using Constants;
     using FluentValidation.Mvc;
     using Mediators;
+    using Mediators.Search;
     using ViewModels.VacancySearch;
 
     public class ApprenticeshipSearchController : CandidateControllerBase
@@ -49,11 +50,11 @@
 
                 switch (response.Code)
                 {
-                    case Codes.ApprenticeshipSearch.SearchValidation.ValidationError:
+                    case ApprenticeshipSearchMediatorCodes.SearchValidation.ValidationError:
                         ModelState.Clear();
                         response.ValidationResult.AddToModelState(ModelState, string.Empty);
                         return View("Index", response.ViewModel);
-                    case Codes.ApprenticeshipSearch.SearchValidation.Ok:
+                    case ApprenticeshipSearchMediatorCodes.SearchValidation.Ok:
                         return RedirectToAction("Results", model);
                 }
 
@@ -75,18 +76,18 @@
 
                 switch (response.Code)
                 {
-                    case Codes.ApprenticeshipSearch.Results.ValidationError:
+                    case ApprenticeshipSearchMediatorCodes.Results.ValidationError:
                         ModelState.Clear();
                         response.ValidationResult.AddToModelState(ModelState, string.Empty);
                         return View(response.ViewModel);
-                    case Codes.ApprenticeshipSearch.Results.HasError:
+                    case ApprenticeshipSearchMediatorCodes.Results.HasError:
                         ModelState.Clear();
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return View(response.ViewModel);
-                    case Codes.ApprenticeshipSearch.Results.ExactMatchFound:
+                    case ApprenticeshipSearchMediatorCodes.Results.ExactMatchFound:
                         ViewBag.SearchReturnUrl = null;
                         return RedirectToAction("Details", response.Parameters);
-                    case Codes.ApprenticeshipSearch.Results.Ok:
+                    case ApprenticeshipSearchMediatorCodes.Results.Ok:
                         ModelState.Remove("Location");
                         ModelState.Remove("Latitude");
                         ModelState.Remove("Longitude");
@@ -126,13 +127,13 @@
                 
                 switch (response.Code)
                 {
-                    case Codes.ApprenticeshipSearch.Details.VacancyNotFound: 
+                    case ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound: 
                         return new ApprenticeshipNotFoundResult();
-                    case Codes.ApprenticeshipSearch.Details.VacancyHasError:
+                    case ApprenticeshipSearchMediatorCodes.Details.VacancyHasError:
                         ModelState.Clear();
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return View(response.ViewModel);
-                    case Codes.ApprenticeshipSearch.Details.Ok:
+                    case ApprenticeshipSearchMediatorCodes.Details.Ok:
                         return View(response.ViewModel);
                 }
 

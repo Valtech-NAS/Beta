@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipApplication
 {
     using System;
-    using Candidate.Mediators;
+    using Candidate.Mediators.Application;
     using Candidate.ViewModels.Applications;
     using Candidate.ViewModels.Candidate;
     using Candidate.ViewModels.VacancySearch;
@@ -28,7 +28,7 @@
             
             var response = Mediator.PreviewAndSubmit(Guid.NewGuid(), ValidVacancyId, viewModel);
 
-            response.AssertCode(Codes.ApprenticeshipApplication.PreviewAndSubmit.VacancyNotFound, false);
+            response.AssertCode(ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.VacancyNotFound, false);
         }
 
         [Test]
@@ -43,7 +43,7 @@
             
             var response = Mediator.PreviewAndSubmit(Guid.NewGuid(), ValidVacancyId, viewModel);
 
-            response.AssertCode(Codes.ApprenticeshipApplication.PreviewAndSubmit.IncorrectState, false);
+            response.AssertCode(ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.IncorrectState, false);
         }
 
         [Test]
@@ -58,7 +58,7 @@
             
             var response = Mediator.PreviewAndSubmit(Guid.NewGuid(), ValidVacancyId, viewModel);
 
-            response.AssertMessage(Codes.ApprenticeshipApplication.PreviewAndSubmit.Error, ApplicationPageMessages.PreviewFailed, UserMessageLevel.Warning, true);
+            response.AssertMessage(ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.Error, ApplicationPageMessages.PreviewFailed, UserMessageLevel.Warning, true);
         }
 
         [Test]
@@ -77,7 +77,7 @@
             
             var response = Mediator.PreviewAndSubmit(Guid.NewGuid(), ValidVacancyId, viewModel);
 
-            response.AssertValidationResult(Codes.ApprenticeshipApplication.PreviewAndSubmit.ValidationError);
+            response.AssertValidationResult(ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.ValidationError);
         }
 
         [Test]
@@ -94,7 +94,7 @@
             
             var response = Mediator.PreviewAndSubmit(Guid.NewGuid(), ValidVacancyId, viewModel);
 
-            response.AssertCode(Codes.ApprenticeshipApplication.PreviewAndSubmit.Ok, false, true);
+            response.AssertCode(ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.Ok, false, true);
         }
     }
 }

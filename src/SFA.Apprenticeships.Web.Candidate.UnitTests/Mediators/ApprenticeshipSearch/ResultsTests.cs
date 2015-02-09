@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Vacancies;
-    using Candidate.Mediators;
+    using Candidate.Mediators.Search;
     using Candidate.ViewModels.VacancySearch;
     using Common.Constants;
     using Constants;
@@ -52,7 +52,7 @@
 
             var response = Mediator.Results(searchViewModel);
 
-            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
 
             var viewModel = response.ViewModel;
             viewModel.Vacancies.Should().NotBeNullOrEmpty();
@@ -73,7 +73,7 @@
 
             var response = Mediator.Results(searchViewModel);
 
-            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
 
             var viewModel = response.ViewModel;
             viewModel.Vacancies.Should().NotBeNullOrEmpty();
@@ -94,7 +94,7 @@
 
             var response = Mediator.Results(searchViewModel);
 
-            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
 
             var viewModel = response.ViewModel;
             viewModel.Vacancies.Should().NotBeNull();
@@ -112,7 +112,7 @@
 
             var response = Mediator.Results(searchViewModel);
 
-            response.AssertValidationResult(Codes.ApprenticeshipSearch.Results.ValidationError, true);
+            response.AssertValidationResult(ApprenticeshipSearchMediatorCodes.Results.ValidationError, true);
         }
 
         [Test]
@@ -125,7 +125,7 @@
 
             var response = Mediator.Results(searchViewModel);
 
-            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
 
             var viewModel = response.ViewModel;
             var sortTypes = viewModel.SortTypes.ToList();
@@ -145,7 +145,7 @@
 
             var response = Mediator.Results(searchViewModel);
 
-            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
 
             var viewModel = response.ViewModel;
             var sortTypes = viewModel.SortTypes.ToList();
@@ -168,7 +168,7 @@
 
             var response = Mediator.Results(searchViewModel);
 
-            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
 
             response.ViewModel.VacancySearch.SortType.Should().Be(VacancySearchSortType.ClosingDate);
         }
@@ -186,7 +186,7 @@
 
             var response = Mediator.Results(searchViewModel);
 
-            response.AssertMessage(Codes.ApprenticeshipSearch.Results.HasError, SomeErrorMessage, UserMessageLevel.Warning, true);
+            response.AssertMessage(ApprenticeshipSearchMediatorCodes.Results.HasError, SomeErrorMessage, UserMessageLevel.Warning, true);
         }
 
         [Test]
@@ -203,7 +203,7 @@
 
             var response = Mediator.Results(searchViewModel);
 
-            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
             response.ViewModel.LocationSearches.Should().HaveCount(numberOfSuggestedLocations);
         }
 
@@ -220,7 +220,7 @@
 
             var response = Mediator.Results(searchViewModel);
 
-            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
             response.ViewModel.VacancySearch.Should().Be(searchViewModel);
         }
 
@@ -240,7 +240,7 @@
 
             var response = Mediator.Results(searchViewModel);
 
-            response.AssertMessage(Codes.ApprenticeshipSearch.Results.HasError, SomeErrorMessage, UserMessageLevel.Warning, true);
+            response.AssertMessage(ApprenticeshipSearchMediatorCodes.Results.HasError, SomeErrorMessage, UserMessageLevel.Warning, true);
         }
 
         [Test]
@@ -260,7 +260,7 @@
 
             var response = Mediator.Results(searchViewModel);
 
-            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
             response.ViewModel.VacancySearch.LocationType = ApprenticeshipLocationType.NonNational;
         }
 
@@ -288,7 +288,7 @@
 
             var response = Mediator.Results(searchViewModel);
 
-            response.AssertCode(Codes.ApprenticeshipSearch.Results.ExactMatchFound, false, true);
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.ExactMatchFound, false, true);
         }
 
         [Test]
@@ -305,7 +305,7 @@
 
             var response = Mediator.Results(searchViewModel);
 
-            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
 
             response.ViewModel.VacancySearch.SortType.Should().Be(VacancySearchSortType.Relevancy);
         }
@@ -326,7 +326,7 @@
 
             var response = Mediator.Results(searchViewModel);
 
-            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
 
             response.ViewModel.VacancySearch.SortType.Should().Be(originalSortType);
         }
@@ -347,7 +347,7 @@
 
             var response = Mediator.Results(searchViewModel);
 
-            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
 
             response.ViewModel.VacancySearch.SortType.Should().Be(VacancySearchSortType.Relevancy);
         }
@@ -367,7 +367,7 @@
 
             var response = Mediator.Results(searchViewModel);
 
-            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
 
             response.ViewModel.VacancySearch.SortType.Should().Be(VacancySearchSortType.Distance);
         }
@@ -388,7 +388,7 @@
 
             var response = Mediator.Results(searchViewModel);
 
-            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
 
             response.ViewModel.VacancySearch.SortType.Should().Be(VacancySearchSortType.Relevancy);
         }
@@ -408,7 +408,7 @@
 
             var response = Mediator.Results(searchViewModel);
 
-            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
 
             response.ViewModel.VacancySearch.SortType.Should().Be(VacancySearchSortType.ClosingDate);
         }
@@ -459,7 +459,7 @@
 
             var response = Mediator.Results(searchViewModel);
 
-            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
 
             //The search sent to the search provider should have been modified based on the search mode
             _searchSentToSearchProvider.Should().NotBeNull();
@@ -533,7 +533,7 @@
 
             var response = Mediator.Results(searchViewModel);
 
-            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
 
             //The search sent to the search provider should have been modified based on the search mode
             _searchSentToSearchProvider.Should().NotBeNull();
@@ -573,7 +573,7 @@
 
             var response = Mediator.Results(searchViewModel);
 
-            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
 
             response.ViewModel.VacancySearch.SortType.Should().Be(VacancySearchSortType.Distance);
             var sortTypes = response.ViewModel.SortTypes.ToList();
@@ -604,7 +604,7 @@
 
             var response = Mediator.Results(searchViewModel);
 
-            response.AssertCode(Codes.ApprenticeshipSearch.Results.Ok, true);
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
 
             response.ViewModel.VacancySearch.LocationType.Should().Be(ApprenticeshipLocationType.National);
         }

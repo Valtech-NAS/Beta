@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSearch
 {
-    using Candidate.Mediators;
+    using Candidate.Mediators.Search;
     using Candidate.ViewModels.VacancySearch;
     using NUnit.Framework;
 
@@ -19,7 +19,7 @@
 
             var response = Mediator.SearchValidation(searchViewModel);
 
-            response.AssertValidationResult(Codes.ApprenticeshipSearch.SearchValidation.ValidationError, true);
+            response.AssertValidationResult(ApprenticeshipSearchMediatorCodes.SearchValidation.ValidationError, true);
         }
 
         [Test]
@@ -34,7 +34,7 @@
 
             var response = Mediator.SearchValidation(searchViewModel);
 
-            response.AssertValidationResult(Codes.ApprenticeshipSearch.SearchValidation.ValidationError, true);
+            response.AssertValidationResult(ApprenticeshipSearchMediatorCodes.SearchValidation.ValidationError, true);
         }
     }
 }
