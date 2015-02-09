@@ -36,6 +36,7 @@
             var returnedViewModel = ApprenticeshipApplicationProvider.SubmitApplication(candidateId, ValidVacancyId);
             returnedViewModel.HasError().Should().BeFalse();
             returnedViewModel.ViewModelStatus.Should().Be(ApplicationViewModelStatus.ApplicationInIncorrectState);
+            returnedViewModel.Status.Should().Be(ApplicationStatuses.Unknown);
         }
 
         [Test]
@@ -50,6 +51,7 @@
             returnedViewModel.HasError().Should().BeTrue();
             returnedViewModel.ViewModelStatus.Should().Be(ApplicationViewModelStatus.Error);
             returnedViewModel.ViewModelMessage.Should().NotBeNullOrEmpty();
+            returnedViewModel.Status.Should().Be(ApplicationStatuses.Unknown);
         }
 
         [Test]
@@ -64,6 +66,7 @@
             returnedViewModel.HasError().Should().BeTrue();
             returnedViewModel.ViewModelStatus.Should().Be(ApplicationViewModelStatus.Error);
             returnedViewModel.ViewModelMessage.Should().NotBeNullOrEmpty();
+            returnedViewModel.Status.Should().Be(ApplicationStatuses.Unknown);
         }
 
         [Test]
@@ -77,6 +80,7 @@
             returnedViewModel.HasError().Should().BeFalse();
             returnedViewModel.ViewModelStatus.Should().Be(ApplicationViewModelStatus.Ok);
             returnedViewModel.ViewModelMessage.Should().BeNullOrEmpty();
+            returnedViewModel.Status.Should().Be(ApplicationStatuses.Unknown);
         }
     }
 }

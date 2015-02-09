@@ -11,6 +11,7 @@
     public abstract class ApprenticeshipApplicationProviderTestsBase
     {
         protected const int ValidVacancyId = 1;
+        protected const int InvalidVacancyId = 999999;
 
         protected Mock<IApprenticeshipVacancyDetailProvider> ApprenticeshipVacancyDetailProvider;
         protected Mock<ICandidateService> CandidateService;
@@ -19,7 +20,7 @@
         protected ApprenticeshipApplicationProvider ApprenticeshipApplicationProvider;
 
         [SetUp]
-        public void SetUp()
+        public virtual void SetUp()
         {
             ApprenticeshipVacancyDetailProvider = new Mock<IApprenticeshipVacancyDetailProvider>();
             CandidateService = new Mock<ICandidateService>();

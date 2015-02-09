@@ -7,15 +7,24 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class ArchiveApplicationTests : ApprenticeshipApplicationProviderTestsBase
+    public class UnarchiveApplicationTests : ApprenticeshipApplicationProviderTestsBase
     {
+        private Guid _candidateId;
+
+        [SetUp]
+        public override void SetUp()
+        {
+            base.SetUp();
+
+            _candidateId = Guid.NewGuid();
+        }
+
         [Test]
         public void GivenException_ThenFailedApplicationViewModelIsReturned()
         {
-            var candidateId = Guid.NewGuid();
-            CandidateService.Setup(cs => cs.ArchiveApplication(candidateId, ValidVacancyId)).Throws<Exception>();
+            CandidateService.Setup(cs => cs.UnarchiveApplication(_candidateId, ValidVacancyId)).Throws<Exception>();
 
-            var returnedViewModel = ApprenticeshipApplicationProvider.ArchiveApplication(candidateId, ValidVacancyId);
+            var returnedViewModel = ApprenticeshipApplicationProvider.UnarchiveApplication(_candidateId, ValidVacancyId);
             returnedViewModel.HasError().Should().BeTrue();
             returnedViewModel.ViewModelStatus.Should().Be(ApplicationViewModelStatus.Error);
             returnedViewModel.ViewModelMessage.Should().NotBeNullOrEmpty();
@@ -23,10 +32,9 @@
         }
 
         [Test]
-        public void GivenSuccessfulArchive_ThenSuccessfulViewModelIsReturned()
+        public void GivenSuccessfulUnarchive_ThenSuccessfulViewModelIsReturned()
         {
-            var candidateId = Guid.NewGuid();
-            var returnedViewModel = ApprenticeshipApplicationProvider.ArchiveApplication(candidateId, ValidVacancyId);
+            var returnedViewModel = ApprenticeshipApplicationProvider.UnarchiveApplication(_candidateId, ValidVacancyId);
             returnedViewModel.HasError().Should().BeFalse();
             returnedViewModel.ViewModelStatus.Should().Be(ApplicationViewModelStatus.Ok);
             returnedViewModel.ViewModelMessage.Should().BeNullOrEmpty();

@@ -35,6 +35,7 @@
             viewModel.ViewModelStatus.Should().Be(ApplicationViewModelStatus.ApplicationNotFound);
             viewModel.ViewModelMessage.Should().Be(MyApplicationsPageMessages.ApplicationNotFound);
             viewModel.HasError().Should().BeTrue();
+            viewModel.Status.Should().Be(ApplicationStatuses.Unknown);
         }
 
         [Test]
@@ -48,6 +49,7 @@
             viewModel.ViewModelStatus.Should().Be(ApplicationViewModelStatus.ApplicationInIncorrectState);
             viewModel.ViewModelMessage.Should().Be(MyApplicationsPageMessages.ApplicationInIncorrectState);
             viewModel.HasError().Should().BeTrue();
+            viewModel.Status.Should().Be(ApplicationStatuses.Unknown);
         }
 
         [Test]
@@ -61,6 +63,7 @@
             viewModel.ViewModelStatus.Should().Be(ApplicationViewModelStatus.Error);
             viewModel.ViewModelMessage.Should().Be(MyApplicationsPageMessages.UnhandledError);
             viewModel.HasError().Should().BeTrue();
+            viewModel.Status.Should().Be(ApplicationStatuses.Unknown);
         }
 
         [Test]
@@ -74,6 +77,7 @@
             viewModel.ViewModelStatus.Should().Be(ApplicationViewModelStatus.Error);
             viewModel.ViewModelMessage.Should().Be(MyApplicationsPageMessages.CreateOrRetrieveApplicationFailed);
             viewModel.HasError().Should().BeTrue();
+            viewModel.Status.Should().Be(ApplicationStatuses.Unknown);
         }
 
         [Test]
