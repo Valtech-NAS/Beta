@@ -2,10 +2,8 @@
 {
     using System;
     using System.Web.Routing;
-    using Candidate.ViewModels;
     using Candidate.ViewModels.Account;
     using Candidate.ViewModels.Applications;
-    using Candidate.ViewModels.Locations;
     using Candidate.Views.Account;
     using FluentAssertions;
     using NUnit.Framework;

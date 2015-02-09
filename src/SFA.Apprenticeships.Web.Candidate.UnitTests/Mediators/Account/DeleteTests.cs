@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
 {
     using System;
-    using Candidate.Mediators;
     using Candidate.Mediators.Account;
     using Candidate.Providers;
     using Candidate.Validators;
@@ -56,7 +55,7 @@
             _apprenticeshipApplicationProviderMock.Setup(x => x.GetApplicationViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(applicationView);
 
             var response = _accountMediator.Delete(Guid.NewGuid(), 1);
-            response.Code.Should().Be(Codes.AccountMediator.Delete.AlreadyDeleted);
+            response.Code.Should().Be(AccountMediatorCodes.Delete.AlreadyDeleted);
             response.Message.Text.Should().Be(MyApplicationsPageMessages.ApplicationDeleted);
             response.Message.Level.Should().Be(UserMessageLevel.Warning);
         }
@@ -70,7 +69,7 @@
             _apprenticeshipApplicationProviderMock.Setup(x => x.DeleteApplication(It.IsAny<Guid>(), It.IsAny<int>())).Returns(errorApplicationView);
 
             var response = _accountMediator.Delete(Guid.NewGuid(), 1);
-            response.Code.Should().Be(Codes.AccountMediator.Delete.ErrorDeleting);
+            response.Code.Should().Be(AccountMediatorCodes.Delete.ErrorDeleting);
             response.Message.Text.Should().Be("Error deleting");
             response.Message.Level.Should().Be(UserMessageLevel.Warning);
         }
@@ -89,7 +88,7 @@
             _apprenticeshipApplicationProviderMock.Setup(x => x.DeleteApplication(It.IsAny<Guid>(), It.IsAny<int>())).Returns(successApplicationView);
 
             var response = _accountMediator.Delete(Guid.NewGuid(), 1);
-            response.Code.Should().Be(Codes.AccountMediator.Delete.SuccessfullyDeleted);
+            response.Code.Should().Be(AccountMediatorCodes.Delete.SuccessfullyDeleted);
             response.Message.Should().NotBeNull();
             response.Message.Text.Should().Be("Vac title");
             response.Message.Level.Should().Be(UserMessageLevel.Success);
@@ -109,7 +108,7 @@
             _apprenticeshipApplicationProviderMock.Setup(x => x.DeleteApplication(It.IsAny<Guid>(), It.IsAny<int>())).Returns(new ApprenticeshipApplicationViewModel());
 
             var response = _accountMediator.Delete(Guid.NewGuid(), 1);
-            response.Code.Should().Be(Codes.AccountMediator.Delete.SuccessfullyDeletedExpiredOrWithdrawn);
+            response.Code.Should().Be(AccountMediatorCodes.Delete.SuccessfullyDeletedExpiredOrWithdrawn);
             response.Message.Should().NotBeNull();
             response.Message.Text.Should().Be(MyApplicationsPageMessages.ApplicationDeleted);
             response.Message.Level.Should().Be(UserMessageLevel.Success);

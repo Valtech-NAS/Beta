@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
 {
     using System;
-    using Candidate.Mediators;
     using Candidate.Mediators.Account;
     using Candidate.Providers;
     using Candidate.Validators;
@@ -55,7 +54,7 @@
             var settingsViewModel = new SettingsViewModel();
 
             var response = _accountMediator.SaveSettings(Guid.NewGuid(), settingsViewModel);
-            response.Code.Should().Be(Codes.AccountMediator.Settings.ValidationError);
+            response.Code.Should().Be(AccountMediatorCodes.Settings.ValidationError);
             response.ViewModel.Should().Be(settingsViewModel);
             response.ValidationResult.Should().NotBeNull();
         }
@@ -82,7 +81,7 @@
             _accountProviderMock.Setup(x => x.SaveSettings(It.IsAny<Guid>(), It.IsAny<SettingsViewModel>())).Returns(true);
 
             var response = _accountMediator.SaveSettings(Guid.NewGuid(), settingsViewModel);
-            response.Code.Should().Be(Codes.AccountMediator.Settings.Success);
+            response.Code.Should().Be(AccountMediatorCodes.Settings.Success);
             response.ViewModel.Should().Be(settingsViewModel);
         }
 
@@ -108,7 +107,7 @@
             _accountProviderMock.Setup(x => x.SaveSettings(It.IsAny<Guid>(), It.IsAny<SettingsViewModel>())).Returns(false);
 
             var response = _accountMediator.SaveSettings(Guid.NewGuid(), settingsViewModel);
-            response.Code.Should().Be(Codes.AccountMediator.Settings.SaveError);
+            response.Code.Should().Be(AccountMediatorCodes.Settings.SaveError);
             response.ViewModel.Should().Be(settingsViewModel);
             response.Message.Text.Should().Be(AccountPageMessages.SettingsUpdateFailed);
             response.Message.Level.Should().Be(UserMessageLevel.Warning);
@@ -119,7 +118,7 @@
         {
             _accountProviderMock.Setup(x => x.GetSettingsViewModel(It.IsAny<Guid>())).Returns(new SettingsViewModel());
             var response = _accountMediator.Settings(Guid.NewGuid());
-            response.AssertCode(Codes.AccountMediator.Settings.Success);
+            response.AssertCode(AccountMediatorCodes.Settings.Success);
         }
     }
 }

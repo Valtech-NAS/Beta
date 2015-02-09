@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
 {
     using System;
-    using Candidate.Mediators;
     using Candidate.Mediators.Account;
     using Candidate.Providers;
     using Candidate.Validators;
@@ -54,7 +53,7 @@
             var response = _accountMediator.DismissTraineeshipPrompts(Guid.NewGuid());
 
             response.Should().NotBeNull();
-            response.Code.Should().Be(Codes.AccountMediator.DismissTraineeshipPrompts.SuccessfullyDismissed);
+            response.Code.Should().Be(AccountMediatorCodes.DismissTraineeshipPrompts.SuccessfullyDismissed);
         }
 
         [Test]
@@ -65,7 +64,7 @@
             var response = _accountMediator.DismissTraineeshipPrompts(Guid.NewGuid());
 
             response.Should().NotBeNull();
-            response.Code.Should().Be(Codes.AccountMediator.DismissTraineeshipPrompts.ErrorDismissing);
+            response.Code.Should().Be(AccountMediatorCodes.DismissTraineeshipPrompts.ErrorDismissing);
             response.Message.Text.Should().Be(MyApplicationsPageMessages.DismissTraineeshipPromptsFailed);
             response.Message.Level.Should().Be(UserMessageLevel.Error);
         }

@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
 {
     using System;
-    using Candidate.Mediators;
     using Candidate.Mediators.Account;
     using Candidate.Providers;
     using Candidate.Validators;
@@ -54,7 +53,7 @@
             _apprenticeshipApplicationProviderMock.Setup(x => x.ArchiveApplication(It.IsAny<Guid>(), It.IsAny<int>())).Returns(applicationView);
 
             var response = _accountMediator.Archive(Guid.NewGuid(), 1);
-            response.Code.Should().Be(Codes.AccountMediator.Archive.SuccessfullyArchived);
+            response.Code.Should().Be(AccountMediatorCodes.Archive.SuccessfullyArchived);
             response.Message.Text.Should().Be(MyApplicationsPageMessages.ApplicationArchived);
             response.Message.Level.Should().Be(UserMessageLevel.Success);
         }
@@ -66,7 +65,7 @@
             _apprenticeshipApplicationProviderMock.Setup(x => x.ArchiveApplication(It.IsAny<Guid>(), It.IsAny<int>())).Returns(applicationView);
 
             var response = _accountMediator.Archive(Guid.NewGuid(), 1);
-            response.Code.Should().Be(Codes.AccountMediator.Archive.ErrorArchiving);
+            response.Code.Should().Be(AccountMediatorCodes.Archive.ErrorArchiving);
             response.Message.Text.Should().Be("Has error");
             response.Message.Level.Should().Be(UserMessageLevel.Warning);
         }

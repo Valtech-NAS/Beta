@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
 {
     using System;
-    using Candidate.Mediators;
     using Candidate.Mediators.Account;
     using Candidate.Providers;
     using Candidate.Validators;
@@ -59,7 +58,7 @@
             _candidateServiceProviderMock.Setup(x => x.AcceptTermsAndConditions(It.IsAny<Guid>(), It.IsAny<string>())).Returns(true);
             var response = _accountMediator.AcceptTermsAndConditions(Guid.NewGuid());
 
-            response.Code.Should().Be(Codes.AccountMediator.AcceptTermsAndConditions.SuccessfullyAccepted);
+            response.Code.Should().Be(AccountMediatorCodes.AcceptTermsAndConditions.SuccessfullyAccepted);
         }
 
         [Test]
@@ -76,7 +75,7 @@
 
             var response = _accountMediator.AcceptTermsAndConditions(Guid.NewGuid());
 
-            response.Code.Should().Be(Codes.AccountMediator.AcceptTermsAndConditions.AlreadyAccepted);
+            response.Code.Should().Be(AccountMediatorCodes.AcceptTermsAndConditions.AlreadyAccepted);
         }
 
         [Test]
@@ -93,7 +92,7 @@
 
             var response = _accountMediator.AcceptTermsAndConditions(Guid.NewGuid());
 
-            response.Code.Should().Be(Codes.AccountMediator.AcceptTermsAndConditions.ErrorAccepting);
+            response.Code.Should().Be(AccountMediatorCodes.AcceptTermsAndConditions.ErrorAccepting);
         }
 
         [Test]
@@ -103,7 +102,7 @@
             _configurationManagerMock.Setup(x => x.GetAppSetting<string>("TermsAndConditionsVersion")).Returns("1.1");
             var response = _accountMediator.AcceptTermsAndConditions(Guid.NewGuid());
 
-            response.Code.Should().Be(Codes.AccountMediator.AcceptTermsAndConditions.ErrorAccepting);
+            response.Code.Should().Be(AccountMediatorCodes.AcceptTermsAndConditions.ErrorAccepting);
         }
     }
 }

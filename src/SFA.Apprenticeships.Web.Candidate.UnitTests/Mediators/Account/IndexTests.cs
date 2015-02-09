@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using Candidate.Mediators;
     using Candidate.Mediators.Account;
     using Candidate.Providers;
     using Candidate.Validators;
@@ -55,7 +54,7 @@
             _apprenticeshipApplicationProviderMock.Setup(x => x.GetMyApplications(It.IsAny<Guid>())).Returns(_emptyMyApplicationsView);
 
             var response = _accountMediator.Index(Guid.NewGuid(), "deletedVacancyId", "deletedVacancyTitle");
-            response.Code.Should().Be(Codes.AccountMediator.Index.Success);
+            response.Code.Should().Be(AccountMediatorCodes.Index.Success);
             response.ViewModel.Should().Be(_emptyMyApplicationsView);
             response.ViewModel.DeletedVacancyId.Should().Be("deletedVacancyId");
             response.ViewModel.DeletedVacancyTitle.Should().Be("deletedVacancyTitle");

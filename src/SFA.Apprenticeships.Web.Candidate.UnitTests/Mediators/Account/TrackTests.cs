@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
 {
     using System;
-    using Candidate.Mediators;
     using Candidate.Mediators.Account;
     using Candidate.Providers;
     using Candidate.Validators;
@@ -55,7 +54,7 @@
 
             var response = _accountMediator.Track(Guid.NewGuid(), 1);
 
-            response.Code.Should().Be(Codes.AccountMediator.Track.SuccessfullyTracked);
+            response.Code.Should().Be(AccountMediatorCodes.Track.SuccessfullyTracked);
             response.Message.Should().BeNull();
         }
 
@@ -68,7 +67,7 @@
 
             var response = _accountMediator.Track(Guid.NewGuid(), 1);
 
-            response.Code.Should().Be(Codes.AccountMediator.Track.ErrorTracking);
+            response.Code.Should().Be(AccountMediatorCodes.Track.ErrorTracking);
             response.Message.Text.Should().Be(applicationView.ViewModelMessage);
             response.Message.Level.Should().Be(UserMessageLevel.Warning);
         }
