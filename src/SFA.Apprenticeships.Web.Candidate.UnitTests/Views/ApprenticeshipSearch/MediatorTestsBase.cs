@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Views.ApprenticeshipSearch
 {
     using System.Collections.Generic;
-    using System.Web.Routing;
     using Application.Interfaces.ReferenceData;
     using Candidate.Mediators.Search;
     using Candidate.Providers;
@@ -12,7 +11,7 @@
     using Moq;
     using NUnit.Framework;
 
-    public abstract class MediatorTestsBase
+    public abstract class MediatorTestsBase : ViewUnitTest
     {
         protected Mock<IApprenticeshipVacancyDetailProvider> ApprenticeshipVacancyDetailProvider;
         protected Mock<IConfigurationManager> ConfigurationManager;
@@ -22,7 +21,7 @@
         protected IApprenticeshipSearchMediator Mediator;
 
         [SetUp]
-        public virtual void SetUp()
+        public virtual void SetUpMethod()
         {
             //Use the mediator so that we get an accurate view model for testing
             ApprenticeshipVacancyDetailProvider = new Mock<IApprenticeshipVacancyDetailProvider>();
@@ -34,9 +33,6 @@
             ReferenceDataService = new Mock<IReferenceDataService>();
             ReferenceDataService.Setup(rds => rds.GetCategories()).Returns(GetCategories);
             Mediator = new ApprenticeshipSearchMediator(ConfigurationManager.Object, SearchProvider.Object, ApprenticeshipVacancyDetailProvider.Object, UserDataProvider.Object, ReferenceDataService.Object, new ApprenticeshipSearchViewModelServerValidator(), new ApprenticeshipSearchViewModelLocationValidator());
-
-            RouteTable.Routes.Clear();
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
         }
 
         private static IEnumerable<Category> GetCategories()

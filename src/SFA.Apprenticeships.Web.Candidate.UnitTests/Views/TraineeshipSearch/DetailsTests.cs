@@ -3,7 +3,6 @@
     using System.Collections;
     using System.Collections.Specialized;
     using System.Web;
-    using System.Web.Routing;
     using Candidate.ViewModels.Locations;
     using Candidate.ViewModels.VacancySearch;
     using Candidate.Views.TraineeshipSearch;
@@ -13,17 +12,10 @@
     using RazorGenerator.Testing;
 
     [TestFixture]
-    public class DetailsTests
+    public class DetailsTests : ViewUnitTest
     {
         private const string NoValue = null;
         private const string SomeString = "some string";
-
-        [SetUp]
-        public void SetUp()
-        {
-            RouteTable.Routes.Clear();
-            RouteConfig.RegisterRoutes(RouteTable.Routes);            
-        }
 
         [Test]
         public void ShouldShowSearchReturnUrlLink()
