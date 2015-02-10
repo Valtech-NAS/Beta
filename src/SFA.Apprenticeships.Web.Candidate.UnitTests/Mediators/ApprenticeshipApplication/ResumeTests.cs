@@ -30,7 +30,13 @@
         [Test]
         public void Ok()
         {
-            ApprenticeshipApplicationProvider.Setup(p => p.GetOrCreateApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel());
+            ApprenticeshipApplicationProvider.Setup(p => p.GetOrCreateApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel
+            {
+                VacancyDetail = new VacancyDetailViewModel
+                {
+                    VacancyStatus = VacancyStatuses.Live
+                }
+            });
             
             var response = Mediator.Resume(Guid.NewGuid(), ValidVacancyId);
 
