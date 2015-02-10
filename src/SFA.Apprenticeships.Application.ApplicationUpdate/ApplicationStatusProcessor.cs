@@ -162,6 +162,7 @@
                 _logger.Debug("Unable to find/update apprenticeship application status for application with legacy application ID '{0}'", applicationStatusSummary.LegacyApplicationId);
                 return false;
             }
+
             return _applicationStatusUpdateStrategy.Update(apprenticeshipApplicationDetail, applicationStatusSummary);
         }
 

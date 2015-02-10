@@ -56,6 +56,7 @@
                 LegacyVacancyId = applicationStatusSummary.LegacyVacancyId,
                 VacancyStatus = applicationStatusSummary.VacancyStatus
             };
+
             _bus.PublishMessage(vss);
 
             return true;
@@ -81,6 +82,7 @@
             }
 
             _traineeshipApplicationWriteRepository.Save(traineeeshipApplication);
+
             return true;
         }
     }
