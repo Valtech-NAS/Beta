@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Applications
 {
     using System;
+    using System.Linq;
     using ApplicationUpdate;
     using ApplicationUpdate.Entities;
     using ApplicationUpdate.Strategies;
@@ -42,21 +43,44 @@
         public void ShouldQueueApplicationStatusSummaryForEachApplication()
         {
             //Would never get back from both app and trn but just checking right things are called
-            var apprenticeshipApplicationSummaries = Builder<ApprenticeshipApplicationSummary>.CreateListOfSize(4).All().With(x=> x.LegacyVacancyId = 123).Build();
-            var traineeshipApplicationSummaries = Builder<TraineeshipApplicationSummary>.CreateListOfSize(3).All().With(x => x.LegacyVacancyId = 123).Build();
+            var apprenticeshipApplicationSummaries =
+                Enumerable.Repeat(new ApprenticeshipApplicationSummary
+                {
+                    Status = ApplicationStatuses.Draft,
+                    LegacyVacancyId = 123
+                }, 4);
+
+            var traineeshipApplicationSummaries =
+                Enumerable.Repeat(new TraineeshipApplicationSummary
+                {
+                    LegacyVacancyId = 456
+                }, 3);
 
             _bus.Setup(x => x.PublishMessage(It.IsAny<ApplicationStatusSummary>()));
 
             _apprenticeshipApplicationReadMock.Setup(
-                x => x.GetApplicationSummaries(It.IsAny<int>()))
+                x => x.GetApplicationSummaries(It.Is<int>(id => id == 123)))
                 .Returns(apprenticeshipApplicationSummaries);
 
             _traineeshipApplicationReadMock.Setup(
-                x => x.GetApplicationSummaries(It.IsAny<int>()))
+                x => x.GetApplicationSummaries(It.Is<int>(id => id == 456)))
                 .Returns(traineeshipApplicationSummaries);
 
             var closingDate = DateTime.Now.AddMonths(-2);
-            _applicationStatusProcessor.ProcessApplicationStatuses(123, VacancyStatuses.Expired, closingDate);
+
+            _applicationStatusProcessor.ProcessApplicationStatuses(new VacancyStatusSummary
+            {
+                LegacyVacancyId = 123,
+                VacancyStatus = VacancyStatuses.Expired,
+                ClosingDate = closingDate
+            });
+
+            _applicationStatusProcessor.ProcessApplicationStatuses(new VacancyStatusSummary
+            {
+                LegacyVacancyId = 456,
+                VacancyStatus = VacancyStatuses.Expired,
+                ClosingDate = closingDate
+            });
 
             _apprenticeshipApplicationReadMock.Verify(
                 x =>
@@ -66,16 +90,15 @@
             _traineeshipApplicationReadMock.Verify(
                 x =>
                     x.GetApplicationSummaries(
-                        It.Is<int>(id => id == 123)), Times.Once);
+                        It.Is<int>(id => id == 456)), Times.Once);
 
             _bus.Verify(
                 x =>
                     x.PublishMessage(
                         It.Is<ApplicationStatusSummary>(
                             ass =>
-                                ass.LegacyVacancyId == 123 && ass.ClosingDate == closingDate &&
+                                (ass.LegacyVacancyId == 123 || ass.LegacyVacancyId == 456) && ass.ClosingDate == closingDate &&
                                 ass.VacancyStatus == VacancyStatuses.Expired)), Times.Exactly(7));
         }
-
     }
 }

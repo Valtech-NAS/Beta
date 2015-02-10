@@ -34,7 +34,7 @@
 
                 _cacheService.PutObject(message.CacheKey(), message, message.CacheDuration());
 
-                _applicationStatusProcessor.ProcessApplicationStatuses(message.LegacyVacancyId, message.VacancyStatus, message.ClosingDate);
+                _applicationStatusProcessor.ProcessApplicationStatuses(message);
             });
         }
     }

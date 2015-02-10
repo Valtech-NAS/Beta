@@ -3,12 +3,9 @@
     using System;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Repositories;
-    using Interfaces.Logging;
 
     public class ApplicationVacancyUpdater : IApplicationVacancyUpdater
     {
-        private readonly ILogService _logger;
-
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
         private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
         private readonly ITraineeshipApplicationReadRepository _traineeshipApplicationReadRepository;
@@ -18,18 +15,18 @@
             IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository,
             IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
             ITraineeshipApplicationWriteRepository traineeshipApplicationWriteRepository,
-            ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository, ILogService logger)
+            ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository)
         {
             _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
             _traineeshipApplicationWriteRepository = traineeshipApplicationWriteRepository;
             _traineeshipApplicationReadRepository = traineeshipApplicationReadRepository;
-            _logger = logger;
         }
 
         public void Update(Guid candidateId, int vacancyId, VacancyDetail vacancyDetail)
         {
             // Try apprenticeships first, the majority should be apprenticeships.
+            // Note that it is possible for a candidate to have no application for this vacancy.
             var apprenticeshipApplication = _apprenticeshipApplicationReadRepository.GetForCandidate(candidateId, vacancyId);
             var updated = false;
 
@@ -74,13 +71,6 @@
                     {
                         _traineeshipApplicationWriteRepository.Save(traineeshipApplication);
                     }
-                }
-                else
-                {
-                    //todo: shouldn't warn as may have been called for a vacancy the candidate doesn't have an application for
-                    _logger.Warn(
-                        "Unable to find apprenticeship or traineeship application for candiate ID {0} with legacy vacancy ID \"{1}\".",
-                        candidateId, vacancyId);
                 }
             }
         }

@@ -10,6 +10,9 @@
 
         public int LegacyApplicationId { get; set; }
 
+        // TODO: map LegacyCandidateId.
+        // public int LegacyCandidateId { get; set; }
+
         public ApplicationStatuses ApplicationStatus { get; set; }
 
         public int LegacyVacancyId { get; set; }

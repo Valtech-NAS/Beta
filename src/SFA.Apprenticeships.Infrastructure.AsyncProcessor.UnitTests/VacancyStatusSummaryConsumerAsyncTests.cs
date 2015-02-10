@@ -28,23 +28,22 @@
         [Test]
         public void ShouldNotQueueWhenInCache()
         {
-            _applicationStatusProcessor.Setup(x => x.ProcessApplicationStatuses(It.IsAny<int>(), It.IsAny<VacancyStatuses>(), It.IsAny<DateTime>()));
+            _applicationStatusProcessor.Setup(x => x.ProcessApplicationStatuses(It.IsAny<VacancyStatusSummary>()));
             _cacheServiceMock.Setup(x => x.Get<VacancyStatusSummary>(It.IsAny<string>())).Returns(new VacancyStatusSummary());
 
             var task = _vacancyStatusSummaryConsumerAsync.Consume(new VacancyStatusSummary());
             task.Wait();
 
             _cacheServiceMock.Verify(x => x.PutObject(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<CacheDuration>()), Times.Never);
-            _applicationStatusProcessor.Verify(x => x.ProcessApplicationStatuses(It.IsAny<int>(), It.IsAny<VacancyStatuses>(), It.IsAny<DateTime>()), Times.Never);
+            _applicationStatusProcessor.Verify(x => x.ProcessApplicationStatuses(It.IsAny<VacancyStatusSummary>()), Times.Never);
         }
 
         [Test]
         public void ShouldPutInCacheWhenNotInCache()
         {
             var vacancyStatusSummary = new VacancyStatusSummary { LegacyVacancyId = 123, ClosingDate = DateTime.Now.AddMonths(-3), VacancyStatus = VacancyStatuses.Expired };
-            _applicationStatusProcessor.Setup(x => x.ProcessApplicationStatuses(It.IsAny<int>(), It.IsAny<VacancyStatuses>(), It.IsAny<DateTime>()));
+            _applicationStatusProcessor.Setup(x => x.ProcessApplicationStatuses(It.IsAny<VacancyStatusSummary>()));
             _cacheServiceMock.Setup(x => x.PutObject(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<CacheDuration>()));
-            _applicationStatusProcessor.Setup(x => x.ProcessApplicationStatuses(It.IsAny<int>(), It.IsAny<VacancyStatuses>(), It.IsAny<DateTime>()));
 
             var task = _vacancyStatusSummaryConsumerAsync.Consume(vacancyStatusSummary);
             task.Wait();
@@ -59,9 +58,7 @@
             _applicationStatusProcessor.Verify(
                 x =>
                     x.ProcessApplicationStatuses(
-                        It.Is<int>(i => i == vacancyStatusSummary.LegacyVacancyId),
-                        It.Is<VacancyStatuses>(vs => vs == VacancyStatuses.Expired),
-                        It.Is<DateTime>(cd => cd == vacancyStatusSummary.ClosingDate)), Times.Once);
+                        It.Is<VacancyStatusSummary>(i => i == vacancyStatusSummary)), Times.Once);
         }
     }
 }

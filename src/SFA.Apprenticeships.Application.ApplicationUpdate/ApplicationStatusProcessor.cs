@@ -93,12 +93,12 @@
             }
         }
 
-        public void ProcessApplicationStatuses(int legacyVacancyId, VacancyStatuses vacancyStatus, DateTime closingDate)
+        public void ProcessApplicationStatuses(VacancyStatusSummary vacancyStatusSummary)
         {
             try
             {
-                QueueApprenticeshipApplicationStatusSummaries(legacyVacancyId, vacancyStatus, closingDate);
-                QueueTraineeshipApplicationStatusSummaries(legacyVacancyId, vacancyStatus, closingDate);
+                QueueApprenticeshipApplicationStatusSummaries(vacancyStatusSummary);
+                QueueTraineeshipApplicationStatusSummaries(vacancyStatusSummary);
             }
             catch (Exception ex)
             {
@@ -106,47 +106,49 @@
             }
         }
 
-        private void QueueApprenticeshipApplicationStatusSummaries(int legacyVacancyId, VacancyStatuses vacancyStatus, DateTime closingDate)
+        private void QueueApprenticeshipApplicationStatusSummaries(VacancyStatusSummary vacancyStatusSummary)
         {
-            var applicationSummaries = _apprenticeshipApplicationReadRepository.GetApplicationSummaries(legacyVacancyId);
-            var applicationStatusSummaries =
-                applicationSummaries.Select(
-                    x =>
-                        new ApplicationStatusSummary
-                        {
-                            ApplicationId = x.ApplicationId,
-                            LegacyApplicationId = x.LegacyApplicationId,
-                            ApplicationStatus = x.Status,
-                            VacancyStatus = vacancyStatus,
-                            LegacyVacancyId = x.LegacyVacancyId,
-                            ClosingDate = closingDate,
-                            UnsuccessfulReason = x.UnsuccessfulReason
-                        });
+            var applicationSummaries = _apprenticeshipApplicationReadRepository.GetApplicationSummaries(vacancyStatusSummary.LegacyVacancyId);
+            var applicationSummaryStates = new[] { ApplicationStatuses.Draft, ApplicationStatuses.Submitting, ApplicationStatuses.Submitted };
 
-            //TODO: Think how to reduce applications that need processed based on their status.
+            var applicationStatusSummaries = applicationSummaries
+                .Select(applicationSummary =>
+                    new ApplicationStatusSummary
+                    {
+                        ApplicationId = applicationSummary.ApplicationId,
+                        LegacyApplicationId = applicationSummary.LegacyApplicationId,
+                        LegacyVacancyId = applicationSummary.LegacyVacancyId,
+                        ApplicationStatus = applicationSummary.Status,
+                        VacancyStatus = vacancyStatusSummary.VacancyStatus,
+                        ClosingDate = vacancyStatusSummary.ClosingDate,
+                        UnsuccessfulReason = applicationSummary.UnsuccessfulReason
+                    })
+                .Where(applicationSummary => applicationSummaryStates.Contains(applicationSummary.ApplicationStatus));
+
             Parallel.ForEach(
                 applicationStatusSummaries,
                 new ParallelOptions { MaxDegreeOfParallelism = 5 },
                 applicationStatusSummary => _messageBus.PublishMessage(applicationStatusSummary));
         }
 
-        private void QueueTraineeshipApplicationStatusSummaries(int legacyVacancyId, VacancyStatuses vacancyStatus, DateTime closingDate)
+        private void QueueTraineeshipApplicationStatusSummaries(VacancyStatusSummary vacancyStatusSummary)
         {
-            var applicationSummaries = _traineeshipApplicationReadRepository.GetApplicationSummaries(legacyVacancyId);
-            var applicationStatusSummaries =
-                applicationSummaries.Select(
-                    x =>
-                        new ApplicationStatusSummary
-                        {
-                            ApplicationId = x.ApplicationId,
-                            LegacyApplicationId = x.LegacyApplicationId,
-                            ApplicationStatus = ApplicationStatuses.Submitted,
-                            VacancyStatus = vacancyStatus,
-                            LegacyVacancyId = x.LegacyVacancyId,
-                            ClosingDate = closingDate
-                        });
+            var applicationSummaries = _traineeshipApplicationReadRepository.GetApplicationSummaries(vacancyStatusSummary.LegacyVacancyId);
 
-            //TODO: Think how to reduce applications that need processed based on their status.
+            var applicationStatusSummaries = applicationSummaries
+                .Select(applicationSummary =>
+                    new ApplicationStatusSummary
+                    {
+                        ApplicationId = applicationSummary.ApplicationId,
+                        LegacyApplicationId = applicationSummary.LegacyApplicationId,
+                        LegacyVacancyId = applicationSummary.LegacyVacancyId,
+                        ApplicationStatus = ApplicationStatuses.Submitted,
+                        VacancyStatus = vacancyStatusSummary.VacancyStatus,
+                        ClosingDate = vacancyStatusSummary.ClosingDate
+                    });
+
+            // TODO: Think how to reduce applications that need processing based on their status.
+            // TODO: Think about why we are processing traineeship application status updates.
             Parallel.ForEach(
                 applicationStatusSummaries,
                 new ParallelOptions { MaxDegreeOfParallelism = 5 },
@@ -155,6 +157,7 @@
 
         private bool ProcessApprenticeshipsApplication(ApplicationStatusSummary applicationStatusSummary)
         {
+            // TODO: get application by Legacy Candidate and Legacy Vacancy Id. This will enable Legacy Application Id to be 'back-filled'.
             var apprenticeshipApplicationDetail = _apprenticeshipApplicationReadRepository.Get(applicationStatusSummary.LegacyApplicationId);
 
             if (apprenticeshipApplicationDetail == null)
@@ -168,6 +171,7 @@
 
         private bool ProcessTraineeshipsApplication(ApplicationStatusSummary applicationStatusSummary)
         {
+            // TODO: get application by Legacy Candidate and Legacy Vacancy Id. This will enable Legacy Application Id to be 'back-filled'.
             var traineeshipApplicationDetail = _traineeshipApplicationReadRepository.Get(applicationStatusSummary.LegacyApplicationId);
 
             if (traineeshipApplicationDetail == null)

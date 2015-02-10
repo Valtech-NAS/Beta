@@ -52,8 +52,8 @@
             // note, to force vacancy status updates for users with draft applications for this vacancy
             var vss = new VacancyStatusSummary
             {
-                ClosingDate = applicationStatusSummary.ClosingDate,
                 LegacyVacancyId = applicationStatusSummary.LegacyVacancyId,
+                ClosingDate = applicationStatusSummary.ClosingDate,
                 VacancyStatus = applicationStatusSummary.VacancyStatus
             };
 

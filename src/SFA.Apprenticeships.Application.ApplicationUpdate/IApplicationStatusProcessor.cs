@@ -12,6 +12,6 @@
 
         void ProcessApplicationStatuses(ApplicationStatusSummary applicationStatusSummary);
 
-        void ProcessApplicationStatuses(int legacyVacancyId, VacancyStatuses vacancyStatus, DateTime closingDate);
+        void ProcessApplicationStatuses(VacancyStatusSummary vacancyStatusSummary);
     }
 }
