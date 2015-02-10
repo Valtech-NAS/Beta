@@ -8,7 +8,7 @@
         public const string AccountUnlockCodeExpired = "The code to unlock your account has expired. Please use the new one we’ve sent you.";
         public const string WrongEmailAddressOrAccountUnlockCodeErrorText = "Please enter a valid email address or unlock account code";
         public const string AccountUnlockedText = "You've successfully unlocked your account";
-        public const string AccountUnlockCodeResent = "A code to unlock your account has been sent to {0}";
+        public const string AccountUnlockCodeMayHaveBeenResent = "Please check your email for an account unlock code. If you do not recieve one, please check you entered your email correctly and that your account is locked.";
         public const string AccountUnlockResendCodeFailed = "There’s been a problem sending you a code to unlock your account. Please try again.";
     }
 }

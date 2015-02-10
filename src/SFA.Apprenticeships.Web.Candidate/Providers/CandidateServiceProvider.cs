@@ -297,23 +297,29 @@
             }
             catch (CustomException e)
             {
+                AccountUnlockState status;
                 switch (e.Code)
                 {
                     case Domain.Entities.ErrorCodes.EntityStateError:
+                        status = AccountUnlockState.UserInIncorrectState;
+                        _logger.Info(e.Message, e);
+                        break;
                     case Application.Interfaces.Users.ErrorCodes.UnknownUserError:
+                        status = AccountUnlockState.AccountEmailAddressOrUnlockCodeInvalid;
                         _logger.Info(e.Message, e);
                         break;
                     default:
+                        status = AccountUnlockState.Error;
                         _logger.Error(e.Message, e);
                         break;
                 }
-                return new AccountUnlockViewModel(e.Message) {EmailAddress = model.EmailAddress};
+                return new AccountUnlockViewModel(e.Message) { EmailAddress = model.EmailAddress, Status = status };
             }
             catch (Exception e)
             {
                 var message = string.Format("Send account unlock code failed for " + model.EmailAddress);
                 _logger.Error(message, e);
-                return new AccountUnlockViewModel(message) {EmailAddress = model.EmailAddress};
+                return new AccountUnlockViewModel(message) {EmailAddress = model.EmailAddress, Status = AccountUnlockState.Error};
             }
         }
 

@@ -27,14 +27,38 @@
 
             var response = Mediator.Resend(viewModel);
 
-            response.AssertMessage(LoginMediatorCodes.Resend.ResentSuccessfully, string.Format(AccountUnlockPageMessages.AccountUnlockCodeResent, viewModel.EmailAddress), UserMessageLevel.Success, true);
+            response.AssertMessage(LoginMediatorCodes.Resend.ResentSuccessfully, AccountUnlockPageMessages.AccountUnlockCodeMayHaveBeenResent, UserMessageLevel.Success, true);
             UserDataProvider.Verify(x => x.Push(UserDataItemNames.EmailAddress, viewModel.EmailAddress));
         }
 
         [Test]
-        public void Fail()
+        public void UserInIncorrectState()
         {
-            var viewModel = new AccountUnlockViewModel { EmailAddress = "ab@cde.com", ViewModelMessage = "Error" };
+            var viewModel = new AccountUnlockViewModel { EmailAddress = "ab@cde.com", ViewModelMessage = "Send unlock code", Status = AccountUnlockState.UserInIncorrectState };
+            CandidateServiceProvider.Setup(x => x.RequestAccountUnlockCode(It.IsAny<AccountUnlockViewModel>())).Returns(viewModel);
+            UserDataProvider.Setup(x => x.Push(It.IsAny<string>(), It.IsAny<string>()));
+
+            var response = Mediator.Resend(viewModel);
+
+            response.AssertMessage(LoginMediatorCodes.Resend.ResentSuccessfully, AccountUnlockPageMessages.AccountUnlockCodeMayHaveBeenResent, UserMessageLevel.Success, true);
+        }
+
+        [Test]
+        public void AccountEmailAddressOrUnlockCodeInvalid()
+        {
+            var viewModel = new AccountUnlockViewModel { EmailAddress = "ab@cde.com", ViewModelMessage = "Unknown username=ab@cde.com", Status = AccountUnlockState.AccountEmailAddressOrUnlockCodeInvalid };
+            CandidateServiceProvider.Setup(x => x.RequestAccountUnlockCode(It.IsAny<AccountUnlockViewModel>())).Returns(viewModel);
+            UserDataProvider.Setup(x => x.Push(It.IsAny<string>(), It.IsAny<string>()));
+
+            var response = Mediator.Resend(viewModel);
+
+            response.AssertMessage(LoginMediatorCodes.Resend.ResentSuccessfully, AccountUnlockPageMessages.AccountUnlockCodeMayHaveBeenResent, UserMessageLevel.Success, true);
+        }
+
+        [Test]
+        public void Error()
+        {
+            var viewModel = new AccountUnlockViewModel { EmailAddress = "ab@cde.com", ViewModelMessage = "Error", Status = AccountUnlockState.Error };
             CandidateServiceProvider.Setup(x => x.RequestAccountUnlockCode(It.IsAny<AccountUnlockViewModel>())).Returns(viewModel);
             UserDataProvider.Setup(x => x.Push(It.IsAny<string>(), It.IsAny<string>()));
 

@@ -143,10 +143,14 @@
 
             if (accountUnlockViewModel.HasError())
             {
+                if (accountUnlockViewModel.Status == AccountUnlockState.UserInIncorrectState || accountUnlockViewModel.Status == AccountUnlockState.AccountEmailAddressOrUnlockCodeInvalid)
+                {
+                    return GetMediatorResponse(LoginMediatorCodes.Resend.ResentSuccessfully, accountUnlockViewModel, AccountUnlockPageMessages.AccountUnlockCodeMayHaveBeenResent, UserMessageLevel.Success);
+                }
                 return GetMediatorResponse(LoginMediatorCodes.Resend.ResendFailed, accountUnlockViewModel, AccountUnlockPageMessages.AccountUnlockResendCodeFailed, UserMessageLevel.Warning);
             }
 
-            return GetMediatorResponse(LoginMediatorCodes.Resend.ResentSuccessfully, accountUnlockViewModel, string.Format(AccountUnlockPageMessages.AccountUnlockCodeResent, accountUnlockViewModel.EmailAddress), UserMessageLevel.Success);
+            return GetMediatorResponse(LoginMediatorCodes.Resend.ResentSuccessfully, accountUnlockViewModel, AccountUnlockPageMessages.AccountUnlockCodeMayHaveBeenResent, UserMessageLevel.Success);
         }
     }
 }

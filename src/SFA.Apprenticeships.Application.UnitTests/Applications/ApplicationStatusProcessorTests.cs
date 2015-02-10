@@ -40,7 +40,7 @@
         }
 
         [Test]
-        public void ShouldQueueApplicationStatusSummaryForEachApplication()
+        public void ShouldQueueApprenticeshipApplicationStatusSummaryForEachApplication()
         {
             //Would never get back from both app and trn but just checking right things are called
             var apprenticeshipApplicationSummaries =
@@ -50,21 +50,11 @@
                     LegacyVacancyId = 123
                 }, 4);
 
-            var traineeshipApplicationSummaries =
-                Enumerable.Repeat(new TraineeshipApplicationSummary
-                {
-                    LegacyVacancyId = 456
-                }, 3);
-
             _bus.Setup(x => x.PublishMessage(It.IsAny<ApplicationStatusSummary>()));
 
             _apprenticeshipApplicationReadMock.Setup(
                 x => x.GetApplicationSummaries(It.Is<int>(id => id == 123)))
                 .Returns(apprenticeshipApplicationSummaries);
-
-            _traineeshipApplicationReadMock.Setup(
-                x => x.GetApplicationSummaries(It.Is<int>(id => id == 456)))
-                .Returns(traineeshipApplicationSummaries);
 
             var closingDate = DateTime.Now.AddMonths(-2);
 
@@ -75,30 +65,18 @@
                 ClosingDate = closingDate
             });
 
-            _applicationStatusProcessor.ProcessApplicationStatuses(new VacancyStatusSummary
-            {
-                LegacyVacancyId = 456,
-                VacancyStatus = VacancyStatuses.Expired,
-                ClosingDate = closingDate
-            });
-
             _apprenticeshipApplicationReadMock.Verify(
                 x =>
                     x.GetApplicationSummaries(
                         It.Is<int>(id => id == 123)), Times.Once);
-
-            _traineeshipApplicationReadMock.Verify(
-                x =>
-                    x.GetApplicationSummaries(
-                        It.Is<int>(id => id == 456)), Times.Once);
 
             _bus.Verify(
                 x =>
                     x.PublishMessage(
                         It.Is<ApplicationStatusSummary>(
                             ass =>
-                                (ass.LegacyVacancyId == 123 || ass.LegacyVacancyId == 456) && ass.ClosingDate == closingDate &&
-                                ass.VacancyStatus == VacancyStatuses.Expired)), Times.Exactly(7));
+                                (ass.LegacyVacancyId == 123) && ass.ClosingDate == closingDate &&
+                                ass.VacancyStatus == VacancyStatuses.Expired)), Times.Exactly(4));
         }
     }
 }

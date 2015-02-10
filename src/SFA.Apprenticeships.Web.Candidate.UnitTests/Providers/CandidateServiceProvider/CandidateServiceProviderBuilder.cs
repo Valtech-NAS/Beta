@@ -10,9 +10,8 @@
     using Common.Services;
     using Domain.Interfaces.Configuration;
     using Moq;
-    using NUnit.Framework;
 
-    public class CandidateServiceProviderTestsBase
+    public class CandidateServiceProviderBuilder
     {
         protected Mock<ICandidateService> CandidateService;
         protected Mock<IUserAccountService> UserAccountService;
@@ -23,8 +22,7 @@
         protected Mock<ILogService> Logger;
         protected CandidateServiceProvider CandidateServiceProvider;
 
-        [SetUp]
-        public void SetUp()
+        public CandidateServiceProviderBuilder()
         {
             CandidateService = new Mock<ICandidateService>();
             UserAccountService = new Mock<IUserAccountService>();
@@ -33,8 +31,24 @@
             HttpContext = new Mock<HttpContextBase>();
             ConfigurationManager = new Mock<IConfigurationManager>();
             Logger = new Mock<ILogService>();
+        }
 
+        public CandidateServiceProvider Build()
+        {
             CandidateServiceProvider = new CandidateServiceProvider(CandidateService.Object, UserAccountService.Object, UserDataProvider.Object, AuthenticationTicketService.Object, new ApprenticeshipCandidateWebMappers(), HttpContext.Object, ConfigurationManager.Object, Logger.Object);
+            return CandidateServiceProvider;
+        }
+
+        public CandidateServiceProviderBuilder With(Mock<ICandidateService> candidateService)
+        {
+            CandidateService = candidateService;
+            return this;
+        }
+
+        public CandidateServiceProviderBuilder With(Mock<IUserAccountService> userAccountService)
+        {
+            UserAccountService = userAccountService;
+            return this;
         }
     }
 }

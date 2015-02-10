@@ -47,6 +47,7 @@
             _applicationStatusProcessor.Setup(x => x.ProcessApplicationStatuses(It.IsAny<VacancyStatusSummary>()));
             _cacheServiceMock.Setup(x => x.PutObject(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<CacheDuration>()));
             _configurationManagerMock.Setup(x => x.GetCloudAppSetting<bool>(It.Is<string>(s => s == "EnableVacancyStatusPropagation"))).Returns(true);
+            _vacancyStatusSummaryConsumerAsync = new VacancyStatusSummaryConsumerAsync(_cacheServiceMock.Object, _applicationStatusProcessor.Object, _configurationManagerMock.Object);
 
             var task = _vacancyStatusSummaryConsumerAsync.Consume(vacancyStatusSummary);
             task.Wait();
