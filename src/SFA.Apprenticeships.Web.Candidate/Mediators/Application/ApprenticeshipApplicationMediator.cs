@@ -189,6 +189,16 @@
         {
             var savedModel = _apprenticeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
 
+            if (savedModel.HasError())
+            {
+                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Submit.Error, null, ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning, new { id = vacancyId });
+            }
+
+            if (savedModel.IsExpiredOrWithdrawn())
+            {
+                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Submit.VacancyNotFound);
+            }
+
             var result = _apprenticeshipApplicationViewModelSaveValidator.Validate(savedModel);
 
             if (!result.IsValid)
@@ -196,10 +206,7 @@
                 return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.Submit.ValidationError, savedModel, result);
             }
 
-            if (savedModel.IsExpiredOrWithdrawn())
-            {
-                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Submit.VacancyNotFound);
-            }
+            
 
             var model = _apprenticeshipApplicationProvider.SubmitApplication(candidateId, vacancyId);
 
