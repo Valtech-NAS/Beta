@@ -2,6 +2,7 @@
 {
     using System;
     using System.Configuration;
+    using Domain.Entities.Vacancies;
     using FluentValidation.Attributes;
     using Domain.Entities.Applications;
     using Candidate;
@@ -34,6 +35,12 @@
 
         public ApprenticeshipApplicationViewModel()
         {
+        }
+
+        //TODO: Think in a better name
+        public bool IsExpiredOrWithdrawn()
+        {
+            return Status == ApplicationStatuses.ExpiredOrWithdrawn || VacancyDetail.VacancyStatus != VacancyStatuses.Live;
         }
     }
 }

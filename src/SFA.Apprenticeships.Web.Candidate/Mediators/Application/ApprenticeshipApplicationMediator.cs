@@ -8,7 +8,6 @@
     using Common.Providers;
     using Constants.Pages;
     using Domain.Entities.Applications;
-    using Domain.Entities.Vacancies;
     using Domain.Interfaces.Configuration;
     using Helpers;
     using Providers;
@@ -38,7 +37,7 @@
                 return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Resume.HasError, null, model.ViewModelMessage, UserMessageLevel.Warning);
             }
 
-            if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn || model.VacancyDetail.VacancyStatus != VacancyStatuses.Live)
+            if (model.IsExpiredOrWithdrawn())
             {
                 return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Resume.HasError, null, MyApplicationsPageMessages.ApprenticeshipNoLongerAvailable, UserMessageLevel.Warning);
             }
@@ -57,14 +56,14 @@
 
             var model = _apprenticeshipApplicationProvider.GetOrCreateApplicationViewModel(candidateId, vacancyId);
 
-            if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
-            {
-                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Apply.VacancyNotFound);
-            }
-
             if (model.HasError())
             {
                 return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Apply.HasError);
+            }
+
+            if (model.IsExpiredOrWithdrawn())
+            {
+                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Apply.VacancyNotFound);
             }
 
             model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
@@ -78,7 +77,12 @@
 
             var savedModel = _apprenticeshipApplicationProvider.GetOrCreateApplicationViewModel(candidateId, vacancyId);
 
-            if (savedModel.Status == ApplicationStatuses.ExpiredOrWithdrawn)
+            if (savedModel.HasError())
+            {
+                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.Error, viewModel, ApplicationPageMessages.PreviewFailed, UserMessageLevel.Warning);
+            }
+
+            if (savedModel.IsExpiredOrWithdrawn())
             {
                 return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.VacancyNotFound);
             }
@@ -89,10 +93,6 @@
 
             viewModel.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
 
-            if (savedModel.HasError())
-            {
-                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.Error, viewModel, ApplicationPageMessages.PreviewFailed, UserMessageLevel.Warning);
-            }
 
             var result = _apprenticeshipApplicationViewModelFullValidator.Validate(viewModel);
 
@@ -196,12 +196,12 @@
                 return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.Submit.ValidationError, savedModel, result);
             }
 
-            var model = _apprenticeshipApplicationProvider.SubmitApplication(candidateId, vacancyId);
-
-            if (savedModel.Status == ApplicationStatuses.ExpiredOrWithdrawn)
+            if (savedModel.IsExpiredOrWithdrawn())
             {
                 return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Submit.VacancyNotFound);
             }
+
+            var model = _apprenticeshipApplicationProvider.SubmitApplication(candidateId, vacancyId);
 
             if (model.ViewModelStatus == ApplicationViewModelStatus.ApplicationInIncorrectState)
             {

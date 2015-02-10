@@ -8,6 +8,7 @@
     using Common.Constants;
     using Constants.Pages;
     using Domain.Entities.Applications;
+    using Domain.Entities.Vacancies;
     using Moq;
     using NUnit.Framework;
 
@@ -88,13 +89,36 @@
                 Candidate = new ApprenticeshipCandidateViewModel(),
                 VacancyDetail = new VacancyDetailViewModel()
             };
-            ApprenticeshipApplicationProvider.Setup(p => p.GetOrCreateApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel { Status = ApplicationStatuses.Draft });
+            ApprenticeshipApplicationProvider.Setup(p => p.GetOrCreateApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel { Status = ApplicationStatuses.Draft, VacancyDetail = new VacancyDetailViewModel
+            {
+                VacancyStatus = VacancyStatuses.Live
+            }});
             ApprenticeshipApplicationProvider.Setup(p => p.PatchApplicationViewModel(It.IsAny<Guid>(), It.IsAny<ApprenticeshipApplicationViewModel>(), It.IsAny<ApprenticeshipApplicationViewModel>())).Returns<Guid, ApprenticeshipApplicationViewModel, ApprenticeshipApplicationViewModel>((cid, svm, vm) => vm);
             ApprenticeshipApplicationProvider.Setup(p => p.SubmitApplication(It.IsAny<Guid>(), It.IsAny<int>())).Returns(viewModel);
             
             var response = Mediator.PreviewAndSubmit(Guid.NewGuid(), ValidVacancyId, viewModel);
 
             response.AssertCode(ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.Ok, false, true);
+        }
+
+        [Test]
+        public void VacancyExpired()
+        {
+            var viewModel = new ApprenticeshipApplicationViewModel
+            {
+                Candidate = new ApprenticeshipCandidateViewModel(),
+                VacancyDetail = new VacancyDetailViewModel()
+            };
+            ApprenticeshipApplicationProvider.Setup(p => p.GetOrCreateApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel { Status = ApplicationStatuses.Draft, VacancyDetail = new VacancyDetailViewModel
+            {
+                VacancyStatus = VacancyStatuses.Expired
+            }});
+            ApprenticeshipApplicationProvider.Setup(p => p.PatchApplicationViewModel(It.IsAny<Guid>(), It.IsAny<ApprenticeshipApplicationViewModel>(), It.IsAny<ApprenticeshipApplicationViewModel>())).Returns<Guid, ApprenticeshipApplicationViewModel, ApprenticeshipApplicationViewModel>((cid, svm, vm) => vm);
+            ApprenticeshipApplicationProvider.Setup(p => p.SubmitApplication(It.IsAny<Guid>(), It.IsAny<int>())).Returns(viewModel);
+
+            var response = Mediator.PreviewAndSubmit(Guid.NewGuid(), ValidVacancyId, viewModel);
+
+            response.AssertCode(ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.VacancyNotFound, false);
         }
     }
 }
