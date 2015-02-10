@@ -28,7 +28,7 @@
             _logger = logger;
         }
 
-        public bool Update(ApprenticeshipApplicationDetail apprenticeshipApplication, ApplicationStatusSummary applicationStatusSummary)
+        public void Update(ApprenticeshipApplicationDetail apprenticeshipApplication, ApplicationStatusSummary applicationStatusSummary)
         {
             // invoked because the status of the apprenticeshipApplication / vacancy has changed
             _logger.Info(
@@ -42,27 +42,23 @@
             // note, this flow will be extended to include a call to outbound communication later (when we do notifications)
             // note, may subsequently consolidate status updates for a candidate (when we do notifications) but may be done in another component
 
-            if (!apprenticeshipApplication.UpdateApprenticeshipApplicationDetail(applicationStatusSummary))
+            if (apprenticeshipApplication.UpdateApprenticeshipApplicationDetail(applicationStatusSummary))
             {
-                return false;
+                _apprenticeshipApplicationWriteRepository.Save(apprenticeshipApplication);
+
+                // note, to force vacancy status updates for users with draft applications for this vacancy
+                var vacancyStatusSummary = new VacancyStatusSummary
+                {
+                    LegacyVacancyId = applicationStatusSummary.LegacyVacancyId,
+                    ClosingDate = applicationStatusSummary.ClosingDate,
+                    VacancyStatus = applicationStatusSummary.VacancyStatus
+                };
+
+                _bus.PublishMessage(vacancyStatusSummary);
             }
-
-            _apprenticeshipApplicationWriteRepository.Save(apprenticeshipApplication);
-
-            // note, to force vacancy status updates for users with draft applications for this vacancy
-            var vss = new VacancyStatusSummary
-            {
-                LegacyVacancyId = applicationStatusSummary.LegacyVacancyId,
-                ClosingDate = applicationStatusSummary.ClosingDate,
-                VacancyStatus = applicationStatusSummary.VacancyStatus
-            };
-
-            _bus.PublishMessage(vss);
-
-            return true;
         }
 
-        public bool Update(TraineeshipApplicationDetail traineeeshipApplication, ApplicationStatusSummary applicationStatusSummary)
+        public void Update(TraineeshipApplicationDetail traineeeshipApplication, ApplicationStatusSummary applicationStatusSummary)
         {
             // invoked because the status of the apprenticeshipApplication / vacancy has changed
             _logger.Info(
@@ -76,14 +72,10 @@
             // note, this flow will be extended to include a call to outbound communication later (when we do notifications)
             // note, may subsequently consolidate status updates for a candidate (when we do notifications) but may be done in another component
 
-            if (!traineeeshipApplication.UpdateTraineeshipApplicationDetail(applicationStatusSummary))
+            if (traineeeshipApplication.UpdateTraineeshipApplicationDetail(applicationStatusSummary))
             {
-                return false;
+                _traineeshipApplicationWriteRepository.Save(traineeeshipApplication);
             }
-
-            _traineeshipApplicationWriteRepository.Save(traineeeshipApplication);
-
-            return true;
         }
     }
 }

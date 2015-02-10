@@ -174,7 +174,8 @@
                 return false;
             }
 
-            return _applicationStatusUpdateStrategy.Update(apprenticeshipApplicationDetail, applicationStatusSummary);
+            _applicationStatusUpdateStrategy.Update(apprenticeshipApplicationDetail, applicationStatusSummary);
+            return true;
         }
 
         private bool ProcessTraineeshipsApplication(ApplicationStatusSummary applicationStatusSummary)
@@ -187,7 +188,8 @@
                 return false;
             }
 
-            return _applicationStatusUpdateStrategy.Update(traineeshipApplicationDetail, applicationStatusSummary);
+            _applicationStatusUpdateStrategy.Update(traineeshipApplicationDetail, applicationStatusSummary);
+            return true;
         }
     }
 }

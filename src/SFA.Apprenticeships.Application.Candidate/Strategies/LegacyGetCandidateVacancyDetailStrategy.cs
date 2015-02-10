@@ -41,9 +41,6 @@
                 // update the application for this candidate (if they have one) with latest info from legacy
                 _applicationVacancyUpdater.Update(candidateId, vacancyId, vacancyDetails);
 
-                // propagate vacancy's latest status info
-                QueueVacancyStatusSummaryUpdate(vacancyDetails);
-
                 return vacancyDetails;
             }
             catch (Exception e)
@@ -54,18 +51,6 @@
 
                 throw new CustomException(message, e, ErrorCodes.GetVacancyDetailsFailed);
             }
-        }
-
-        private void QueueVacancyStatusSummaryUpdate(TVacancyDetail vacancyDetails)
-        {
-            var vacancyStatusSummary = new VacancyStatusSummary
-            {
-                LegacyVacancyId = vacancyDetails.Id,
-                VacancyStatus = vacancyDetails.VacancyStatus,
-                ClosingDate = vacancyDetails.ClosingDate
-            };
-
-            _bus.PublishMessage(vacancyStatusSummary);
         }
     }
 }
