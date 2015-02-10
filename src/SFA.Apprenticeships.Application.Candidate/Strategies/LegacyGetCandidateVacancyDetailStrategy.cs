@@ -7,7 +7,6 @@
     using Domain.Interfaces.Messaging;
     using Interfaces.Logging;
     using Vacancy;
-    using VacancyEtl.Entities;
     using ErrorCodes = Interfaces.Vacancies.ErrorCodes;
 
     public class LegacyGetCandidateVacancyDetailStrategy<TVacancyDetail> : ILegacyGetCandidateVacancyDetailStrategy<TVacancyDetail>
@@ -41,6 +40,7 @@
 
                 _applicationVacancyUpdater.Update(candidateId, vacancyId, vacancyDetails);
 
+                // propagate vacancy's latest status info
                 QueueVacancyStatusSummaryUpdate(vacancyDetails);
 
                 return vacancyDetails;

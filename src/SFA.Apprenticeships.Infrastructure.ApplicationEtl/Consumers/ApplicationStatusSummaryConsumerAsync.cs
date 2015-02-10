@@ -48,6 +48,7 @@
                         VacancyStatus = applicationStatusSummaryToProcess.VacancyStatus,
                         ClosingDate = applicationStatusSummaryToProcess.ClosingDate
                     };
+
                     _bus.PublishMessage(vacancyStatusSummary);
                 }
                 finally

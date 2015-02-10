@@ -43,8 +43,7 @@
 
                     _applicationStatusUpdater.Update(candidate, submittedApplicationStatuses);
 
-                    //Queue drafts for status updates.
-                }
+                //todo: queue drafts for status updates?                
             }
             catch (Exception ex)
             {
