@@ -253,14 +253,14 @@
         {
             var model = _apprenticeshipApplicationProvider.GetOrCreateApplicationViewModel(candidateId, vacancyId);
 
-            if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
-            {
-                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Preview.VacancyNotFound);
-            }
-
             if (model.HasError())
             {
                 return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Preview.HasError);
+            }
+
+            if (model.IsExpiredOrWithdrawn())
+            {
+                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Preview.VacancyNotFound);
             }
 
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.Preview.Ok, model);

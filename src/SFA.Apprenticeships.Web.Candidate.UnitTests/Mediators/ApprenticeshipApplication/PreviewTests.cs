@@ -3,7 +3,9 @@
     using System;
     using Candidate.Mediators.Application;
     using Candidate.ViewModels.Applications;
+    using Candidate.ViewModels.VacancySearch;
     using Domain.Entities.Applications;
+    using Domain.Entities.Vacancies;
     using Moq;
     using NUnit.Framework;
 
@@ -36,11 +38,33 @@
         [Test]
         public void Ok()
         {
-            ApprenticeshipApplicationProvider.Setup(p => p.GetOrCreateApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel());
+            ApprenticeshipApplicationProvider.Setup(p => p.GetOrCreateApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel
+            {
+                VacancyDetail = new VacancyDetailViewModel
+                {
+                    VacancyStatus = VacancyStatuses.Live
+                }
+            });
             
             var response = Mediator.Preview(Guid.NewGuid(), ValidVacancyId);
 
             response.AssertCode(ApprenticeshipApplicationMediatorCodes.Preview.Ok, true);
+        }
+
+        [Test]
+        public void VacancyExpired()
+        {
+            ApprenticeshipApplicationProvider.Setup(p => p.GetOrCreateApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel
+            {
+                VacancyDetail = new VacancyDetailViewModel
+                {
+                    VacancyStatus = VacancyStatuses.Expired
+                }
+            });
+
+            var response = Mediator.Preview(Guid.NewGuid(), ValidVacancyId);
+
+            response.AssertCode(ApprenticeshipApplicationMediatorCodes.Preview.VacancyNotFound, false);
         }
     }
 }
