@@ -77,6 +77,7 @@
                 }
                 else
                 {
+                    //todo: shouldn't warn as may have been called for a vacancy the candidate doesn't have an application for
                     _logger.Warn(
                         "Unable to find apprenticeship or traineeship application for candiate ID {0} with legacy vacancy ID \"{1}\".",
                         candidateId, vacancyId);
