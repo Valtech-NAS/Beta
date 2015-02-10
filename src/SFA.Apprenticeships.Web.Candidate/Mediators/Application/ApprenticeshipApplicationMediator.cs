@@ -8,6 +8,7 @@
     using Common.Providers;
     using Constants.Pages;
     using Domain.Entities.Applications;
+    using Domain.Entities.Vacancies;
     using Domain.Interfaces.Configuration;
     using Helpers;
     using Providers;
@@ -31,6 +32,11 @@
         public MediatorResponse<ApprenticeshipApplicationViewModel> Resume(Guid candidateId, int vacancyId)
         {
             var model = _apprenticeshipApplicationProvider.GetOrCreateApplicationViewModel(candidateId, vacancyId);
+
+            if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn || model.VacancyDetail.VacancyStatus != VacancyStatuses.Live)
+            {
+                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Resume.HasError, null, MyApplicationsPageMessages.ApprenticeshipNoLongerAvailable, UserMessageLevel.Warning);
+            }
 
             if (model.HasError())
             {

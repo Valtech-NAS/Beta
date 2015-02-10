@@ -39,11 +39,13 @@
                 if (candidate.LegacyCandidateId != 0)
                 {
                     //Verify candidate exists in legacy system otherwise this call will throw and exception and log an error
-                    var submittedApplicationStatuses = _legacyApplicationStatusesProvider.GetCandidateApplicationStatuses(candidate);
+                    var submittedApplicationStatuses =
+                        _legacyApplicationStatusesProvider.GetCandidateApplicationStatuses(candidate);
 
                     _applicationStatusUpdater.Update(candidate, submittedApplicationStatuses);
 
-                //todo: queue drafts for status updates?                
+                    //todo: queue drafts for status updates?    
+                }
             }
             catch (Exception ex)
             {
