@@ -33,7 +33,7 @@
 
             var response = default(GetVacancySummaryResponse);
 
-            _logger.Debug("Calling Legacy.GetVacancySummaries for page count");
+            _logger.Info("Calling Legacy.GetVacancySummaries for page count");
 
             _service.Use("SecureService", client => response = client.GetVacancySummaries(request));
 
@@ -56,7 +56,7 @@
 
             var response = default(GetVacancySummaryResponse);
 
-            _logger.Debug("Calling Legacy.GetVacancySummaries for page {0}", page);
+            _logger.Info("Calling Legacy.GetVacancySummaries for page {0}", page);
 
             _service.Use("SecureService", client => response = client.GetVacancySummaries(request));
 
@@ -79,7 +79,7 @@
             var traineeshipsSummaries = _mapper.Map<VacancySummary[], IEnumerable<TraineeshipSummary>>(
                 response.VacancySummaries.Where(v => v.VacancyType == "Traineeship").ToArray());
 
-            _logger.Debug("Vacancy summaries (page {0}) were successfully retrieved from Legacy.GetVacancySummaries ({1})",
+            _logger.Info("Vacancy summaries (page {0}) were successfully retrieved from Legacy.GetVacancySummaries ({1})",
                 page, response.VacancySummaries.Count());
 
             return new VacancySummaries(apprenticeshipSummaries, traineeshipsSummaries);
