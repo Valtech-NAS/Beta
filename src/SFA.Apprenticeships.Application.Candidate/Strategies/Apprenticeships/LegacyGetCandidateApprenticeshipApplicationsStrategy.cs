@@ -35,17 +35,23 @@
             {
                 // try to get the latest status of apps for the specified candidate from legacy
                 var candidate = _candidateReadRepository.Get(candidateId);
-                var submittedApplicationStatuses = _legacyApplicationStatusesProvider.GetCandidateApplicationStatuses(candidate);
 
-                _applicationStatusUpdater.Update(candidate, submittedApplicationStatuses);
+                if (candidate.LegacyCandidateId != 0)
+                {
+                    //Verify candidate exists in legacy system otherwise this call will throw and exception and log an error
+                    var submittedApplicationStatuses = _legacyApplicationStatusesProvider.GetCandidateApplicationStatuses(candidate);
 
-                //Queue drafts for status updates.
-                
+                    _applicationStatusUpdater.Update(candidate, submittedApplicationStatuses);
+
+                    //Queue drafts for status updates.
+                }
             }
             catch (Exception ex)
             {
                 // if fails just return apps with their current status
-                _logger.Error("Failed to update candidate's application statuses from legacy", ex);
+                var message = string.Format("Failed to update candidate's application statuses from legacy. CandidateId: {0}", candidateId);
+                _logger.Error(message, ex);
+
             }
 
             return _apprenticeshipApplicationReadRepository.GetForCandidate(candidateId);
