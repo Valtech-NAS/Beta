@@ -8,6 +8,7 @@
     using Common.Providers;
     using Constants.Pages;
     using Domain.Entities.Applications;
+    using Domain.Entities.Vacancies;
     using Domain.Interfaces.Configuration;
     using Helpers;
     using Providers;
@@ -42,7 +43,7 @@
                 return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Resume.HasError, null, MyApplicationsPageMessages.ApprenticeshipNoLongerAvailable, UserMessageLevel.Warning);
             }
 
-            return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Resume.Ok, parameters: new { vacancyId });
+            return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Resume.Ok, parameters: new { id = vacancyId });
         }
 
         public MediatorResponse<ApprenticeshipApplicationViewModel> Apply(Guid candidateId, string vacancyIdString)
@@ -277,17 +278,16 @@
 
             var model = _apprenticeshipApplicationProvider.GetWhatHappensNextViewModel(candidateId, vacancyId);
 
-            if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
-            {
-                return GetMediatorResponse<WhatHappensNextViewModel>(ApprenticeshipApplicationMediatorCodes.WhatHappensNext.VacancyNotFound);
-            }
-
             if (model.HasError())
             {
                 model.VacancyReference = vacancyReference;
                 model.VacancyTitle = vacancyTitle;
             }
-
+            else if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn || model.VacancyStatus != VacancyStatuses.Live)
+            {
+                return GetMediatorResponse<WhatHappensNextViewModel>(ApprenticeshipApplicationMediatorCodes.WhatHappensNext.VacancyNotFound);
+            }
+            
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.WhatHappensNext.Ok, model);
         }
 

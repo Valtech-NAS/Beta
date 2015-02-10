@@ -4,10 +4,12 @@
     using Application.Interfaces.Candidates;
     using Builders;
     using Candidate.Providers;
+    using Candidate.Validators;
     using Candidate.ViewModels.VacancySearch;
     using Constants.Pages;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
+    using Domain.Entities.Vacancies;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -99,6 +101,25 @@
             returnedViewModel.HasError().Should().BeFalse();
             returnedViewModel.ViewModelMessage.Should().BeNullOrEmpty();
             returnedViewModel.Status.Should().Be(ApplicationStatuses.Unknown);
+        }
+
+        [Test]
+        public void GivenVacancyIsExpired_ThenViewModelStatusIsExpired()
+        {
+            var candidateId = Guid.NewGuid();
+            var candidateService = new Mock<ICandidateService>();
+            var apprenticeshipVacancyDetailProvider = new Mock<IApprenticeshipVacancyDetailProvider>();
+            candidateService.Setup(cs => cs.GetApplication(candidateId, ValidVacancyId)).Returns(new ApprenticeshipApplicationDetailBuilder(candidateId, ValidVacancyId).Build);
+            candidateService.Setup(cs => cs.GetCandidate(candidateId)).Returns(new CandidateBuilder().Build);
+            apprenticeshipVacancyDetailProvider.Setup(cs => cs.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(new VacancyDetailViewModelBuilder().WithVacancyStatus(VacancyStatuses.Expired).Build());
+
+            var returnedViewModel = new ApprenticeshipApplicationProviderBuilder()
+                .With(candidateService).With(apprenticeshipVacancyDetailProvider).Build()
+                .GetWhatHappensNextViewModel(candidateId, ValidVacancyId);
+
+            returnedViewModel.HasError().Should().BeFalse();
+            returnedViewModel.ViewModelMessage.Should().BeNullOrEmpty();
+            returnedViewModel.VacancyStatus.Should().Be(VacancyStatuses.Expired);
         }
     }
 }

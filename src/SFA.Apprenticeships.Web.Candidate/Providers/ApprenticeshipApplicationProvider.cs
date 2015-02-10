@@ -408,7 +408,8 @@
                     VacancyReference = patchedModel.VacancyDetail.VacancyReference,
                     VacancyTitle = patchedModel.VacancyDetail.Title,
                     Status = patchedModel.Status,
-                    SentEmail = candidate.CommunicationPreferences.AllowEmail
+                    SentEmail = candidate.CommunicationPreferences.AllowEmail,
+                    VacancyStatus = patchedModel.VacancyDetail.VacancyStatus
                 };
             }
             catch (Exception e)

@@ -3,6 +3,7 @@
     using System;
     using Candidate.Mediators.Application;
     using Candidate.ViewModels.Applications;
+    using Domain.Entities.Vacancies;
     using FluentAssertions;
     using NUnit.Framework;
     using Domain.Entities.Applications;
@@ -25,7 +26,10 @@
         [Test]
         public void Ok()
         {
-            ApprenticeshipApplicationProvider.Setup(p => p.GetWhatHappensNextViewModel(_someCandidateId, SomeVacancyId)).Returns(new WhatHappensNextViewModel());
+            ApprenticeshipApplicationProvider.Setup(p => p.GetWhatHappensNextViewModel(_someCandidateId, SomeVacancyId)).Returns(new WhatHappensNextViewModel
+            {
+                VacancyStatus = VacancyStatuses.Live
+            });
 
             var response = Mediator.WhatHappensNext(_someCandidateId, SomeVacancyId.ToString(), VacancyReference, VacancyTitle);
 
