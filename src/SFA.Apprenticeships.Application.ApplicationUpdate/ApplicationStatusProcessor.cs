@@ -89,7 +89,7 @@
             
             if (!ProcessApprenticeshipsApplication(applicationStatusSummary) && !ProcessTraineeshipsApplication(applicationStatusSummary))
             {
-                _logger.Warn("Unable to find/update apprenticeship or traineeship application status for application with legacy application ID '{0}'", applicationStatusSummary.LegacyApplicationId);
+                _logger.Warn("Unable to find/update apprenticeship or traineeship application status for application with legacy application ID '{0}' and application ID '{1}'", applicationStatusSummary.LegacyApplicationId, applicationStatusSummary.ApplicationId);
             }
         }
 
@@ -158,11 +158,19 @@
         private bool ProcessApprenticeshipsApplication(ApplicationStatusSummary applicationStatusSummary)
         {
             // TODO: get application by Legacy Candidate and Legacy Vacancy Id. This will enable Legacy Application Id to be 'back-filled'.
-            var apprenticeshipApplicationDetail = _apprenticeshipApplicationReadRepository.Get(applicationStatusSummary.LegacyApplicationId);
+            var apprenticeshipApplicationDetail = default(ApprenticeshipApplicationDetail);
+
+            if (applicationStatusSummary.ApplicationId != Guid.Empty)
+            {
+                apprenticeshipApplicationDetail = _apprenticeshipApplicationReadRepository.Get(applicationStatusSummary.ApplicationId);
+            }
+            else if (applicationStatusSummary.LegacyApplicationId != 0)
+            {
+                apprenticeshipApplicationDetail = _apprenticeshipApplicationReadRepository.Get(applicationStatusSummary.LegacyApplicationId);
+            }
 
             if (apprenticeshipApplicationDetail == null)
             {
-                _logger.Debug("Unable to find/update apprenticeship application status for application with legacy application ID '{0}'", applicationStatusSummary.LegacyApplicationId);
                 return false;
             }
 
@@ -176,7 +184,6 @@
 
             if (traineeshipApplicationDetail == null)
             {
-                _logger.Debug("Unable to find/update traineeship application status for application with legacy application ID '{0}'", applicationStatusSummary.LegacyApplicationId);
                 return false;
             }
 
