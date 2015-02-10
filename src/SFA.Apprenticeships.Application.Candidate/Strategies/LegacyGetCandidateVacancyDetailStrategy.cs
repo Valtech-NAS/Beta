@@ -38,6 +38,7 @@
             {
                 var vacancyDetails = _vacancyDataProvider.GetVacancyDetails(vacancyId);
 
+                // update the application for this candidate with latest info from legacy
                 _applicationVacancyUpdater.Update(candidateId, vacancyId, vacancyDetails);
 
                 // propagate vacancy's latest status info
