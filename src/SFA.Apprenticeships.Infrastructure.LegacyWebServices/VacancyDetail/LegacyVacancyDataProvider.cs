@@ -70,6 +70,7 @@
 
             var vacancyDetail = GetVacancyDetailFrom(response);
 
+            // TODO: consider relying entirely on VacancyStatus here and removing this check / update.
             if (HasClosingDatePassed(vacancyDetail) && vacancyDetail.VacancyStatus != VacancyStatuses.Expired)
             {
                 _logger.Info("Vacancy ({0}) closing date {1} has passed. Setting status to {2} (was \"{3}\").",
