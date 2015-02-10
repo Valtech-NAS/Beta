@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.UnitTests
 {
     using System;
+    using Application.Interfaces.Logging;
     using Domain.Interfaces.Messaging;
     using Moq;
     using NUnit.Framework;
@@ -13,12 +14,14 @@
     {
         private Mock<IMessageBus> _messageBusMock;
         private Mock<IVacancySummaryProcessor> _vacancySummaryProcessorMock;
+        private Mock<ILogService> _logService;
 
         [SetUp]
         public void SetUp()
         {
             _messageBusMock = new Mock<IMessageBus>();
             _vacancySummaryProcessorMock = new Mock<IVacancySummaryProcessor>();
+            _logService = new Mock<ILogService>();
         }
 
         [TestCase(1, 20)]
@@ -35,7 +38,7 @@
                 ScheduledRefreshDateTime = scheduledRefreshDate
             };
 
-            var vacancySummaryPageConsumerAsync = new VacancySummaryPageConsumerAsync(_messageBusMock.Object, _vacancySummaryProcessorMock.Object);
+            var vacancySummaryPageConsumerAsync = new VacancySummaryPageConsumerAsync(_messageBusMock.Object, _vacancySummaryProcessorMock.Object, _logService.Object);
             var task = vacancySummaryPageConsumerAsync.Consume(vacancySummaryPage);
             task.Wait();
 
