@@ -304,7 +304,7 @@
             Condition.Requires(candidateId);
             Condition.Requires(vacancyId).IsGreaterOrEqual(0);
 
-            _logger.Debug("Calling CandidateService to get the apprenticeship vacancy ID {0} for candidaqte ID {1}.", vacancyId, candidateId);
+            _logger.Debug("Calling CandidateService to get the apprenticeship vacancy ID {0} for candidate ID {1}.", vacancyId, candidateId);
 
             return _candidateApprenticeshipVacancyDetailStrategy.GetVacancyDetails(candidateId, vacancyId);
         }
@@ -314,7 +314,7 @@
             Condition.Requires(candidateId);
             Condition.Requires(vacancyId).IsGreaterOrEqual(0);
 
-            _logger.Debug("Calling CandidateService to get the traineeship vacancy ID {0} for candidaqte ID {1}.", vacancyId, candidateId);
+            _logger.Debug("Calling CandidateService to get the traineeship vacancy ID {0} for candidate ID {1}.", vacancyId, candidateId);
 
             return _candidateTraineeshipVacancyDetailStrategy.GetVacancyDetails(candidateId, vacancyId);
         }
