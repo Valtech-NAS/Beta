@@ -44,7 +44,10 @@
                 var applicationStatusSummary = applicationStatusSummaries.SingleOrDefault(s => s.LegacyVacancyId == applicationDetail.Vacancy.Id);
                 if (applicationStatusSummary == null)
                 {
-                    _applicationDiagnosticsRepository.UpdateApplicationStatus(applicationDetail, ApplicationStatuses.Submitting);
+                    if (applicationDetail.Status != ApplicationStatuses.Submitting)
+                    {
+                        _applicationDiagnosticsRepository.UpdateApplicationStatus(applicationDetail, ApplicationStatuses.Submitting);
+                    }
 
                     var message = new SubmitApprenticeshipApplicationRequest
                     {
@@ -57,6 +60,10 @@
                 }
                 else
                 {
+                    if (applicationDetail.Status != ApplicationStatuses.Submitted)
+                    {
+                        _applicationDiagnosticsRepository.UpdateApplicationStatus(applicationDetail, ApplicationStatuses.Submitted);
+                    }
                     _applicationDiagnosticsRepository.UpdateLegacyApplicationId(applicationDetail, applicationStatusSummary.LegacyApplicationId);
                     _logger.Info("Patching apprenticeship application id: {0} with legacy id: {1}", applicationDetail.EntityId, applicationDetail.LegacyApplicationId);
                 }

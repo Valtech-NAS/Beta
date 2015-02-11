@@ -3,14 +3,13 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Application.ApplicationUpdate;
     using Application.ApplicationUpdate.Entities;
     using Application.Interfaces.Logging;
-    using Newtonsoft.Json;
-    using Application.ApplicationUpdate;
-    using Configuration;
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Mapping;
     using GatewayServiceProxy;
+    using Newtonsoft.Json;
     using Wcf;
     using Candidate = Domain.Entities.Candidates.Candidate;
 
@@ -21,7 +20,7 @@
         private readonly IMapper _mapper;
         private readonly IWcfService<GatewayServiceContract> _service;
 
-        public LegacyCandidateApplicationStatusesProvider(IWcfService<GatewayServiceContract> service, IMapper mapper, ILegacyServicesConfiguration legacyServicesConfiguration, ILogService logger)
+        public LegacyCandidateApplicationStatusesProvider(IWcfService<GatewayServiceContract> service, IMapper mapper, ILogService logger)
         {
             _service = service;
             _mapper = mapper;
