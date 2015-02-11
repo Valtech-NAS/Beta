@@ -11,5 +11,9 @@
         IEnumerable<CandidateApprenticeshipApplicationDetail> GetSubmittedApplicationsWithUnsetLegacyId();
 
         IEnumerable<string> GetDraftApplicationVacancyIds();
+
+        void UpdateApplicationStatus(ApprenticeshipApplicationDetail applicationDetail, ApplicationStatuses newApplicationStatus);
+
+        void UpdateLegacyApplicationId(ApprenticeshipApplicationDetail applicationDetail, int legacyApplicationId);
     }
 }

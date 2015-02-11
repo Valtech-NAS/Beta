@@ -10,6 +10,8 @@
     using Domain.Interfaces.Repositories;
     using Entities;
     using Mongo.Common;
+    using MongoDB.Bson;
+    using MongoDB.Driver;
     using MongoDB.Driver.Builders;
     using MongoDB.Driver.Linq;
     using Repositories.Applications.Entities;
@@ -86,6 +88,16 @@
         public IEnumerable<string> GetDraftApplicationVacancyIds()
         {
             return Collection.Distinct("Vacancy._id", Query.EQ("Status", ApplicationStatuses.Draft)).Select(v => v.ToString());
+        }
+
+        public void UpdateApplicationStatus(ApprenticeshipApplicationDetail applicationDetail, ApplicationStatuses newApplicationStatus)
+        {
+            Collection.Update(Query.EQ("EntityId", applicationDetail.EntityId), new UpdateDocument {{"$set", new BsonDocument("Status", newApplicationStatus)}});
+        }
+
+        public void UpdateLegacyApplicationId(ApprenticeshipApplicationDetail applicationDetail, int legacyApplicationId)
+        {
+            Collection.Update(Query.EQ("EntityId", applicationDetail.EntityId), new UpdateDocument { { "$set", new BsonDocument("LegacyApplicationId", legacyApplicationId) } });
         }
     }
 }

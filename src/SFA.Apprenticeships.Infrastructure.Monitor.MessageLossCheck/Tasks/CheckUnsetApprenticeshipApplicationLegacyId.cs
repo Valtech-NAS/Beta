@@ -7,7 +7,6 @@
     using Application.Interfaces.Logging;
     using Domain.Entities.Applications;
     using Domain.Interfaces.Messaging;
-    using Domain.Interfaces.Repositories;
     using Monitor.Tasks;
     using Repository;
 
@@ -16,15 +15,13 @@
         private readonly IApprenticeshipApplicationDiagnosticsRepository _applicationDiagnosticsRepository;
         private readonly IMessageBus _messageBus;
         private readonly ILegacyApplicationStatusesProvider _legacyApplicationStatusesProvider;
-        private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
         private readonly ILogService _logger;
 
-        public CheckUnsetApprenticeshipApplicationLegacyId(IApprenticeshipApplicationDiagnosticsRepository applicationDiagnosticsRepository, IMessageBus messageBus, ILegacyApplicationStatusesProvider legacyApplicationStatusesProvider, IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository, ILogService logger)
+        public CheckUnsetApprenticeshipApplicationLegacyId(IApprenticeshipApplicationDiagnosticsRepository applicationDiagnosticsRepository, IMessageBus messageBus, ILegacyApplicationStatusesProvider legacyApplicationStatusesProvider, ILogService logger)
         {
             _applicationDiagnosticsRepository = applicationDiagnosticsRepository;
             _messageBus = messageBus;
             _legacyApplicationStatusesProvider = legacyApplicationStatusesProvider;
-            _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
             _logger = logger;
         }
 
@@ -47,8 +44,7 @@
                 var applicationStatusSummary = applicationStatusSummaries.SingleOrDefault(s => s.LegacyVacancyId == applicationDetail.Vacancy.Id);
                 if (applicationStatusSummary == null)
                 {
-                    applicationDetail.Status = ApplicationStatuses.Submitting;
-                    _apprenticeshipApplicationWriteRepository.Save(applicationDetail);
+                    _applicationDiagnosticsRepository.UpdateApplicationStatus(applicationDetail, ApplicationStatuses.Submitting);
 
                     var message = new SubmitApprenticeshipApplicationRequest
                     {
@@ -57,12 +53,11 @@
 
                     _messageBus.PublishMessage(message);
 
-                    _logger.Warn("Could not patch apprenticeship application id: {0} with legacy id as no matching application status summary was found. Requed instead", applicationDetail.EntityId);
+                    _logger.Warn("Could not patch apprenticeship application id: {0} with legacy id as no matching application status summary was found. Re-queued instead", applicationDetail.EntityId);
                 }
                 else
                 {
-                    applicationDetail.LegacyApplicationId = applicationStatusSummary.LegacyApplicationId;
-                    _apprenticeshipApplicationWriteRepository.Save(applicationDetail);
+                    _applicationDiagnosticsRepository.UpdateLegacyApplicationId(applicationDetail, applicationStatusSummary.LegacyApplicationId);
                     _logger.Info("Patching apprenticeship application id: {0} with legacy id: {1}", applicationDetail.EntityId, applicationDetail.LegacyApplicationId);
                 }
             }

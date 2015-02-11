@@ -9,5 +9,7 @@
         IEnumerable<TraineeshipApplicationDetail> GetApplicationsForValidCandidatesWithUnsetLegacyId();
 
         IEnumerable<CandidateTraineeshipApplicationDetail> GetSubmittedApplicationsWithUnsetLegacyId();
+
+        void UpdateLegacyApplicationId(TraineeshipApplicationDetail applicationDetail, int legacyApplicationId);
     }
 }

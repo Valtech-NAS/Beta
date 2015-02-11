@@ -10,6 +10,9 @@
     using Domain.Interfaces.Repositories;
     using Entities;
     using Mongo.Common;
+    using MongoDB.Bson;
+    using MongoDB.Driver;
+    using MongoDB.Driver.Builders;
     using MongoDB.Driver.Linq;
     using Repositories.Applications.Entities;
 
@@ -80,6 +83,11 @@
             }
 
             return submittedApplicationsWithUnsetLegacyId;
+        }
+
+        public void UpdateLegacyApplicationId(TraineeshipApplicationDetail applicationDetail, int legacyApplicationId)
+        {
+            Collection.Update(Query.EQ("EntityId", applicationDetail.EntityId), new UpdateDocument { { "$set", new BsonDocument("LegacyApplicationId", legacyApplicationId) } });
         }
     }
 }
