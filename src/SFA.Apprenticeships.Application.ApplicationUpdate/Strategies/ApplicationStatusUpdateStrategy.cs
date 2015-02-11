@@ -45,6 +45,7 @@
 
         public void Update(TraineeshipApplicationDetail traineeeshipApplication, ApplicationStatusSummary applicationStatusSummary)
         {
+            //todo: 1.6: remove this? we won't ever receive these updates while integrating with the legacy system for traineeships
             // invoked because the status of the apprenticeshipApplication / vacancy has changed
             _logger.Info(
                 "Updating status of traineeship application '{0}' for vacancy '{1}' from '{2}' to '{3}' for candidate {4}",
