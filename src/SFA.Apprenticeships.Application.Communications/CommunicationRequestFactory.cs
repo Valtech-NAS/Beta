@@ -18,16 +18,22 @@
                 MessageType = MessageTypes.DailyDigest
             };
 
-            var commTokens = new List<CommunicationToken>();
+            var commTokens = new List<CommunicationToken>
+            {
+                new CommunicationToken(CommunicationTokens.CandidateFirstName, candidate.RegistrationDetails.FirstName),
+                new CommunicationToken(CommunicationTokens.CandidateEmailAddress, candidate.RegistrationDetails.EmailAddress),
+                new CommunicationToken(CommunicationTokens.CandidateMobileNumber, candidate.RegistrationDetails.PhoneNumber),
+                new CommunicationToken(CommunicationTokens.ExpiringDraftsCount, candidateDailyDigest.Count().ToString(CultureInfo.InvariantCulture))
+            };
 
-            commTokens.Add(new CommunicationToken(CommunicationTokens.CandidateEmailAddress, candidate.RegistrationDetails.EmailAddress));
-            commTokens.Add(new CommunicationToken(CommunicationTokens.CandidateMobileNumber, candidate.RegistrationDetails.PhoneNumber));
-            commTokens.Add(new CommunicationToken(CommunicationTokens.ExpiringDraftsCount, candidateDailyDigest.Count().ToString(CultureInfo.InvariantCulture)));
+            var drafts = string.Join("~", candidateDailyDigest
+                .OrderBy(p => p.ClosingDate)
+                .Select(d => string.Join("|", WebUtility.UrlEncode(d.Title), WebUtility.UrlEncode(d.EmployerName), d.ClosingDate.ToLongDateString())));
 
-            var drafts = string.Join("~", candidateDailyDigest.OrderBy(p => p.ClosingDate).Select(d => string.Join("|", WebUtility.UrlEncode(d.Title), WebUtility.UrlEncode(d.EmployerName), d.ClosingDate.ToLongDateString())));
             commTokens.Add(new CommunicationToken(CommunicationTokens.ExpiringDrafts, drafts));
 
             communicationMessage.Tokens = commTokens;
+
             return communicationMessage;
         } 
     }
