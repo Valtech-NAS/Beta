@@ -1,8 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.ApplicationUpdate.Strategies
 {
     using Domain.Entities.Applications;
-    using Domain.Entities.Vacancies;
-    using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Entities;
     using Extensions;
@@ -14,17 +12,14 @@
 
         private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
         private readonly ITraineeshipApplicationWriteRepository _traineeshipApplicationWriteRepository;
-        private readonly IMessageBus _bus;
 
         public ApplicationStatusUpdateStrategy(
             IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository, 
             ITraineeshipApplicationWriteRepository traineeshipApplicationWriteRepository, 
-            IMessageBus bus,
             ILogService logger)
         {
             _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
             _traineeshipApplicationWriteRepository = traineeshipApplicationWriteRepository;
-            _bus = bus;
             _logger = logger;
         }
 
@@ -45,16 +40,6 @@
             if (apprenticeshipApplication.UpdateApprenticeshipApplicationDetail(applicationStatusSummary))
             {
                 _apprenticeshipApplicationWriteRepository.Save(apprenticeshipApplication);
-
-                // note, to force vacancy status updates for users with draft applications for this vacancy
-                var vacancyStatusSummary = new VacancyStatusSummary
-                {
-                    LegacyVacancyId = applicationStatusSummary.LegacyVacancyId,
-                    ClosingDate = applicationStatusSummary.ClosingDate,
-                    VacancyStatus = applicationStatusSummary.VacancyStatus
-                };
-
-                _bus.PublishMessage(vacancyStatusSummary);
             }
         }
 

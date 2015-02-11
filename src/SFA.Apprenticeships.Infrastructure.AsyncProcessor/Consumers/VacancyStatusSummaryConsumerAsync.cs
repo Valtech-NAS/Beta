@@ -5,6 +5,7 @@
     using Application.ApplicationUpdate;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Caching;
+    using Domain.Interfaces.Configuration;
     using EasyNetQ.AutoSubscribe;
     using Extensions;
 
@@ -12,11 +13,14 @@
     {
         private readonly ICacheService _cacheService;
         private readonly IApplicationStatusProcessor _applicationStatusProcessor;
+        private readonly bool _enableVacancyStatusPropagation;
 
-        public VacancyStatusSummaryConsumerAsync(ICacheService cacheService, IApplicationStatusProcessor applicationStatusProcessor)
+        public VacancyStatusSummaryConsumerAsync(ICacheService cacheService, IApplicationStatusProcessor applicationStatusProcessor, 
+            IConfigurationManager configurationManager)
         {
             _cacheService = cacheService;
             _applicationStatusProcessor = applicationStatusProcessor;
+            _enableVacancyStatusPropagation = configurationManager.GetCloudAppSetting<bool>("EnableVacancyStatusPropagation");
         }
 
         [SubscriptionConfiguration(PrefetchCount = 20)]
@@ -25,6 +29,8 @@
         {
             return Task.Run(() =>
             {
+                if (!_enableVacancyStatusPropagation) return;
+
                 var cachedSummaryUpdate = _cacheService.Get<VacancyStatusSummary>(message.CacheKey());
 
                 if (cachedSummaryUpdate != null)

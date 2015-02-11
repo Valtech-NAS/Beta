@@ -87,7 +87,7 @@
         {
             _logger.Debug("Processing application summary status update for application with legacy application ID '{0}'", applicationStatusSummary.LegacyApplicationId);
             
-            if (!ProcessApprenticeshipsApplication(applicationStatusSummary) && !ProcessTraineeshipsApplication(applicationStatusSummary))
+            if (!ProcessApprenticeshipApplication(applicationStatusSummary) && !ProcessTraineeshipApplication(applicationStatusSummary))
             {
                 _logger.Warn("Unable to find/update apprenticeship or traineeship application status for application with legacy application ID '{0}' and application ID '{1}'", applicationStatusSummary.LegacyApplicationId, applicationStatusSummary.ApplicationId);
             }
@@ -95,23 +95,12 @@
 
         public void ProcessApplicationStatuses(VacancyStatusSummary vacancyStatusSummary)
         {
-            try
-            {
-                QueueApprenticeshipApplicationStatusSummaries(vacancyStatusSummary);
-                QueueTraineeshipApplicationStatusSummaries(vacancyStatusSummary);
-            }
-            catch (Exception ex)
-            {
-                _logger.Error("Error processing application statuses", ex);
-            }
-        }
-
-        private void QueueApprenticeshipApplicationStatusSummaries(VacancyStatusSummary vacancyStatusSummary)
-        {
+            //todo: extract to strategy
+            // propagate current vacancy state to all draft applications for the vacancy
             var applicationSummaries = _apprenticeshipApplicationReadRepository.GetApplicationSummaries(vacancyStatusSummary.LegacyVacancyId);
-            var applicationSummaryStates = new[] { ApplicationStatuses.Draft, ApplicationStatuses.Submitting, ApplicationStatuses.Submitted };
 
             var applicationStatusSummaries = applicationSummaries
+                .Where(applicationSummary => applicationSummary.Status == ApplicationStatuses.Draft)
                 .Select(applicationSummary =>
                     new ApplicationStatusSummary
                     {
@@ -122,42 +111,17 @@
                         VacancyStatus = vacancyStatusSummary.VacancyStatus,
                         ClosingDate = vacancyStatusSummary.ClosingDate,
                         UnsuccessfulReason = applicationSummary.UnsuccessfulReason
-                    })
-                .Where(applicationSummary => applicationSummaryStates.Contains(applicationSummary.ApplicationStatus));
-
-            Parallel.ForEach(
-                applicationStatusSummaries,
-                new ParallelOptions { MaxDegreeOfParallelism = 5 },
-                applicationStatusSummary => _messageBus.PublishMessage(applicationStatusSummary));
-        }
-
-        private void QueueTraineeshipApplicationStatusSummaries(VacancyStatusSummary vacancyStatusSummary)
-        {
-            var applicationSummaries = _traineeshipApplicationReadRepository.GetApplicationSummaries(vacancyStatusSummary.LegacyVacancyId);
-
-            var applicationStatusSummaries = applicationSummaries
-                .Select(applicationSummary =>
-                    new ApplicationStatusSummary
-                    {
-                        ApplicationId = applicationSummary.ApplicationId,
-                        LegacyApplicationId = applicationSummary.LegacyApplicationId,
-                        LegacyVacancyId = applicationSummary.LegacyVacancyId,
-                        ApplicationStatus = ApplicationStatuses.Submitted,
-                        VacancyStatus = vacancyStatusSummary.VacancyStatus,
-                        ClosingDate = vacancyStatusSummary.ClosingDate
                     });
 
-            // TODO: Think how to reduce applications that need processing based on their status.
-            // TODO: Think about why we are processing traineeship application status updates.
             Parallel.ForEach(
                 applicationStatusSummaries,
                 new ParallelOptions { MaxDegreeOfParallelism = 5 },
                 applicationStatusSummary => _messageBus.PublishMessage(applicationStatusSummary));
         }
 
-        private bool ProcessApprenticeshipsApplication(ApplicationStatusSummary applicationStatusSummary)
+        private bool ProcessApprenticeshipApplication(ApplicationStatusSummary applicationStatusSummary)
         {
-            // TODO: get application by Legacy Candidate and Legacy Vacancy Id. This will enable Legacy Application Id to be 'back-filled'.
+            // TODO: get application by LegacyCandidateId + LegacyVacancyId. This will enable LegacyApplicationId to be 'back-filled' if missing.
             var apprenticeshipApplicationDetail = default(ApprenticeshipApplicationDetail);
 
             if (applicationStatusSummary.ApplicationId != Guid.Empty)
@@ -171,16 +135,16 @@
 
             if (apprenticeshipApplicationDetail == null)
             {
-                return false;
+                return false; // not an error as may be a traineeship
             }
 
             _applicationStatusUpdateStrategy.Update(apprenticeshipApplicationDetail, applicationStatusSummary);
             return true;
         }
 
-        private bool ProcessTraineeshipsApplication(ApplicationStatusSummary applicationStatusSummary)
+        private bool ProcessTraineeshipApplication(ApplicationStatusSummary applicationStatusSummary)
         {
-            // TODO: get application by Legacy Candidate and Legacy Vacancy Id. This will enable Legacy Application Id to be 'back-filled'.
+            // TODO: get application by LegacyCandidateId + LegacyVacancyId. This will enable LegacyApplicationId to be 'back-filled' if missing.
             var traineeshipApplicationDetail = _traineeshipApplicationReadRepository.Get(applicationStatusSummary.LegacyApplicationId);
 
             if (traineeshipApplicationDetail == null)

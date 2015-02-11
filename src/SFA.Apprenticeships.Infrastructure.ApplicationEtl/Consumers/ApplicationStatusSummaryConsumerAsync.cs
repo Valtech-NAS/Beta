@@ -12,9 +12,9 @@
     public class ApplicationStatusSummaryConsumerAsync : IConsumeAsync<ApplicationStatusSummary>
     {
         private readonly IApplicationStatusProcessor _applicationStatusProcessor;
-        private readonly IMessageBus _bus;
         private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
         private readonly ManualResetEvent _applicationStatusSummaryConsumerResetEvent = new ManualResetEvent(true);
+        private readonly IMessageBus _bus;
 
         private CancellationToken CancellationToken { get { return _cancellationTokenSource.Token; } }
 
@@ -42,14 +42,20 @@
                 {
                     _applicationStatusProcessor.ProcessApplicationStatuses(applicationStatusSummaryToProcess);
 
-                    var vacancyStatusSummary = new VacancyStatusSummary
-                    {
-                        LegacyVacancyId = applicationStatusSummaryToProcess.LegacyVacancyId,
-                        VacancyStatus = applicationStatusSummaryToProcess.VacancyStatus,
-                        ClosingDate = applicationStatusSummaryToProcess.ClosingDate
-                    };
+                    // determine whether this message is from an already propagated vacancy status summary
+                    var isReprocessing = applicationStatusSummaryToProcess.ApplicationId != Guid.Empty;
 
-                    _bus.PublishMessage(vacancyStatusSummary);
+                    if (!isReprocessing)
+                    {
+                        var vacancyStatusSummary = new VacancyStatusSummary
+                        {
+                            LegacyVacancyId = applicationStatusSummaryToProcess.LegacyVacancyId,
+                            VacancyStatus = applicationStatusSummaryToProcess.VacancyStatus,
+                            ClosingDate = applicationStatusSummaryToProcess.ClosingDate
+                        };
+
+                        _bus.PublishMessage(vacancyStatusSummary);
+                    }
                 }
                 finally
                 {

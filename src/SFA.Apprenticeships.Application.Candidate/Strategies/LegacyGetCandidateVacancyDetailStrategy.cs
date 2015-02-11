@@ -41,6 +41,16 @@
                 // update the application for this candidate (if they have one) with latest info from legacy
                 _applicationVacancyUpdater.Update(candidateId, vacancyId, vacancyDetails);
 
+                // propagate the current vacancy status for other consumers
+                var vacancyStatusSummary = new VacancyStatusSummary
+                {
+                    LegacyVacancyId = vacancyId,
+                    VacancyStatus = vacancyDetails.VacancyStatus,
+                    ClosingDate = vacancyDetails.ClosingDate
+                };
+
+                _bus.PublishMessage(vacancyStatusSummary);
+
                 return vacancyDetails;
             }
             catch (Exception e)

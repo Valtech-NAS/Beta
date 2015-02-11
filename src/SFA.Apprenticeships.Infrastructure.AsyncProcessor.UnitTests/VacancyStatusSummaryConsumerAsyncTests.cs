@@ -2,10 +2,10 @@
 {
     using System;
     using Application.ApplicationUpdate;
-    using Application.VacancyEtl.Entities;
     using Consumers;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Caching;
+    using Domain.Interfaces.Configuration;
     using Extensions;
     using Moq;
     using NUnit.Framework;
@@ -16,13 +16,15 @@
         private VacancyStatusSummaryConsumerAsync _vacancyStatusSummaryConsumerAsync;
         private Mock<ICacheService> _cacheServiceMock;
         private Mock<IApplicationStatusProcessor> _applicationStatusProcessor;
+        private Mock<IConfigurationManager> _configurationManagerMock;
 
         [SetUp]
         public void SetUp()
         {
             _cacheServiceMock = new Mock<ICacheService>();
             _applicationStatusProcessor = new Mock<IApplicationStatusProcessor>();
-            _vacancyStatusSummaryConsumerAsync = new VacancyStatusSummaryConsumerAsync(_cacheServiceMock.Object, _applicationStatusProcessor.Object);
+            _configurationManagerMock = new Mock<IConfigurationManager>();
+            _vacancyStatusSummaryConsumerAsync = new VacancyStatusSummaryConsumerAsync(_cacheServiceMock.Object, _applicationStatusProcessor.Object, _configurationManagerMock.Object);
         }
 
         [Test]
@@ -44,6 +46,7 @@
             var vacancyStatusSummary = new VacancyStatusSummary { LegacyVacancyId = 123, ClosingDate = DateTime.Now.AddMonths(-3), VacancyStatus = VacancyStatuses.Expired };
             _applicationStatusProcessor.Setup(x => x.ProcessApplicationStatuses(It.IsAny<VacancyStatusSummary>()));
             _cacheServiceMock.Setup(x => x.PutObject(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<CacheDuration>()));
+            _configurationManagerMock.Setup(x => x.GetCloudAppSetting<bool>(It.Is<string>(s => s == "EnableVacancyStatusPropagation"))).Returns(true);
 
             var task = _vacancyStatusSummaryConsumerAsync.Consume(vacancyStatusSummary);
             task.Wait();
