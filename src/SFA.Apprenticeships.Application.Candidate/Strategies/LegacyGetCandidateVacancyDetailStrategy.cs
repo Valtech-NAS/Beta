@@ -2,6 +2,7 @@
 {
     using System;
     using ApplicationUpdate;
+    using ApplicationUpdate.Entities;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Messaging;

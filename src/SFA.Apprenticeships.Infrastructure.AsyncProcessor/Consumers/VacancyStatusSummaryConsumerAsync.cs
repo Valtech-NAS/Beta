@@ -3,6 +3,7 @@
     using System;
     using System.Threading.Tasks;
     using Application.ApplicationUpdate;
+    using Application.ApplicationUpdate.Entities;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Caching;
     using Domain.Interfaces.Configuration;

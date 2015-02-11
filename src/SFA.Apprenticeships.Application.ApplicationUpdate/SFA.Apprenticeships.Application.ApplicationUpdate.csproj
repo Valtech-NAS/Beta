@@ -87,6 +87,7 @@
     <Compile Include="ApplicationStatusUpdater.cs" />
     <Compile Include="Entities\ApplicationStatusSummary.cs" />
     <Compile Include="Entities\ApplicationUpdatePage.cs" />
+    <Compile Include="Entities\VacancyStatusSummary.cs" />
     <Compile Include="Extensions\TraineeshipApplicationDetailExtension.cs" />
     <Compile Include="Extensions\ApprenticeshipApplicationDetailExtension.cs" />
     <Compile Include="IApplicationStatusProcessor.cs" />

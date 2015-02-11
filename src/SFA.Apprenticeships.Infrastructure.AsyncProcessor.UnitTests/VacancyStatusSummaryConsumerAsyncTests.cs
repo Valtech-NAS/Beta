@@ -2,6 +2,7 @@
 {
     using System;
     using Application.ApplicationUpdate;
+    using Application.ApplicationUpdate.Entities;
     using Consumers;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Caching;

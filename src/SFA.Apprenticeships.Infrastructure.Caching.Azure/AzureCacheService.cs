@@ -84,6 +84,8 @@
                 _logger.Debug(ItemNotInCacheFormat, key);
             }
 
+            _logger.Debug(ItemReturnedFromCacheFormat, key);
+
             return result;
         }
 
