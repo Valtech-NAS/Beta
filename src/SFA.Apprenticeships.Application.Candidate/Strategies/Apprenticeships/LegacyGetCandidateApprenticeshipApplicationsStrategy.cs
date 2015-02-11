@@ -43,8 +43,6 @@
                         _legacyApplicationStatusesProvider.GetCandidateApplicationStatuses(candidate);
 
                     _applicationStatusUpdater.Update(candidate, submittedApplicationStatuses);
-
-                //todo: queue drafts for status updates?                
                 }
             }
             catch (Exception ex)
