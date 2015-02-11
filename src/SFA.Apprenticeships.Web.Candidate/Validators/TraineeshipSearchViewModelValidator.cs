@@ -48,7 +48,7 @@
         {
             validator.RuleFor(x => x.Location)
                 .Length(3, 99)
-                .When(x => !x.Location.Any(Char.IsDigit))
+                .When(x => x.Location != null && !x.Location.Any(Char.IsDigit))
                 .WithMessage(TraineeshipSearchViewModelMessages.LocationMessages.LengthErrorText);
         }
 
