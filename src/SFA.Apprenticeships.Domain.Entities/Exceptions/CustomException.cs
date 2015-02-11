@@ -2,7 +2,7 @@
 {
     using System;
 
-    //todo: remove message arguments from exception ctors and replace with data items
+    //todo: 1.6: remove message arguments from exception ctors and replace with data items
     public sealed class CustomException : Exception
     {
         public CustomException(string code)
@@ -43,7 +43,7 @@
 
         private void StoreData(Guid? candidateId = null, string candidateEmail = null, Guid? applicationId = null, int? vacancyId = null)
         {
-            //todo: add contextual information (if present) to the data items
+            //todo: 1.6: add contextual information (if present) to the data items
             //Data.Add("candidate.id", candidateId);
             //Data.Add("candidate.email", candidateEmail);
             //Data.Add("application.id", applicationId);

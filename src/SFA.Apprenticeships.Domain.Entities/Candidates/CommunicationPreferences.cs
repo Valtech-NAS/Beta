@@ -13,12 +13,12 @@
 
         public bool AllowMobile { get; set; }
 
-        //todo: mobile verification number here?
+        //todo: 1.6: mobile verification number here?
 
         public bool VerifiedMobile { get; set; }
 
         public bool AllowTraineeshipPrompts { get; set; }
 
-        //todo: marketing opt-in (for v1.6)
+        //todo: 1.6: marketing opt-in
     }
 }

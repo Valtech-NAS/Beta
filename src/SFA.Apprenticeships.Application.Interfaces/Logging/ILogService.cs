@@ -2,7 +2,6 @@
 {
     using System;
 
-    //todo: add domain specific overloads? (entity, custom exception, etc.)
     public interface ILogService
     {
         void Debug(string message, params object[] args);

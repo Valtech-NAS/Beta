@@ -112,7 +112,7 @@
 
         public void ProcessApplicationStatuses(VacancyStatusSummary vacancyStatusSummary)
         {
-            //TODO: extract to strategy
+            //TODO: 1.6: extract to strategy
             // propagate current vacancy state to all draft applications for the vacancy
             var applicationSummaries = _apprenticeshipApplicationReadRepository.GetApplicationSummaries(vacancyStatusSummary.LegacyVacancyId);
 
@@ -138,7 +138,7 @@
 
         private bool ProcessApprenticeshipApplication(ApplicationStatusSummary applicationStatusSummary)
         {
-            // TODO: get application by LegacyCandidateId + LegacyVacancyId. This will enable LegacyApplicationId to be 'back-filled' if missing.
+            // TODO: 1.6: get application by LegacyCandidateId + LegacyVacancyId. This will enable LegacyApplicationId to be 'back-filled' if missing.
             var apprenticeshipApplicationDetail = default(ApprenticeshipApplicationDetail);
 
             if (applicationStatusSummary.ApplicationId != Guid.Empty)
@@ -161,7 +161,7 @@
 
         private bool ProcessTraineeshipApplication(ApplicationStatusSummary applicationStatusSummary)
         {
-            // TODO: get application by LegacyCandidateId + LegacyVacancyId. This will enable LegacyApplicationId to be 'back-filled' if missing.
+            // TODO: 1.6: get application by LegacyCandidateId + LegacyVacancyId. This will enable LegacyApplicationId to be 'back-filled' if missing.
             var traineeshipApplicationDetail = _traineeshipApplicationReadRepository.Get(applicationStatusSummary.LegacyApplicationId);
 
             if (traineeshipApplicationDetail == null)
