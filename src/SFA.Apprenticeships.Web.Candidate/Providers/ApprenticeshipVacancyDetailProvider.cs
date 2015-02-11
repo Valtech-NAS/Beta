@@ -6,6 +6,7 @@
     using Application.Interfaces.Logging;
     using Application.Interfaces.Vacancies;
     using Constants.Pages;
+    using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Mapping;
@@ -48,9 +49,21 @@
 
                 if (candidateId == null) return vacancyDetailViewModel;
 
-                var applicationDetails = _candidateService
-                    .GetApprenticeshipApplications(candidateId.Value)
-                    .SingleOrDefault(a => a.LegacyVacancyId == vacancyId);
+
+                ApprenticeshipApplicationSummary applicationDetails = null;
+                try
+                {
+                    var apprenticeshipApplicationSummaries = _candidateService.GetApprenticeshipApplications(candidateId.Value);
+                    if (apprenticeshipApplicationSummaries != null && apprenticeshipApplicationSummaries.Count > 0)
+                    {
+                        applicationDetails = apprenticeshipApplicationSummaries.SingleOrDefault(a => a.LegacyVacancyId == vacancyId);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    var message = string.Format("Finding application failed for Candidate Id: {0}, Vacancy Id: {1}", candidateId, vacancyId);
+                    _logger.Warn(message, ex);
+                }
 
                 if (applicationDetails == null) return vacancyDetailViewModel;
 
