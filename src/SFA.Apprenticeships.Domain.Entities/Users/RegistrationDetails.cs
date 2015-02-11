@@ -5,7 +5,6 @@
 
     public class RegistrationDetails
     {
-
         private string _emailAddress;
 
         public RegistrationDetails()
