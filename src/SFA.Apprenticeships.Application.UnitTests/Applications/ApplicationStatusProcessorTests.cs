@@ -7,6 +7,7 @@
     using ApplicationUpdate.Strategies;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
+    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using FizzWare.NBuilder;
@@ -22,6 +23,7 @@
         private Mock<ILegacyApplicationStatusesProvider> _legacyApplicationStatusProvider;
         private Mock<IApprenticeshipApplicationReadRepository> _apprenticeshipApplicationReadMock;
         private Mock<ITraineeshipApplicationReadRepository> _traineeshipApplicationReadMock;
+        private Mock<IConfigurationManager> _configurationManagerMock;
         private Mock<IMessageBus> _bus;
         private Mock<ILogService> _logger;
 
@@ -34,9 +36,10 @@
             _applicationStatusUpdateStrategy = new Mock<IApplicationStatusUpdateStrategy>();
             _bus = new Mock<IMessageBus>();
             _logger = new Mock<ILogService>();
+            _configurationManagerMock = new Mock<IConfigurationManager>();
             _applicationStatusProcessor = new ApplicationStatusProcessor(_legacyApplicationStatusProvider.Object,
                 _apprenticeshipApplicationReadMock.Object, _traineeshipApplicationReadMock.Object,
-                _applicationStatusUpdateStrategy.Object, _bus.Object, _logger.Object);
+                _applicationStatusUpdateStrategy.Object, _bus.Object, _logger.Object, _configurationManagerMock.Object);
         }
 
         [Test]

@@ -8,7 +8,6 @@
     {
         private const string SystemIdConst = "SystemId";
         private const string PublicKeyConst = "PublicKey";
-        private const string ApplicationStatusExtractWindowConst = "ApplicationStatusExtractWindow";
 
         public LegacyServicesConfiguration() : base("LegacyServicesConfiguration")
         {
@@ -26,13 +25,6 @@
         {
             get { return (string)this[PublicKeyConst]; }
             set { this[PublicKeyConst] = value; }
-        }
-
-        [ConfigurationProperty(ApplicationStatusExtractWindowConst, IsRequired = true, IsKey = false)]
-        public int ApplicationStatusExtractWindow
-        {
-            get { return (int)this[ApplicationStatusExtractWindowConst]; }
-            set { this[ApplicationStatusExtractWindowConst] = value; }
         }
     }
 }

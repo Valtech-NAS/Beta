@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
+    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Entities;
@@ -21,11 +22,13 @@
         private readonly IApplicationStatusUpdateStrategy _applicationStatusUpdateStrategy;
         private readonly IMessageBus _messageBus;
 
+        private readonly int _applicationStatusExtractWindow;
+
         public ApplicationStatusProcessor(ILegacyApplicationStatusesProvider legacyApplicationStatusesProvider,
             IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
             ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository,
             IApplicationStatusUpdateStrategy applicationStatusUpdateStrategy, 
-            IMessageBus messageBus, ILogService logger)
+            IMessageBus messageBus, ILogService logger, IConfigurationManager configurationManager)
         {
             _legacyApplicationStatusesProvider = legacyApplicationStatusesProvider;
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
@@ -33,13 +36,15 @@
             _applicationStatusUpdateStrategy = applicationStatusUpdateStrategy;
             _messageBus = messageBus;
             _logger = logger;
+
+            _applicationStatusExtractWindow = configurationManager.GetCloudAppSetting<int>("ApplicationStatusExtractWindow");
         }
 
         public void QueueApplicationStatusesPages()
         {
             _logger.Debug("Starting to queue application summary status update pages");
 
-            var pageCount = _legacyApplicationStatusesProvider.GetApplicationStatusesPageCount();
+            var pageCount = _legacyApplicationStatusesProvider.GetApplicationStatusesPageCount(_applicationStatusExtractWindow);
 
             if (pageCount == 0)
             {
@@ -50,7 +55,7 @@
             var pages = Enumerable.Range(1, pageCount)
                 .Select(i => new ApplicationUpdatePage {PageNumber = i, TotalPages = pageCount});
 
-            _logger.Debug("Queueing {0} application summary status update pages", pageCount);
+            _logger.Debug("Queuing {0} application summary status update pages", pageCount);
 
             Parallel.ForEach(
                 pages,
@@ -65,7 +70,7 @@
             _logger.Debug("Starting to queue application status updates for page {0} of {1}", applicationStatusSummaryPage.PageNumber, applicationStatusSummaryPage.TotalPages);
 
             // retrieve page of status updates from legacy... then queue each one for subsequent processing
-            var applicationStatusSummaries = _legacyApplicationStatusesProvider.GetAllApplicationStatuses(applicationStatusSummaryPage.PageNumber).ToList();
+            var applicationStatusSummaries = _legacyApplicationStatusesProvider.GetAllApplicationStatuses(applicationStatusSummaryPage.PageNumber, _applicationStatusExtractWindow).ToList();
 
             if (!applicationStatusSummaries.Any())
             {
@@ -73,7 +78,7 @@
                 return;
             }
 
-            _logger.Debug("Queueing {0} application status updates for page {1} of {2}", applicationStatusSummaries.Count(), applicationStatusSummaryPage.PageNumber, applicationStatusSummaryPage.TotalPages);
+            _logger.Debug("Queuing {0} application status updates for page {1} of {2}", applicationStatusSummaries.Count(), applicationStatusSummaryPage.PageNumber, applicationStatusSummaryPage.TotalPages);
 
             Parallel.ForEach(
                 applicationStatusSummaries,
@@ -95,7 +100,7 @@
 
         public void ProcessApplicationStatuses(VacancyStatusSummary vacancyStatusSummary)
         {
-            //todo: extract to strategy
+            //TODO: extract to strategy
             // propagate current vacancy state to all draft applications for the vacancy
             var applicationSummaries = _apprenticeshipApplicationReadRepository.GetApplicationSummaries(vacancyStatusSummary.LegacyVacancyId);
 

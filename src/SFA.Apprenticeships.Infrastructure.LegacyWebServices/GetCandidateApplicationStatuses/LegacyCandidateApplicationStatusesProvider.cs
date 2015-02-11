@@ -20,15 +20,12 @@
 
         private readonly IMapper _mapper;
         private readonly IWcfService<GatewayServiceContract> _service;
-        private readonly int _applicationStatusExtractWindow;
 
         public LegacyCandidateApplicationStatusesProvider(IWcfService<GatewayServiceContract> service, IMapper mapper, ILegacyServicesConfiguration legacyServicesConfiguration, ILogService logger)
         {
             _service = service;
             _mapper = mapper;
             _logger = logger;
-
-            _applicationStatusExtractWindow = legacyServicesConfiguration.ApplicationStatusExtractWindow;
         }
 
         public IEnumerable<ApplicationStatusSummary> GetCandidateApplicationStatuses(Candidate candidate)
@@ -73,7 +70,7 @@
             return _mapper.Map<CandidateApplication[], IEnumerable<ApplicationStatusSummary>>(response.CandidateApplications);
         }
 
-        public int GetApplicationStatusesPageCount()
+        public int GetApplicationStatusesPageCount(int applicationStatusExtractWindow)
         {
             // retrieve application statuses page count so can queue subsequent paged requests
 
@@ -81,7 +78,7 @@
             {
                 PageNumber = 1,
                 RangeTo = DateTime.UtcNow,
-                RangeFrom = DateTime.UtcNow.AddMinutes(_applicationStatusExtractWindow * -1)
+                RangeFrom = DateTime.UtcNow.AddMinutes(applicationStatusExtractWindow * -1)
             };
 
             var response = default(GetApplicationsStatusResponse);
@@ -102,7 +99,7 @@
             return response.TotalPages;
         }
 
-        public IEnumerable<ApplicationStatusSummary> GetAllApplicationStatuses(int page)
+        public IEnumerable<ApplicationStatusSummary> GetAllApplicationStatuses(int page, int applicationStatusExtractWindow)
         {
             // retrieve application statuses for ALL candidates (used in application ETL process)
 
@@ -110,7 +107,7 @@
             {
                 PageNumber = page,
                 RangeTo = DateTime.UtcNow,
-                RangeFrom = DateTime.UtcNow.AddMinutes(_applicationStatusExtractWindow * -1)
+                RangeFrom = DateTime.UtcNow.AddMinutes(applicationStatusExtractWindow * -1)
             };
 
             var response = default(GetApplicationsStatusResponse);
