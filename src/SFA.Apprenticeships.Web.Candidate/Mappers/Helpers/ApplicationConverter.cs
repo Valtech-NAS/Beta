@@ -9,6 +9,7 @@
     using ViewModels.Candidate;
     using ViewModels.Locations;
 
+    //todo: 1.6: this is inconsistent with approach to other mapping. should use MapperEngine
     public static class ApplicationConverter
     {
         #region Entity To Model Converters

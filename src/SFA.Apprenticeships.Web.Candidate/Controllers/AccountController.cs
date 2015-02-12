@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
+    using System;
     using System.Globalization;
     using System.Net;
     using System.Threading.Tasks;
@@ -77,6 +78,29 @@
                 }
             });
         }
+
+        //todo: 1.6: mobile verification
+        //[OutputCache(CacheProfile = CacheProfiles.None)]
+        //[AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        //[ApplyWebTrends]
+        //public async Task<ActionResult> VerifyMobile()
+        //{
+        //    return await Task.Run<ActionResult>(() =>
+        //    {
+        //    });
+        //}
+
+        //todo: 1.6: mobile verification
+        //[HttpPost]
+        //[OutputCache(CacheProfile = CacheProfiles.None)]
+        //[AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        //[ApplyWebTrends]
+        //public async Task<ActionResult> VerifyMobile(VerifyMobileViewModel model)
+        //{
+        //    return await Task.Run<ActionResult>(() =>
+        //    {
+        //    });
+        //}
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]

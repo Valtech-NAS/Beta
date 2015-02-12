@@ -11,6 +11,7 @@
         PasswordResetCodeExpiryDays,
         AccountUnlockCode,
         AccountUnlockCodeExpiryDays,
+        MobileVerificationCode,
         ApplicationVacancyTitle,
         ApplicationVacancyReference,
         ApplicationId,
