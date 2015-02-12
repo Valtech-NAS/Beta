@@ -38,6 +38,12 @@
             return this;
         }
 
+        public ApprenticeshipApplicationViewModelBuilder HasError(string viewModelMessage)
+        {
+            _viewModelMessage = viewModelMessage;
+            return this;
+        }
+
         public ApprenticeshipApplicationViewModel Build()
         {
             var viewModel = new ApprenticeshipApplicationViewModel

@@ -175,6 +175,7 @@
     <Compile Include="Helpers\FullNameFormatterTests.cs" />
     <Compile Include="Mappers\VacancyDetailViewModelMapperTests.cs" />
     <Compile Include="Mediators\Account\AcceptTermsAndConditionsTests.cs" />
+    <Compile Include="Mediators\Account\AccountMediatorBuilder.cs" />
     <Compile Include="Mediators\Account\ApprenticeshipVacancyDetailsTests.cs" />
     <Compile Include="Mediators\Account\ArchiveTests.cs" />
     <Compile Include="Mediators\Account\DeleteTests.cs" />
