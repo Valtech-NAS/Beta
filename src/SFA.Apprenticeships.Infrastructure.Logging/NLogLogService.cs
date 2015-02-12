@@ -58,6 +58,7 @@
             var logMessage = string.Format(message, args);
             var logEvent = new LogEventInfo
             {
+                LoggerName = _logger.Name,
                 Level = logLevel,
                 Exception = exception,
                 Message = logMessage
