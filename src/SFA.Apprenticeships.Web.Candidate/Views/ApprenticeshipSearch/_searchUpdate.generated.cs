@@ -421,8 +421,28 @@ WriteLiteral("                    ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n                </div>\r\n            </div>\r\n        </fieldset>\r\n    </div>\r\n" +
-"</section>");
+WriteLiteral("\r\n                    ");
+
+WriteLiteral("\r\n                    <input");
+
+WriteLiteral(" id=\"LocationType\"");
+
+WriteLiteral(" name=\"LocationType\"");
+
+WriteLiteral(" type=\"hidden\"");
+
+WriteAttribute("value", Tuple.Create(" value=\"", 4510), Tuple.Create("\"", 4537)
+            
+            #line 66 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+      , Tuple.Create(Tuple.Create("", 4518), Tuple.Create<System.Object, System.Int32>(Model.LocationType
+            
+            #line default
+            #line hidden
+, 4518), false)
+);
+
+WriteLiteral(" />\r\n\r\n                </div>\r\n            </div>\r\n        </fieldset>\r\n    </div" +
+">\r\n</section>");
 
         }
     }

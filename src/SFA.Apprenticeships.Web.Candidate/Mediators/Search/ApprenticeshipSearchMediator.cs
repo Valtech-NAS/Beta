@@ -229,8 +229,8 @@
             }
 
             var isLocalLocationType = results.VacancySearch.LocationType != ApprenticeshipLocationType.National;
-            
-            results.VacancySearch.SortTypes = GetSortTypes(searchModel.SortType, searchModel.Keywords, isLocalLocationType);
+
+            results.VacancySearch.SortTypes = GetSortTypes(model.SortType, model.Keywords, isLocalLocationType);
 
             return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.Results.Ok, results);
         }

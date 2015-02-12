@@ -62,6 +62,8 @@
                     @Html.HiddenFor(m => m.Longitude)
                     @Html.Hidden("Hash", Model.LatLonLocHash())
                     @Html.HiddenFor(m => m.SearchMode)
+                    @* This is declared explicitly because we want the value from the model NOT from the URL and the view engine will favour the (potentially incorrect) one from the URL *@
+                    <input id="LocationType" name="LocationType" type="hidden" value="@Model.LocationType" />
 
                 </div>
             </div>
