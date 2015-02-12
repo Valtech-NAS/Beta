@@ -13,8 +13,11 @@
         }
 
         public Education EducationHistory { get; set; }
+
         public IList<Qualification> Qualifications { get; set; }
+
         public IList<WorkExperience> WorkExperience { get; set; }
+
         public AboutYou AboutYou { get; set; }
     }
 }
