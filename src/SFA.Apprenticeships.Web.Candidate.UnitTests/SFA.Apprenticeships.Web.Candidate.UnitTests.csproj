@@ -167,6 +167,7 @@
     <Compile Include="Builders\ApprenticeshipApplicationViewModelBuilder.cs" />
     <Compile Include="Builders\ApprenticeshipSummaryBuilder.cs" />
     <Compile Include="Builders\CandidateBuilder.cs" />
+    <Compile Include="Builders\RegisterViewModelBuilder.cs" />
     <Compile Include="Builders\VacancyDetailViewModelBuilder.cs" />
     <Compile Include="Extensions\CollectionExtensionsTests.cs" />
     <Compile Include="Helpers\BaseExtensionTests.cs" />
@@ -234,6 +235,7 @@
     <Compile Include="Providers\ApplicationProvider\TraineeshipsFeatureViewModel.cs" />
     <Compile Include="Providers\ApplicationProvider\UnarchiveApplicationTests.cs" />
     <Compile Include="Providers\CandidateServiceProvider\CandidateServiceProviderBuilder.cs" />
+    <Compile Include="Providers\CandidateServiceProvider\RegisterTests.cs" />
     <Compile Include="Providers\CandidateServiceProvider\RequestAccountUnlockCodeTests.cs" />
     <Compile Include="Providers\CandidateServiceProvider\VerifyAccountUnlockCodeTests.cs" />
     <Compile Include="Providers\SearchProviderTests.cs" />

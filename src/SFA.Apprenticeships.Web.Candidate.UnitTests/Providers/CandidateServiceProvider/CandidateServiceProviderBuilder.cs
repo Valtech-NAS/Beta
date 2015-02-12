@@ -9,6 +9,7 @@
     using Common.Providers;
     using Common.Services;
     using Domain.Interfaces.Configuration;
+    using Domain.Interfaces.Mapping;
     using Moq;
 
     public class CandidateServiceProviderBuilder
@@ -29,6 +30,7 @@
             UserDataProvider = new Mock<IUserDataProvider>();
             AuthenticationTicketService = new Mock<IAuthenticationTicketService>();
             HttpContext = new Mock<HttpContextBase>();
+            HttpContext.Setup(h => h.Response).Returns(new Mock<HttpResponseBase>().Object);
             ConfigurationManager = new Mock<IConfigurationManager>();
             Logger = new Mock<ILogService>();
         }
