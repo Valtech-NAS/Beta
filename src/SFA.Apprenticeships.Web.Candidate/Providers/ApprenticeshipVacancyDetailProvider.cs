@@ -1,12 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
     using System;
-    using System.Linq;
     using Application.Interfaces.Candidates;
     using Application.Interfaces.Logging;
     using Application.Interfaces.Vacancies;
     using Constants.Pages;
-    using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Mapping;
@@ -48,23 +46,8 @@
                 var vacancyDetailViewModel = _mapper.Map<ApprenticeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
 
                 if (candidateId == null) return vacancyDetailViewModel;
-
-
-                ApprenticeshipApplicationSummary applicationDetails = null;
-                try
-                {
-                    var apprenticeshipApplicationSummaries = _candidateService.GetApprenticeshipApplications(candidateId.Value);
-                    if (apprenticeshipApplicationSummaries != null && apprenticeshipApplicationSummaries.Count > 0)
-                    {
-                        applicationDetails = apprenticeshipApplicationSummaries.SingleOrDefault(a => a.LegacyVacancyId == vacancyId);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    var message = string.Format("Finding application failed for Candidate Id: {0}, Vacancy Id: {1}", candidateId, vacancyId);
-                    _logger.Warn(message, ex);
-                }
-
+                
+                var applicationDetails = _candidateService.GetApplication(candidateId.Value, vacancyId);
                 if (applicationDetails == null) return vacancyDetailViewModel;
 
                 // If candidate has applied for vacancy, include the details in the view model.
