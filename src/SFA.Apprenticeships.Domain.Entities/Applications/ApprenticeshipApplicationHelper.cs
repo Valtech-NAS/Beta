@@ -11,7 +11,7 @@
             if (!allowedUserStatuses.Contains(apprenticeshipApplicationDetail.Status))
             {
                 var expectedStatuses = string.Join(", ", allowedUserStatuses);
-                var message = string.Format("Application in invalid state for '{0}' (id: {1}, current: {2}, expected: '{3}')", 
+                var message = string.Format("Application in invalid state for '{0}' (id: {1}, current: '{2}', expected: '{3}')", 
                     errorMessage,
                     apprenticeshipApplicationDetail.EntityId,
                     apprenticeshipApplicationDetail.Status,

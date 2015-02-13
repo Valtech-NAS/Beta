@@ -42,7 +42,7 @@
             if (!allowedUserStatuses.Contains(user.Status))
             {
                 var expectedStatuses = string.Join(", ", allowedUserStatuses);
-                var message = string.Format("User in invalid state for '{0}' (id: {1}, current: {2}, expected: '{3}')", 
+                var message = string.Format("User in invalid state for '{0}' (id: {1}, current: '{2}', expected: '{3}')", 
                     errorMessage, 
                     user.EntityId, 
                     user.Status,
