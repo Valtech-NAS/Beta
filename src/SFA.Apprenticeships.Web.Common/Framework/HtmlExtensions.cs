@@ -162,19 +162,13 @@
                     this HtmlHelper<TModel> helper,
                     Expression<Func<TModel, bool>> expression,
                     string labelText = null,
-                    string hintText = null,
                     object containerHtmlAttributes = null,
                     object labelHtmlAttributes = null,
-                    object hintHtmlAttributes = null,
                     object controlHtmlAttributes = null)
         {
             var container = new TagBuilder("div");
-            var label = new TagBuilder("label");
 
             var containerAttributes = MergeAttributes("form-group", containerHtmlAttributes);
-            var controlAttributes = MergeAttributes("", controlHtmlAttributes);
-            var labelAttributes = MergeAttributes("", labelHtmlAttributes);
-            //var hintAttributes = MergeAttributes("form-hint", hintHtmlAttributes);
             
             var validationError = HasValidationError(helper, expression);
             var validator = helper.ValidationMessageFor(expression, null);
@@ -187,14 +181,39 @@
                 container.AddCssClass(HtmlHelper.ValidationInputCssClassName);
             }
 
-            label.MergeAttributes(labelAttributes);
-            label.Attributes.Add("for", helper.ViewData.TemplateInfo.GetFullHtmlFieldId(ExpressionHelper.GetExpressionText(expression)));
-            label.InnerHtml = helper.CheckBoxFor(expression, controlAttributes).ToString();
-            label.InnerHtml += GetDisplayName(helper, expression, labelText);
+            var label = GetLabel(helper, expression, labelText, labelHtmlAttributes, controlHtmlAttributes);
 
             container.InnerHtml += string.Concat(anchorTag, label.ToString(), validator);
 
             return MvcHtmlString.Create(container.ToString());
+        }
+
+        private static TagBuilder GetLabel<TModel>(HtmlHelper<TModel> helper, Expression<Func<TModel, bool>> expression, string labelText, object labelHtmlAttributes, object controlHtmlAttributes)
+        {
+            var controlAttributes = MergeAttributes("", controlHtmlAttributes);
+            var labelAttributes = MergeAttributes("", labelHtmlAttributes);
+            var label = new TagBuilder("label");
+            label.MergeAttributes(labelAttributes);
+            label.Attributes.Add("for", helper.ViewData.TemplateInfo.GetFullHtmlFieldId(ExpressionHelper.GetExpressionText(expression)));
+            label.InnerHtml = helper.CheckBoxFor(expression, controlAttributes).ToString();
+            label.InnerHtml += GetDisplayName(helper, expression, labelText);
+            return label;
+        }
+
+        /// <summary>
+        /// Creates the NAS form element with the appropriate classes.
+        /// </summary>
+        /// <returns>The html to render</returns>
+        public static MvcHtmlString FormUnvalidatedCheckBoxFor<TModel>(
+                    this HtmlHelper<TModel> helper,
+                    Expression<Func<TModel, bool>> expression,
+                    string labelText = null,
+                    object labelHtmlAttributes = null,
+                    object controlHtmlAttributes = null)
+        {
+            var label = GetLabel(helper, expression, labelText, labelHtmlAttributes, controlHtmlAttributes);
+
+            return MvcHtmlString.Create(label.ToString());
         }
 
         #endregion

@@ -223,7 +223,41 @@ WriteLiteral(">\r\n            <h3");
 
 WriteLiteral(" class=\"heading-large\"");
 
-WriteLiteral(">How we contact you</h3>\r\n            <div");
+WriteLiteral(">How we contact you</h3>\r\n\r\n            <div");
+
+WriteLiteral(" class=\"form-group form-group-compound\"");
+
+WriteLiteral(">\r\n                <p");
+
+WriteLiteral(" class=\"form-label\"");
+
+WriteLiteral(">Receive notifications?</p>\r\n                <span");
+
+WriteLiteral(" class=\"form-hint\"");
+
+WriteLiteral(">If you don\'t select an option you won\'t receive notifications</span>\r\n");
+
+WriteLiteral("                ");
+
+            
+            #line 46 "..\..\Views\Account\Settings.cshtml"
+           Write(Html.FormUnvalidatedCheckBoxFor(m => m.AllowEmailComms, labelHtmlAttributes: new { @class = "block-label selected" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("                ");
+
+            
+            #line 47 "..\..\Views\Account\Settings.cshtml"
+           Write(Html.FormUnvalidatedCheckBoxFor(m => m.AllowSmsComms, labelHtmlAttributes: new { @class = "block-label selected" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n            </div>\r\n\r\n            <div");
 
 WriteLiteral(" class=\"panel-indent text\"");
 
@@ -240,7 +274,7 @@ WriteLiteral("\r\n                    <li>an apprenticeship is approaching its c
 WriteLiteral("            ");
 
             
-            #line 50 "..\..\Views\Account\Settings.cshtml"
+            #line 58 "..\..\Views\Account\Settings.cshtml"
        Write(Html.FormRadioButtonsYesNo(m => m.AllowEmailComms));
 
             
@@ -249,7 +283,7 @@ WriteLiteral("            ");
 WriteLiteral("\r\n        </div>\r\n\r\n    </fieldset>\r\n");
 
             
-            #line 54 "..\..\Views\Account\Settings.cshtml"
+            #line 62 "..\..\Views\Account\Settings.cshtml"
 
 
             
@@ -268,7 +302,7 @@ WriteLiteral(" class=\"button\"");
 WriteLiteral(">Update details</button>\r\n    </div>\r\n");
 
             
-            #line 58 "..\..\Views\Account\Settings.cshtml"
+            #line 66 "..\..\Views\Account\Settings.cshtml"
 }
 
             
@@ -282,7 +316,7 @@ WriteLiteral("\r\n    <script>\r\n        $(function () {\r\n            $(\"#fi
 "Lookup({\r\n                url: \'");
 
             
-            #line 65 "..\..\Views\Account\Settings.cshtml"
+            #line 73 "..\..\Views\Account\Settings.cshtml"
                  Write(Url.Action("Addresses", "Location"));
 
             

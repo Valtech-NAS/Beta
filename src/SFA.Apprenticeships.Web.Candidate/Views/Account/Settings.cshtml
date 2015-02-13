@@ -39,6 +39,14 @@
         
         <div id="accountSettings2">
             <h3 class="heading-large">How we contact you</h3>
+
+            <div class="form-group form-group-compound">
+                <p class="form-label">Receive notifications?</p>
+                <span class="form-hint">If you don't select an option you won't receive notifications</span>
+                @Html.FormUnvalidatedCheckBoxFor(m => m.AllowEmailComms, labelHtmlAttributes: new { @class = "block-label selected" })
+                @Html.FormUnvalidatedCheckBoxFor(m => m.AllowSmsComms, labelHtmlAttributes: new { @class = "block-label selected" })
+            </div>
+
             <div class="panel-indent text">
                 <p>We'll notify you when:</p>
                 <ul class="list-bullet">
