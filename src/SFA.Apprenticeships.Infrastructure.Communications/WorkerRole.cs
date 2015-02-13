@@ -51,6 +51,10 @@ namespace SFA.Apprenticeships.Infrastructure.Communications
                     }
 
                 }
+                catch (FaultException fe)
+                {
+                    _logger.Error("FaultException from  " + ProcessName, fe);
+                }
                 catch (CommunicationException ce)
                 {
                     _logger.Warn("CommunicationException from " + ProcessName, ce);
