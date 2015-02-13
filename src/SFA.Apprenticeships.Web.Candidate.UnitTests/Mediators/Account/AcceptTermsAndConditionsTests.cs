@@ -3,7 +3,6 @@
     using System;
     using Candidate.Mediators.Account;
     using Candidate.Providers;
-    using Candidate.Validators;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
@@ -14,37 +13,6 @@
     [TestFixture]
     public class AcceptTermsAndConditionsTests
     {
-        private AccountMediator _accountMediator;
-        private Mock<IApprenticeshipApplicationProvider> _apprenticeshipApplicationProviderMock;
-        private Mock<IApprenticeshipVacancyDetailProvider> _apprenticeshipVacancyDetailProvider;
-        private Mock<ITraineeshipVacancyDetailProvider> _traineeshipVacancyDetailProvider;
-        private Mock<IAccountProvider> _accountProviderMock;
-        private Mock<ICandidateServiceProvider> _candidateServiceProviderMock;
-        private Mock<IConfigurationManager> _configurationManagerMock;
-        private SettingsViewModelServerValidator _settingsViewModelServerValidator;
-
-        [TestFixtureSetUp]
-        public void SetUp()
-        {
-            _apprenticeshipApplicationProviderMock = new Mock<IApprenticeshipApplicationProvider>();
-            _apprenticeshipVacancyDetailProvider = new Mock<IApprenticeshipVacancyDetailProvider>();
-            _traineeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
-
-            _accountProviderMock = new Mock<IAccountProvider>();
-            _settingsViewModelServerValidator = new SettingsViewModelServerValidator();
-            _candidateServiceProviderMock = new Mock<ICandidateServiceProvider>();
-            _configurationManagerMock = new Mock<IConfigurationManager>();
-
-            _accountMediator = new AccountMediator(
-                _accountProviderMock.Object,
-                _candidateServiceProviderMock.Object,
-                _settingsViewModelServerValidator,
-                _apprenticeshipApplicationProviderMock.Object,
-                _apprenticeshipVacancyDetailProvider.Object,
-                _traineeshipVacancyDetailProvider.Object,
-                _configurationManagerMock.Object);
-        }
-
         [TestCase("1")]
         [TestCase(null)]
         public void SuccessTest(string version)
@@ -53,10 +21,15 @@
             {
                 RegistrationDetails = new RegistrationDetails { AcceptedTermsAndConditionsVersion = version }
             };
-            _candidateServiceProviderMock.Setup(x => x.GetCandidate(It.IsAny<Guid>())).Returns(candidate);
-            _configurationManagerMock.Setup(x => x.GetAppSetting<string>("TermsAndConditionsVersion")).Returns("1.1");
-            _candidateServiceProviderMock.Setup(x => x.AcceptTermsAndConditions(It.IsAny<Guid>(), It.IsAny<string>())).Returns(true);
-            var response = _accountMediator.AcceptTermsAndConditions(Guid.NewGuid());
+
+            var candidateServiceProviderMock = new Mock<ICandidateServiceProvider>();
+            candidateServiceProviderMock.Setup(x => x.GetCandidate(It.IsAny<Guid>())).Returns(candidate);
+            var configurationManagerMock = new Mock<IConfigurationManager>();
+            configurationManagerMock.Setup(x => x.GetAppSetting<string>("TermsAndConditionsVersion")).Returns("1.1");
+            candidateServiceProviderMock.Setup(x => x.AcceptTermsAndConditions(It.IsAny<Guid>(), It.IsAny<string>())).Returns(true);
+            var accountMediator = new AccountMediatorBuilder().With(candidateServiceProviderMock).With(configurationManagerMock).Build();
+
+            var response = accountMediator.AcceptTermsAndConditions(Guid.NewGuid());
 
             response.Code.Should().Be(AccountMediatorCodes.AcceptTermsAndConditions.SuccessfullyAccepted);
         }
@@ -69,11 +42,14 @@
                 RegistrationDetails = new RegistrationDetails { AcceptedTermsAndConditionsVersion = "1.1" }
             };
 
-            _candidateServiceProviderMock.Setup(x => x.GetCandidate(It.IsAny<Guid>())).Returns(candidate);
-            _configurationManagerMock.Setup(x => x.GetAppSetting<string>("TermsAndConditionsVersion")).Returns("1.1");
-            _candidateServiceProviderMock.Setup(x => x.AcceptTermsAndConditions(It.IsAny<Guid>(), It.IsAny<string>())).Returns(true);
+            var candidateServiceProviderMock = new Mock<ICandidateServiceProvider>();
+            candidateServiceProviderMock.Setup(x => x.GetCandidate(It.IsAny<Guid>())).Returns(candidate);
+            var configurationManagerMock = new Mock<IConfigurationManager>();
+            configurationManagerMock.Setup(x => x.GetAppSetting<string>("TermsAndConditionsVersion")).Returns("1.1");
+            candidateServiceProviderMock.Setup(x => x.AcceptTermsAndConditions(It.IsAny<Guid>(), It.IsAny<string>())).Returns(true);
+            var accountMediator = new AccountMediatorBuilder().With(candidateServiceProviderMock).With(configurationManagerMock).Build();
 
-            var response = _accountMediator.AcceptTermsAndConditions(Guid.NewGuid());
+            var response = accountMediator.AcceptTermsAndConditions(Guid.NewGuid());
 
             response.Code.Should().Be(AccountMediatorCodes.AcceptTermsAndConditions.AlreadyAccepted);
         }
@@ -86,11 +62,14 @@
                 RegistrationDetails = new RegistrationDetails { AcceptedTermsAndConditionsVersion = "1" }
             };
 
-            _candidateServiceProviderMock.Setup(x => x.GetCandidate(It.IsAny<Guid>())).Returns(candidate);
-            _configurationManagerMock.Setup(x => x.GetAppSetting<string>("TermsAndConditionsVersion")).Returns("1.1");
-            _candidateServiceProviderMock.Setup(x => x.AcceptTermsAndConditions(It.IsAny<Guid>(), It.IsAny<string>())).Returns(false);
+            var candidateServiceProviderMock = new Mock<ICandidateServiceProvider>();
+            candidateServiceProviderMock.Setup(x => x.GetCandidate(It.IsAny<Guid>())).Returns(candidate);
+            var configurationManagerMock = new Mock<IConfigurationManager>();
+            configurationManagerMock.Setup(x => x.GetAppSetting<string>("TermsAndConditionsVersion")).Returns("1.1");
+            candidateServiceProviderMock.Setup(x => x.AcceptTermsAndConditions(It.IsAny<Guid>(), It.IsAny<string>())).Returns(false);
+            var accountMediator = new AccountMediatorBuilder().With(candidateServiceProviderMock).With(configurationManagerMock).Build();
 
-            var response = _accountMediator.AcceptTermsAndConditions(Guid.NewGuid());
+            var response = accountMediator.AcceptTermsAndConditions(Guid.NewGuid());
 
             response.Code.Should().Be(AccountMediatorCodes.AcceptTermsAndConditions.ErrorAccepting);
         }
@@ -98,9 +77,13 @@
         [Test]
         public void ExceptionTest()
         {
-            _candidateServiceProviderMock.Setup(x => x.GetCandidate(It.IsAny<Guid>())).Throws<Exception>();
-            _configurationManagerMock.Setup(x => x.GetAppSetting<string>("TermsAndConditionsVersion")).Returns("1.1");
-            var response = _accountMediator.AcceptTermsAndConditions(Guid.NewGuid());
+            var candidateServiceProviderMock = new Mock<ICandidateServiceProvider>();
+            candidateServiceProviderMock.Setup(x => x.GetCandidate(It.IsAny<Guid>())).Throws<Exception>();
+            var configurationManagerMock = new Mock<IConfigurationManager>();
+            configurationManagerMock.Setup(x => x.GetAppSetting<string>("TermsAndConditionsVersion")).Returns("1.1");
+            var accountMediator = new AccountMediatorBuilder().With(candidateServiceProviderMock).With(configurationManagerMock).Build();
+
+            var response = accountMediator.AcceptTermsAndConditions(Guid.NewGuid());
 
             response.Code.Should().Be(AccountMediatorCodes.AcceptTermsAndConditions.ErrorAccepting);
         }

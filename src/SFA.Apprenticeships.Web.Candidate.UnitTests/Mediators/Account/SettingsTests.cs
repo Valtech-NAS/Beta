@@ -3,13 +3,12 @@
     using System;
     using Candidate.Mediators.Account;
     using Candidate.Providers;
-    using Candidate.Validators;
     using Candidate.ViewModels;
     using Candidate.ViewModels.Account;
     using Candidate.ViewModels.Locations;
     using Common.Constants;
     using Constants.Pages;
-    using Domain.Interfaces.Configuration;
+    using Domain.Entities.Candidates;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -17,43 +16,19 @@
     [TestFixture]
     public class SettingsTests
     {
-        private AccountMediator _accountMediator;
-        private Mock<IApprenticeshipApplicationProvider> _apprenticeshipApplicationProviderMock;
-        private Mock<IApprenticeshipVacancyDetailProvider> _apprenticeshipVacancyDetailProvider;
-        private Mock<ITraineeshipVacancyDetailProvider> _traineeshipVacancyDetailProvider;
-        private Mock<IAccountProvider> _accountProviderMock;
-        private Mock<ICandidateServiceProvider> _candidateServiceProviderMock;
-        private Mock<IConfigurationManager> _configurationManagerMock;
-        private SettingsViewModelServerValidator _settingsViewModelServerValidator;
-
         [TestFixtureSetUp]
         public void SetUp()
         {
-            _apprenticeshipApplicationProviderMock = new Mock<IApprenticeshipApplicationProvider>();
-            _apprenticeshipVacancyDetailProvider = new Mock<IApprenticeshipVacancyDetailProvider>();
-            _traineeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
 
-            _accountProviderMock = new Mock<IAccountProvider>();
-            _settingsViewModelServerValidator = new SettingsViewModelServerValidator();
-            _candidateServiceProviderMock = new Mock<ICandidateServiceProvider>();
-            _configurationManagerMock = new Mock<IConfigurationManager>();
-
-            _accountMediator = new AccountMediator(
-                _accountProviderMock.Object,
-                _candidateServiceProviderMock.Object,
-                _settingsViewModelServerValidator,
-                _apprenticeshipApplicationProviderMock.Object,
-                _apprenticeshipVacancyDetailProvider.Object,
-                _traineeshipVacancyDetailProvider.Object,
-                _configurationManagerMock.Object);
         }
 
         [Test]
         public void SaveValidationErrorTest()
         {
             var settingsViewModel = new SettingsViewModel();
+            var accountMediator = new AccountMediatorBuilder().Build();
 
-            var response = _accountMediator.SaveSettings(Guid.NewGuid(), settingsViewModel);
+            var response = accountMediator.SaveSettings(Guid.NewGuid(), settingsViewModel);
             response.Code.Should().Be(AccountMediatorCodes.Settings.ValidationError);
             response.ViewModel.Should().Be(settingsViewModel);
             response.ValidationResult.Should().NotBeNull();
@@ -78,9 +53,14 @@
                 Lastname = "LN"
             };
 
-            _accountProviderMock.Setup(x => x.SaveSettings(It.IsAny<Guid>(), It.IsAny<SettingsViewModel>())).Returns(true);
+            var candidateServiceProviderMock = new Mock<ICandidateServiceProvider>();
+            candidateServiceProviderMock.Setup(x => x.GetCandidate(It.IsAny<Guid>())).Returns(new Candidate());
+            var candidate = new Candidate();
+            var accountProviderMock = new Mock<IAccountProvider>();
+            accountProviderMock.Setup(x => x.TrySaveSettings(It.IsAny<Guid>(), It.IsAny<SettingsViewModel>(), out candidate)).Returns(true);
+            var accountMediator = new AccountMediatorBuilder().With(candidateServiceProviderMock).With(accountProviderMock.Object).Build();
 
-            var response = _accountMediator.SaveSettings(Guid.NewGuid(), settingsViewModel);
+            var response = accountMediator.SaveSettings(Guid.NewGuid(), settingsViewModel);
             response.Code.Should().Be(AccountMediatorCodes.Settings.Success);
             response.ViewModel.Should().Be(settingsViewModel);
         }
@@ -104,9 +84,12 @@
                 Lastname = "LN"
             };
 
-            _accountProviderMock.Setup(x => x.SaveSettings(It.IsAny<Guid>(), It.IsAny<SettingsViewModel>())).Returns(false);
+            Candidate candidate;
+            var accountProviderMock = new Mock<IAccountProvider>();
+            accountProviderMock.Setup(x => x.TrySaveSettings(It.IsAny<Guid>(), It.IsAny<SettingsViewModel>(), out candidate)).Returns(false);
+            var accountMediator = new AccountMediatorBuilder().With(accountProviderMock.Object).Build();
 
-            var response = _accountMediator.SaveSettings(Guid.NewGuid(), settingsViewModel);
+            var response = accountMediator.SaveSettings(Guid.NewGuid(), settingsViewModel);
             response.Code.Should().Be(AccountMediatorCodes.Settings.SaveError);
             response.ViewModel.Should().Be(settingsViewModel);
             response.Message.Text.Should().Be(AccountPageMessages.SettingsUpdateFailed);
@@ -116,8 +99,11 @@
         [Test]
         public void SuccessTest()
         {
-            _accountProviderMock.Setup(x => x.GetSettingsViewModel(It.IsAny<Guid>())).Returns(new SettingsViewModel());
-            var response = _accountMediator.Settings(Guid.NewGuid());
+            var accountProviderMock = new Mock<IAccountProvider>();
+            accountProviderMock.Setup(x => x.GetSettingsViewModel(It.IsAny<Guid>())).Returns(new SettingsViewModel());
+            var accountMediator = new AccountMediatorBuilder().With(accountProviderMock.Object).Build();
+
+            var response = accountMediator.Settings(Guid.NewGuid());
             response.AssertCode(AccountMediatorCodes.Settings.Success);
         }
     }

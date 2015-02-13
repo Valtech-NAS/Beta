@@ -3,12 +3,10 @@
     using System;
     using Candidate.Mediators.Account;
     using Candidate.Providers;
-    using Candidate.Validators;
     using Candidate.ViewModels.VacancySearch;
     using Common.Constants;
     using Constants.Pages;
     using Domain.Entities.Vacancies;
-    using Domain.Interfaces.Configuration;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -16,37 +14,6 @@
     [TestFixture]
     public class TraineeshipVacancyDetailsTests
     {
-        private AccountMediator _accountMediator;
-        private Mock<IApprenticeshipApplicationProvider> _apprenticeshipApplicationProviderMock;
-        private Mock<IApprenticeshipVacancyDetailProvider> _apprenticeshipVacancyDetailProvider;
-        private Mock<ITraineeshipVacancyDetailProvider> _traineeshipVacancyDetailProvider;
-        private Mock<IAccountProvider> _accountProviderMock;
-        private Mock<ICandidateServiceProvider> _candidateServiceProviderMock;
-        private Mock<IConfigurationManager> _configurationManagerMock;
-        private SettingsViewModelServerValidator _settingsViewModelServerValidator;
-
-        [TestFixtureSetUp]
-        public void SetUp()
-        {
-            _apprenticeshipApplicationProviderMock = new Mock<IApprenticeshipApplicationProvider>();
-            _apprenticeshipVacancyDetailProvider = new Mock<IApprenticeshipVacancyDetailProvider>();
-            _traineeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
-
-            _accountProviderMock = new Mock<IAccountProvider>();
-            _settingsViewModelServerValidator = new SettingsViewModelServerValidator();
-            _candidateServiceProviderMock = new Mock<ICandidateServiceProvider>();
-            _configurationManagerMock = new Mock<IConfigurationManager>();
-
-            _accountMediator = new AccountMediator(
-                _accountProviderMock.Object,
-                _candidateServiceProviderMock.Object,
-                _settingsViewModelServerValidator,
-                _apprenticeshipApplicationProviderMock.Object,
-                _apprenticeshipVacancyDetailProvider.Object,
-                _traineeshipVacancyDetailProvider.Object,
-                _configurationManagerMock.Object);
-        }
-
         [Test]
         public void VacancyStatusLiveTest()
         {
@@ -55,11 +22,11 @@
                 VacancyStatus = VacancyStatuses.Live
             };
 
-            _traineeshipVacancyDetailProvider.Setup(x =>
-                x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>()))
-                .Returns(vacancyDetailViewModel);
+            var traineeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
+            traineeshipVacancyDetailProvider.Setup(x => x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
+            var accountMediator = new AccountMediatorBuilder().With(traineeshipVacancyDetailProvider).Build();
 
-            var response = _accountMediator.TraineeshipVacancyDetails(Guid.NewGuid(), 42);
+            var response = accountMediator.TraineeshipVacancyDetails(Guid.NewGuid(), 42);
 
             response.Code.Should().Be(AccountMediatorCodes.VacancyDetails.Available);
             response.Message.Should().BeNull();
@@ -73,11 +40,11 @@
                 VacancyStatus = VacancyStatuses.Expired
             };
 
-            _traineeshipVacancyDetailProvider.Setup(x =>
-                x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>()))
-                .Returns(vacancyDetailViewModel);
+            var traineeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
+            traineeshipVacancyDetailProvider.Setup(x => x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
+            var accountMediator = new AccountMediatorBuilder().With(traineeshipVacancyDetailProvider).Build();
 
-            var response = _accountMediator.TraineeshipVacancyDetails(Guid.NewGuid(), 42);
+            var response = accountMediator.TraineeshipVacancyDetails(Guid.NewGuid(), 42);
 
             response.Code.Should().Be(AccountMediatorCodes.VacancyDetails.Available);
             response.Message.Should().BeNull();
@@ -91,11 +58,11 @@
                 VacancyStatus = VacancyStatuses.Unavailable
             };
 
-            _traineeshipVacancyDetailProvider.Setup(x =>
-                x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>()))
-                .Returns(vacancyDetailViewModel);
+            var traineeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
+            traineeshipVacancyDetailProvider.Setup(x => x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
+            var accountMediator = new AccountMediatorBuilder().With(traineeshipVacancyDetailProvider).Build();
 
-            var response = _accountMediator.TraineeshipVacancyDetails(Guid.NewGuid(), 42);
+            var response = accountMediator.TraineeshipVacancyDetails(Guid.NewGuid(), 42);
 
             response.Code.Should().Be(AccountMediatorCodes.VacancyDetails.Unavailable);
             response.Message.Should().NotBeNull();
@@ -106,11 +73,11 @@
         [Test]
         public void VacancyNotFoundTest()
         {
-            _traineeshipVacancyDetailProvider.Setup(x =>
-                x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>()))
-                .Returns(default(VacancyDetailViewModel));
+            var traineeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
+            traineeshipVacancyDetailProvider.Setup(x => x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(default(VacancyDetailViewModel));
+            var accountMediator = new AccountMediatorBuilder().With(traineeshipVacancyDetailProvider).Build();
 
-            var response = _accountMediator.TraineeshipVacancyDetails(Guid.NewGuid(), 42);
+            var response = accountMediator.TraineeshipVacancyDetails(Guid.NewGuid(), 42);
 
             response.Code.Should().Be(AccountMediatorCodes.VacancyDetails.Unavailable);
             response.Message.Should().NotBeNull();
@@ -126,11 +93,11 @@
                 ViewModelMessage = "Has error"
             };
 
-            _traineeshipVacancyDetailProvider.Setup(x =>
-                x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>()))
-                .Returns(vacancyDetailViewModel);
+            var traineeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
+            traineeshipVacancyDetailProvider.Setup(x => x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
+            var accountMediator = new AccountMediatorBuilder().With(traineeshipVacancyDetailProvider).Build();
 
-            var response = _accountMediator.TraineeshipVacancyDetails(Guid.NewGuid(), 42);
+            var response = accountMediator.TraineeshipVacancyDetails(Guid.NewGuid(), 42);
 
             response.Code.Should().Be(AccountMediatorCodes.VacancyDetails.Error);
             response.Message.Should().NotBeNull();

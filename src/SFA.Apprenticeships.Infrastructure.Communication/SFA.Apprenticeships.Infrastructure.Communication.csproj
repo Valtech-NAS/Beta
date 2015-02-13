@@ -110,6 +110,7 @@
     <Compile Include="Email\EmailMessageFormatters\EmailSimpleMessageFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsDailyDigestMessageFormatter.cs" />
+    <Compile Include="Sms\SmsMessageFormatters\SmsSendMobileVerificationCodeFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsTraineeshipApplicationSubmittedMessageFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsAccountUnlockCodeMessageFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsActivationCodeMessageFormatter.cs" />

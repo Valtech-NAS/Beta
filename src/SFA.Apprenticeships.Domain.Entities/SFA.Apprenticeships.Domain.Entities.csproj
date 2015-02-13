@@ -89,6 +89,7 @@
     <Compile Include="Applications\TraineeshipApplicationDetail.cs" />
     <Compile Include="Applications\ApprenticeshipApplicationDetail.cs" />
     <Compile Include="Applications\ApplicationStatuses.cs" />
+    <Compile Include="Candidates\CandidateHelper.cs" />
     <Compile Include="Candidates\CommunicationPreferences.cs" />
     <Compile Include="Communication\ExpiringApprenticeshipApplicationDraft.cs" />
     <Compile Include="Exceptions\CustomException.cs" />

@@ -6,14 +6,16 @@ using SFA.Apprenticeships.Web.Candidate.Validators;
 
 namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
 {
+    using Common.Providers;
+
     internal class AccountMediatorBuilder
     {
         private Mock<IApprenticeshipApplicationProvider> _apprenticeshipApplicationProviderMock = new Mock<IApprenticeshipApplicationProvider>();
         private Mock<IApprenticeshipVacancyDetailProvider> _apprenticeshipVacancyDetailProvider = new Mock<IApprenticeshipVacancyDetailProvider>();
         private Mock<ITraineeshipVacancyDetailProvider> _traineeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
-        private Mock<IAccountProvider> _accountProviderMock = new Mock<IAccountProvider>();
+        private IAccountProvider _accountProvider = new Mock<IAccountProvider>().Object;
         private Mock<ICandidateServiceProvider> _candidateServiceProviderMock = new Mock<ICandidateServiceProvider>();
-        private readonly Mock<IConfigurationManager> _configurationManagerMock = new Mock<IConfigurationManager>();
+        private Mock<IConfigurationManager> _configurationManagerMock = new Mock<IConfigurationManager>();
         private readonly SettingsViewModelServerValidator _settingsViewModelServerValidator = new SettingsViewModelServerValidator();
         
         public AccountMediatorBuilder With(Mock<IApprenticeshipVacancyDetailProvider> apprenticeshipVacancyDetailProvider)
@@ -34,9 +36,9 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
             return this;
         }
 
-        public AccountMediatorBuilder With(Mock<IAccountProvider> accountProvider)
+        public AccountMediatorBuilder With(IAccountProvider accountProvider)
         {
-            _accountProviderMock = accountProvider;
+            _accountProvider = accountProvider;
             return this;
         }
 
@@ -46,9 +48,15 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
             return this;
         }
 
+        public AccountMediatorBuilder With(Mock<IConfigurationManager> configurationManager)
+        {
+            _configurationManagerMock = configurationManager;
+            return this;
+        }
+
         public AccountMediator Build()
         {
-            return new AccountMediator(_accountProviderMock.Object,
+            return new AccountMediator(_accountProvider,
                 _candidateServiceProviderMock.Object,
                 _settingsViewModelServerValidator,
                 _apprenticeshipApplicationProviderMock.Object,
@@ -57,5 +65,4 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
                 _configurationManagerMock.Object);
         }
     }
-
 }

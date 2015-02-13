@@ -14,45 +14,16 @@
     [TestFixture]
     public class TrackTests
     {
-        private AccountMediator _accountMediator;
-        private Mock<IApprenticeshipApplicationProvider> _apprenticeshipApplicationProviderMock;
-        private Mock<IApprenticeshipVacancyDetailProvider> _apprenticeshipVacancyDetailProvider;
-        private Mock<ITraineeshipVacancyDetailProvider> _traineeshipVacancyDetailProvider;
-        private Mock<IAccountProvider> _accountProviderMock;
-        private Mock<ICandidateServiceProvider> _candidateServiceProviderMock;
-        private Mock<IConfigurationManager> _configurationManagerMock;
-        private SettingsViewModelServerValidator _settingsViewModelServerValidator;
-
-        [TestFixtureSetUp]
-        public void SetUp()
-        {
-            _apprenticeshipApplicationProviderMock = new Mock<IApprenticeshipApplicationProvider>();
-            _apprenticeshipVacancyDetailProvider = new Mock<IApprenticeshipVacancyDetailProvider>();
-            _traineeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
-
-            _accountProviderMock = new Mock<IAccountProvider>();
-            _settingsViewModelServerValidator = new SettingsViewModelServerValidator();
-            _candidateServiceProviderMock = new Mock<ICandidateServiceProvider>();
-            _configurationManagerMock = new Mock<IConfigurationManager>();
-
-            _accountMediator = new AccountMediator(
-                _accountProviderMock.Object,
-                _candidateServiceProviderMock.Object,
-                _settingsViewModelServerValidator,
-                _apprenticeshipApplicationProviderMock.Object,
-                _apprenticeshipVacancyDetailProvider.Object,
-                _traineeshipVacancyDetailProvider.Object,
-                _configurationManagerMock.Object);
-        }
-
         [Test]
         public void SuccessTest()
         {
             var applicationView = new ApprenticeshipApplicationViewModel();
 
-            _apprenticeshipApplicationProviderMock.Setup(x => x.UnarchiveApplication(It.IsAny<Guid>(), It.IsAny<int>())).Returns(applicationView);
+            var apprenticeshipApplicationProviderMock = new Mock<IApprenticeshipApplicationProvider>();
+            apprenticeshipApplicationProviderMock.Setup(x => x.UnarchiveApplication(It.IsAny<Guid>(), It.IsAny<int>())).Returns(applicationView);
+            var accountMediator = new AccountMediatorBuilder().With(apprenticeshipApplicationProviderMock).Build();
 
-            var response = _accountMediator.Track(Guid.NewGuid(), 1);
+            var response = accountMediator.Track(Guid.NewGuid(), 1);
 
             response.Code.Should().Be(AccountMediatorCodes.Track.SuccessfullyTracked);
             response.Message.Should().BeNull();
@@ -63,9 +34,11 @@
         {
             var applicationView = new ApprenticeshipApplicationViewModel { ViewModelMessage = "Has error" };
 
-            _apprenticeshipApplicationProviderMock.Setup(x => x.UnarchiveApplication(It.IsAny<Guid>(), It.IsAny<int>())).Returns(applicationView);
+            var apprenticeshipApplicationProviderMock = new Mock<IApprenticeshipApplicationProvider>();
+            apprenticeshipApplicationProviderMock.Setup(x => x.UnarchiveApplication(It.IsAny<Guid>(), It.IsAny<int>())).Returns(applicationView);
+            var accountMediator = new AccountMediatorBuilder().With(apprenticeshipApplicationProviderMock).Build();
 
-            var response = _accountMediator.Track(Guid.NewGuid(), 1);
+            var response = accountMediator.Track(Guid.NewGuid(), 1);
 
             response.Code.Should().Be(AccountMediatorCodes.Track.ErrorTracking);
             response.Message.Text.Should().Be(applicationView.ViewModelMessage);

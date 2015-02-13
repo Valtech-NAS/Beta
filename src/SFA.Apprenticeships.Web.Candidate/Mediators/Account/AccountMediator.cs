@@ -4,6 +4,7 @@
     using Common.Constants;
     using Constants.Pages;
     using Domain.Entities.Applications;
+    using Domain.Entities.Candidates;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Configuration;
     using Providers;
@@ -115,11 +116,20 @@
                 return GetMediatorResponse(AccountMediatorCodes.Settings.ValidationError, settingsViewModel, validationResult);
             }
 
-            var saved = _accountProvider.SaveSettings(candidateId, settingsViewModel);
+            Candidate candidate;
+            var saved = _accountProvider.TrySaveSettings(candidateId, settingsViewModel, out candidate);
 
-            return !saved
-                ? GetMediatorResponse(AccountMediatorCodes.Settings.SaveError, settingsViewModel, AccountPageMessages.SettingsUpdateFailed, UserMessageLevel.Warning)
-                : GetMediatorResponse(AccountMediatorCodes.Settings.Success, settingsViewModel);
+            if (saved)
+            {
+                if (candidate.MobileVerificationRequired())
+                {
+                    return GetMediatorResponse(AccountMediatorCodes.Settings.MobileVerificationRequired, settingsViewModel, AccountPageMessages.MobileVerificationRequired, UserMessageLevel.Success);
+                }
+
+                return GetMediatorResponse(AccountMediatorCodes.Settings.Success, settingsViewModel);
+            }
+
+            return GetMediatorResponse(AccountMediatorCodes.Settings.SaveError, settingsViewModel, AccountPageMessages.SettingsUpdateFailed, UserMessageLevel.Warning);
         }
 
         public MediatorResponse Track(Guid candidateId, int vacancyId)

@@ -26,6 +26,7 @@
             candidate.CommunicationPreferences.AllowEmail.Should().BeTrue();
             candidate.CommunicationPreferences.AllowMobile.Should().BeFalse();
             candidate.CommunicationPreferences.VerifiedMobile.Should().BeFalse();
+            candidate.CommunicationPreferences.MobileVerificationCode.Should().BeNullOrEmpty();
             registered.Should().BeTrue();
         }
     }

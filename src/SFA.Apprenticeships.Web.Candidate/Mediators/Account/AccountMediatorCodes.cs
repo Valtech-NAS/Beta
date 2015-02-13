@@ -26,6 +26,7 @@
             public const string Success = "AccountMediator.Settings.Success";
             public const string ValidationError = "AccountMediator.Settings.ValidationError";
             public const string SaveError = "AccountMediator.Settings.SaveError";
+            public const string MobileVerificationRequired = "AccountMediator.Settings.MobileVerificationRequired";
         }
 
         public class DismissTraineeshipPrompts

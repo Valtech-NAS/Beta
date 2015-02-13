@@ -3,6 +3,7 @@
     using System;
     using Application.Interfaces.Candidates;
     using Application.Interfaces.Logging;
+    using Domain.Entities.Candidates;
     using Domain.Entities.Locations;
     using Domain.Entities.Users;
     using Domain.Interfaces.Mapping;
@@ -33,6 +34,8 @@
                 var candidate = _candidateService.GetCandidate(candidateId);
                 var settings = _mapper.Map<RegistrationDetails, SettingsViewModel>(candidate.RegistrationDetails);
                 settings.AllowEmailComms = candidate.CommunicationPreferences.AllowEmail;
+                settings.AllowSmsComms = candidate.CommunicationPreferences.AllowMobile;
+                settings.VerifiedMobile = candidate.CommunicationPreferences.VerifiedMobile;
                 return settings;
             }
             catch (Exception e)
@@ -46,15 +49,21 @@
             }
         }
 
-        public bool SaveSettings(Guid candidateId, SettingsViewModel model)
+        public bool TrySaveSettings(Guid candidateId, SettingsViewModel model, out Candidate candidate)
         {
             try
             {
                 _logger.Debug("Calling AccountProvider to save the settings for candidate with Id={0}", candidateId);
-                var candidate = _candidateService.GetCandidate(candidateId);
+                candidate = _candidateService.GetCandidate(candidateId);
 
                 candidate.CommunicationPreferences.AllowEmail = model.AllowEmailComms;
                 candidate.CommunicationPreferences.AllowMobile = model.AllowSmsComms;
+                if (candidate.RegistrationDetails.PhoneNumber != model.PhoneNumber)
+                {
+                    model.VerifiedMobile = false;
+                }
+                candidate.CommunicationPreferences.VerifiedMobile = model.VerifiedMobile;
+                
                 PatchRegistrationDetails(candidate.RegistrationDetails, model);
                 _candidateService.SaveCandidate(candidate);
                 _logger.Debug("Settings saved for candidate with Id={0}", candidateId);
@@ -64,7 +73,7 @@
             catch (Exception e)
             {
                 _logger.Error("Save settings failed for candidate " + candidateId, e);
-
+                candidate = null;
                 return false;
             }
         }

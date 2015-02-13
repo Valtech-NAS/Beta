@@ -69,6 +69,8 @@
                     case AccountMediatorCodes.Settings.SaveError:
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return View(response.ViewModel);
+                    case AccountMediatorCodes.Settings.MobileVerificationRequired:
+                        return RedirectToAction("VerifyMobile");
                     case AccountMediatorCodes.Settings.Success:
                         UserData.SetUserContext(UserContext.UserName, response.ViewModel.Firstname + " " + response.ViewModel.Lastname, UserContext.AcceptedTermsAndConditionsVersion);
                         SetUserMessage(AccountPageMessages.SettingsUpdated);

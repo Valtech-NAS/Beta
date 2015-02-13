@@ -42,6 +42,7 @@
                 case MessageTypes.SendPasswordResetCode:
                 case MessageTypes.SendAccountUnlockCode:
                 case MessageTypes.PasswordChanged:
+                case MessageTypes.SendMobileVerificationCode:
                     _sendCandidateCommunicationStrategy.Send(candidateId, messageType, tokens);
                     break;
 

@@ -1,15 +1,11 @@
-﻿using SFA.Apprenticeships.Web.Candidate.UnitTests.Builders;
-
-namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
+﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
 {
     using System;
+    using Builders;
     using Candidate.Mediators.Account;
     using Candidate.Providers;
-    using Candidate.Validators;
-    using Candidate.ViewModels.Applications;
     using Common.Constants;
     using Constants.Pages;
-    using Domain.Interfaces.Configuration;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
