@@ -122,9 +122,9 @@
                     new ApplicationStatusSummary
                     {
                         ApplicationId = applicationSummary.ApplicationId,
+                        ApplicationStatus = applicationSummary.Status,
                         LegacyApplicationId = applicationSummary.LegacyApplicationId,
                         LegacyVacancyId = applicationSummary.LegacyVacancyId,
-                        ApplicationStatus = applicationSummary.Status,
                         VacancyStatus = vacancyStatusSummary.VacancyStatus,
                         ClosingDate = vacancyStatusSummary.ClosingDate,
                         UnsuccessfulReason = applicationSummary.UnsuccessfulReason
@@ -138,30 +138,32 @@
 
         private bool ProcessApprenticeshipApplication(ApplicationStatusSummary applicationStatusSummary)
         {
-            // TODO: 1.6: get application by LegacyCandidateId + LegacyVacancyId. This will enable LegacyApplicationId to be 'back-filled' if missing.
+            // TODO: 1.6: get application by LegacyCandidateId + LegacyVacancyId. This will enable LegacyApplicationId to be 'back-filled' if missing. REQUIRES DISCUSSION
             var apprenticeshipApplicationDetail = default(ApprenticeshipApplicationDetail);
 
             if (applicationStatusSummary.ApplicationId != Guid.Empty)
             {
                 apprenticeshipApplicationDetail = _apprenticeshipApplicationReadRepository.Get(applicationStatusSummary.ApplicationId);
             }
-            else if (applicationStatusSummary.LegacyApplicationId != 0)
+
+            if (apprenticeshipApplicationDetail == null && applicationStatusSummary.LegacyApplicationId != 0)
             {
                 apprenticeshipApplicationDetail = _apprenticeshipApplicationReadRepository.Get(applicationStatusSummary.LegacyApplicationId);
             }
 
             if (apprenticeshipApplicationDetail == null)
             {
-                return false; // not an error as may be a traineeship
+                return false; // not necessarily an error as may be a traineeship
             }
 
             _applicationStatusUpdateStrategy.Update(apprenticeshipApplicationDetail, applicationStatusSummary);
+
             return true;
         }
 
         private bool ProcessTraineeshipApplication(ApplicationStatusSummary applicationStatusSummary)
         {
-            // TODO: 1.6: get application by LegacyCandidateId + LegacyVacancyId. This will enable LegacyApplicationId to be 'back-filled' if missing.
+            // TODO: 1.6: get application by LegacyCandidateId + LegacyVacancyId. This will enable LegacyApplicationId to be 'back-filled' if missing. REQUIRES DISCUSSION
             var traineeshipApplicationDetail = _traineeshipApplicationReadRepository.Get(applicationStatusSummary.LegacyApplicationId);
 
             if (traineeshipApplicationDetail == null)
@@ -170,6 +172,7 @@
             }
 
             _applicationStatusUpdateStrategy.Update(traineeshipApplicationDetail, applicationStatusSummary);
+
             return true;
         }
     }
