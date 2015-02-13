@@ -215,7 +215,42 @@ WriteLiteral("        ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n        \r\n        <div");
+WriteLiteral("\r\n\r\n");
+
+            
+            #line 40 "..\..\Views\Account\Settings.cshtml"
+        
+            
+            #line default
+            #line hidden
+            
+            #line 40 "..\..\Views\Account\Settings.cshtml"
+         if (Model.VerifiedMobile)
+        {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("            <span");
+
+WriteLiteral(" class=\"input-withlink__link\"");
+
+WriteLiteral(" id=\"verifyContainer\"");
+
+WriteLiteral(">\r\n                <span><i");
+
+WriteLiteral(" class=\"fa fa-check-circle-o\"");
+
+WriteLiteral("></i>Verified</span>\r\n            </span>\r\n");
+
+            
+            #line 45 "..\..\Views\Account\Settings.cshtml"
+        }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("        \r\n        <div");
 
 WriteLiteral(" id=\"accountSettings2\"");
 
@@ -240,7 +275,7 @@ WriteLiteral(">If you don\'t select an option you won\'t receive notifications</
 WriteLiteral("                ");
 
             
-            #line 46 "..\..\Views\Account\Settings.cshtml"
+            #line 53 "..\..\Views\Account\Settings.cshtml"
            Write(Html.FormUnvalidatedCheckBoxFor(m => m.AllowEmailComms, labelHtmlAttributes: new { @class = "block-label selected" }));
 
             
@@ -251,7 +286,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                ");
 
             
-            #line 47 "..\..\Views\Account\Settings.cshtml"
+            #line 54 "..\..\Views\Account\Settings.cshtml"
            Write(Html.FormUnvalidatedCheckBoxFor(m => m.AllowSmsComms, labelHtmlAttributes: new { @class = "block-label selected" }));
 
             
@@ -274,7 +309,7 @@ WriteLiteral("\r\n                    <li>an apprenticeship is approaching its c
 WriteLiteral("            ");
 
             
-            #line 58 "..\..\Views\Account\Settings.cshtml"
+            #line 65 "..\..\Views\Account\Settings.cshtml"
        Write(Html.FormRadioButtonsYesNo(m => m.AllowEmailComms));
 
             
@@ -283,7 +318,7 @@ WriteLiteral("            ");
 WriteLiteral("\r\n        </div>\r\n\r\n    </fieldset>\r\n");
 
             
-            #line 62 "..\..\Views\Account\Settings.cshtml"
+            #line 69 "..\..\Views\Account\Settings.cshtml"
 
 
             
@@ -302,7 +337,7 @@ WriteLiteral(" class=\"button\"");
 WriteLiteral(">Update details</button>\r\n    </div>\r\n");
 
             
-            #line 66 "..\..\Views\Account\Settings.cshtml"
+            #line 73 "..\..\Views\Account\Settings.cshtml"
 }
 
             
@@ -316,7 +351,7 @@ WriteLiteral("\r\n    <script>\r\n        $(function () {\r\n            $(\"#fi
 "Lookup({\r\n                url: \'");
 
             
-            #line 73 "..\..\Views\Account\Settings.cshtml"
+            #line 80 "..\..\Views\Account\Settings.cshtml"
                  Write(Url.Action("Addresses", "Location"));
 
             

@@ -36,6 +36,13 @@
         @Html.EditorFor(r => r.DateOfBirth)
         @Html.EditorFor(a => a.Address, new { AnalyticsDSCUri = "/settings/findaddress" })
         @Html.FormTextFor(m => m.PhoneNumber, controlHtmlAttributes: new { @class = "form-control-1-3", type = "tel" })
+
+        @if (Model.VerifiedMobile)
+        {
+            <span class="input-withlink__link" id="verifyContainer">
+                <span><i class="fa fa-check-circle-o"></i>Verified</span>
+            </span>
+        }
         
         <div id="accountSettings2">
             <h3 class="heading-large">How we contact you</h3>

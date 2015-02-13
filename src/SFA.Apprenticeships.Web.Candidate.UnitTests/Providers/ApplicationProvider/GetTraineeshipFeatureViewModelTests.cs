@@ -34,7 +34,7 @@
 
             candidateService.Setup(cs => cs.GetApprenticeshipApplications(candidateId)).Returns(new ApprenticeshipApplicationSummary[0]);
             candidateService.Setup(cs => cs.GetTraineeshipApplications(candidateId)).Returns(new TraineeshipApplicationSummary[0]);
-            candidateService.Setup(cs => cs.GetCandidate(candidateId)).Returns(new CandidateBuilder().Build());
+            candidateService.Setup(cs => cs.GetCandidate(candidateId)).Returns(new CandidateBuilder(candidateId).Build());
 
             var returnedViewModel = new ApprenticeshipApplicationProviderBuilder()
                 .With(candidateService).Build()

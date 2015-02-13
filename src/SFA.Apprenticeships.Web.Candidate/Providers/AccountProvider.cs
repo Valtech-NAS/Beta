@@ -54,6 +54,7 @@
                 var candidate = _candidateService.GetCandidate(candidateId);
 
                 candidate.CommunicationPreferences.AllowEmail = model.AllowEmailComms;
+                candidate.CommunicationPreferences.AllowMobile = model.AllowSmsComms;
                 PatchRegistrationDetails(candidate.RegistrationDetails, model);
                 _candidateService.SaveCandidate(candidate);
                 _logger.Debug("Settings saved for candidate with Id={0}", candidateId);

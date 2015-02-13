@@ -23,6 +23,8 @@
         [Display(Name = SettingsViewModelMessages.PhoneNumberMessages.LabelText)]
         public string PhoneNumber { get; set; }
 
+        public bool VerifiedMobile { get; set; }
+
         [Display(Name = SettingsViewModelMessages.AllowEmailCommsMessages.LabelText)]
         public bool AllowEmailComms { get; set; }
 

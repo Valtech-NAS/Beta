@@ -9,7 +9,6 @@
     using Common.Providers;
     using Common.Services;
     using Domain.Interfaces.Configuration;
-    using Domain.Interfaces.Mapping;
     using Moq;
 
     public class CandidateServiceProviderBuilder

@@ -224,6 +224,8 @@
     <Compile Include="Mediators\TraineeshipApplication\TestsBase.cs" />
     <Compile Include="Mediators\TraineeshipSearch\ResultsTests.cs" />
     <Compile Include="Mediators\TraineeshipSearch\TestsBase.cs" />
+    <Compile Include="Providers\AccountProvider\AccountProviderBuilder.cs" />
+    <Compile Include="Providers\AccountProvider\SaveSettingsTests.cs" />
     <Compile Include="Providers\ApplicationProvider\ApprenticeshipApplicationProviderBuilder.cs" />
     <Compile Include="Providers\ApplicationProvider\ArchiveApplicationTests.cs" />
     <Compile Include="Providers\ApplicationProvider\DeleteApplicationTests.cs" />
@@ -249,6 +251,7 @@
     <Compile Include="Validators\EducationViewModelValidatorTests.cs" />
     <Compile Include="Validators\AboutYouViewModelValidatorTests.cs" />
     <Compile Include="Validators\RegisterViewModelValidatorTests.cs" />
+    <Compile Include="Validators\SettingsViewModelServerValidatorTests.cs" />
     <Compile Include="Validators\VacancySearchValidatorTests.cs" />
     <Compile Include="ViewModels\PaginationTests.cs" />
     <Compile Include="Views\ApprenticeshipSearch\IndexCategoriesTests.cs" />
