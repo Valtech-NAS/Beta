@@ -2,6 +2,7 @@
 {
     using System;
     using ViewModels.Account;
+    using ViewModels.Login;
     using ViewModels.MyApplications;
 
     public interface IAccountMediator
@@ -25,5 +26,11 @@
         MediatorResponse ApprenticeshipVacancyDetails(Guid candidateId, int vacancyId);
 
         MediatorResponse TraineeshipVacancyDetails(Guid candidateId, int vacancyId);
+
+        MediatorResponse<VerifyMobileViewModel> VerifyMobile(Guid candidateId);
+
+        MediatorResponse<VerifyMobileViewModel> VerifyMobile(Guid candidateId, VerifyMobileViewModel verifyMobileViewModel);
+
+        MediatorResponse<VerifyMobileViewModel> Resend(Guid candidateId, VerifyMobileViewModel model);
     }
 }

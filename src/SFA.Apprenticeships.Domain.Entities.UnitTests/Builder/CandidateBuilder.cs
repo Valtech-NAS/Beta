@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Builders
+﻿namespace SFA.Apprenticeships.Domain.Entities.UnitTests.Builder
 {
     using System;
     using Domain.Entities.Candidates;
@@ -8,6 +8,7 @@
     {
         private readonly Guid _candidateId;
         private string _phoneNumber;
+        private string _mobileVerificationCode;
         private bool _allowEmail;
         private bool _allowMobile;
         private bool _verifiedMobile;
@@ -41,6 +42,12 @@
             return this;
         }
 
+        public CandidateBuilder MobileVerificationCode(string  mobileVerificationCode)
+        {
+            _mobileVerificationCode = mobileVerificationCode;
+            return this;
+        }
+
         public Candidate Build()
         {
             var candidate = new Candidate
@@ -54,7 +61,8 @@
                 {
                     AllowEmail = _allowEmail,
                     AllowMobile = _allowMobile,
-                    VerifiedMobile = _verifiedMobile
+                    VerifiedMobile = _verifiedMobile,
+                    MobileVerificationCode = _mobileVerificationCode
                 }
             };
 

@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies
 {
     using Domain.Entities.Candidates;
+    using Domain.Entities.Exceptions;
+    using Domain.Entities.Users;
     using Interfaces.Communications;
 
     public class SendMobileVerificationCodeStrategy : ISendMobileVerificationCodeStrategy
@@ -14,6 +16,12 @@
 
         public void SendMobileVerificationCode(Candidate candidate)
         {
+            if (!candidate.MobileVerificationRequired())
+            {
+                var message = string.Format("The mobile number associated with candidate Id: {0} does not require verification.", candidate.EntityId);
+                throw new CustomException(message, Domain.Entities.ErrorCodes.EntityStateError);
+            }
+
             var mobileNumber = candidate.RegistrationDetails.PhoneNumber;
             var mobileVerificationCode = candidate.CommunicationPreferences.MobileVerificationCode;
 

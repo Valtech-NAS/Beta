@@ -56,8 +56,8 @@
 
         TraineeshipVacancyDetail GetTraineeshipVacancyDetail(Guid candidateId, int vacancyId);
 
-        //todo: 1.6: void SendMobileVerificationCode(string username);
+        void SendMobileVerificationCode(Candidate candidate);
 
-        //todo: 1.6: void VerifyMobilecode(string username, string verificationCode);
+        void VerifyMobileCode(Guid candidateId, string verificationCode);
     }
 }

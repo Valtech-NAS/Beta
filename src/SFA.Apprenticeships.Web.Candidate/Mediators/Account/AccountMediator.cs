@@ -1,4 +1,11 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
+﻿using System.Threading.Tasks;
+using System.Web.Mvc;
+using System.Web.UI.WebControls;
+using SFA.Apprenticeships.Web.Candidate.Attributes;
+using SFA.Apprenticeships.Web.Candidate.Constants;
+using SFA.Apprenticeships.Web.Common.Providers;
+
+namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
 {
     using System;
     using Common.Constants;
@@ -7,9 +14,11 @@
     using Domain.Entities.Candidates;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Configuration;
+    using Login;
     using Providers;
     using Validators;
     using ViewModels.Account;
+    using ViewModels.Login;
     using ViewModels.MyApplications;
 
     public class AccountMediator : MediatorBase, IAccountMediator
@@ -21,15 +30,17 @@
         private readonly IAccountProvider _accountProvider;
         private readonly ICandidateServiceProvider _candidateServiceProvider;
         private readonly SettingsViewModelServerValidator _settingsViewModelServerValidator;
+        private readonly VerifyMobileViewModelServerValidator _verifyMobileViewModelServerValidator;
 
         public AccountMediator(
             IAccountProvider accountProvider,
             ICandidateServiceProvider candidateServiceProvider,
-            SettingsViewModelServerValidator settingsViewModelServerValidator, 
+            SettingsViewModelServerValidator settingsViewModelServerValidator,
             IApprenticeshipApplicationProvider apprenticeshipApplicationProvider,
             IApprenticeshipVacancyDetailProvider apprenticeshipVacancyDetailProvider,
             ITraineeshipVacancyDetailProvider traineeshipVacancyDetailProvider,
-            IConfigurationManager configurationManager)
+            IConfigurationManager configurationManager,
+            VerifyMobileViewModelServerValidator mobileViewModelServerValidator)
         {
             _accountProvider = accountProvider;
             _candidateServiceProvider = candidateServiceProvider;
@@ -38,6 +49,7 @@
             _apprenticeshipVacancyDetailProvider = apprenticeshipVacancyDetailProvider;
             _configurationManager = configurationManager;
             _traineeshipVacancyDetailProvider = traineeshipVacancyDetailProvider;
+            _verifyMobileViewModelServerValidator = mobileViewModelServerValidator;
         }
 
         public MediatorResponse<MyApplicationsViewModel> Index(Guid candidateId, string deletedVacancyId, string deletedVacancyTitle)
@@ -91,7 +103,7 @@
         {
             if (_accountProvider.DismissTraineeshipPrompts(candidateId))
             {
-                return GetMediatorResponse(AccountMediatorCodes.DismissTraineeshipPrompts.SuccessfullyDismissed);                
+                return GetMediatorResponse(AccountMediatorCodes.DismissTraineeshipPrompts.SuccessfullyDismissed);
             }
 
             return GetMediatorResponse(AccountMediatorCodes.DismissTraineeshipPrompts.ErrorDismissing, MyApplicationsPageMessages.DismissTraineeshipPromptsFailed, UserMessageLevel.Error);
@@ -203,6 +215,54 @@
             }
 
             return GetMediatorResponse(AccountMediatorCodes.VacancyDetails.Available);
+        }
+
+        
+        public MediatorResponse<VerifyMobileViewModel> VerifyMobile(Guid candidateId)
+        {
+            //todo: append other switch cases
+             var viewModel = _accountProvider.GetVerifyMobileViewModel(candidateId);
+             return GetMediatorResponse(AccountMediatorCodes.VerifyMobile.Success, viewModel);
+        }
+
+        
+        public MediatorResponse<VerifyMobileViewModel> VerifyMobile(Guid candidateId, VerifyMobileViewModel verifyMobileViewModel)
+        {
+            var validationResult = _verifyMobileViewModelServerValidator.Validate(verifyMobileViewModel);
+
+            if (!validationResult.IsValid)
+            {
+                return GetMediatorResponse(AccountMediatorCodes.VerifyMobile.ValidationError, verifyMobileViewModel, validationResult);
+            }
+
+            var verifyMobileViewModelResponse = _accountProvider.VerifyMobile(candidateId, verifyMobileViewModel);
+
+            switch (verifyMobileViewModelResponse.Status)
+            {
+                case VerifyMobileState.Ok:
+                    return GetMediatorResponse(AccountMediatorCodes.VerifyMobile.Success, verifyMobileViewModel, VerifyMobilePageMessages.MobileVerificationSuccessText, UserMessageLevel.Success);
+                case VerifyMobileState.VerifyMobileCodeInvalid:
+                    return GetMediatorResponse(AccountMediatorCodes.VerifyMobile.InvalidCode, verifyMobileViewModel, VerifyMobilePageMessages.MobileVerificationCodeInvalid, UserMessageLevel.Error);
+                case VerifyMobileState.MobileVerificationNotRequired:
+                    return GetMediatorResponse(AccountMediatorCodes.VerifyMobile.VerificationNotRequired, verifyMobileViewModel, VerifyMobilePageMessages.MobileVerificationNotRequired, UserMessageLevel.Warning);
+                default:
+                    return GetMediatorResponse(AccountMediatorCodes.VerifyMobile.Error, verifyMobileViewModel, VerifyMobilePageMessages.MobileVerificationError, UserMessageLevel.Error);
+            }
+        }
+
+        public MediatorResponse<VerifyMobileViewModel> Resend(Guid candidateId, VerifyMobileViewModel verifyMobileViewModel)
+        {
+            verifyMobileViewModel = _accountProvider.SendMobileVerificationCode(candidateId, verifyMobileViewModel);
+
+            switch (verifyMobileViewModel.Status)
+            {
+                case VerifyMobileState.Ok:
+                    return GetMediatorResponse(AccountMediatorCodes.Resend.ResentSuccessfully, verifyMobileViewModel, VerifyMobilePageMessages.MobileVerificationCodeMayHaveBeenResent, UserMessageLevel.Success);
+                case VerifyMobileState.MobileVerificationNotRequired:
+                    return GetMediatorResponse(AccountMediatorCodes.Resend.ResendNotRequired, verifyMobileViewModel, VerifyMobilePageMessages.MobileVerificationNotRequired, UserMessageLevel.Warning);
+                default:
+                    return GetMediatorResponse(AccountMediatorCodes.Resend.Error, verifyMobileViewModel, VerifyMobilePageMessages.MobileVerificationCodeResendFailed, UserMessageLevel.Error);
+            }
         }
     }
 }

@@ -11,5 +11,13 @@
         bool TrySaveSettings(Guid candidateId, SettingsViewModel model, out Candidate candidate);
 
         bool DismissTraineeshipPrompts(Guid candidateId);
+
+        VerifyMobileViewModel GetVerifyMobileViewModel(Guid candidateId);
+
+        VerifyMobileViewModel VerifyMobile(Guid candidateId, VerifyMobileViewModel model);
+
+        VerifyMobileViewModel SendMobileVerificationCode(Guid candidateId, VerifyMobileViewModel model);
+
+
     }
 }

@@ -594,6 +594,10 @@
       <LastGenOutput>_categoriesAndSubCategories.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\razorgenerator.directives" />
+    <Content Include="Views\Account\VerifyMobile.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>VerifyMobile.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -683,8 +687,10 @@
     <Compile Include="Constants\Pages\LoginPageMessages.cs" />
     <Compile Include="Constants\Pages\ApprenticeshipVacancyDetailPageMessages.cs" />
     <Compile Include="Constants\Pages\VacancySearchResultsPageMessages.cs" />
+    <Compile Include="Constants\Pages\VerifyMobilePageMessages.cs" />
     <Compile Include="Constants\Settings.cs" />
     <Compile Include="Constants\CandidateDataItemNames.cs" />
+    <Compile Include="Constants\ViewModels\VerifyMobileViewModelMessages.cs" />
     <Compile Include="DependencyResolution\ControllerConvention.cs" />
     <Compile Include="DependencyResolution\DefaultRegistry.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
@@ -693,6 +699,9 @@
     <Compile Include="Extensions\CollectionExtensions.cs" />
     <Compile Include="Extensions\UrlHelperExtensions.cs" />
     <Compile Include="Helpers\FullNameFormatter.cs" />
+    <Compile Include="Validators\VerifyMobileViewModelValidator.cs" />
+    <Compile Include="ViewModels\Account\VerifyMobileState.cs" />
+    <Compile Include="ViewModels\Account\VerifyMobileViewModel.cs" />
     <Compile Include="ViewModels\AddressSearchResult.cs" />
     <Compile Include="Constants\ViewModels\AddressViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\TraineeshipSearchViewModelMessages.cs" />
@@ -868,6 +877,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Terms.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Account\VerifyMobile.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VerifyMobile.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\ApprenticeshipApplication\Apply.generated.cs">
       <AutoGen>True</AutoGen>

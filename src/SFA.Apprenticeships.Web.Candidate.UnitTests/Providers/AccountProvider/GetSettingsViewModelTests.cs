@@ -3,6 +3,7 @@
     using System;
     using Application.Interfaces.Candidates;
     using Builders;
+    using Domain.Entities.UnitTests.Builder;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;

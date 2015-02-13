@@ -115,6 +115,7 @@
             For<ISendAccountUnlockCodeStrategy>().Use<SendAccountUnlockCodeStrategy>();
             For<ISaveCandidateStrategy>().Use<SaveCandidateStrategy>();
             For<ISendMobileVerificationCodeStrategy>().Use<SendMobileVerificationCodeStrategy>();
+            For<IVerifyMobileStrategy>().Use<VerifyMobileStrategy>();
             For<ILockAccountStrategy>().Use<LockAccountStrategy>();
             For<ILockUserStrategy>().Use<LockUserStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);
             For<ICreateApprenticeshipApplicationStrategy>().Use<CreateApprenticeshipApplicationStrategy>();

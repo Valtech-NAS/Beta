@@ -87,6 +87,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Builder\CandidateBuilder.cs" />
     <Compile Include="Location\LocationHelperPartialPostcodeTests.cs" />
     <Compile Include="Location\LocationHelperFullPostcodeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -4,6 +4,7 @@
     using Application.Interfaces.Candidates;
     using Application.Interfaces.Users;
     using Builders;
+    using Domain.Entities.UnitTests.Builder;
     using Domain.Entities.Users;
     using FluentAssertions;
     using Moq;

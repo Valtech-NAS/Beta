@@ -40,6 +40,8 @@
         private readonly ISaveCandidateStrategy _saveCandidateStrategy;
         private readonly ILegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail> _candidateApprenticeshipVacancyDetailStrategy;
         private readonly ILegacyGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail> _candidateTraineeshipVacancyDetailStrategy;
+        private readonly ISendMobileVerificationCodeStrategy _sendMobileVerificationCodeStrategy;
+        private IVerifyMobileStrategy _verifyMobileStrategy;
 
         public CandidateService(
             ICandidateReadRepository candidateReadRepository,
@@ -62,7 +64,9 @@
             ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository,
             IGetCandidateTraineeshipApplicationsStrategy getCandidateTraineeshipApplicationsStrategy,
             ILegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail> candidateApprenticeshipVacancyDetailStrategy,
-            ILegacyGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail> candidateTraineeshipVacancyDetailStrategy, ILogService logService)
+            ILegacyGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail> candidateTraineeshipVacancyDetailStrategy,
+            ISendMobileVerificationCodeStrategy sendMobileVerificationCodeStrategy,
+            ILogService logService, IVerifyMobileStrategy verifyMobileStrategy)
         {
             _candidateReadRepository = candidateReadRepository;
             _activateCandidateStrategy = activateCandidateStrategy;
@@ -85,7 +89,9 @@
             _getCandidateTraineeshipApplicationsStrategy = getCandidateTraineeshipApplicationsStrategy;
             _candidateApprenticeshipVacancyDetailStrategy = candidateApprenticeshipVacancyDetailStrategy;
             _candidateTraineeshipVacancyDetailStrategy = candidateTraineeshipVacancyDetailStrategy;
+            _sendMobileVerificationCodeStrategy = sendMobileVerificationCodeStrategy;
             _logger = logService;
+            _verifyMobileStrategy = verifyMobileStrategy;
         }
 
         public Candidate Register(Candidate newCandidate, string password)
@@ -317,6 +323,25 @@
             _logger.Debug("Calling CandidateService to get the traineeship vacancy ID {0} for candidate ID {1}.", vacancyId, candidateId);
 
             return _candidateTraineeshipVacancyDetailStrategy.GetVacancyDetails(candidateId, vacancyId);
+        }
+
+        public void SendMobileVerificationCode(Candidate candidate)
+        {
+            Condition.Requires(candidate);
+
+            _logger.Debug("Calling Send Mobile Verification Code for candidate Id: {0}", candidate.EntityId);
+
+            _sendMobileVerificationCodeStrategy.SendMobileVerificationCode(candidate);
+        }
+
+        public void VerifyMobileCode(Guid candidateId, string verificationCode)
+        {
+            Condition.Requires(candidateId);
+            Condition.Requires(verificationCode).IsNotNullOrEmpty();
+
+            _logger.Info("Calling CandidateService to verify the mobile number for candidateId {0} with code {1}", candidateId, verificationCode);
+
+            _verifyMobileStrategy.VerifyMobile(candidateId, verificationCode);
         }
     }
 }

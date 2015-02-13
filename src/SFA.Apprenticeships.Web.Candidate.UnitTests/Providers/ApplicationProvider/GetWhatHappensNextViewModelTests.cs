@@ -9,6 +9,7 @@
     using Constants.Pages;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
+    using Domain.Entities.UnitTests.Builder;
     using Domain.Entities.Vacancies;
     using FluentAssertions;
     using Moq;

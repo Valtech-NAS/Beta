@@ -166,12 +166,12 @@
     <Compile Include="Builders\ApprenticeshipApplicationDetailBuilder.cs" />
     <Compile Include="Builders\ApprenticeshipApplicationViewModelBuilder.cs" />
     <Compile Include="Builders\ApprenticeshipSummaryBuilder.cs" />
-    <Compile Include="Builders\CandidateBuilder.cs" />
     <Compile Include="Builders\LoginResultViewModelBuilder.cs" />
     <Compile Include="Builders\LoginViewModelBuilder.cs" />
     <Compile Include="Builders\RegisterViewModelBuilder.cs" />
     <Compile Include="Builders\SettingsViewModelBuilder.cs" />
     <Compile Include="Builders\VacancyDetailViewModelBuilder.cs" />
+    <Compile Include="Builders\VerifyMobileViewModelBuilder.cs" />
     <Compile Include="Extensions\CollectionExtensionsTests.cs" />
     <Compile Include="Helpers\BaseExtensionTests.cs" />
     <Compile Include="Helpers\FormTextForTests.cs" />
@@ -185,9 +185,11 @@
     <Compile Include="Mediators\Account\DeleteTests.cs" />
     <Compile Include="Mediators\Account\DismissTests.cs" />
     <Compile Include="Mediators\Account\IndexTests.cs" />
+    <Compile Include="Mediators\Account\ResendTests.cs" />
     <Compile Include="Mediators\Account\SettingsTests.cs" />
     <Compile Include="Mediators\Account\TrackTests.cs" />
     <Compile Include="Mediators\Account\TraineeshipVacancyDetailsTests.cs" />
+    <Compile Include="Mediators\Account\VerifyMobileTests.cs" />
     <Compile Include="Mediators\ApprenticeshipApplication\AddEmptyQualificationRowsTests.cs" />
     <Compile Include="Mediators\ApprenticeshipApplication\AddEmptyWorkExperienceRowsTests.cs" />
     <Compile Include="Mediators\ApprenticeshipApplication\ApplyTests.cs" />
@@ -283,6 +285,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
       <Project>{2c577447-2405-46b3-8065-613a19a58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities.UnitTests\SFA.Apprenticeships.Domain.Entities.UnitTests.csproj">
+      <Project>{4741B9B0-C694-4D34-8D30-D5B82BC87724}</Project>
+      <Name>SFA.Apprenticeships.Domain.Entities.UnitTests</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
       <Project>{4c2be232-4dbd-44d0-b427-0450e2d857a5}</Project>

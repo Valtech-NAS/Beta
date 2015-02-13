@@ -15,9 +15,10 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
         private Mock<ITraineeshipVacancyDetailProvider> _traineeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
         private IAccountProvider _accountProvider = new Mock<IAccountProvider>().Object;
         private Mock<ICandidateServiceProvider> _candidateServiceProviderMock = new Mock<ICandidateServiceProvider>();
+        private Mock<VerifyMobileViewModelServerValidator> _verifyMobileViewModelServerValidatorMock = new Mock<VerifyMobileViewModelServerValidator>();
         private Mock<IConfigurationManager> _configurationManagerMock = new Mock<IConfigurationManager>();
         private readonly SettingsViewModelServerValidator _settingsViewModelServerValidator = new SettingsViewModelServerValidator();
-        
+
         public AccountMediatorBuilder With(Mock<IApprenticeshipVacancyDetailProvider> apprenticeshipVacancyDetailProvider)
         {
             _apprenticeshipVacancyDetailProvider = apprenticeshipVacancyDetailProvider;
@@ -27,6 +28,12 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
         public AccountMediatorBuilder With(Mock<IApprenticeshipApplicationProvider> apprenticeshipApplicationProvider)
         {
             _apprenticeshipApplicationProviderMock = apprenticeshipApplicationProvider;
+            return this;
+        }
+
+        public AccountMediatorBuilder With(Mock<VerifyMobileViewModelServerValidator> verifyMobileViewModelServerValidator)
+        {
+            _verifyMobileViewModelServerValidatorMock = verifyMobileViewModelServerValidator;
             return this;
         }
 
@@ -62,7 +69,8 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
                 _apprenticeshipApplicationProviderMock.Object,
                 _apprenticeshipVacancyDetailProvider.Object,
                 _traineeshipVacancyDetailProvider.Object,
-                _configurationManagerMock.Object);
+                _configurationManagerMock.Object,
+                _verifyMobileViewModelServerValidatorMock.Object);
         }
     }
 }

@@ -4,8 +4,10 @@
     using System.Globalization;
     using System.Net;
     using System.Threading.Tasks;
+    using System.Web;
     using System.Web.Mvc;
     using Attributes;
+    using Common.Attributes;
     using Common.Constants;
     using Common.Providers;
     using Constants;
@@ -13,7 +15,9 @@
     using FluentValidation.Mvc;
     using Mediators;
     using Mediators.Account;
+    using Mediators.Login;
     using ViewModels.Account;
+    using ViewModels.Login;
 
     public class AccountController : CandidateControllerBase
     {
@@ -82,27 +86,75 @@
         }
 
         //todo: 1.6: mobile verification
-        //[OutputCache(CacheProfile = CacheProfiles.None)]
-        //[AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        //[ApplyWebTrends]
-        //public async Task<ActionResult> VerifyMobile()
-        //{
-        //    return await Task.Run<ActionResult>(() =>
-        //    {
-        //    });
-        //}
+        [OutputCache(CacheProfile = CacheProfiles.None)]
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [ApplyWebTrends]
+        public async Task<ActionResult> VerifyMobile()
+        {
+            var response = _accountMediator.VerifyMobile(UserContext.CandidateId);
+            return await Task.Run<ActionResult>(() => View(response.ViewModel));
+        }
 
-        //todo: 1.6: mobile verification
-        //[HttpPost]
-        //[OutputCache(CacheProfile = CacheProfiles.None)]
-        //[AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        //[ApplyWebTrends]
-        //public async Task<ActionResult> VerifyMobile(VerifyMobileViewModel model)
-        //{
-        //    return await Task.Run<ActionResult>(() =>
-        //    {
-        //    });
-        //}
+       // todo: 1.6: mobile verification
+        [HttpPost]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [AllowReturnUrl(Allow = false)]
+        [MultipleFormActionsButton(Name = "VerifyMobileAction", Argument = "VerifyMobile")]
+        [ApplyWebTrends]
+        public async Task<ActionResult> VerifyMobile(VerifyMobileViewModel model)
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                var response = _accountMediator.VerifyMobile(UserContext.CandidateId, model);
+                ModelState.Clear();
+
+                switch (response.Code)
+                {
+                    case AccountMediatorCodes.VerifyMobile.ValidationError:
+                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                        return View(response.ViewModel);
+                    case AccountMediatorCodes.VerifyMobile.InvalidCode:
+                        SetUserMessage(VerifyMobilePageMessages.MobileVerificationCodeInvalid, UserMessageLevel.Error);
+                        return View(response.ViewModel);
+                    case AccountMediatorCodes.VerifyMobile.Error:
+                        SetUserMessage(VerifyMobilePageMessages.MobileVerificationError, UserMessageLevel.Error);
+                        return View(response.ViewModel);
+                    case AccountMediatorCodes.VerifyMobile.Success:
+                        SetUserMessage(VerifyMobilePageMessages.MobileVerificationSuccessText);
+                        //todo: return url should work 
+                        return Redirect(HttpUtility.UrlDecode(response.Parameters.ToString()));
+                        //return RedirectToRoute(CandidateRouteNames.Settings); //todo: return url 
+                    default:
+                        throw new InvalidMediatorCodeException(response.Code);
+                }
+            });
+        }
+
+        [HttpPost]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
+        [AllowReturnUrl(Allow = false)]
+        [MultipleFormActionsButton(Name = "VerifyMobileAction", Argument = "Resend")]
+        [ApplyWebTrends]
+        public async Task<ActionResult> Resend(VerifyMobileViewModel model)
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                var response = _accountMediator.Resend( UserContext.CandidateId, model);
+
+                switch (response.Code)
+                {
+                    case AccountMediatorCodes.Resend.Error:
+                    case AccountMediatorCodes.Resend.ResendNotRequired:
+                    case AccountMediatorCodes.Resend.ResentSuccessfully:
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        break;
+                    default:
+                        throw new InvalidMediatorCodeException(response.Code);
+                }
+                return RedirectToAction("VerifyMobile"); 
+            });
+        }
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]

@@ -8,6 +8,7 @@
     using Common.Providers;
     using Constants;
     using Constants.Pages;
+    using Domain.Entities.UnitTests.Builder;
     using Moq;
     using NUnit.Framework;
     using Providers.AccountProvider;

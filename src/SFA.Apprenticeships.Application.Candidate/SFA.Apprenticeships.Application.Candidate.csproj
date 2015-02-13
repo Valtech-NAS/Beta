@@ -99,6 +99,7 @@
     <Compile Include="Strategies\Apprenticeships\ArchiveApprenticeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\ILegacyGetCandidateVacancyDetailStrategy.cs" />
     <Compile Include="Strategies\ISendMobileVerificationCodeStrategy.cs" />
+    <Compile Include="Strategies\IVerifyMobileStrategy.cs" />
     <Compile Include="Strategies\LegacyGetCandidateVacancyDetailStrategy.cs" />
     <Compile Include="Strategies\Apprenticeships\LegacySubmitApprenticeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\ISubmitTraineeshipApplicationStrategy.cs" />
@@ -134,6 +135,7 @@
     <Compile Include="Strategies\Traineeships\SaveTraineeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\Apprenticeships\SaveApprenticeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\SaveCandidateStrategy.cs" />
+    <Compile Include="Strategies\VerifyMobileStrategy.cs" />
     <Compile Include="SubmitApprenticeshipApplicationRequest.cs" />
     <Compile Include="SubmitTraineeshipApplicationRequest.cs" />
   </ItemGroup>

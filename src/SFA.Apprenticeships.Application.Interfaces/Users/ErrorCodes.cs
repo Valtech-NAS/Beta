@@ -14,5 +14,7 @@
         public const string AccountUnlockCodeInvalid = "User.AccountUnlockCodeInvalid";
         public const string UserDirectoryAccountExistsError = "User.UserDirectoryAccountExistsError";
         public const string UserDirectoryAccountDoesNotExistError = "User.UserDirectoryAccountDoesNotExistError";
+        public const string MobileCodeVerificationFailed = "User.MobileCodeVerificationFailed";
+        public const string UnknownMobileCodeResendError = "User.UnknownMobileCodeResendError";
     }
 }

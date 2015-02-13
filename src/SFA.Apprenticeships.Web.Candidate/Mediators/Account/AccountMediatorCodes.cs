@@ -54,5 +54,21 @@
             public const string Unavailable = "AccountMediator.ApprenticeshipDetails.Unavailable";
             public const string Error = "AccountMediator.ApprenticeshipDetails.Error";
         }
+
+        public class VerifyMobile
+        {
+            public const string Success = "AccountMediator.VerifyMobile.Success";
+            public const string ValidationError = "AccountMediator.VerifyMobile.ValidationError";
+            public const string VerificationNotRequired = "AccountMediator.VerifyMobile.Failed";
+            public const string InvalidCode = "AccountMediator.VerifyMobile.InvalidCode";
+            public const string Error = "AccountMediator.VerifyMobile.Error";
+        }
+
+        public class Resend
+        {
+            public const string ResentSuccessfully = "AccountMediator.Resend.Successfully";
+            public const string ResendNotRequired = "AccountMediator.Resend.Failed";
+            public const string Error = "AccountMediator.Resend.Error";
+        }
     }
 }

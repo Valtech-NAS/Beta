@@ -104,6 +104,8 @@
   <ItemGroup>
     <Compile Include="Applications\ApplicationStatusProcessorTests.cs" />
     <Compile Include="Candidate\Strategies\CreateApplicationStrategy\GivenAFaultedServer.cs" />
+    <Compile Include="Candidate\Strategies\VerifyMobileStrategy\VerifyMobileStrategyBuilder.cs" />
+    <Compile Include="Candidate\Strategies\VerifyMobileStrategy\VerifyMobileStrategyTests.cs" />
     <Compile Include="CodeGeneratorTests.cs" />
     <Compile Include="Communications\CommunicationProcessorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -150,6 +152,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Vacancy\SFA.Apprenticeships.Application.Vacancy.csproj">
       <Project>{67CDACCD-5217-4110-8432-C6EF164BAA0D}</Project>
       <Name>SFA.Apprenticeships.Application.Vacancy</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities.UnitTests\SFA.Apprenticeships.Domain.Entities.UnitTests.csproj">
+      <Project>{4741B9B0-C694-4D34-8D30-D5B82BC87724}</Project>
+      <Name>SFA.Apprenticeships.Domain.Entities.UnitTests</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
       <Project>{4c2be232-4dbd-44d0-b427-0450e2d857a5}</Project>
