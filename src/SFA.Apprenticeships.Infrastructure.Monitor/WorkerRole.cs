@@ -43,6 +43,10 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
                 {
                     _monitorControlQueueConsumer.CheckScheduleQueue().Wait();
                 }
+                catch (FaultException fe)
+                {
+                    _logger.Error("FaultException from  " + ProcessName, fe);
+                }
                 catch (CommunicationException ce)
                 {
                     _logger.Warn("CommunicationException from " + ProcessName, ce);
