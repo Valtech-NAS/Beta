@@ -19,7 +19,6 @@
                 updated = true;
             }
 
-            // TODO: AG: comment 'applicationStatusSummary.LegacyApplicationId != 0'.
             if (applicationStatusSummary.LegacyApplicationId != 0 && apprenticeshipApplication.LegacyApplicationId != applicationStatusSummary.LegacyApplicationId)
             {
                 // Ensure the application is linked to the legacy application (if any).

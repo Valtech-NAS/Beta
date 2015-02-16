@@ -21,7 +21,7 @@
 
             if (applicationStatusSummary.LegacyApplicationId != 0 && traineeshipApplication.LegacyApplicationId != applicationStatusSummary.LegacyApplicationId)
             {
-                // Ensure the application is linked to the legacy application.
+                // Ensure the application is linked to the legacy application (if any).
                 traineeshipApplication.LegacyApplicationId = applicationStatusSummary.LegacyApplicationId;
                 updated = true;
             }
