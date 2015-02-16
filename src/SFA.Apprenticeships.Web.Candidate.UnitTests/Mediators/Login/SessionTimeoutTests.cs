@@ -3,7 +3,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class SessionTimeoutTests : TestsBase
+    public class SessionTimeoutTests
     {
     }
 }

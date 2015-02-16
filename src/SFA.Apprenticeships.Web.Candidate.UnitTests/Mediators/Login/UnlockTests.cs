@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Login
 {
     using Candidate.Mediators.Login;
+    using Candidate.Providers;
     using Candidate.ViewModels.Login;
     using Common.Constants;
     using Constants.Pages;
@@ -9,14 +10,15 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class UnlockTests : TestsBase
+    public class UnlockTests
     {
         [Test]
         public void ValidationError()
         {
             var viewModel = new AccountUnlockViewModel();
+            var mediator = new LoginMediatorBuilder().Build();
 
-            var response = Mediator.Unlock(viewModel);
+            var response = mediator.Unlock(viewModel);
 
             response.AssertValidationResult(LoginMediatorCodes.Unlock.ValidationError);
         }
@@ -30,9 +32,11 @@
         {
             var viewModel = new AccountUnlockViewModel { EmailAddress = "ab@cde.com", AccountUnlockCode = "ABC123", Status = accountUnlockState };
 
-            CandidateServiceProvider.Setup(x => x.VerifyAccountUnlockCode(It.IsAny<AccountUnlockViewModel>())).Returns(viewModel);
+            var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
+            candidateServiceProvider.Setup(x => x.VerifyAccountUnlockCode(It.IsAny<AccountUnlockViewModel>())).Returns(viewModel);
+            var mediator = new LoginMediatorBuilder().With(candidateServiceProvider).Build();
 
-            var response = Mediator.Unlock(viewModel);
+            var response = mediator.Unlock(viewModel);
 
             response.Code.Should().Be(code);
 
@@ -46,7 +50,6 @@
                 response.Message.Text.Should().Be(message);
                 response.Message.Level.Should().Be(messageLevel);
             }
-            
         }
     }
 }

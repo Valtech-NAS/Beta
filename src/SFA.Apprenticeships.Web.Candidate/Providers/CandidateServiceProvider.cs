@@ -225,7 +225,8 @@
                             FullName = candidate.RegistrationDetails.FirstName + " " + candidate.RegistrationDetails.LastName,
                             UserStatus = userStatusViewModel.UserStatus.Value,
                             IsAuthenticated = true,
-                            AcceptedTermsAndConditionsVersion = candidate.RegistrationDetails.AcceptedTermsAndConditionsVersion
+                            AcceptedTermsAndConditionsVersion = candidate.RegistrationDetails.AcceptedTermsAndConditionsVersion,
+                            MobileVerificationRequired = candidate.MobileVerificationRequired()
                         };
                     }
 

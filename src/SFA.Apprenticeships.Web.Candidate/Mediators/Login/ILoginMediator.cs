@@ -4,7 +4,7 @@
 
     public interface ILoginMediator
     {
-        MediatorResponse Index(LoginViewModel viewModel);
+        MediatorResponse<LoginResultViewModel> Index(LoginViewModel viewModel);
 
         MediatorResponse<AccountUnlockViewModel> Unlock(AccountUnlockViewModel accountUnlockView);
 

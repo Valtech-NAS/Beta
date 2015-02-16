@@ -65,6 +65,13 @@
 
                 var response = _loginMediator.Index(model);
 
+                var viewModel = response.ViewModel;
+                if (viewModel != null && viewModel.IsAuthenticated && viewModel.MobileVerificationRequired)
+                {
+                    var mobileVerificationRequiredMessage = string.Format(LoginPageMessages.MobileVerificationRequiredText, Url.Action("VerifyMobile", "Account"));
+                    SetUserMessage(mobileVerificationRequiredMessage, UserMessageLevel.Info);
+                }
+
                 switch (response.Code)
                 {
                     case LoginMediatorCodes.Index.ValidationError:

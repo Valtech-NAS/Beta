@@ -35,13 +35,13 @@
             _resendAccountUnlockCodeViewModelServerValidator = resendAccountUnlockCodeViewModelServerValidator;
         }
 
-        public MediatorResponse Index(LoginViewModel viewModel)
+        public MediatorResponse<LoginResultViewModel> Index(LoginViewModel viewModel)
         {
             var validationResult = _loginViewModelServerValidator.Validate(viewModel);
 
             if (!validationResult.IsValid)
             {
-                return GetMediatorResponse(LoginMediatorCodes.Index.ValidationError, validationResult: validationResult);
+                return GetMediatorResponse<LoginResultViewModel>(LoginMediatorCodes.Index.ValidationError, null, validationResult);
             }
 
             var result = _candidateServiceProvider.Login(viewModel);
@@ -52,7 +52,7 @@
                 {
                     _userDataProvider.Push(UserDataItemNames.UnlockEmailAddress, result.EmailAddress);
 
-                    return GetMediatorResponse(LoginMediatorCodes.Index.AccountLocked);
+                    return GetMediatorResponse(LoginMediatorCodes.Index.AccountLocked, result);
                 }
 
                 if (result.IsAuthenticated)
@@ -61,7 +61,7 @@
 
                     if (result.UserStatus == UserStatuses.PendingActivation)
                     {
-                        return GetMediatorResponse(LoginMediatorCodes.Index.PendingActivation);
+                        return GetMediatorResponse(LoginMediatorCodes.Index.PendingActivation, result);
                     }
 
                     // Redirect to session return URL (if any).
@@ -70,13 +70,13 @@
                     if (result.AcceptedTermsAndConditionsVersion != _configurationManager.GetAppSetting<string>(Settings.TermsAndConditionsVersion))
                     {
                         return !string.IsNullOrEmpty(returnUrl)
-                            ? GetMediatorResponse(LoginMediatorCodes.Index.TermsAndConditionsNeedAccepted, parameters: returnUrl)
-                            : GetMediatorResponse(LoginMediatorCodes.Index.TermsAndConditionsNeedAccepted);
+                            ? GetMediatorResponse(LoginMediatorCodes.Index.TermsAndConditionsNeedAccepted, result, parameters: returnUrl)
+                            : GetMediatorResponse(LoginMediatorCodes.Index.TermsAndConditionsNeedAccepted, result);
                     }
 
                     if (!string.IsNullOrWhiteSpace(returnUrl))
                     {
-                        return GetMediatorResponse(LoginMediatorCodes.Index.ReturnUrl, parameters: returnUrl);
+                        return GetMediatorResponse(LoginMediatorCodes.Index.ReturnUrl, result, parameters: returnUrl);
                     }
 
                     // Redirect to last viewed vacancy (if any).
@@ -90,17 +90,17 @@
 
                         if (applicationStatus.HasValue && applicationStatus.Value == ApplicationStatuses.Draft)
                         {
-                            return GetMediatorResponse(LoginMediatorCodes.Index.ApprenticeshipApply, parameters: lastViewedVacancyId);
+                            return GetMediatorResponse(LoginMediatorCodes.Index.ApprenticeshipApply, result, parameters: lastViewedVacancyId);
                         }
 
-                        return GetMediatorResponse(LoginMediatorCodes.Index.ApprenticeshipDetails, parameters: lastViewedVacancyId);
+                        return GetMediatorResponse(LoginMediatorCodes.Index.ApprenticeshipDetails, result, parameters: lastViewedVacancyId);
                     }
 
-                    return GetMediatorResponse(LoginMediatorCodes.Index.Ok);
+                    return GetMediatorResponse(LoginMediatorCodes.Index.Ok, result);
                 }                
             }
 
-            return GetMediatorResponse(LoginMediatorCodes.Index.LoginFailed, parameters: result.ViewModelMessage);
+            return GetMediatorResponse(LoginMediatorCodes.Index.LoginFailed, result, parameters: result.ViewModelMessage);
         }
 
 

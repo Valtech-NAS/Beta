@@ -167,6 +167,8 @@
     <Compile Include="Builders\ApprenticeshipApplicationViewModelBuilder.cs" />
     <Compile Include="Builders\ApprenticeshipSummaryBuilder.cs" />
     <Compile Include="Builders\CandidateBuilder.cs" />
+    <Compile Include="Builders\LoginResultViewModelBuilder.cs" />
+    <Compile Include="Builders\LoginViewModelBuilder.cs" />
     <Compile Include="Builders\RegisterViewModelBuilder.cs" />
     <Compile Include="Builders\SettingsViewModelBuilder.cs" />
     <Compile Include="Builders\VacancyDetailViewModelBuilder.cs" />
@@ -203,10 +205,10 @@
     <Compile Include="Mediators\ApprenticeshipSearch\SearchValidationTests.cs" />
     <Compile Include="Mediators\ApprenticeshipSearch\TestsBase.cs" />
     <Compile Include="Mediators\Login\IndexTests.cs" />
+    <Compile Include="Mediators\Login\LoginMediatorBuilder.cs" />
     <Compile Include="Mediators\Login\ResendTests.cs" />
     <Compile Include="Mediators\Login\SessionTimeoutTests.cs" />
     <Compile Include="Mediators\Login\SignOutTests.cs" />
-    <Compile Include="Mediators\Login\TestsBase.cs" />
     <Compile Include="Mediators\Login\UnlockTests.cs" />
     <Compile Include="Mediators\MediatorResponseExtensions.cs" />
     <Compile Include="Mediators\Register\ActivateTests.cs" />
@@ -241,6 +243,7 @@
     <Compile Include="Providers\ApplicationProvider\TraineeshipsFeatureViewModel.cs" />
     <Compile Include="Providers\ApplicationProvider\UnarchiveApplicationTests.cs" />
     <Compile Include="Providers\CandidateServiceProvider\CandidateServiceProviderBuilder.cs" />
+    <Compile Include="Providers\CandidateServiceProvider\LoginTests.cs" />
     <Compile Include="Providers\CandidateServiceProvider\RegisterTests.cs" />
     <Compile Include="Providers\CandidateServiceProvider\RequestAccountUnlockCodeTests.cs" />
     <Compile Include="Providers\CandidateServiceProvider\VerifyAccountUnlockCodeTests.cs" />

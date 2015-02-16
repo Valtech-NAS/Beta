@@ -22,5 +22,7 @@
         public bool IsAuthenticated { get; set; }
 
         public string AcceptedTermsAndConditionsVersion { get; set; }
+
+        public bool MobileVerificationRequired { get; set; }
     }
 }
