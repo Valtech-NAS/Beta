@@ -16,13 +16,13 @@
 
                 // Application status has changed, ensure it appears on the candidate's dashboard.
                 apprenticeshipApplication.IsArchived = false;
-
                 updated = true;
             }
 
-            if (apprenticeshipApplication.LegacyApplicationId != applicationStatusSummary.LegacyApplicationId)
+            // TODO: AG: comment 'applicationStatusSummary.LegacyApplicationId != 0'.
+            if (applicationStatusSummary.LegacyApplicationId != 0 && apprenticeshipApplication.LegacyApplicationId != applicationStatusSummary.LegacyApplicationId)
             {
-                // Ensure the application is linked to the legacy application.
+                // Ensure the application is linked to the legacy application (if any).
                 apprenticeshipApplication.LegacyApplicationId = applicationStatusSummary.LegacyApplicationId;
                 updated = true;
             }

@@ -16,11 +16,10 @@
 
                 // Application status has changed, ensure it appears on the candidate's dashboard.
                 traineeshipApplication.IsArchived = false;
-
                 updated = true;
             }
 
-            if (traineeshipApplication.LegacyApplicationId != applicationStatusSummary.LegacyApplicationId)
+            if (applicationStatusSummary.LegacyApplicationId != 0 && traineeshipApplication.LegacyApplicationId != applicationStatusSummary.LegacyApplicationId)
             {
                 // Ensure the application is linked to the legacy application.
                 traineeshipApplication.LegacyApplicationId = applicationStatusSummary.LegacyApplicationId;
