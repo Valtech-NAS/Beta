@@ -37,7 +37,7 @@
                 _logger.Debug("Dispatching email To:{0}, Template:{1}", request.ToEmail, request.MessageType);
 
                 var message = ComposeMessage(request);
-                DispatchMessage(message);
+                DispatchMessage(request, message);
             }
             catch (Exception ex)
             {
@@ -124,33 +124,36 @@
             throw new ConfigurationErrorsException(errorMessage);
         }
 
-        private void DispatchMessage(SendGridMessage message)
+        private void DispatchMessage(EmailRequest request, SendGridMessage message)
         {
+            var logMessage = GetEmailLogMessage(request, message);
+
             try
             {
+                _logger.Debug("Dispatching email: {0}", logMessage);
+
                 var credentials = new NetworkCredential(_userName, _password);
                 var web = new Web(credentials);
 
-                _logger.Debug("Dispatching email: {0}", LogSendGridMessage(message));
                 web.Deliver(message);
-                _logger.Info("Dispatched email: {0} to {1}", message.Subject,
-                    string.Join(", ", message.To.Select(a => a.Address)));
+
+                _logger.Info("Dispatched email: {0}", logMessage);
             }
             catch (Exception e)
             {
-                _logger.Error("Failed to dispatch email", e);
-                throw new CustomException("Failed to dispatch email", e, ErrorCodes.EmailError);
+                var errorMessage = string.Format("Failed to dispatch email: {0}", logMessage);
+
+                _logger.Error(errorMessage, e, logMessage);
+                throw new CustomException(errorMessage, e, ErrorCodes.EmailError);
             }
         }
 
-        private static string LogSendGridMessage(SendGridMessage message)
+        private static string GetEmailLogMessage(EmailRequest request, SendGridMessage message)
         {
-            var messageLog = string.Format("Subject: {0}", message.Subject);
-            messageLog += "To: ";
-            message.To.ToList().ForEach(t => messageLog += string.Format("{0}, ", t.Address));
-            messageLog += string.Format("From: {0}, ", message.From.Address);
+            var subject = string.IsNullOrWhiteSpace(message.Subject) ? "<from template>" : message.Subject;
+            var recipients = string.Join(", ", message.To.Select(a => a.Address));
 
-            return messageLog;
+            return string.Format("type='{0}', subject='{1}', recipients='{2}'", request.MessageType, subject, recipients);
         }
     }
 }
