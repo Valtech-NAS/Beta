@@ -22,7 +22,7 @@ Background:
 
 @US532
 Scenario: As a candidate I can change my personal settings
-
+	
 	Given I navigated to the SettingsPage page
 	When I am on the SettingsPage page
 
@@ -43,8 +43,8 @@ Scenario: As a candidate I can change my personal settings
 	And I wait to see AddressLine4
 	And I wait to see Postcode
 
-	And I wait to see AllowEmailCommsYes
-	And I wait to see AllowEmailCommsNo
+	And I wait to see AllowEmailComms
+	And I wait to see AllowSmsComms
 
 	And I wait to see UpdateDetailsButton
 
@@ -66,7 +66,7 @@ Scenario: As a candidate I can change my personal settings
 	| AddressLine4 | England             |
 	| Postcode     | SW1A 2AA            |
 
-	And I choose AllowEmailCommsNo
+	And I choose AllowEmailComms
 
 	And I choose UpdateDetailsButton
 	Then I am on the SettingsPage page

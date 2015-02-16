@@ -304,21 +304,10 @@ WriteLiteral(">\r\n                    <li>you submit an application form</li>\r
 "   ");
 
 WriteLiteral("\r\n                    <li>an apprenticeship is approaching its closing date</li>\r" +
-"\n                </ul>\r\n            </div>\r\n");
-
-WriteLiteral("            ");
+"\n                </ul>\r\n            </div>\r\n        </div>\r\n\r\n    </fieldset>\r\n");
 
             
-            #line 65 "..\..\Views\Account\Settings.cshtml"
-       Write(Html.FormRadioButtonsYesNo(m => m.AllowEmailComms));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n        </div>\r\n\r\n    </fieldset>\r\n");
-
-            
-            #line 69 "..\..\Views\Account\Settings.cshtml"
+            #line 68 "..\..\Views\Account\Settings.cshtml"
 
 
             
@@ -337,7 +326,7 @@ WriteLiteral(" class=\"button\"");
 WriteLiteral(">Update details</button>\r\n    </div>\r\n");
 
             
-            #line 73 "..\..\Views\Account\Settings.cshtml"
+            #line 72 "..\..\Views\Account\Settings.cshtml"
 }
 
             
@@ -351,7 +340,7 @@ WriteLiteral("\r\n    <script>\r\n        $(function () {\r\n            $(\"#fi
 "Lookup({\r\n                url: \'");
 
             
-            #line 80 "..\..\Views\Account\Settings.cshtml"
+            #line 79 "..\..\Views\Account\Settings.cshtml"
                  Write(Url.Action("Addresses", "Location"));
 
             

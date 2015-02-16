@@ -65,5 +65,19 @@
                 allowEmailCommsCheckBox.Should().BeNull();
             }
         }
+
+        [Test]
+        public void US616_EmailRadioButtonsRemoved()
+        {
+            var viewModel = new SettingsViewModelBuilder().Build();
+
+            var result = new SettingsViewBuilder().With(viewModel).Render();
+
+            var allowEmailCommsRadioButtonYes = result.GetElementbyId("AllowEmailComms-yes");
+            var allowEmailCommsRadioButtonNo = result.GetElementbyId("AllowEmailComms-no");
+
+            allowEmailCommsRadioButtonYes.Should().BeNull();
+            allowEmailCommsRadioButtonNo.Should().BeNull();
+        }
     }
 }
