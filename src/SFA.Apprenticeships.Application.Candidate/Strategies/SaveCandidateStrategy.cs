@@ -6,7 +6,6 @@
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Interfaces.Repositories;
-    using Interfaces.Communications;
     using Interfaces.Logging;
     using Interfaces.Users;
 
@@ -16,7 +15,7 @@
 
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
         private readonly ICodeGenerator _codeGenerator;
-        private readonly ICommunicationService _communicationService;
+        private readonly ISendMobileVerificationCodeStrategy _sendMobileVerificationCodeStrategy;
         private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ICandidateWriteRepository _candidateWriteRepository;
@@ -28,7 +27,7 @@
             IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository,
             IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
             ICodeGenerator codeGenerator,
-            ICommunicationService communicationService,
+            ISendMobileVerificationCodeStrategy sendMobileVerificationCodeStrategy,
             ILogService logger)
         {
             _candidateWriteRepository = candidateWriteRepository;
@@ -37,7 +36,7 @@
             _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
             _codeGenerator = codeGenerator;
-            _communicationService = communicationService;
+            _sendMobileVerificationCodeStrategy = sendMobileVerificationCodeStrategy;
             _logger = logger;
         }
 
@@ -46,7 +45,7 @@
             if (candidate.MobileVerificationRequired())
             {
                 candidate.CommunicationPreferences.MobileVerificationCode = _codeGenerator.GenerateNumeric();
-                SendMobileVerificationCode(candidate);
+                _sendMobileVerificationCodeStrategy.SendMobileVerificationCode(candidate);
             }
 
             var result = _candidateWriteRepository.Save(candidate);
@@ -76,19 +75,6 @@
             });
 
             return result;
-        }
-
-        private void SendMobileVerificationCode(Candidate candidate)
-        {
-            var mobileNumber = candidate.RegistrationDetails.PhoneNumber;
-            var mobileVerificationCode = candidate.CommunicationPreferences.MobileVerificationCode;
-
-            _communicationService.SendMessageToCandidate(candidate.EntityId, MessageTypes.SendMobileVerificationCode,
-                new[]
-                {
-                    new CommunicationToken(CommunicationTokens.CandidateMobileNumber, mobileNumber),
-                    new CommunicationToken(CommunicationTokens.MobileVerificationCode, mobileVerificationCode)
-                });
         }
 
         private void UpdateApprenticeshipApplicationDetail(Candidate candidate, int vacancyId)
