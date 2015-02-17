@@ -19,9 +19,9 @@
                 updated = true;
             }
 
-            if (applicationStatusSummary.LegacyApplicationId != 0 && traineeshipApplication.LegacyApplicationId != applicationStatusSummary.LegacyApplicationId)
+            if (traineeshipApplication.LegacyApplicationId != applicationStatusSummary.LegacyApplicationId)
             {
-                // Ensure the application is linked to the legacy application (if any).
+                // Ensure the application is linked to the legacy application.
                 traineeshipApplication.LegacyApplicationId = applicationStatusSummary.LegacyApplicationId;
                 updated = true;
             }

@@ -19,9 +19,9 @@
                 updated = true;
             }
 
-            if (applicationStatusSummary.LegacyApplicationId != 0 && apprenticeshipApplication.LegacyApplicationId != applicationStatusSummary.LegacyApplicationId)
+            if (apprenticeshipApplication.LegacyApplicationId != applicationStatusSummary.LegacyApplicationId)
             {
-                // Ensure the application is linked to the legacy application (if any).
+                // Ensure the application is linked to the legacy application.
                 apprenticeshipApplication.LegacyApplicationId = applicationStatusSummary.LegacyApplicationId;
                 updated = true;
             }
