@@ -3,12 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Application.Communications;
     using Application.Interfaces.Communications;
+    using Builder;
     using Communication.Email.EmailMessageFormatters;
-    using Domain.Entities.Candidates;
     using Domain.Entities.Communication;
-    using FizzWare.NBuilder;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -20,13 +18,14 @@
         private const string ExpiryVacanciesCountTag = "-Expiry.Vacancies.Count-";
         private const string ExpiryVacanciesInfoTag = "-Expiry.Vacancies.Info-";
         private const string CandidateFirstNameTag = "-Candidate.FirstName-";
-        private const string Pipe = "|";
+        private const char Pipe = '|';
         private const char Tilda = '~';
 
         [Test]
         public void GivenSingleExpiringDraft()
         {
-            var emailRequest = GetEmailRequest(1);
+            var expiringDrafts = new ExpiringApprenticeshipApplicationDraftsBuilder().WithExpiringDrafts(1).Build();
+            var emailRequest = new DailyDigestEmailRequestBuilder().WithExpiringDrafts(expiringDrafts).Build();
             List<SendGridMessageSubstitution> sendGridMessageSubstitutions;
             var sendGridMessage = GetSendGridMessage(out sendGridMessageSubstitutions);
 
@@ -46,7 +45,8 @@
         [TestCase(11)]
         public void GivenMultipleExpiringDrafts(int noOfDrafts)
         {
-            var emailRequest = GetEmailRequest(noOfDrafts);
+            var expiringDrafts = new ExpiringApprenticeshipApplicationDraftsBuilder().WithExpiringDrafts(noOfDrafts).Build();
+            var emailRequest = new DailyDigestEmailRequestBuilder().WithExpiringDrafts(expiringDrafts).Build();
             List<SendGridMessageSubstitution> sendGridMessageSubstitutions;
             var sendGridMessage = GetSendGridMessage(out sendGridMessageSubstitutions);
 
@@ -66,8 +66,8 @@
         [TestCase(11)]
         public void GivenMultipleExpiringDraftsSpecialCharacters(int noOfDrafts)
         {
-            var expiringDrafts = GetExpiringDraftsSpecialCharacters(noOfDrafts);
-            var emailRequest = GetEmailRequest(expiringDrafts);
+            var expiringDrafts = new ExpiringApprenticeshipApplicationDraftsBuilder().WithSpecialCharacterExpiringDrafts(noOfDrafts).Build();
+            var emailRequest = new DailyDigestEmailRequestBuilder().WithExpiringDrafts(expiringDrafts).Build();
             List<SendGridMessageSubstitution> sendGridMessageSubstitutions;
             var sendGridMessage = GetSendGridMessage(out sendGridMessageSubstitutions);
 
@@ -86,8 +86,8 @@
         [TestCase(2)]
         public void ShouldContainCandidateFirstNameSubstitution(int noOfDrafts)
         {
-            var expiringDrafts = GetExpiringDraftsSpecialCharacters(noOfDrafts);
-            var emailRequest = GetEmailRequest(expiringDrafts);
+            var expiringDrafts = new ExpiringApprenticeshipApplicationDraftsBuilder().WithSpecialCharacterExpiringDrafts(noOfDrafts).Build();
+            var emailRequest = new DailyDigestEmailRequestBuilder().WithExpiringDrafts(expiringDrafts).Build();
             List<SendGridMessageSubstitution> sendGridMessageSubstitutions;
             var sendGridMessage = GetSendGridMessage(out sendGridMessageSubstitutions);
 
@@ -101,8 +101,8 @@
         [TestCase(2)]
         public void ShouldContainExpiryVacanciesCountSubstitution(int noOfDrafts)
         {
-            var expiringDrafts = GetExpiringDraftsSpecialCharacters(noOfDrafts);
-            var emailRequest = GetEmailRequest(expiringDrafts);
+            var expiringDrafts = new ExpiringApprenticeshipApplicationDraftsBuilder().WithSpecialCharacterExpiringDrafts(noOfDrafts).Build();
+            var emailRequest = new DailyDigestEmailRequestBuilder().WithExpiringDrafts(expiringDrafts).Build();
             List<SendGridMessageSubstitution> sendGridMessageSubstitutions;
             var sendGridMessage = GetSendGridMessage(out sendGridMessageSubstitutions);
 
@@ -112,16 +112,16 @@
             sendGridMessageSubstitutions.Any(s => s.ReplacementTag == ExpiryVacanciesCountTag).Should().BeTrue();
         }
 
+        [Test]
         public void GivenMultipleExpiringDrafts_ThenOrderedByClosingDate()
         {
-            var drafts = GetExpiringDrafts(3);
-            //todo:modify dates
-            drafts[0].ClosingDate = new DateTime(2015, 02, 1);
-            drafts[1].ClosingDate = new DateTime(2015, 01, 1);
-            drafts[2].ClosingDate = new DateTime(2015, 04, 1);
-            var emailRequest = GetEmailRequest(drafts);
+            var expiringDrafts = new ExpiringApprenticeshipApplicationDraftsBuilder().WithExpiringDrafts(3).Build();
+            expiringDrafts[0].ClosingDate = new DateTime(2015, 02, 01);
+            expiringDrafts[1].ClosingDate = new DateTime(2015, 01, 01);
+            expiringDrafts[2].ClosingDate = new DateTime(2015, 04, 01);
+            var emailRequest = new DailyDigestEmailRequestBuilder().WithExpiringDrafts(expiringDrafts).Build();
 
-            //Assert the asc ordering by ClosingDate of apprenticeships about to expire
+            //Assert the ascending ordering by ClosingDate of apprenticeships about to expire
             if (emailRequest.Tokens.Count() > 1)
             {
                 var orderedList = ConvertToExpiringApprenticeshipApplicationDraftModel(emailRequest);
@@ -130,24 +130,18 @@
             }
         }
 
-        private List<ExpiringApprenticeshipApplicationDraft> ConvertToExpiringApprenticeshipApplicationDraftModel(EmailRequest request)
+        private static List<ExpiringApprenticeshipApplicationDraft> ConvertToExpiringApprenticeshipApplicationDraftModel(EmailRequest request)
         {
             var drafts = request.Tokens.First(t => t.Key == CommunicationTokens.ExpiringDrafts).Value;
 
-            List<ExpiringApprenticeshipApplicationDraft> list = new List<ExpiringApprenticeshipApplicationDraft>();
+            var list = new List<ExpiringApprenticeshipApplicationDraft>();
             foreach (var draft in drafts.Split(Tilda))
             {
-                string closingDate;
-                ExtractVacancyDataFrom(draft, out closingDate);
+                var closingDate = draft.Split(Pipe)[3];
                 list.Add(new ExpiringApprenticeshipApplicationDraft { ClosingDate = Convert.ToDateTime(closingDate) });
             }
 
             return list;
-        }
-
-        private void ExtractVacancyDataFrom(string line, out string closingDate)
-        {
-            closingDate = line.Split(new[] { Pipe }, StringSplitOptions.RemoveEmptyEntries)[2];
         }
 
         private static Mock<ISendGrid> GetSendGridMessage(out List<SendGridMessageSubstitution> sendGridMessageSubstitutions)
@@ -162,9 +156,9 @@
             return sendGridMessage;
         }
 
-        private string GetExpectedInfoSubstitution(int noOfDrafts)
+        private static string GetExpectedInfoSubstitution(int noOfDrafts)
         {
-            var drafts = GetExpiringDrafts(noOfDrafts);
+            var drafts = new ExpiringApprenticeshipApplicationDraftsBuilder().WithExpiringDrafts(noOfDrafts).Build();
             return GetExpectedInfoSubstitution(drafts);
         }
 
@@ -172,60 +166,6 @@
         {
             var lineItems = expiringDrafts.Select(d => string.Format("<li><a href=\"https://www.findapprenticeship.service.gov.uk/account/apprenticeshipvacancydetails/{0}\">{1} with {2}</a><br>Closing date: {3}</li>",d.VacancyId, d.Title, d.EmployerName, d.ClosingDate.ToLongDateString()));
             return string.Format("<ul>{0}</ul>", string.Join("", lineItems));
-        }
-
-        private static EmailRequest GetEmailRequest(int noOfDrafts)
-        {
-            var drafts = GetExpiringDrafts(noOfDrafts);
-            return GetEmailRequest(drafts);
-        }
-
-        private static EmailRequest GetEmailRequest(List<ExpiringApprenticeshipApplicationDraft> expiringDrafts)
-        {
-            var candidate = new Candidate();
-            var communicationRequest = CommunicationRequestFactory.GetCommunicationMessage(candidate, expiringDrafts);
-            var emailRequest = new EmailRequest
-            {
-                MessageType = MessageTypes.DailyDigest,
-                ToEmail = "test@test.com",
-                Tokens = communicationRequest.Tokens
-            };
-            return emailRequest;
-        }
-
-        private static List<ExpiringApprenticeshipApplicationDraft> GetExpiringDrafts(int noOfDrafts)
-        {
-            var drafts = Builder<ExpiringApprenticeshipApplicationDraft>
-                .CreateListOfSize(noOfDrafts)
-                .All()
-                .With(ed => ed.ClosingDate = new DateTime(2015, 01, 31))
-                .Build().OrderBy(p => p.ClosingDate).ToList();
-            return drafts;
-        }
-
-        private static List<ExpiringApprenticeshipApplicationDraft> GetExpiringDraftsSpecialCharacters(int noOfDrafts)
-        {
-            var drafts = Builder<ExpiringApprenticeshipApplicationDraft>
-                .CreateListOfSize(noOfDrafts)
-                .All()
-                .With(ed => ed.Title = "Tit|e with sp~cial ch@r$ in \"t")
-                .With(ed => ed.EmployerName = "\"Emp|ov~r N@m€\"")
-                .With(ed => ed.ClosingDate = new DateTime(2015, 01, 31))
-                .Build().ToList();
-            return drafts;
-        }
-
-        private class SendGridMessageSubstitution
-        {
-            public SendGridMessageSubstitution(string replacementTag, List<string> substitutionValues)
-            {
-                ReplacementTag = replacementTag;
-                SubstitutionValues = substitutionValues;
-            }
-
-            public string ReplacementTag { get; private set; }
-
-            public List<string> SubstitutionValues { get; private set; }
         }
     }
 }

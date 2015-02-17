@@ -5,7 +5,7 @@
 
     public class SmsPasswordChangedMessageFormatter : SmsMessageFormatter
     {
-        public SmsPasswordChangedMessageFormatter(TwilioConfiguration configuration)
+        public SmsPasswordChangedMessageFormatter(ITwillioConfiguration configuration)
             : base(configuration)
         {
             Message = GetTemplateConfiguration("MessageTypes.PasswordChanged").Message;

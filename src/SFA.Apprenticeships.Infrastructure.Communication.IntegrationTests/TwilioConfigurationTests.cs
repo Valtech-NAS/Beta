@@ -28,7 +28,7 @@
         [Test, Category("Integration"), Category("SmokeTests")]
         public void ShouldGetMultipleTemplates()
         {
-            var templates = TwilioConfiguration.Instance.Templates;
+            var templates = TwilioConfiguration.Instance.TemplateCollection;
 
             Assert.IsNotNull(templates);
             Assert.IsTrue(templates.Count > 1);

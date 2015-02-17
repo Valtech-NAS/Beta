@@ -110,8 +110,16 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Email\EmailMessageFormatters\DailyDigestEmailRequestBuilder.cs" />
+    <Compile Include="Builder\ExpiringApprenticeshipApplicationDraftsBuilder.cs" />
     <Compile Include="Email\EmailMessageFormatters\EmailDailyDigestMessageFormatterTests.cs" />
+    <Compile Include="Email\EmailMessageFormatters\EmailRequestBuilder.cs" />
+    <Compile Include="Email\EmailMessageFormatters\SendGridMessageSubstitution.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sms\SmsMessageFormatters\DailyDigestSmsRequestBuilder.cs" />
+    <Compile Include="Sms\SmsMessageFormatters\SmsDailyDigestMessageFormatterBuilder.cs" />
+    <Compile Include="Sms\SmsMessageFormatters\SmsDailyDigestMessageFormatterTests.cs" />
+    <Compile Include="Sms\SmsMessageFormatters\SmsRequestBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
@@ -125,6 +133,10 @@
       <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities.UnitTests\SFA.Apprenticeships.Domain.Entities.UnitTests.csproj">
+      <Project>{4741B9B0-C694-4D34-8D30-D5B82BC87724}</Project>
+      <Name>SFA.Apprenticeships.Domain.Entities.UnitTests</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
       <Project>{4C2BE232-4DBD-44D0-B427-0450E2D857A5}</Project>
       <Name>SFA.Apprenticeships.Domain.Entities</Name>
@@ -132,6 +144,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Interfaces\SFA.Apprenticeships.Domain.Interfaces.csproj">
       <Project>{91DB99C3-50A9-4DED-AB90-2FF94D0B130E}</Project>
       <Name>SFA.Apprenticeships.Domain.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
+      <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Communication\SFA.Apprenticeships.Infrastructure.Communication.csproj">
       <Project>{D34D27D3-79A9-407E-86EF-AF3AC0EA024B}</Project>
@@ -141,6 +157,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

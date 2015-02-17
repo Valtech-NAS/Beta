@@ -1,9 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Communication.Sms
 {
+    using System.Collections.Generic;
     using System.Configuration;
     using Common.Configuration;
 
-    public class TwilioConfiguration : SecureConfigurationSection<TwilioConfiguration>
+    public class TwilioConfiguration : SecureConfigurationSection<TwilioConfiguration>, ITwillioConfiguration
     {
         private const string AccountSidConstant = "AccountSid";
         private const string AuthTokenConstant = "AuthToken";
@@ -35,9 +36,14 @@
             set { this[MobileNumberFromConstant] = value; }
         }
 
+        public IEnumerable<TwilioTemplateConfiguration> Templates
+        {
+            get { return TemplateCollection; }
+        }
+
         [ConfigurationProperty("", IsDefaultCollection = true)]
         [ConfigurationCollection(typeof(TwilioTemplateConfigurationCollection), AddItemName = "Template")]
-        public TwilioTemplateConfigurationCollection Templates
+        public TwilioTemplateConfigurationCollection TemplateCollection
         {
             get { return (TwilioTemplateConfigurationCollection)this[""]; }
         }

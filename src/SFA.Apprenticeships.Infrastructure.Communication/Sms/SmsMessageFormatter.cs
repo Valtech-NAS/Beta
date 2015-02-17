@@ -7,10 +7,10 @@
 
     public abstract class SmsMessageFormatter
     {
-        private readonly TwilioConfiguration _configuration;
+        private readonly ITwillioConfiguration _configuration;
         protected string Message;
 
-        protected SmsMessageFormatter(TwilioConfiguration configuration)
+        protected SmsMessageFormatter(ITwillioConfiguration configuration)
         {
             _configuration = configuration;
         }

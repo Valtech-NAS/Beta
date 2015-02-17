@@ -6,7 +6,7 @@
 
     public class SmsApprenticeshipApplicationSubmittedMessageFormatter : SmsMessageFormatter
     {
-        public SmsApprenticeshipApplicationSubmittedMessageFormatter(TwilioConfiguration configuration)
+        public SmsApprenticeshipApplicationSubmittedMessageFormatter(ITwillioConfiguration configuration)
             : base(configuration)
         {
             Message = GetTemplateConfiguration("MessageTypes.ApprenticeshipApplicationSubmitted").Message;

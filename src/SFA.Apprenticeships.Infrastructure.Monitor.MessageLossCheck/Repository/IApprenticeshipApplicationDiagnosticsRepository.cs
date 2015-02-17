@@ -10,6 +10,8 @@
 
         IEnumerable<CandidateApprenticeshipApplicationDetail> GetSubmittedApplicationsWithUnsetLegacyId();
 
+        IEnumerable<CandidateApprenticeshipApplicationDetail> GetDraftApplicationsWithAppliedDate();
+
         IEnumerable<string> GetDraftApplicationVacancyIds();
 
         void UpdateApplicationStatus(ApprenticeshipApplicationDetail applicationDetail, ApplicationStatuses newApplicationStatus);

@@ -10,14 +10,14 @@
     using Monitor.Tasks;
     using Repository;
 
-    public class CheckUnsetApprenticeshipApplicationLegacyId : IMonitorTask
+    public class CheckApprenticeshipApplicationsIncorrectlyInDraft : IMonitorTask
     {
         private readonly IApprenticeshipApplicationDiagnosticsRepository _applicationDiagnosticsRepository;
         private readonly IMessageBus _messageBus;
         private readonly ILegacyApplicationStatusesProvider _legacyApplicationStatusesProvider;
         private readonly ILogService _logger;
 
-        public CheckUnsetApprenticeshipApplicationLegacyId(IApprenticeshipApplicationDiagnosticsRepository applicationDiagnosticsRepository, IMessageBus messageBus, ILegacyApplicationStatusesProvider legacyApplicationStatusesProvider, ILogService logger)
+        public CheckApprenticeshipApplicationsIncorrectlyInDraft(IApprenticeshipApplicationDiagnosticsRepository applicationDiagnosticsRepository, IMessageBus messageBus, ILegacyApplicationStatusesProvider legacyApplicationStatusesProvider, ILogService logger)
         {
             _applicationDiagnosticsRepository = applicationDiagnosticsRepository;
             _messageBus = messageBus;
@@ -27,7 +27,7 @@
 
         public string TaskName
         {
-            get { return "Check Unset Apprenticeship Application Legacy Id"; }
+            get { return "Check Draft Applications With Applied Date"; }
         }
 
         public void Run()
@@ -35,7 +35,7 @@
             var sb = new StringBuilder("The following actions were taken to resolve issues with apprenticeship applications:");
             sb.AppendLine();
 
-            var applicationsToCheck = _applicationDiagnosticsRepository.GetSubmittedApplicationsWithUnsetLegacyId().ToList();
+            var applicationsToCheck = _applicationDiagnosticsRepository.GetDraftApplicationsWithAppliedDate().ToList();
 
             foreach (var application in applicationsToCheck)
             {

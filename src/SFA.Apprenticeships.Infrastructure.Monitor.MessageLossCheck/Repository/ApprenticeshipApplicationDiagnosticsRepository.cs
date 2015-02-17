@@ -59,11 +59,7 @@
         {
             var submittedApplicationsWithUnsetLegacyId = new List<CandidateApprenticeshipApplicationDetail>();
 
-            //Message queue back off strategy is to wait 30 seconds before initial retry then 5 minutes for each subsequent retry
-            //6 Minutes provides enough time for three attempts
-            var outsideLikelyUpdateTime = DateTime.Now.AddMinutes(60);
-
-            var applicationWithUnsetLegacyId = Collection.AsQueryable().Where(a => a.Status == ApplicationStatuses.Submitted && a.DateUpdated < outsideLikelyUpdateTime && a.LegacyApplicationId == 0);
+            var applicationWithUnsetLegacyId = Collection.AsQueryable().Where(a => a.Status == ApplicationStatuses.Submitted && a.LegacyApplicationId == 0);
 
             foreach (var mongoApprenticeshipApplicationDetail in applicationWithUnsetLegacyId)
             {
@@ -83,6 +79,32 @@
             }
 
             return submittedApplicationsWithUnsetLegacyId;
+        }
+
+        public IEnumerable<CandidateApprenticeshipApplicationDetail> GetDraftApplicationsWithAppliedDate()
+        {
+            var draftApplicationsWithAppliedDate = new List<CandidateApprenticeshipApplicationDetail>();
+
+            var applicationWithUnsetLegacyId = Collection.AsQueryable().Where(a => a.Status == ApplicationStatuses.Draft && a.DateApplied != null);
+
+            foreach (var mongoApprenticeshipApplicationDetail in applicationWithUnsetLegacyId)
+            {
+                var candidate = _candidateReadRepository.Get(mongoApprenticeshipApplicationDetail.CandidateId);
+                //Exclude any applications associated with a candidate that does not yet have a valid legacy candidate id.
+                //These candidates need updating first before any applications will go through.
+                if (candidate.LegacyCandidateId == 0) continue;
+
+                var apprenticeshipApplicationDetail = _mapper.Map<MongoApprenticeshipApplicationDetail, ApprenticeshipApplicationDetail>(mongoApprenticeshipApplicationDetail);
+                var candidateApprenticeshipApplicationDetail = new CandidateApprenticeshipApplicationDetail
+                {
+                    Candidate = candidate,
+                    ApprenticeshipApplicationDetail = apprenticeshipApplicationDetail
+                };
+                _logger.Debug("Apprenticeship application {0} is associated with a valid candidate but does not have a valid legacy application id from the legacy service", apprenticeshipApplicationDetail.EntityId);
+                draftApplicationsWithAppliedDate.Add(candidateApprenticeshipApplicationDetail);
+            }
+
+            return draftApplicationsWithAppliedDate;
         }
 
         public IEnumerable<string> GetDraftApplicationVacancyIds()

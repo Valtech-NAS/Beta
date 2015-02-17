@@ -6,7 +6,7 @@
 
     public class SmsActivationCodeMessageFormatter : SmsMessageFormatter
     {
-        public SmsActivationCodeMessageFormatter(TwilioConfiguration configuration)
+        public SmsActivationCodeMessageFormatter(ITwillioConfiguration configuration)
             : base(configuration)
         {
             Message = GetTemplateConfiguration("MessageTypes.SendActivationCode").Message;

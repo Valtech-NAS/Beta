@@ -6,7 +6,7 @@
 
     public class SmsPasswordResetCodeMessageFormatter : SmsMessageFormatter
     {
-        public SmsPasswordResetCodeMessageFormatter(TwilioConfiguration configuration)
+        public SmsPasswordResetCodeMessageFormatter(ITwillioConfiguration configuration)
             : base(configuration)
         {
             Message = GetTemplateConfiguration("MessageTypes.SendPasswordResetCode").Message;

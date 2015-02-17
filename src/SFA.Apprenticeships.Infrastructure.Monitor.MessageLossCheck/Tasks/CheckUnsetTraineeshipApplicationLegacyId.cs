@@ -55,7 +55,7 @@
                 else
                 {
                     _applicationDiagnosticsRepository.UpdateLegacyApplicationId(applicationDetail, applicationStatusSummary.LegacyApplicationId);
-                    _logger.Info("Patching traineeship application id: {0} with legacy id: {1}", applicationDetail.EntityId, applicationDetail.LegacyApplicationId);
+                    _logger.Info("Patching traineeship application id: {0} with legacy id: {1}", applicationDetail.EntityId, applicationStatusSummary.LegacyApplicationId);
                 }
             }
         }

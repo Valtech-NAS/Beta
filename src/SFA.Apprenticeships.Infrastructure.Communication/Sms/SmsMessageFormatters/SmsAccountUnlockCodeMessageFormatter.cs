@@ -6,7 +6,7 @@
 
     public class SmsAccountUnlockCodeMessageFormatter : SmsMessageFormatter
     {
-        public SmsAccountUnlockCodeMessageFormatter(TwilioConfiguration configuration)
+        public SmsAccountUnlockCodeMessageFormatter(ITwillioConfiguration configuration)
             : base(configuration)
         {
             Message = GetTemplateConfiguration("MessageTypes.SendAccountUnlockCode").Message;
