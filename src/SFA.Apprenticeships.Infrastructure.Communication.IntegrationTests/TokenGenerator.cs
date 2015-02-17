@@ -86,7 +86,7 @@
                 new CommunicationToken(CommunicationTokens.ExpiringDraftsCount, Convert.ToString(numOfVacancies))
             };
 
-            var drafts = string.Join("~", Enumerable.Range(1, numOfVacancies).Select(i => string.Format("Application Vacancy Title {0}|Employer name {0}|15 Jan 15", i)));
+            var drafts = string.Join("~", Enumerable.Range(1, numOfVacancies).Select(i => string.Format("{0}|Application Vacancy Title {0}|Employer name {0}|15 Jan 15", i)));
 
             tokens.Add(new CommunicationToken(CommunicationTokens.ExpiringDrafts, drafts));
 

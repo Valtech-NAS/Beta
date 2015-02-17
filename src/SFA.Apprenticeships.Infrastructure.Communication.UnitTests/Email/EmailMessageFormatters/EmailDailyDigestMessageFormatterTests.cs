@@ -145,7 +145,7 @@
 
         private static string GetExpectedInfoSubstitution(IEnumerable<ExpiringApprenticeshipApplicationDraft> expiringDrafts)
         {
-            var lineItems = expiringDrafts.Select(d => string.Format("<li>{0} with {1}<br>Closing date: {2}</li>", d.Title, d.EmployerName, d.ClosingDate.ToLongDateString()));
+            var lineItems = expiringDrafts.Select(d => string.Format("<li><a href=\"https://www.findapprenticeship.service.gov.uk/account/apprenticeshipvacancydetails/{0}\">{1} with {2}</a><br>Closing date: {3}</li>",d.VacancyId, d.Title, d.EmployerName, d.ClosingDate.ToLongDateString()));
             return string.Format("<ul>{0}</ul>", string.Join("", lineItems));
         }
 

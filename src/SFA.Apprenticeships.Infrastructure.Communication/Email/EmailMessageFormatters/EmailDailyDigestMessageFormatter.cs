@@ -70,17 +70,19 @@
             string apprenticeshipName;
             string companyName;
             string closingDate;
-            ExtractVacancyDataFrom(line, out apprenticeshipName, out companyName, out closingDate);
+            int vacancyId = 0;
+            ExtractVacancyDataFrom(line,out vacancyId, out apprenticeshipName, out companyName, out closingDate);
 
-            return string.Format("<li>{0} with {1}<br>Closing date: {2}</li>", apprenticeshipName, companyName,
+            return string.Format("<li><a href=\"https://www.findapprenticeship.service.gov.uk/account/apprenticeshipvacancydetails/{0}\">{1} with {2}</a><br>Closing date: {3}</li>",vacancyId, apprenticeshipName, companyName,
                 closingDate);
         }
 
-        private static void ExtractVacancyDataFrom(string line, out string apprenticeshipName, out string companyName, out string closingDate)
+        private static void ExtractVacancyDataFrom(string line, out int vacancyId, out string apprenticeshipName, out string companyName, out string closingDate)
         {
-            apprenticeshipName = WebUtility.UrlDecode(line.Split(new[] {Pipe}, StringSplitOptions.RemoveEmptyEntries)[0]);
-            companyName = WebUtility.UrlDecode(line.Split(new[] {Pipe}, StringSplitOptions.RemoveEmptyEntries)[1]);
-            closingDate = line.Split(new[] {Pipe}, StringSplitOptions.RemoveEmptyEntries)[2];
+            vacancyId = Convert.ToInt32(line.Split(new[] { Pipe }, StringSplitOptions.RemoveEmptyEntries)[0]);
+            apprenticeshipName = WebUtility.UrlDecode(line.Split(new[] {Pipe}, StringSplitOptions.RemoveEmptyEntries)[1]);
+            companyName = WebUtility.UrlDecode(line.Split(new[] {Pipe}, StringSplitOptions.RemoveEmptyEntries)[2]);
+            closingDate = line.Split(new[] {Pipe}, StringSplitOptions.RemoveEmptyEntries)[3];
         }
     }
 }

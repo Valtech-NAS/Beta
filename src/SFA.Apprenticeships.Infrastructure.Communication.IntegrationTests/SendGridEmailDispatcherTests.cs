@@ -1,10 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Communication.IntegrationTests
 {
+    using System;
     using Application.Interfaces.Communications;
+    using Application.Interfaces.Logging;
     using Common.IoC;
     using Email;
     using IoC;
-    using Logging.IoC;
+    using Moq;
     using NUnit.Framework;
     using StructureMap;
 
@@ -15,6 +17,8 @@
 
         private IEmailDispatcher _voidEmailDispatcher;
 
+        private readonly Mock<ILogService> _logServiceMock = new Mock<ILogService>();
+
         private const string TestToEmail = "valtechnas@gmail.com";
 
         [SetUp]
@@ -23,9 +27,10 @@
             var container = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
-                x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<CommunicationRegistry>();
             });
+
+            container.Configure(c => c.For<ILogService>().Use(_logServiceMock.Object));
 
             _dispatcher = container.GetInstance<IEmailDispatcher>("SendGridEmailDispatcher");
             _voidEmailDispatcher = container.GetInstance<IEmailDispatcher>("VoidEmailDispatcher");
@@ -56,6 +61,8 @@
             };
 
             _dispatcher.SendEmail(request);
+
+            _logServiceMock.Verify(l => l.Error(It.IsAny<string>(), It.IsAny<Exception>()), Times.Never);
         }
 
         [Test, Category("Integration"), Category("SmokeTests")]
@@ -70,6 +77,8 @@
             };
 
             _dispatcher.SendEmail(request);
+
+            _logServiceMock.Verify(l => l.Error(It.IsAny<string>(), It.IsAny<Exception>()), Times.Never);
         }
 
         [Test, Category("Integration")]
@@ -84,6 +93,8 @@
             };
 
             _dispatcher.SendEmail(request);
+
+            _logServiceMock.Verify(l => l.Error(It.IsAny<string>(), It.IsAny<Exception>()), Times.Never);
         }
 
         [Test, Category("Integration")]
@@ -97,6 +108,8 @@
             };
 
             _dispatcher.SendEmail(request);
+
+            _logServiceMock.Verify(l => l.Error(It.IsAny<string>(), It.IsAny<Exception>()), Times.Never);
         }
 
         [Test, Category("Integration")]
@@ -110,6 +123,8 @@
             };
 
             _dispatcher.SendEmail(request);
+
+            _logServiceMock.Verify(l => l.Error(It.IsAny<string>(), It.IsAny<Exception>()), Times.Never);
         }
 
         [Test, Category("Integration")]
@@ -123,6 +138,8 @@
             };
 
             _dispatcher.SendEmail(request);
+
+            _logServiceMock.Verify(l => l.Error(It.IsAny<string>(), It.IsAny<Exception>()), Times.Never);
         }
 
         [Test, Category("Integration")]
@@ -136,6 +153,8 @@
             };
 
             _dispatcher.SendEmail(request);
+
+            _logServiceMock.Verify(l => l.Error(It.IsAny<string>(), It.IsAny<Exception>()), Times.Never);
         }
 
         [Test, Category("Integration")]
@@ -149,6 +168,8 @@
             };
 
             _dispatcher.SendEmail(request);
+
+            _logServiceMock.Verify(l => l.Error(It.IsAny<string>(), It.IsAny<Exception>()), Times.Never);
         }
 
         [Test, Category("Integration")]
@@ -162,6 +183,8 @@
             };
 
             _dispatcher.SendEmail(request);
+
+            _logServiceMock.Verify(l => l.Error(It.IsAny<string>(), It.IsAny<Exception>()), Times.Never);
         }
     }
 }

@@ -59,7 +59,7 @@
         {
             const string emptyHtml = "<span></span>";
             const string emptyText = "";
-            const string subject = "-";
+            const string subject = " ";
 
             // NOTE: https://github.com/sendgrid/sendgrid-csharp.
             var message = new SendGridMessage

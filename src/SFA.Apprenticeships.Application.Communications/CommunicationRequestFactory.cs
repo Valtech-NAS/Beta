@@ -28,7 +28,7 @@
 
             var drafts = string.Join("~", candidateDailyDigest
                 .OrderBy(p => p.ClosingDate)
-                .Select(d => string.Join("|", WebUtility.UrlEncode(d.Title), WebUtility.UrlEncode(d.EmployerName), d.ClosingDate.ToLongDateString())));
+                .Select(d => string.Join("|",d.VacancyId,  WebUtility.UrlEncode(d.Title), WebUtility.UrlEncode(d.EmployerName), d.ClosingDate.ToLongDateString())));
 
             commTokens.Add(new CommunicationToken(CommunicationTokens.ExpiringDrafts, drafts));
 
