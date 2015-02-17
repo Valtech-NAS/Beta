@@ -5,8 +5,8 @@
     using SpecBind.Pages;
     using Templates.EditorFor;
 
-    [PageNavigation("/verifynumber")]
-    [PageAlias("VerifyNumber")]
+    [PageNavigation("/verifymobile")]
+    [PageAlias("VerifyMobile")]
     public class VerifyMobilePage : BaseValidationPage
     {
         public VerifyMobilePage(ISearchContext context)

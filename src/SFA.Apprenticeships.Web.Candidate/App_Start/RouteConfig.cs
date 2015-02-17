@@ -34,7 +34,7 @@
 
             routes.MapRoute(
                 name: CandidateRouteNames.VerifyMobile,
-                url: "verifynumber",
+                url: "verifymobile",
                 defaults: new { controller = "Account", action = "VerifyMobile" }
                 );
 
