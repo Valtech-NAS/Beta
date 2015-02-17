@@ -2,9 +2,9 @@
 
     /*Show map with radius in results*/
 
-    var apprLatitude       = $('#Latitude').val(),
-        apprLongitude      = $('#Longitude').val(),
-        apprMiles          = $('#loc-within').val(),
+    var apprLatitude       = Number($('#Latitude').val()),
+        apprLongitude      = Number($('#Longitude').val()),
+        apprMiles          = Number($('#loc-within').val()),
         resultsPage        = $('#results-per-page').val(),
         numberOfResults    = $('.vacancy-link').length,
         distanceOfLast     = $('.search-results__item:last-child .distance-value').html(),
@@ -16,8 +16,7 @@
         vacancy            = [],
         theMarkers         = [],
         markersFeature     = true,
-        isEngland          = false,
-        mapCenter          = (isEngland ? { lat: 52.56192833333333, lng: -1.464853888888889 } : { lat: apprLatitude, lng: apprLongitude });
+        mapCenter          = { lat: apprLatitude, lng: apprLongitude };
 
     for (var i = 0; i < vacancyLinks.length; i++) {
         var lat = $(vacancyLinks[i]).attr('data-lat'),
@@ -29,28 +28,28 @@
     }
 
     if (apprMiles <= 40) {
-        apprZoom = 7
+        apprZoom = 7;
     }
 
     if (apprMiles <= 30) {
-        apprZoom = 8
+        apprZoom = 8;
     }
 
     if (apprMiles < 20) {
-        apprZoom = 9
+        apprZoom = 9;
     }
 
     if (apprMiles < 10) {
-        apprZoom = 10
+        apprZoom = 10;
     }
 
     if (apprMiles < 5) {
-        apprZoom = 11
+        apprZoom = 11;
     }
 
-    if (apprMiles == "England") {
-        isEngland = true;
-        apprZoom = 4
+    if (apprMiles == 0) {
+        mapCenter = { lat: 52.56192833333333, lng: -1.464853888888889 };
+        apprZoom = 5;
     }
 
     if (apprLatitude == 0 || apprLongitude == 0) {
