@@ -105,7 +105,7 @@
                     .Ctor<IReferenceDataProvider>()
                     .Named("LegacyReferenceDataProvider")
                     .Ctor<ICacheService>()
-                    .Named("AzureCacheService");
+                    .Named("MemoryCacheService");
             }
 
             #endregion
