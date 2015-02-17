@@ -1,10 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Views.VerifyMobile
 {
     using Builders;
-    using Candidate.ViewModels.Account;
     using FluentAssertions;
     using NUnit.Framework;
 
+    [TestFixture]
     public class VerifyMobileTests : ViewUnitTest
     {
         [TestCase(true)]
@@ -27,25 +27,18 @@
             }
         }
 
-        //[TestCase(true)]
-        //[TestCase(false)]
-        //public void US616_AC4_PhoneVerifiedIndication(bool verifiedMobile)
-        //{
-        //    var viewModel = new VerifyMobileViewModelBuilder().Build();
+        [Test]
+        public void US616_AC5_VerifyMobilePageElements()
+        {
+            var viewModel = new VerifyMobileViewModelBuilder().Build();
 
-        //    var result = new VerifyMobileViewBuilder().With(viewModel).Render();
+            var result = new VerifyMobileViewBuilder().With(viewModel).Render();
 
-        //    var allowEmailCommsCheckBox = result.GetElementbyId("verifyContainer");
+            var phoneNumber = result.GetElementbyId("phoneNumber");
+            var verifyMobileCode = result.GetElementbyId("VerifyMobileCode");
 
-        //    if (verifiedMobile)
-        //    {
-        //        allowEmailCommsCheckBox.Should().NotBeNull();
-        //        allowEmailCommsCheckBox.ChildNodes["span"].InnerText.Should().Be("Verified");
-        //    }
-        //    else
-        //    {
-        //        allowEmailCommsCheckBox.Should().BeNull();
-        //    }
-        //}
+            phoneNumber.Should().NotBeNull();
+            verifyMobileCode.Should().NotBeNull();
+        }
     }
 }

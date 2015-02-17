@@ -84,22 +84,37 @@
                 }
             });
         }
-
-        //todo: 1.6: mobile verification
+        
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [ApplyWebTrends]
         public async Task<ActionResult> VerifyMobile(string returnUrl)
         {
-            var response = _accountMediator.VerifyMobile(UserContext.CandidateId, returnUrl);
-            return await Task.Run<ActionResult>(() => View(response.ViewModel));
-        }
+            return await Task.Run<ActionResult>(() =>
+            {
+                var response = _accountMediator.VerifyMobile(UserContext.CandidateId, returnUrl);
 
-        // todo: 1.6: mobile verification
+                switch (response.Code)
+                {
+                    case AccountMediatorCodes.VerifyMobile.Success:
+                        return View(response.ViewModel);
+                    case AccountMediatorCodes.VerifyMobile.VerificationNotRequired:
+                        SetUserMessage(VerifyMobilePageMessages.MobileVerificationNotRequired, UserMessageLevel.Warning);
+                        return View(response.ViewModel);
+                    case AccountMediatorCodes.VerifyMobile.Error:
+                        SetUserMessage(VerifyMobilePageMessages.MobileVerificationError, UserMessageLevel.Error);
+                        return View(response.ViewModel);
+                    default:
+                        throw new InvalidMediatorCodeException(response.Code);
+                }
+            });
+
+            
+        }
+        
         [HttpPost]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [AllowReturnUrl(Allow = false)]
         [MultipleFormActionsButton(Name = "VerifyMobileAction", Argument = "VerifyMobile")]
         [ApplyWebTrends]
         public async Task<ActionResult> VerifyMobile(VerifyMobileViewModel model)
@@ -116,6 +131,9 @@
                         return View(response.ViewModel);
                     case AccountMediatorCodes.VerifyMobile.InvalidCode:
                         SetUserMessage(VerifyMobilePageMessages.MobileVerificationCodeInvalid, UserMessageLevel.Error);
+                        return View(response.ViewModel);
+                    case AccountMediatorCodes.VerifyMobile.VerificationNotRequired:
+                        SetUserMessage(VerifyMobilePageMessages.MobileVerificationNotRequired, UserMessageLevel.Warning);
                         return View(response.ViewModel);
                     case AccountMediatorCodes.VerifyMobile.Error:
                         SetUserMessage(VerifyMobilePageMessages.MobileVerificationError, UserMessageLevel.Error);

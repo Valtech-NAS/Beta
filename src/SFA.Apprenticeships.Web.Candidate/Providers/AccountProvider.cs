@@ -114,14 +114,24 @@
 
         public VerifyMobileViewModel GetVerifyMobileViewModel(Guid candidateId)
         {
-            //todo try catch 
-            var candidate = _candidateService.GetCandidate(candidateId);
-            var model = new VerifyMobileViewModel { PhoneNumber = candidate.RegistrationDetails.PhoneNumber };
-            if (!candidate.MobileVerificationRequired())
-            {
-                model.Status = VerifyMobileState.MobileVerificationNotRequired;
-            }
+            _logger.Debug("Calling CandidateService to fetch candidateId {0} details", candidateId);
 
+            VerifyMobileViewModel model = new VerifyMobileViewModel();
+            try
+            {
+                var candidate = _candidateService.GetCandidate(candidateId);
+                model.PhoneNumber = candidate.RegistrationDetails.PhoneNumber;
+                if (!candidate.MobileVerificationRequired())
+                {
+                    model.Status = VerifyMobileState.MobileVerificationNotRequired;
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.Error("Mobile code verification failed for candidateId {0} and Lme {1}", candidateId, model.PhoneNumber, e);
+                model.ViewModelMessage = e.Message;
+                model.Status = VerifyMobileState.Error;
+            }
             return model;
         }
 

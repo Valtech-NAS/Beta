@@ -220,14 +220,21 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
 
         public MediatorResponse<VerifyMobileViewModel> VerifyMobile(Guid candidateId, string returnUrl)
         {
-            //todo: append other switch cases
-             var viewModel = _accountProvider.GetVerifyMobileViewModel(candidateId);
+            var verifyMobileViewModel = _accountProvider.GetVerifyMobileViewModel(candidateId);
 
              var traineeshipFeature = _apprenticeshipApplicationProvider.GetTraineeshipFeatureViewModel(candidateId);
-             viewModel.TraineeshipFeature = traineeshipFeature;
-            viewModel.ReturnUrl = returnUrl ?? string.Empty;
+             verifyMobileViewModel.TraineeshipFeature = traineeshipFeature;
+             verifyMobileViewModel.ReturnUrl = returnUrl ?? string.Empty;
 
-             return GetMediatorResponse(AccountMediatorCodes.VerifyMobile.Success, viewModel);
+             switch (verifyMobileViewModel.Status)
+            {
+                case VerifyMobileState.Ok:
+                    return GetMediatorResponse(AccountMediatorCodes.VerifyMobile.Success, verifyMobileViewModel, VerifyMobilePageMessages.MobileVerificationSuccessText, UserMessageLevel.Success);
+                case VerifyMobileState.MobileVerificationNotRequired:
+                    return GetMediatorResponse(AccountMediatorCodes.VerifyMobile.VerificationNotRequired, verifyMobileViewModel, VerifyMobilePageMessages.MobileVerificationNotRequired, UserMessageLevel.Warning);
+                default:
+                    return GetMediatorResponse(AccountMediatorCodes.VerifyMobile.Error, verifyMobileViewModel, VerifyMobilePageMessages.MobileVerificationError, UserMessageLevel.Error);
+            }
         }
 
         

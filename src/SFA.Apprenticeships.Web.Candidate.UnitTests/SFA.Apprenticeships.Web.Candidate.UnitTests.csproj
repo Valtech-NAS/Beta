@@ -232,6 +232,7 @@
     <Compile Include="Providers\AccountProvider\AccountProviderBuilder.cs" />
     <Compile Include="Providers\AccountProvider\GetSettingsViewModelTests.cs" />
     <Compile Include="Providers\AccountProvider\SaveSettingsTests.cs" />
+    <Compile Include="Providers\AccountProvider\VerifyMobileTests.cs" />
     <Compile Include="Providers\ApplicationProvider\ApprenticeshipApplicationProviderBuilder.cs" />
     <Compile Include="Providers\ApplicationProvider\ArchiveApplicationTests.cs" />
     <Compile Include="Providers\ApplicationProvider\DeleteApplicationTests.cs" />
