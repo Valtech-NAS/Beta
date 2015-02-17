@@ -1270,6 +1270,10 @@
       <Project>{B3285E4A-29DD-4CB6-B8C9-51AA06DB4F83}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Caching.Azure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Caching.Memory\SFA.Apprenticeships.Infrastructure.Caching.Memory.csproj">
+      <Project>{b1628369-3014-4a8b-bffd-49cb8adf3bd2}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Caching.Memory</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
       <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
