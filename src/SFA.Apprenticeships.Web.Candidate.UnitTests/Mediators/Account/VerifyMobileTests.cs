@@ -21,7 +21,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
        private const string ValidVerificationCode = "1234";
        private const string InvalidVerificationCode = "987654321";
 
-       [TestCase(VerifyMobileState.Ok, AccountMediatorCodes.VerifyMobile.Success, VerifyMobilePageMessages.MobileVerificationCodeMayHaveBeenResent, UserMessageLevel.Success)]
+       [TestCase(VerifyMobileState.Ok, AccountMediatorCodes.VerifyMobile.Success, VerifyMobilePageMessages.MobileVerificationSuccessText, UserMessageLevel.Success)]
        [TestCase(VerifyMobileState.MobileVerificationNotRequired, AccountMediatorCodes.VerifyMobile.VerificationNotRequired, VerifyMobilePageMessages.MobileVerificationNotRequired, UserMessageLevel.Warning)]
        [TestCase(VerifyMobileState.Error, AccountMediatorCodes.VerifyMobile.Error, VerifyMobilePageMessages.MobileVerificationError, UserMessageLevel.Error)]
        [TestCase(VerifyMobileState.VerifyMobileCodeInvalid, AccountMediatorCodes.VerifyMobile.InvalidCode, VerifyMobilePageMessages.MobileVerificationCodeInvalid, UserMessageLevel.Error)]

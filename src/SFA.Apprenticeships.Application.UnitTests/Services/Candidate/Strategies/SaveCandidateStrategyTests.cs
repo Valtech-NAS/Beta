@@ -14,6 +14,7 @@
     using Interfaces.Users;
     using Moq;
     using NUnit.Framework;
+    using UnitTests.Candidate.Strategies.SendMobileVerificationCodeStrategy;
 
     [TestFixture]
     public class SaveCandidateStrategyTests
@@ -119,7 +120,7 @@
             IEnumerable<CommunicationToken> communicationTokens = new List<CommunicationToken>(0);
             communicationService.Setup(cs => cs.SendMessageToCandidate(candidateId, MessageTypes.SendMobileVerificationCode, It.IsAny<IEnumerable<CommunicationToken>>())).Callback<Guid, MessageTypes, IEnumerable<CommunicationToken>>((cid, mt, ct) => { communicationTokens = ct; });
 
-            var sendMobileVerificationCodeStrategy = new SendMobileVerificationCodeStrategy(communicationService.Object);
+            var sendMobileVerificationCodeStrategy = new SendMobileVerificationCodeStrategyBuilder().With(communicationService).Build();
             var saveCandidateStrategy = new SaveCandidateStrategy(_candidateWriteRepository.Object, _getCandidateApplicationsStrategy.Object, _candidateReadRepository.Object, _apprenticeshipApplicationWriteRepository.Object, _apprenticeshipApplicationReadRepository.Object, codeGenerator.Object, sendMobileVerificationCodeStrategy, null);
 
             saveCandidateStrategy.SaveCandidate(candidate);
