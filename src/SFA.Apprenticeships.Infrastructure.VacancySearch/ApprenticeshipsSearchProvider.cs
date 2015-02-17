@@ -195,7 +195,8 @@
                         query = query && queryClause;
                     }
 
-                    if (parameters.Location != null)
+                    //TODO: convert search radius (Distance) into a value object to avoid using magic numbers.
+                    if (parameters.Location != null && parameters.SearchRadius != 0)
                     {
                         var queryClause = q.Filtered(qf => qf.Filter(f => f
                             .GeoDistance(vs => vs

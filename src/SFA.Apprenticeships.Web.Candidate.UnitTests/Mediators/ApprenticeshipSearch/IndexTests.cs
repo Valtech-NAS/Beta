@@ -71,6 +71,34 @@
             viewModel.ApprenticeshipLevel.Should().Be("Advanced");
         }
 
+        [Test]
+        public void ShowEnglandSearchInKeywordSearch()
+        {
+            var response = Mediator.Index(ApprenticeshipSearchMode.Keyword);
+
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.Index.Ok, true);
+
+            var viewModel = response.ViewModel;
+            viewModel.WithinDistance.Should().Be(5);
+            viewModel.Distances.SelectedValue.Should().Be(null);
+            viewModel.Distances.Last().Text.Should().Be("England");
+            viewModel.Distances.Last().Value.Should().Be("0");
+        }
+
+        [Test]
+        public void ShowEnglandSearchInCategorySearch()
+        {
+            var response = Mediator.Index(ApprenticeshipSearchMode.Category);
+
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.Index.Ok, true);
+
+            var viewModel = response.ViewModel;
+            viewModel.WithinDistance.Should().Be(5);
+            viewModel.Distances.SelectedValue.Should().Be(null);
+            viewModel.Distances.Last().Text.Should().Be("England");
+            viewModel.Distances.Last().Value.Should().Be("0");
+        }
+
         private static IEnumerable<Category> GetCategories()
         {
             return new List<Category>

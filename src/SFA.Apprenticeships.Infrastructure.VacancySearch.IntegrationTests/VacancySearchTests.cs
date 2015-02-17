@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancySearch.IntegrationTests
 {
+    using System.Linq;
     using Application.Interfaces.Logging;
     using Application.Interfaces.Vacancies;
     using Configuration;
@@ -76,6 +77,20 @@
             vacancies.AggregationResults.Should().HaveCount(n => n > 1);
         }
 
+        [Test, Category("Integration")]
+        public void ShouldSearchAllEngland()
+        {
+            //TODO: this test could be too fragile
+            var vacancySearchProvider = new ApprenticeshipsSearchProvider(_elasticsearchClientFactory, _mapper,
+                SearchConfiguration.Instance, _logger.Object);
+
+            var searchParameters = GetEnglandSearchParameters("it");
+
+            var vacancies = vacancySearchProvider.FindVacancies(searchParameters);
+
+            vacancies.Results.Where(r => r.Distance > 40).Should().NotBeEmpty();
+        }
+
         private static ApprenticeshipSearchParameters GetCommonSearchParameters()
         {
             return new ApprenticeshipSearchParameters
@@ -96,6 +111,18 @@
                 SortType = VacancySearchSortType.ClosingDate,
                 VacancyLocationType = ApprenticeshipLocationType.NonNational
             };
+        }
+
+        private static ApprenticeshipSearchParameters GetEnglandSearchParameters(string keyword)
+        {
+            var searchParameters = GetCommonSearchParameters();
+            searchParameters.SearchRadius = 0;
+            searchParameters.Keywords = keyword;
+            searchParameters.ApprenticeshipLevel = string.Empty;
+            searchParameters.PageSize = 50;
+            searchParameters.SortType = VacancySearchSortType.Relevancy;
+
+            return searchParameters;
         }
     }
 }
