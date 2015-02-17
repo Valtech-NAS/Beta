@@ -65,7 +65,6 @@
 
         private void RegisterProviders()
         {
-            For<IReferenceDataProvider>().Use<ReferenceDataProvider>();
             For<ISearchProvider>().Use<SearchProvider>()
                 .Ctor<IMapper>("apprenticeshipSearchMapper").Named("ApprenticeshipCandidateWebMappers")
                 .Ctor<IMapper>("traineeshipSearchMapper").Named("TraineeshipCandidateWebMappers");

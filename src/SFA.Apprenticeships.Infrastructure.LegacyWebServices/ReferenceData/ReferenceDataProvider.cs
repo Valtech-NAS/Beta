@@ -28,7 +28,17 @@
             GetApprenticeshipFrameworksResponse response = null;
 
             var request = new GetApprenticeshipFrameworksRequest(_legacyServicesConfiguration.SystemId, Guid.NewGuid(), _legacyServicesConfiguration.PublicKey);
-            _service.Use("ReferenceData", client => response = client.GetApprenticeshipFrameworks(request));
+
+            try
+            {
+                _service.Use("ReferenceData", client => response = client.GetApprenticeshipFrameworks(request));
+            }
+            catch (Exception ex)
+            {
+                _logger.Warn("Error retrieving apprenticeship frameworks from legacy gateway", ex);
+                // Must return null or could be put in cache.
+                return null;
+            }
 
             if (response == null || response.ApprenticeshipFrameworks == null || response.ApprenticeshipFrameworks.Length == 0)
             {
