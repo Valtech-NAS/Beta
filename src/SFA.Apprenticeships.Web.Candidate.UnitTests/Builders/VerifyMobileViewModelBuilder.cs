@@ -2,30 +2,44 @@
 namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Builders
 {
     using Candidate.ViewModels.Account;
-    using Candidate.ViewModels.Login;
+    using Candidate.ViewModels.Applications;
 
     public class VerifyMobileViewModelBuilder
     {
-        private readonly string _mobileNumber;
-        private readonly string _mobileVerificationCode;
-        private readonly VerifyMobileState _verifyMobileState;
+        private string _mobileNumber;
+        private string _mobileVerificationCode;
+        private VerifyMobileState _verifyMobileState;
+        private bool _showTraineeshipsLink;
+        private bool _showTraineeshipsPrompt;
 
-        public VerifyMobileViewModelBuilder(string mobileNumber, string mobileVerificationCode, VerifyMobileState verifyMobileState)
+        public VerifyMobileViewModelBuilder MobileNumber(string mobileNumber)
         {
             _mobileNumber = mobileNumber;
+            return this;
+        }
+
+        public VerifyMobileViewModelBuilder VerifyMobileState(VerifyMobileState verifyMobileState)
+        {
+            _verifyMobileState = verifyMobileState;
+            return this;
+        }
+
+        public VerifyMobileViewModelBuilder VerifyMobileState(string mobileVerificationCode)
+        {
             _mobileVerificationCode = mobileVerificationCode;
-            _verifyMobileState = verifyMobileState;
+            return this;
         }
 
-        public VerifyMobileViewModelBuilder(string mobileNumber, VerifyMobileState verifyMobileState)
+        public VerifyMobileViewModelBuilder ShowTraineeshipsLink(bool showTraineeshipsLink)
         {
-            _mobileNumber = mobileNumber;
-            _verifyMobileState = verifyMobileState;
+            _showTraineeshipsLink = showTraineeshipsLink;
+            return this;
         }
-        
-        public VerifyMobileViewModelBuilder(string mobileNumber)
+
+        public VerifyMobileViewModelBuilder ShowTraineeshipsPrompt(bool showTraineeshipsPrompt)
         {
-            _mobileNumber = mobileNumber;
+            _showTraineeshipsPrompt = showTraineeshipsPrompt;
+            return this;
         }
 
         public VerifyMobileViewModel Build()
@@ -33,8 +47,13 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Builders
             var model = new VerifyMobileViewModel()
             {
                 Status = _verifyMobileState,
-                MobileNumber = _mobileNumber,
-                VerifyMobileCode = _mobileVerificationCode
+                PhoneNumber = _mobileNumber,
+                VerifyMobileCode = _mobileVerificationCode,
+                TraineeshipFeature = new TraineeshipFeatureViewModel
+                {
+                    ShowTraineeshipsLink = _showTraineeshipsLink,
+                    ShowTraineeshipsPrompt = _showTraineeshipsPrompt
+                }
             };
 
             return model;

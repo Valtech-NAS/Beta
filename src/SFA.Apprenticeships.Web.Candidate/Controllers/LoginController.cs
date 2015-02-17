@@ -3,6 +3,7 @@
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Mvc;
+    using System.Web.Routing;
     using System.Web.Security;
     using Attributes;
     using Common.Attributes;
@@ -19,7 +20,7 @@
     {
         private readonly IAuthenticationTicketService _authenticationTicketService;
         private readonly ILoginMediator _loginMediator;
-     
+
         public LoginController(IAuthenticationTicketService authenticationTicketService,
             ILoginMediator loginMediator)
         {
@@ -68,7 +69,11 @@
                 var viewModel = response.ViewModel;
                 if (viewModel != null && viewModel.IsAuthenticated && viewModel.MobileVerificationRequired)
                 {
-                    var mobileVerificationRequiredMessage = string.Format(LoginPageMessages.MobileVerificationRequiredText, Url.Action("VerifyMobile", "Account"));
+
+                    var mobileVerificationRequiredMessage = string.Format(LoginPageMessages.MobileVerificationRequiredText, Url.Action("VerifyMobile", "Account",
+                        new RouteValueDictionary(){
+                            {"ReturnUrl", viewModel.ReturnUrl}
+                        }));
                     SetUserMessage(mobileVerificationRequiredMessage, UserMessageLevel.Info);
                 }
 
@@ -104,7 +109,7 @@
                     case LoginMediatorCodes.Index.TermsAndConditionsNeedAccepted:
                         if (response.Parameters != null)
                         {
-                            var returnUrl = new { ReturnUrl = HttpUtility.UrlDecode(response.Parameters.ToString())};
+                            var returnUrl = new { ReturnUrl = HttpUtility.UrlDecode(response.Parameters.ToString()) };
                             return RedirectToRoute(RouteNames.UpdatedTermsAndConditions, returnUrl);
                         }
                         return RedirectToRoute(RouteNames.UpdatedTermsAndConditions);
@@ -220,7 +225,7 @@
             }
 
             return !string.IsNullOrEmpty(returnUrl)
-                ? RedirectToRoute(RouteNames.SignIn, new {ReturnUrl = returnUrl})
+                ? RedirectToRoute(RouteNames.SignIn, new { ReturnUrl = returnUrl })
                 : RedirectToRoute(RouteNames.SignIn);
         }
 
@@ -233,7 +238,7 @@
 
             FormsAuthentication.SignOut();
             UserData.Clear();
-            
+
             if (userContext != null)
             {
                 //Only set the message if the user context was set by a previous login action.

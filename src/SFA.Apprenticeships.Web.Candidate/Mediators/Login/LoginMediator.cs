@@ -66,6 +66,7 @@
 
                     // Redirect to session return URL (if any).
                     var returnUrl = _userDataProvider.Pop(UserDataItemNames.SessionReturnUrl) ?? _userDataProvider.Pop(UserDataItemNames.ReturnUrl);
+                    result.ReturnUrl = returnUrl;
 
                     if (result.AcceptedTermsAndConditionsVersion != _configurationManager.GetAppSetting<string>(Settings.TermsAndConditionsVersion))
                     {

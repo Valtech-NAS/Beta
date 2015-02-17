@@ -33,6 +33,12 @@
                 );
 
             routes.MapRoute(
+                name: CandidateRouteNames.VerifyMobile,
+                url: "verifynumber",
+                defaults: new { controller = "Account", action = "VerifyMobile" }
+                );
+
+            routes.MapRoute(
                 name: CandidateRouteNames.MyApplications,
                 url: "myapplications",
                 defaults: new {controller = "Account", action = "Index"}

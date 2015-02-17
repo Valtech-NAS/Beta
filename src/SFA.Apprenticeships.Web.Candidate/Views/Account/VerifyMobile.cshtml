@@ -1,56 +1,55 @@
 ﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.Account.VerifyMobileViewModel
 
 @{
-    ViewBag.Title = "VerifyMobile";
-    Layout = "~/Views/_ViewStart.cshtml";
+    ViewBag.Title = "Apprenticeships - Verify Mobile";
+    Layout = "~/Views/Shared/_ApprenticeshipLayout.cshtml";
 }
-
-<h2>VerifyMobile</h2>
-
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <div class="grid-wrapper">
-            <div class="grid grid-1-2">
-                <h1 class="heading-xlarge">Verify your mobile number</h1>
-            </div>
-            <div class="grid grid-1-2">
-                <p>
-                    <a href="#" class="page-link">Find an apprenticeship</a>
-                </p>
-            </div>
-        </div>
-        <p class="text">
-            To receive notifications via text message, you'll need to verify your mobile
-            number by entering the code that was sent to your mobile phone.
+<div class="grid-wrapper">
+    <div class="grid grid-1-2">
+        <h1 class="heading-xlarge">Verify your mobile number</h1>
+    </div>
+    <div class="grid grid-1-2">
+        <p>
+            @Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link", @class = "page-link" })
         </p>
+        @if (Model.TraineeshipFeature.ShowTraineeshipsLink)
+        {
+            <p>
+                @Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { id = "find-traineeship-link", @class = "page-link" })
+            </p>
+        }
+    </div>
+</div>
+
+
+<p class="text">To receive notifications via text message, you'll need to verify your mobile number by entering the code that was sent to your mobile phone.</p>
+
+
+@using (Html.BeginRouteForm(CandidateRouteNames.VerifyMobile, FormMethod.Post, new { @id = "verify-mobile-form" }))
+{
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+
+    <fieldset>
+
         <div class="form-group">
             <p class="form-label">Mobile number</p>
-            <span class="form-prepopped" id="enterNumber"/>
-        </div>
-        <div class="form-group form-group-withlink">
-            <label for="enterCode" class="form-label">Enter code</label>
-            <input type="text" class="form-control" id="enterCode">
-        </div>
-        <div class="form-group">
-            <p>
-                <a href="">Resend code</a>
-            </p>
-        </div>
-        <div class="form-group">
-            <a href="settings.html" class="button" id="numberVerified">Verify number</a>
+            <span class="form-prepopped" id="phoneNumber">@Model.PhoneNumber</span>
+            @Html.HiddenFor(m => m.PhoneNumber)
+            @Html.HiddenFor(m => m.ReturnUrl)
         </div>
 
+
+        @Html.FormTextFor(
+        m => m.VerifyMobileCode,
+        controlHtmlAttributes: new { @maxlength = "4" },
+        containerHtmlAttributes: new { @class = "form-group-withlink" })
+    </fieldset>
+    <div class="form-group">
+        <button id="ResendMobileVerificationCodeLink" type="submit" name="VerifyMobileAction:Resend" class="button-link" value="Resend" formnovalidate>Resend code</button>
+        <p>
+            <button class="button" id="verify-code-button" type="submit" name="VerifyMobileAction:VerifyMobile">Verify number</button>
+        </p>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

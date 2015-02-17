@@ -32,7 +32,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
             var accountMediator = new AccountMediatorBuilder().With(accountProviderMock.Object).Build();
 
             //Act
-            var response = accountMediator.Resend(Guid.NewGuid(), new VerifyMobileViewModel() { MobileNumber = MobileNumber });
+            var response = accountMediator.Resend(Guid.NewGuid(), new VerifyMobileViewModel() { PhoneNumber = MobileNumber });
 
             //Assert
             response.Code.Should().Be(accountMediatorCode);

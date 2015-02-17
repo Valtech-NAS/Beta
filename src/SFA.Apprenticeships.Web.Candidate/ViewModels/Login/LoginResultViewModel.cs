@@ -24,5 +24,7 @@
         public string AcceptedTermsAndConditionsVersion { get; set; }
 
         public bool MobileVerificationRequired { get; set; }
+
+        public string ReturnUrl { get; set; }
     }
 }

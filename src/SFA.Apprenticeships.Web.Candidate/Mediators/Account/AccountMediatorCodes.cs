@@ -62,6 +62,7 @@
             public const string VerificationNotRequired = "AccountMediator.VerifyMobile.Failed";
             public const string InvalidCode = "AccountMediator.VerifyMobile.InvalidCode";
             public const string Error = "AccountMediator.VerifyMobile.Error";
+            public const string ReturnUrl = "AccountMediator.VerifyMobile.ReturnUrl";
         }
 
         public class Resend

@@ -279,6 +279,8 @@
     <Compile Include="Views\TraineeshipSearch\ApplyPartialTests.cs" />
     <Compile Include="Views\TraineeshipSearch\DetailsTests.cs" />
     <Compile Include="Views\ApprenticeshipSearch\DetailsTests.cs" />
+    <Compile Include="Views\VerifyMobile\VerifyMobileViewBuilder.cs" />
+    <Compile Include="Views\VerifyMobile\VerifyMobileTests.cs" />
     <Compile Include="Views\ViewUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>

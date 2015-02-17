@@ -27,7 +27,7 @@
 
         MediatorResponse TraineeshipVacancyDetails(Guid candidateId, int vacancyId);
 
-        MediatorResponse<VerifyMobileViewModel> VerifyMobile(Guid candidateId);
+        MediatorResponse<VerifyMobileViewModel> VerifyMobile(Guid candidateId, string returnUrl);
 
         MediatorResponse<VerifyMobileViewModel> VerifyMobile(Guid candidateId, VerifyMobileViewModel verifyMobileViewModel);
 

@@ -89,13 +89,13 @@
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [ApplyWebTrends]
-        public async Task<ActionResult> VerifyMobile()
+        public async Task<ActionResult> VerifyMobile(string returnUrl)
         {
-            var response = _accountMediator.VerifyMobile(UserContext.CandidateId);
+            var response = _accountMediator.VerifyMobile(UserContext.CandidateId, returnUrl);
             return await Task.Run<ActionResult>(() => View(response.ViewModel));
         }
 
-       // todo: 1.6: mobile verification
+        // todo: 1.6: mobile verification
         [HttpPost]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
@@ -122,9 +122,11 @@
                         return View(response.ViewModel);
                     case AccountMediatorCodes.VerifyMobile.Success:
                         SetUserMessage(VerifyMobilePageMessages.MobileVerificationSuccessText);
-                        //todo: return url should work 
-                        return Redirect(HttpUtility.UrlDecode(response.Parameters.ToString()));
-                        //return RedirectToRoute(CandidateRouteNames.Settings); //todo: return url 
+                        if (string.IsNullOrEmpty(model.ReturnUrl))
+                        {
+                            return RedirectToRoute(CandidateRouteNames.Settings);
+                        }
+                        return Redirect(model.ReturnUrl);
                     default:
                         throw new InvalidMediatorCodeException(response.Code);
                 }
@@ -140,7 +142,7 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _accountMediator.Resend( UserContext.CandidateId, model);
+                var response = _accountMediator.Resend(UserContext.CandidateId, model);
 
                 switch (response.Code)
                 {
@@ -152,7 +154,7 @@
                     default:
                         throw new InvalidMediatorCodeException(response.Code);
                 }
-                return RedirectToAction("VerifyMobile"); 
+                return RedirectToAction("VerifyMobile");
             });
         }
 
@@ -285,10 +287,10 @@
         public async Task<ActionResult> UpdatedTermsAndConditions(string returnUrl)
         {
             return await Task.Run<ActionResult>(() =>
-            {                
+            {
                 if (!string.IsNullOrEmpty(returnUrl))
                 {
-                    var routeValueDictionary = new {ReturnUrl = returnUrl};
+                    var routeValueDictionary = new { ReturnUrl = returnUrl };
                     return View("Terms", routeValueDictionary);
                 }
 
@@ -341,7 +343,7 @@
                 SetUserMessage(SignOutPageMessages.MustAcceptUpdatedTermsAndConditions, UserMessageLevel.Warning);
 
                 return !string.IsNullOrEmpty(returnUrl)
-                    ? RedirectToRoute(RouteNames.SignOut, new {ReturnUrl = returnUrl})
+                    ? RedirectToRoute(RouteNames.SignOut, new { ReturnUrl = returnUrl })
                     : RedirectToRoute(RouteNames.SignOut);
             });
         }

@@ -40,7 +40,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
             var accountMediator = new AccountMediatorBuilder().With(accountProviderMock.Object).With(verifyMobileViewModelServerValidatorMock).Build();
 
             //Act
-            var response = accountMediator.VerifyMobile(Guid.NewGuid(), new VerifyMobileViewModel() { MobileNumber = MobileNumber, VerifyMobileCode = ValidVerificationCode });
+            var response = accountMediator.VerifyMobile(Guid.NewGuid(), new VerifyMobileViewModel() { PhoneNumber = MobileNumber, VerifyMobileCode = ValidVerificationCode });
 
             //Assert
             response.Code.Should().Be(accountMediatorCode);
@@ -69,7 +69,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
             var accountMediator = new AccountMediatorBuilder().With(accountProviderMock.Object).With(verifyMobileViewModelServerValidatorMock).Build();
 
             //Act
-            var response = accountMediator.VerifyMobile(Guid.NewGuid(), new VerifyMobileViewModel() { MobileNumber = MobileNumber, VerifyMobileCode = ValidVerificationCode });
+            var response = accountMediator.VerifyMobile(Guid.NewGuid(), new VerifyMobileViewModel() { PhoneNumber = MobileNumber, VerifyMobileCode = ValidVerificationCode });
 
             //Assert
             response.Code.Should().Be(AccountMediatorCodes.VerifyMobile.ValidationError);

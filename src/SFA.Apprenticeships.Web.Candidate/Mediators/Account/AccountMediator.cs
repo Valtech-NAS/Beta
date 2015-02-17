@@ -217,11 +217,16 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
             return GetMediatorResponse(AccountMediatorCodes.VacancyDetails.Available);
         }
 
-        
-        public MediatorResponse<VerifyMobileViewModel> VerifyMobile(Guid candidateId)
+
+        public MediatorResponse<VerifyMobileViewModel> VerifyMobile(Guid candidateId, string returnUrl)
         {
             //todo: append other switch cases
              var viewModel = _accountProvider.GetVerifyMobileViewModel(candidateId);
+
+             var traineeshipFeature = _apprenticeshipApplicationProvider.GetTraineeshipFeatureViewModel(candidateId);
+             viewModel.TraineeshipFeature = traineeshipFeature;
+            viewModel.ReturnUrl = returnUrl ?? string.Empty;
+
              return GetMediatorResponse(AccountMediatorCodes.VerifyMobile.Success, viewModel);
         }
 
@@ -236,6 +241,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
             }
 
             var verifyMobileViewModelResponse = _accountProvider.VerifyMobile(candidateId, verifyMobileViewModel);
+
+            var traineeshipFeature = _apprenticeshipApplicationProvider.GetTraineeshipFeatureViewModel(candidateId);
+            verifyMobileViewModel.TraineeshipFeature = traineeshipFeature;
 
             switch (verifyMobileViewModelResponse.Status)
             {
@@ -253,6 +261,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
         public MediatorResponse<VerifyMobileViewModel> Resend(Guid candidateId, VerifyMobileViewModel verifyMobileViewModel)
         {
             verifyMobileViewModel = _accountProvider.SendMobileVerificationCode(candidateId, verifyMobileViewModel);
+
+            var traineeshipFeature = _apprenticeshipApplicationProvider.GetTraineeshipFeatureViewModel(candidateId);
+            verifyMobileViewModel.TraineeshipFeature = traineeshipFeature;
 
             switch (verifyMobileViewModel.Status)
             {

@@ -297,6 +297,7 @@
     <Compile Include="Generators\EmailGenerator.cs" />
     <Compile Include="IoC\WebTestRegistry.cs" />
     <Compile Include="Pages\Account\SettingsPage.cs" />
+    <Compile Include="Pages\Account\VerifyMobilePage.cs" />
     <Compile Include="Pages\ApprenticeshipApplication\ApprenticeshipApplicationCompletePage.cs" />
     <Compile Include="Pages\ApprenticeshipApplication\ApprenticeshipApplicationPreviewPage.cs" />
     <Compile Include="Pages\ApprenticeshipApplication\ApprenticeshipApplicationPage.cs" />

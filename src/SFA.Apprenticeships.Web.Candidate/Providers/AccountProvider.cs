@@ -117,21 +117,23 @@
         {
             //todo try catch 
             var candidate = _candidateService.GetCandidate(candidateId);
-            if (candidate.MobileVerificationRequired())
+            var model = new VerifyMobileViewModel { PhoneNumber = candidate.RegistrationDetails.PhoneNumber };
+            if (!candidate.MobileVerificationRequired())
             {
-                return new VerifyMobileViewModel { MobileNumber = candidate.RegistrationDetails.PhoneNumber };
+                model.Status = VerifyMobileState.MobileVerificationNotRequired;
             }
-            return new VerifyMobileViewModel { Status = VerifyMobileState.MobileVerificationNotRequired };
+
+            return model;
         }
 
         public VerifyMobileViewModel VerifyMobile(Guid candidateId, VerifyMobileViewModel model)
         {
             _logger.Debug("Calling AccountProvider to verify mobile code candidateId {0} and mobile number {1}",
-                                                                                    candidateId, model.MobileNumber);
+                                                                                    candidateId, model.PhoneNumber);
             try
             {
                 _candidateService.VerifyMobileCode(candidateId, model.VerifyMobileCode);
-                return new VerifyMobileViewModel { Status = VerifyMobileState.Ok };
+                model.Status =VerifyMobileState.Ok;
             }
             catch (CustomException e)
             {
@@ -139,58 +141,62 @@
                 {
                     case Domain.Entities.ErrorCodes.EntityStateError:
                         _logger.Info(e.Message, e);
-                        return new VerifyMobileViewModel { Status = VerifyMobileState.MobileVerificationNotRequired };
+                        model.Status = VerifyMobileState.MobileVerificationNotRequired;
+                        break;
                     case Application.Interfaces.Users.ErrorCodes.MobileCodeVerificationFailed:
                         _logger.Info(e.Message, e);
-                        return new VerifyMobileViewModel
-                        {
-                            Status = VerifyMobileState.VerifyMobileCodeInvalid
-                        };
+                        
+                        model.Status = VerifyMobileState.VerifyMobileCodeInvalid;
+                        break;
                     default:
                         _logger.Error(e.Message, e);
-                        return new VerifyMobileViewModel { Status = VerifyMobileState.Error };
+                        model.Status = VerifyMobileState.Error;
+                        break;
                 }
             }
             catch (Exception e)
             {
-                _logger.Error("Mobile code verification failed for candidateId {0} and Lme {1}", candidateId, model.MobileNumber, e);
-                return new VerifyMobileViewModel { Status = VerifyMobileState.Error };
+                _logger.Error("Mobile code verification failed for candidateId {0} and Lme {1}", candidateId, model.PhoneNumber, e);
+                model.Status = VerifyMobileState.Error;
             }
+            return model;
         }
 
         public VerifyMobileViewModel SendMobileVerificationCode(Guid candidateId, VerifyMobileViewModel model)
         {
             _logger.Debug("Calling AccountProvider to send mobile verification code for candidateId {0} to mobile number {1}",
-                                                                                    candidateId, model.MobileNumber);
+                                                                                    candidateId, model.PhoneNumber);
 
             try
             {
                 var candidate = _candidateService.GetCandidate(candidateId);
                 _candidateService.SendMobileVerificationCode(candidate);
-                return new VerifyMobileViewModel { Status = VerifyMobileState.Ok };
+                model.Status = VerifyMobileState.Ok;
             }
             catch (CustomException e)
             {
-                VerifyMobileState status;
                 switch (e.Code)
                 {
                     case Domain.Entities.ErrorCodes.EntityStateError:
-                        status = VerifyMobileState.MobileVerificationNotRequired;
+                        model.Status = VerifyMobileState.MobileVerificationNotRequired;
                         break;
                     default:
-                        status = VerifyMobileState.Error;
+                        model.Status = VerifyMobileState.Error;
                         _logger.Error(e.Message, e);
                         break;
                 }
-                return new VerifyMobileViewModel(e.Message) { Status = status };
+                model.ViewModelMessage = e.Message;
             }
             catch (Exception e)
             {
                 var message = string.Format("Sending Mobile verification code to mobile number {1} failed for candidateId {0} ", 
-                                                                                        candidateId, model.MobileNumber );
+                                                                                        candidateId, model.PhoneNumber );
                 _logger.Error(message, e);
-                return new VerifyMobileViewModel(message) { Status = VerifyMobileState.Error};
+                
+                model.Status = VerifyMobileState.Error;
+                model.ViewModelMessage = e.Message;
             }
+            return model;
         }
     }
 }
