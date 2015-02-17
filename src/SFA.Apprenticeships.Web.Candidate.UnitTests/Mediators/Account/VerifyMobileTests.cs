@@ -29,7 +29,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
         {
             //Arrange
             //const VerifyMobileState verifyMobileState = VerifyMobileState.Ok;
-            var verifyMobileViewModel = new VerifyMobileViewModelBuilder(MobileNumber, ValidVerificationCode, verifyMobileState).Build();
+            var verifyMobileViewModel = new VerifyMobileViewModelBuilder().MobileNumber(MobileNumber).VerifyMobileState(verifyMobileState).MobileVerificationCode(ValidVerificationCode).Build();
 
             var verifyMobileViewModelServerValidatorMock = new Mock<VerifyMobileViewModelServerValidator>();
             verifyMobileViewModelServerValidatorMock.Setup(x => x.Validate(It.IsAny<VerifyMobileViewModel>())).Returns(new ValidationResult());
@@ -57,7 +57,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
             var v = new ValidationResult();
             v.Errors.Add(new ValidationFailure("VerifyMobileCode", "Length should be less than 4 digits"));
 
-            var verifyMobileViewModel = new VerifyMobileViewModelBuilder(MobileNumber, InvalidVerificationCode, verifyMobileState).Build();
+            var verifyMobileViewModel = new VerifyMobileViewModelBuilder().MobileNumber(MobileNumber).VerifyMobileState(verifyMobileState).MobileVerificationCode(InvalidVerificationCode).Build();
 
            //todo: nice to have to convert into a builder class
             var verifyMobileViewModelServerValidatorMock = new Mock<VerifyMobileViewModelServerValidator>();

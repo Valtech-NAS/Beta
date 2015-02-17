@@ -24,7 +24,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Builders
             return this;
         }
 
-        public VerifyMobileViewModelBuilder VerifyMobileState(string mobileVerificationCode)
+        public VerifyMobileViewModelBuilder MobileVerificationCode(string mobileVerificationCode)
         {
             _mobileVerificationCode = mobileVerificationCode;
             return this;

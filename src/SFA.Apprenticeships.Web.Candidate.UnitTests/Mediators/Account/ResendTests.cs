@@ -24,7 +24,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
         public void ResendTest(VerifyMobileState verifyMobileState, string accountMediatorCode, string pageMessage, UserMessageLevel userMessageLevel)
         {
             //Arrange 
-            var verifyMobileViewModel = new VerifyMobileViewModelBuilder(MobileNumber, verifyMobileState).Build();
+            var verifyMobileViewModel = new VerifyMobileViewModelBuilder().MobileNumber(MobileNumber).VerifyMobileState(verifyMobileState).Build();
 
             var accountProviderMock = new Mock<IAccountProvider>();
             accountProviderMock.Setup(x => x.SendMobileVerificationCode(It.IsAny<Guid>(), It.IsAny<VerifyMobileViewModel>())).Returns(verifyMobileViewModel);
