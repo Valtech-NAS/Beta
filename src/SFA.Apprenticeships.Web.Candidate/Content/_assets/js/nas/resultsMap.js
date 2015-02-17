@@ -2,9 +2,9 @@
 
     /*Show map with radius in results*/
 
-    var apprLatitude       = Number($('#Latitude').val()),
-        apprLongitude      = Number($('#Longitude').val()),
-        apprMiles          = Number($('#loc-within').val()),
+    var apprLatitude       = $('#Latitude').val(),
+        apprLongitude      = $('#Longitude').val(),
+        apprMiles          = $('#loc-within').val(),
         resultsPage        = $('#results-per-page').val(),
         numberOfResults    = $('.vacancy-link').length,
         distanceOfLast     = $('.search-results__item:last-child .distance-value').html(),
@@ -15,7 +15,9 @@
         vacancies          = [],
         vacancy            = [],
         theMarkers         = [],
-        markersFeature     = true;
+        markersFeature     = true,
+        isEngland          = false,
+        mapCenter          = (isEngland ? { lat: 52.56192833333333, lng: -1.464853888888889 } : { lat: apprLatitude, lng: apprLongitude });
 
     for (var i = 0; i < vacancyLinks.length; i++) {
         var lat = $(vacancyLinks[i]).attr('data-lat'),
@@ -46,6 +48,11 @@
         apprZoom = 11
     }
 
+    if (apprMiles == "England") {
+        isEngland = true;
+        apprZoom = 4
+    }
+
     if (apprLatitude == 0 || apprLongitude == 0) {
         $('#map-canvas').parent().hide();
     }
@@ -53,7 +60,7 @@
     function initialize() {
 
         var mapOptions = {
-            center: { lat: apprLatitude, lng: apprLongitude },
+            center: mapCenter,
             zoom: apprZoom,
             panControl: false,
             zoomControl: true,
