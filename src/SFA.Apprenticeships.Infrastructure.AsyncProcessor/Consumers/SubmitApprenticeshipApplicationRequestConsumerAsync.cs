@@ -151,7 +151,7 @@
 
         private static void EnsureApplicationCanBeCreated(ApprenticeshipApplicationDetail apprenticeshipApplicationDetail)
         {
-            apprenticeshipApplicationDetail.AssertState(string.Format("Create apprenticeship application for candidate '{0}'", apprenticeshipApplicationDetail.CandidateId), ApplicationStatuses.Submitting);
+            apprenticeshipApplicationDetail.AssertState("Create apprenticeship application", ApplicationStatuses.Submitting);
         }
     }
 }
