@@ -75,7 +75,24 @@ WriteAttribute("class", Tuple.Create(" class=\"", 158), Tuple.Create("\"", 206)
 , 197), false)
 );
 
-WriteLiteral(">\r\n    <ul");
+WriteLiteral(">\r\n    \r\n");
+
+            
+            #line 8 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
+    
+            
+            #line default
+            #line hidden
+            
+            #line 8 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
+      
+        if (Model.Categories != null && Model.Categories.Any())
+        {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("            <ul");
 
 WriteLiteral(" id=\"category-list\"");
 
@@ -84,29 +101,29 @@ WriteLiteral(" class=\"copy-16 list-text list-checkradio\"");
 WriteLiteral(">\r\n");
 
             
-            #line 8 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-        
+            #line 12 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
+                
             
             #line default
             #line hidden
             
-            #line 8 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-         foreach (var category in Model.Categories)
-        {
-            var inputId = string.Format("category-{0}", category.CodeName.ToLower());
-            var subCategories = category.SubCategories.ToList();
-            var checkedAttr = Model.Category == category.CodeName ? "checked" : "";
-            var openAttr = Model.Category == category.CodeName && Model.SubCategories != null && Model.SubCategories.Any() ? "open" : "";
-            var subCategoryListId = string.Format("sub-category-{0}-list", category.CodeName.ToLower());
+            #line 12 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
+                 foreach (var category in Model.Categories)
+                {
+                    var inputId = string.Format("category-{0}", category.CodeName.ToLower());
+                    var subCategories = category.SubCategories.ToList();
+                    var checkedAttr = Model.Category == category.CodeName ? "checked" : "";
+                    var openAttr = Model.Category == category.CodeName && Model.SubCategories != null && Model.SubCategories.Any() ? "open" : "";
+                    var subCategoryListId = string.Format("sub-category-{0}-list", category.CodeName.ToLower());
 
             
             #line default
             #line hidden
-WriteLiteral("            <li>\r\n                <input ");
+WriteLiteral("                    <li>\r\n                        <input ");
 
             
-            #line 16 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-                  Write(checkedAttr);
+            #line 20 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
+                          Write(checkedAttr);
 
             
             #line default
@@ -114,8 +131,8 @@ WriteLiteral("            <li>\r\n                <input ");
 WriteLiteral(" type=\"radio\" name=\"Category\" id=\"");
 
             
-            #line 16 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-                                                                Write(inputId);
+            #line 20 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
+                                                                        Write(inputId);
 
             
             #line default
@@ -123,38 +140,38 @@ WriteLiteral(" type=\"radio\" name=\"Category\" id=\"");
 WriteLiteral("\" value=\"");
 
             
-            #line 16 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-                                                                                 Write(category.CodeName);
+            #line 20 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
+                                                                                         Write(category.CodeName);
 
             
             #line default
             #line hidden
 WriteLiteral("\"><label");
 
-WriteAttribute("for", Tuple.Create(" for=\"", 958), Tuple.Create("\"", 972)
+WriteAttribute("for", Tuple.Create(" for=\"", 1128), Tuple.Create("\"", 1142)
             
-            #line 16 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-                                       , Tuple.Create(Tuple.Create("", 964), Tuple.Create<System.Object, System.Int32>(inputId
+            #line 20 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
+                                              , Tuple.Create(Tuple.Create("", 1134), Tuple.Create<System.Object, System.Int32>(inputId
             
             #line default
             #line hidden
-, 964), false)
+, 1134), false)
 );
 
 WriteLiteral(">");
 
             
-            #line 16 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-                                                                                                                           Write(FullNameFormatter.Format(category.FullName));
+            #line 20 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
+                                                                                                                                   Write(FullNameFormatter.Format(category.FullName));
 
             
             #line default
             #line hidden
-WriteLiteral("</label>\r\n                <details ");
+WriteLiteral("</label>\r\n                        <details ");
 
             
-            #line 17 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-                    Write(openAttr);
+            #line 21 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
+                            Write(openAttr);
 
             
             #line default
@@ -162,35 +179,35 @@ WriteLiteral("</label>\r\n                <details ");
 WriteLiteral(" class=\"");
 
             
-            #line 17 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-                                     Write(openAttr);
+            #line 21 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
+                                             Write(openAttr);
 
             
             #line default
             #line hidden
-WriteLiteral("\">\r\n                    <summary");
+WriteLiteral("\">\r\n                            <summary");
 
 WriteLiteral(" class=\"copy-16\"");
 
 WriteLiteral(">");
 
             
-            #line 18 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-                                        Write(subCategories.Count);
+            #line 22 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
+                                                Write(subCategories.Count);
 
             
             #line default
             #line hidden
-WriteLiteral(" sub-categories</summary>\r\n                    <ul");
+WriteLiteral(" sub-categories</summary>\r\n                            <ul");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 1198), Tuple.Create("\"", 1221)
+WriteAttribute("id", Tuple.Create(" id=\"", 1392), Tuple.Create("\"", 1415)
             
-            #line 19 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-, Tuple.Create(Tuple.Create("", 1203), Tuple.Create<System.Object, System.Int32>(subCategoryListId
+            #line 23 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
+, Tuple.Create(Tuple.Create("", 1397), Tuple.Create<System.Object, System.Int32>(subCategoryListId
             
             #line default
             #line hidden
-, 1203), false)
+, 1397), false)
 );
 
 WriteLiteral(" class=\"detail-content copy-16 list-text list-checkradio scrolling-panel max-heig" +
@@ -199,31 +216,31 @@ WriteLiteral(" class=\"detail-content copy-16 list-text list-checkradio scrollin
 WriteLiteral(">\r\n");
 
             
-            #line 20 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-                        
+            #line 24 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
+                                
             
             #line default
             #line hidden
             
-            #line 20 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-                         foreach (var subCategory in subCategories)
-                        {
-                            checkedAttr = Model.SubCategories != null && Model.SubCategories.Contains(subCategory.CodeName) ? " checked" : "";
-                            var checkboxId = string.Format("sub-category-{0}", subCategory.CodeName.ToLower());
-                            var labelText = FullNameFormatter.Format(subCategory.FullName);
-                            if (subCategory.Count.HasValue)
-                            {
-                                labelText = string.Format("{0} ({1})", labelText, subCategory.Count.Value);
-                            }
+            #line 24 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
+                                 foreach (var subCategory in subCategories)
+                                {
+                                    checkedAttr = Model.SubCategories != null && Model.SubCategories.Contains(subCategory.CodeName) ? " checked" : "";
+                                    var checkboxId = string.Format("sub-category-{0}", subCategory.CodeName.ToLower());
+                                    var labelText = FullNameFormatter.Format(subCategory.FullName);
+                                    if (subCategory.Count.HasValue)
+                                    {
+                                        labelText = string.Format("{0} ({1})", labelText, subCategory.Count.Value);
+                                    }
 
             
             #line default
             #line hidden
-WriteLiteral("                            <li><input ");
+WriteLiteral("                                    <li><input ");
 
             
-            #line 29 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-                                  Write(checkedAttr);
+            #line 33 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
+                                          Write(checkedAttr);
 
             
             #line default
@@ -231,8 +248,8 @@ WriteLiteral("                            <li><input ");
 WriteLiteral(" type=\"checkbox\" name=\"SubCategories\" id=\"");
 
             
-            #line 29 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-                                                                                        Write(checkboxId);
+            #line 33 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
+                                                                                                Write(checkboxId);
 
             
             #line default
@@ -240,29 +257,29 @@ WriteLiteral(" type=\"checkbox\" name=\"SubCategories\" id=\"");
 WriteLiteral("\" value=\"");
 
             
-            #line 29 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-                                                                                                            Write(subCategory.CodeName);
+            #line 33 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
+                                                                                                                    Write(subCategory.CodeName);
 
             
             #line default
             #line hidden
 WriteLiteral("\"><label");
 
-WriteAttribute("for", Tuple.Create(" for=\"", 2134), Tuple.Create("\"", 2151)
+WriteAttribute("for", Tuple.Create(" for=\"", 2408), Tuple.Create("\"", 2425)
             
-            #line 29 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-                                                                    , Tuple.Create(Tuple.Create("", 2140), Tuple.Create<System.Object, System.Int32>(checkboxId
+            #line 33 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
+                                                                            , Tuple.Create(Tuple.Create("", 2414), Tuple.Create<System.Object, System.Int32>(checkboxId
             
             #line default
             #line hidden
-, 2140), false)
+, 2414), false)
 );
 
 WriteLiteral(">");
 
             
-            #line 29 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-                                                                                                                                                            Write(labelText);
+            #line 33 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
+                                                                                                                                                                    Write(labelText);
 
             
             #line default
@@ -270,22 +287,50 @@ WriteLiteral(">");
 WriteLiteral("</label></li>\r\n");
 
             
-            #line 30 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
-                        }
+            #line 34 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
+                                }
 
             
             #line default
             #line hidden
-WriteLiteral("                    </ul>\r\n                </details>\r\n            </li>\r\n");
+WriteLiteral("                            </ul>\r\n                        </details>\r\n          " +
+"          </li>\r\n");
 
             
-            #line 34 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
+            #line 38 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
+                }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("            </ul>\r\n");
+
+            
+            #line 40 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
+        }
+        else
+        {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("            <div");
+
+WriteLiteral(" id=\"category-load-failed\"");
+
+WriteLiteral(" class=\"field-validation-error\"");
+
+WriteLiteral(">TODO: Category search is currently unavailable, please either reload the page to" +
+" try again or use the keyword search</div>\r\n");
+
+            
+            #line 44 "..\..\Views\ApprenticeshipSearch\_categoriesAndSubCategories.cshtml"
         }
 
             
             #line default
             #line hidden
-WriteLiteral("    </ul>\r\n</div>");
+WriteLiteral("\r\n</div>");
 
         }
     }

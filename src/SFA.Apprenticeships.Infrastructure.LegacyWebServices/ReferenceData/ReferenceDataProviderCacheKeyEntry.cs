@@ -13,7 +13,11 @@
 
         public override CacheDuration Duration
         {
-            get { return CacheDuration.OneHour; }
+            get
+            {
+                //TODO: Update to use config value for cache duration
+                return CacheDuration.OneDay;
+            }
         }
     }
 }

@@ -7,13 +7,30 @@
     <span class="form-label">Browse by category</span>
     <div class="grid-wrapper">
         @{
-            var categories = Model.Categories.ToList();
-            var categorySplitCount = categories.Count / 2 + categories.Count % 2;
+            if (Model.Categories != null && Model.Categories.Any())
+            {
+                var categories = Model.Categories.ToList();
+                var categorySplitCount = categories.Count/2 + categories.Count%2;
 
-            <div class="grid grid-1-2">
-                <div class="inner-block-padr">
-                    <ul id="category-list-left" class="copy-16 list-text list-checkradio">
-                        @for (var i = 0; i < categorySplitCount; i++)
+                <div class="grid grid-1-2">
+                    <div class="inner-block-padr">
+                        <ul id="category-list-left" class="copy-16 list-text list-checkradio">
+                            @for (var i = 0; i < categorySplitCount; i++)
+                            {
+                                var category = categories[i];
+                                var inputId = string.Format("category-{0}", category.CodeName.ToLower());
+                                var checkedAttr = Model.Category == category.CodeName ? "checked" : "";
+                                <li>
+                                    <input @checkedAttr type="radio" name="Category" id="@inputId" value="@category.CodeName"><label for="@inputId">@FullNameFormatter.Format(category.FullName)</label>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="grid grid-1-2">
+                    <ul id="category-list-right" class="copy-16 list-text list-checkradio">
+                        @for (var i = categorySplitCount; i < categories.Count; i++)
                         {
                             var category = categories[i];
                             var inputId = string.Format("category-{0}", category.CodeName.ToLower());
@@ -24,21 +41,11 @@
                         }
                     </ul>
                 </div>
-            </div>
-
-            <div class="grid grid-1-2">
-                <ul id="category-list-right" class="copy-16 list-text list-checkradio">
-                    @for (var i = categorySplitCount; i < categories.Count; i++)
-                    {
-                        var category = categories[i];
-                        var inputId = string.Format("category-{0}", category.CodeName.ToLower());
-                        var checkedAttr = Model.Category == category.CodeName ? "checked" : "";
-                        <li>
-                            <input @checkedAttr type="radio" name="Category" id="@inputId" value="@category.CodeName"><label for="@inputId">@FullNameFormatter.Format(category.FullName)</label>
-                        </li>
-                    }
-                </ul>
-            </div>
+            }
+            else
+            {
+                <div id="category-load-failed" class="field-validation-error">TODO: Category search is currently unavailable, please either reload the page to try again or use the keyword search</div>
+            }
         }
     </div>
 </div>

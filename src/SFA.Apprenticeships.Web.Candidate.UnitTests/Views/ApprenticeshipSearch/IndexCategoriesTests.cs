@@ -29,6 +29,20 @@
             var view = categories.RenderAsHtml(searchViewModel);
 
             view.GetElementbyId("categories").Attributes["class"].Value.Contains(" active").Should().BeTrue();
+            view.GetElementbyId("category-load-failed").Should().BeNull();
+        }
+
+        [Test]
+        public void SearchModeCategoryNullCategoriesVisibilityTest()
+        {
+            ReferenceDataService.Setup(rds => rds.GetCategories());
+
+            var categories = new categories();
+
+            var searchViewModel = Mediator.Index(ApprenticeshipSearchMode.Category).ViewModel;
+            var view = categories.RenderAsHtml(searchViewModel);
+
+            view.GetElementbyId("category-load-failed").Should().NotBeNull();
         }
 
         [Test]

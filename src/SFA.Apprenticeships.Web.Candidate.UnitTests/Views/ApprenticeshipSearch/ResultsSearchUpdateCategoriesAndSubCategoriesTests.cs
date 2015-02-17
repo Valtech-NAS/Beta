@@ -33,6 +33,20 @@
         }
 
         [Test]
+        public void SearchModeCategoryNullCategoriesVisibilityTest()
+        {
+            ReferenceDataService.Setup(rds => rds.GetCategories());
+
+            var categories = new categoriesAndSubCategories();
+
+            var searchViewModel = Mediator.Index(ApprenticeshipSearchMode.Category).ViewModel;
+            var view = categories.RenderAsHtml(searchViewModel);
+
+            view.GetElementbyId("categories").Attributes["class"].Value.Contains(" active").Should().BeTrue();
+            view.GetElementbyId("category-load-failed").Should().NotBeNull();
+        }
+
+        [Test]
         public void CategoryListPopulation()
         {
             var categories = new categoriesAndSubCategories();

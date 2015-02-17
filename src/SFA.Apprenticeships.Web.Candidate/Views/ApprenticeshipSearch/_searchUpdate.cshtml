@@ -11,8 +11,12 @@
                     @{
                         var searchTabControlUrl = Url.ApprenticeshipSearchViewModelAction("results", new ApprenticeshipSearchViewModel(Model) {SearchMode = ApprenticeshipSearchMode.Keyword});
                         var browseTabControlUrl = Url.ApprenticeshipSearchViewModelAction("results", new ApprenticeshipSearchViewModel(Model) {SearchMode = ApprenticeshipSearchMode.Category});
-                        var searchTabControlClass = Model.SearchMode == ApprenticeshipSearchMode.Keyword ? "active" : "";
-                        var browseTabControlClass = Model.SearchMode == ApprenticeshipSearchMode.Category ? "active" : "";
+                        var searchTabControlClass = Model.SearchMode == ApprenticeshipSearchMode.Keyword ? " active" : "";
+                        var browseTabControlClass = Model.SearchMode == ApprenticeshipSearchMode.Category ? " active" : "";
+
+                        var categoriesElementControlClass = Model.SearchMode == ApprenticeshipSearchMode.Category && Model.Categories != null && Model.Categories.Any() ? " active" : "";
+                        var categoriesTabClass = Model.Categories != null && Model.Categories.Any() ? " tab2" : "";
+                        var elementControlClass = Model.SearchMode == ApprenticeshipSearchMode.Keyword ? searchTabControlClass : categoriesElementControlClass;                        
                     }
                     <a href="@searchTabControlUrl" id="search-tab-control" class="tabbed-tab @searchTabControlClass" tab="#tab1">Search</a>
                     <a href="@browseTabControlUrl" id="browse-tab-control" class="tabbed-tab @browseTabControlClass" tab="#tab2">Browse</a>
@@ -20,17 +24,12 @@
                 <div class="tabbed-content active">
 
                     @Html.Partial("_categoriesAndSubCategories", Model)
-
-                    @{
-                        var keywordsClass = Model.SearchMode == ApprenticeshipSearchMode.Keyword ? " active" : "";
-                        @Html.FormTextFor(m => m.Keywords, hintText: "", containerHtmlAttributes: new {@class = "tabbed-element tab1" + keywordsClass })
-                    }
-
-                    @Html.FormTextFor(m => m.Location, hintText: "")
+                    @Html.FormTextFor(m => m.Keywords, hintText: "", containerHtmlAttributes: new { @class = "tabbed-element tab1" + searchTabControlClass })
+                    @Html.FormTextFor(m => m.Location, hintText: "", containerHtmlAttributes: new { @class = "tabbed-element tab1" + categoriesTabClass + elementControlClass})
 
                     @if (Model.LocationSearches != null && Model.LocationSearches.Length > 0)
                     {
-                        <details open class="open form-group form-group-compound" id="locationSuggestions">
+                        <details open class="open form-group form-group-compound tabbed-element tab1 @categoriesTabClass @elementControlClass" id="locationSuggestions">
                             <summary tabindex="0" aria-describedby="locSuggestionsAria">Did you mean:</summary>
                             <p class="visuallyhidden" aria-live="polite" id="locSuggestionsAria"></p>
                             <div class="detail-content panel-indent">
@@ -43,18 +42,19 @@
                             </div>
                         </details>
                     }
-                    <div class="form-group">
-                        <label for="loc-within" class="form-label">Within</label>
-                        @Html.DropDownListFor(m => m.WithinDistance, Model.Distances, new {@id = "loc-within", @name = "WithinDistance"})
+                    <div class="form-group tabbed-element tab1 @categoriesTabClass @elementControlClass">
+                        <label for=" loc-within" class="form-label">
+                        Within</label>
+                        @Html.DropDownListFor(m => m.WithinDistance, Model.Distances, new { @id = "loc-within", @name = "WithinDistance" })
                     </div>
-                    <div class="form-group">
+                    <div class="form-group tabbed-element tab1 @categoriesTabClass @elementControlClass">
                         <label for="apprenticeship-level" class="form-label">Apprenticeship level</label>
-                        @Html.DropDownListFor(m => m.ApprenticeshipLevel, Model.ApprenticeshipLevels, new {@id = "apprenticeship-level", @name = "ApprenticeshipLevel"})
+                        @Html.DropDownListFor(m => m.ApprenticeshipLevel, Model.ApprenticeshipLevels, new { @id = "apprenticeship-level", @name = "ApprenticeshipLevel" })
                     </div>
-                    <div class="form-group">
+                    <div class="form-group tabbed-element tab1 @categoriesTabClass @elementControlClass">
                         <button class="button no-btm-margin" id="search-button" name="SearchAction" value="Search">Update results</button>
                     </div>
-                    <div class="form-group map-container hide-nojs">
+                    <div class="form-group map-container hide-nojs tabbed-element tab1 @categoriesTabClass @elementControlClass">
                         <div id="map-canvas" style="width: 100%; height: 250px"></div>
                     </div>
 

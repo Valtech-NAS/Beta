@@ -63,7 +63,7 @@
                 ResultsPerPage = resultsPerPage,
                 ApprenticeshipLevels = apprenticeshipLevels,
                 ApprenticeshipLevel = apprenticeshipLevel,
-                Categories = categories.ToList(),
+                Categories = categories,
                 SearchMode = searchMode
             };
 
@@ -93,9 +93,10 @@
             return UserDataProvider.Get(CandidateDataItemNames.ApprenticeshipLevel) ?? "All";
         }
 
-        private IEnumerable<Category> GetCategories()
+        private List<Category> GetCategories()
         {
-            return _referenceDataService.GetCategories().Where(c => !_blacklistedCategoryCodes.Contains(c.CodeName));
+            var cats = _referenceDataService.GetCategories();
+            return cats == null ? null : _referenceDataService.GetCategories().Where(c => !_blacklistedCategoryCodes.Contains(c.CodeName)).ToList();
         }
 
         public MediatorResponse<ApprenticeshipSearchViewModel> SearchValidation(ApprenticeshipSearchViewModel model)
@@ -107,7 +108,7 @@
                 model.Distances = GetDistances();
                 model.ResultsPerPageSelectList = GetResultsPerPageSelectList(model.ResultsPerPage);
                 model.ApprenticeshipLevels = GetApprenticeshipLevels(model.ApprenticeshipLevel);
-                model.Categories = GetCategories().ToList();
+                model.Categories = GetCategories();
 
                 return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.SearchValidation.ValidationError, model, clientResult);
             }
@@ -143,7 +144,7 @@
             model.Distances = GetDistances();
             model.ResultsPerPageSelectList = GetResultsPerPageSelectList(model.ResultsPerPage);
             model.ApprenticeshipLevels = GetApprenticeshipLevels(model.ApprenticeshipLevel);
-            model.Categories = GetCategories().ToList();
+            model.Categories = GetCategories();
 
             var clientResult = _searchRequestValidator.Validate(model);
 
