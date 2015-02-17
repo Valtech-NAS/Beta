@@ -25,6 +25,12 @@
 
         public void Update(ApprenticeshipApplicationDetail apprenticeshipApplication, ApplicationStatusSummary applicationStatusSummary)
         {
+            var originalLegacyApplicationId = apprenticeshipApplication.LegacyApplicationId;
+            var originalStatus = apprenticeshipApplication.Status;
+            var originalVacancyStatus = apprenticeshipApplication.VacancyStatus;
+            var originalClosingDate = apprenticeshipApplication.Vacancy.ClosingDate;
+            var originalUnsuccessfulReason = apprenticeshipApplication.UnsuccessfulReason;
+
             // invoked because the status of the apprenticeshipApplication / vacancy *may* have changed
             if (apprenticeshipApplication.UpdateApprenticeshipApplicationDetail(applicationStatusSummary))
             {
@@ -44,19 +50,19 @@
                     apprenticeshipApplication.Vacancy.Id, // 1
                     apprenticeshipApplication.CandidateDetails.EmailAddress, // 2
 
-                    apprenticeshipApplication.LegacyApplicationId, // 3
+                    originalLegacyApplicationId, // 3
                     applicationStatusSummary.LegacyApplicationId, // 4
 
-                    apprenticeshipApplication.Status, // 5
+                    originalStatus, // 5
                     applicationStatusSummary.ApplicationStatus, // 6
 
-                    apprenticeshipApplication.VacancyStatus, // 7
+                    originalVacancyStatus, // 7
                     applicationStatusSummary.VacancyStatus, // 8
 
-                    apprenticeshipApplication.Vacancy.ClosingDate, // 9
+                    originalClosingDate, // 9
                     applicationStatusSummary.ClosingDate, // 10
 
-                    apprenticeshipApplication.UnsuccessfulReason, // 11
+                    originalUnsuccessfulReason, // 11
                     applicationStatusSummary.UnsuccessfulReason); // 12
 
                 _apprenticeshipApplicationWriteRepository.Save(apprenticeshipApplication);
@@ -65,6 +71,11 @@
 
         public void Update(TraineeshipApplicationDetail traineeeshipApplication, ApplicationStatusSummary applicationStatusSummary)
         {
+            var originalLegacyApplicationId = traineeeshipApplication.LegacyApplicationId;
+            var originalStatus = traineeeshipApplication.Status;
+            var originalVacancyStatus = traineeeshipApplication.VacancyStatus;
+            var originalClosingDate = traineeeshipApplication.Vacancy.ClosingDate;
+
             //todo: 1.6: remove this? we won't ever receive these updates while integrating with the legacy system for traineeships
             // invoked because the status of the apprenticeshipApplication / vacancy *may* have changed
             if (traineeeshipApplication.UpdateTraineeshipApplicationDetail(applicationStatusSummary))
@@ -84,16 +95,16 @@
                     traineeeshipApplication.Vacancy.Id, // 1
                     traineeeshipApplication.CandidateDetails.EmailAddress, // 2
 
-                    traineeeshipApplication.LegacyApplicationId, // 3
+                    originalLegacyApplicationId, // 3
                     applicationStatusSummary.LegacyApplicationId, // 4
 
-                    traineeeshipApplication.Status, // 5
+                    originalStatus, // 5
                     applicationStatusSummary.ApplicationStatus, // 6
 
-                    traineeeshipApplication.VacancyStatus, // 7
+                    originalVacancyStatus, // 7
                     applicationStatusSummary.VacancyStatus, // 8
 
-                    traineeeshipApplication.Vacancy.ClosingDate, // 9
+                    originalClosingDate, // 9
                     applicationStatusSummary.ClosingDate); // 10
 
                 _traineeshipApplicationWriteRepository.Save(traineeeshipApplication);
