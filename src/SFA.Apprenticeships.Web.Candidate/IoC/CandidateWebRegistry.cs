@@ -25,7 +25,6 @@
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Mapping;
-    using Infrastructure.LegacyWebServices.ReferenceData;
     using Mappers;
     using Mediators.Account;
     using Mediators.Application;
@@ -65,7 +64,6 @@
 
         private void RegisterProviders()
         {
-            For<IReferenceDataProvider>().Use<ReferenceDataProvider>();
             For<ISearchProvider>().Use<SearchProvider>()
                 .Ctor<IMapper>("apprenticeshipSearchMapper").Named("ApprenticeshipCandidateWebMappers")
                 .Ctor<IMapper>("traineeshipSearchMapper").Named("TraineeshipCandidateWebMappers");
