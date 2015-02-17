@@ -24,7 +24,8 @@
                     object containerHtmlAttributes = null,
                     object labelHtmlAttributes = null,
                     object hintHtmlAttributes = null,
-                    object controlHtmlAttributes = null)
+                    object controlHtmlAttributes = null,
+                    bool verified = false)
         {
             return BuildFormControl(helper, 
                                     expression, 
@@ -35,7 +36,8 @@
                                     containerHtmlAttributes, 
                                     labelHtmlAttributes,
                                     hintHtmlAttributes,
-                                    controlHtmlAttributes);
+                                    controlHtmlAttributes,
+                                    verified);
         }
 
         /// <summary>
@@ -100,7 +102,8 @@
                     object containerHtmlAttributes = null,
                     object labelHtmlAttributes = null,
                     object hintHtmlAttributes = null,
-                    object controlHtmlAttributes = null)
+                    object controlHtmlAttributes = null,
+                    bool verified = false)
         {
             Condition.Requires(helper, "helper").IsNotNull();
             Condition.Requires(expression, "expression").IsNotNull();
@@ -113,10 +116,12 @@
 
             var validator = helper.ValidationMessageFor(expression, null);
 
+            var fieldContent = verified ? VerifiedControl(controlFunc, expression, controlAttributes) : controlFunc(expression, controlAttributes);
+
             return FormText(
                 helper.LabelFor(expression, labelText, labelAttributes),
                 helper.HintFor(expression, hintText, hintAttributes),
-                controlFunc(expression, controlAttributes),
+                fieldContent,
                 validator,
                 AnchorFor(helper, expression),
                 addMaxLengthCounter ? CharactersLeftFor(helper, expression) : null,
@@ -364,6 +369,30 @@
             tag.Attributes.Add("class", "visuallyhidden aria-limit");
 
             return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
+        }
+        private static MvcHtmlString VerifiedControl<TModel, TProperty>(Func<Expression<Func<TModel, TProperty>>, IDictionary<string, object>, MvcHtmlString> controlFunc, Expression<Func<TModel, TProperty>> expression, RouteValueDictionary controlAttributes)
+        {
+            var div = new TagBuilder("div");
+            div.Attributes.Add("class", "input-withlink");
+
+            var control = controlFunc(expression, controlAttributes);
+
+            var span = new TagBuilder("span");
+            span.Attributes.Add("id", "verifyContainer");
+            span.Attributes.Add("class", "input-withlink__link");
+
+            var innerSpan = new TagBuilder("span");
+
+            var i = new TagBuilder("i");
+            i.Attributes.Add("class", "fa fa-check-circle-o");
+
+            innerSpan.InnerHtml = i + "Verified";
+
+            span.InnerHtml = innerSpan.ToString();
+
+            div.InnerHtml = control + "\r\n" + span;
+
+            return MvcHtmlString.Create(div.ToString(TagRenderMode.Normal));
         }
 
         #endregion

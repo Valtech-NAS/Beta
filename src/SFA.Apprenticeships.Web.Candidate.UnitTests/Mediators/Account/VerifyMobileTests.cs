@@ -2,7 +2,6 @@
 namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
 {
     using System;
-    using System.Collections.Generic;
     using Builders;
     using Candidate.Mediators.Account;
     using Candidate.Providers;
@@ -15,7 +14,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
     using Moq;
     using NUnit.Framework;
 
-   public class VerifyMobileTests
+    public class VerifyMobileTests
     {
        private const string MobileNumber = "123456789";
        private const string ValidVerificationCode = "1234";

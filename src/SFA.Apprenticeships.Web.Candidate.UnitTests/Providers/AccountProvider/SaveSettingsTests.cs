@@ -24,8 +24,8 @@
         {
             var candidateId = Guid.NewGuid();
             var candidateService = new Mock<ICandidateService>();
-            candidateService.Setup(cs => cs.GetCandidate(candidateId)).Returns(new CandidateBuilder(candidateId).PhoneNumber(phoneNumber).Build);
-            var viewModel = new SettingsViewModelBuilder().PhoneNumber(phoneNumber).VerifiedMobile(verifiedMobile).AllowEmailComms(allowEmailComms).AllowSmsComms(allowSmsComms).Build();
+            candidateService.Setup(cs => cs.GetCandidate(candidateId)).Returns(new CandidateBuilder(candidateId).PhoneNumber(phoneNumber).VerifiedMobile(verifiedMobile).Build);
+            var viewModel = new SettingsViewModelBuilder().PhoneNumber(phoneNumber).AllowEmailComms(allowEmailComms).AllowSmsComms(allowSmsComms).Build();
             var provider = new AccountProviderBuilder().With(candidateService).Build();
 
             Candidate candidate;
@@ -54,14 +54,14 @@
             var candidateId = Guid.NewGuid();
             var candidateService = new Mock<ICandidateService>();
             const string phoneNumber = "0123456789";
-            candidateService.Setup(cs => cs.GetCandidate(candidateId)).Returns(new CandidateBuilder(candidateId).PhoneNumber(phoneNumber).Build);
+            candidateService.Setup(cs => cs.GetCandidate(candidateId)).Returns(new CandidateBuilder(candidateId).PhoneNumber(phoneNumber).VerifiedMobile(verifiedMobile).Build);
             candidateService.Setup(cs => cs.SaveCandidate(It.IsAny<Candidate>())).Returns<Candidate>(c =>
             {
                 if (c.MobileVerificationRequired())
                     c.CommunicationPreferences.MobileVerificationCode = mobileVerificationCode;
                 return c;
             });
-            var viewModel = new SettingsViewModelBuilder().PhoneNumber(newPhoneNumber).VerifiedMobile(verifiedMobile).AllowSmsComms(allowSmsComms).Build();
+            var viewModel = new SettingsViewModelBuilder().PhoneNumber(newPhoneNumber).AllowSmsComms(allowSmsComms).Build();
             var provider = new AccountProviderBuilder().With(candidateService).Build();
 
             Candidate candidate;

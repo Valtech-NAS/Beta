@@ -61,9 +61,8 @@
                 candidate.CommunicationPreferences.AllowMobile = model.AllowSmsComms;
                 if (candidate.RegistrationDetails.PhoneNumber != model.PhoneNumber)
                 {
-                    model.VerifiedMobile = false;
+                    candidate.CommunicationPreferences.VerifiedMobile = false;
                 }
-                candidate.CommunicationPreferences.VerifiedMobile = model.VerifiedMobile;
                 
                 PatchRegistrationDetails(candidate.RegistrationDetails, model);
                 _candidateService.SaveCandidate(candidate);
