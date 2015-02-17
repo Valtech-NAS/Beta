@@ -35,7 +35,7 @@
             _mapper = container.GetInstance<IMapper>();
         }
 
-        [Test]
+        [Test, Category("Integration")]
         public void ShouldReturnFrameworksCount()
         {
             var vacancySearchProvider = new ApprenticeshipsSearchProvider(_elasticsearchClientFactory, _mapper,
@@ -46,7 +46,7 @@
             vacancies.AggregationResults.Should().HaveCount(c => c > 0);
         }
 
-        [Test]
+        [Test, Category("Integration")]
         public void ShouldSearchBySector()
         {
 
@@ -61,7 +61,7 @@
             vacancies.AggregationResults.Should().HaveCount(c => c > 0);
         }
 
-        [Test]
+        [Test, Category("Integration")]
         public void ShouldSearchBySectorAndFramework()
         {
             var vacancySearchProvider = new ApprenticeshipsSearchProvider(_elasticsearchClientFactory, _mapper,
