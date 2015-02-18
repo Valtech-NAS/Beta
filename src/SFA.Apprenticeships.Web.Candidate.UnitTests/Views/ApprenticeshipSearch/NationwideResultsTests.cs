@@ -255,24 +255,5 @@
             view.GetElementbyId("national-results-message")
                     .InnerHtml.Should().BeEmpty();
         }
-
-        [Test]
-        public void NationWideResultsCanNotHaveTheirSortOrderChanged()
-        {
-            var results = new searchResults();
-
-            var view = results.RenderAsHtml(new ApprenticeshipSearchResponseViewModel
-            {
-                VacancySearch = new ApprenticeshipSearchViewModel
-                {
-                    LocationType = ApprenticeshipLocationType.National,
-                    SortTypes = new SelectList(new List<string> { "one", "two"})
-                },
-                TotalLocalHits = 2,
-                TotalNationalHits = 3
-            });
-
-            view.GetElementbyId("sort-results").Attributes["disabled"].Value.Should().Be("disabled");
-        }
     }
 }

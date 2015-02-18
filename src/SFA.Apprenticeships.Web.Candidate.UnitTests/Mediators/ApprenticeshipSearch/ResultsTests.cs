@@ -129,9 +129,10 @@
 
             var viewModel = response.ViewModel;
             var sortTypes = viewModel.SortTypes.ToList();
-            sortTypes.Count.Should().Be(2);
+            sortTypes.Count.Should().Be(3);
             sortTypes.Should().Contain(sli => sli.Value == VacancySearchSortType.ClosingDate.ToString());
             sortTypes.Should().Contain(sli => sli.Value == VacancySearchSortType.Distance.ToString());
+            sortTypes.Should().Contain(sli => sli.Value == VacancySearchSortType.RecentlyAdded.ToString());
         }
 
         [Test]
@@ -149,10 +150,11 @@
 
             var viewModel = response.ViewModel;
             var sortTypes = viewModel.SortTypes.ToList();
-            sortTypes.Count.Should().Be(3);
+            sortTypes.Count.Should().Be(4);
             sortTypes.Should().Contain(sli => sli.Value == VacancySearchSortType.Relevancy.ToString());
             sortTypes.Should().Contain(sli => sli.Value == VacancySearchSortType.ClosingDate.ToString());
             sortTypes.Should().Contain(sli => sli.Value == VacancySearchSortType.Distance.ToString());
+            sortTypes.Should().Contain(sli => sli.Value == VacancySearchSortType.RecentlyAdded.ToString());
         }
 
         [Test]
@@ -557,30 +559,6 @@
             returnedSearch.SubCategories.Length.Should().Be(1);
             returnedSearch.SubCategories[0].Should().Be(selectedCategorySubCategory);
             returnedSearch.SearchMode.Should().Be(ApprenticeshipSearchMode.Keyword);
-        }
-
-        [Test]
-        public void CategorySearchWithKeywordsShouldNotShowBestMatchOption()
-        {
-            var searchViewModel = new ApprenticeshipSearchViewModel
-            {
-                Keywords = AKeyword,
-                Location = ACityWithOneSuggestedLocation,
-                LocationType = ApprenticeshipLocationType.NonNational,
-                Category = "1",
-                SearchMode = ApprenticeshipSearchMode.Category
-            };
-
-            var response = Mediator.Results(searchViewModel);
-
-            response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
-
-            response.ViewModel.VacancySearch.SortType.Should().Be(VacancySearchSortType.Distance);
-            var sortTypes = response.ViewModel.SortTypes.ToList();
-            sortTypes.Count.Should().Be(3);
-            sortTypes.Should().Contain(sli => sli.Value == VacancySearchSortType.Relevancy.ToString());
-            sortTypes.Should().Contain(sli => sli.Value == VacancySearchSortType.ClosingDate.ToString());
-            sortTypes.Should().Contain(sli => sli.Value == VacancySearchSortType.Distance.ToString());
         }
 
         [Test]
