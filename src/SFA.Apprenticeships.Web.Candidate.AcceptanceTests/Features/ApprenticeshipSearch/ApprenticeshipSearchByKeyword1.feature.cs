@@ -180,11 +180,11 @@ this.FeatureBackground();
             table4.AddRow(new string[] {
                         "SortOrderingDropDownItemsCount",
                         "Equals",
-                        "3"});
+                        "4"});
             table4.AddRow(new string[] {
                         "SortOrderingDropDownItemsText",
                         "Equals",
-                        "Best Match,Closing Date,Distance"});
+                        "Best Match,Closing Date,Distance,Recently Added"});
             table4.AddRow(new string[] {
                         "SortOrderingDropDown",
                         "Equals",
@@ -267,11 +267,11 @@ this.FeatureBackground();
             table7.AddRow(new string[] {
                         "SortOrderingDropDownItemsCount",
                         "Equals",
-                        "2"});
+                        "3"});
             table7.AddRow(new string[] {
                         "SortOrderingDropDownItemsText",
                         "Equals",
-                        "Closing Date,Distance"});
+                        "Closing Date,Distance,Recently Added"});
             table7.AddRow(new string[] {
                         "SortOrderingDropDown",
                         "Equals",
@@ -446,11 +446,11 @@ this.FeatureBackground();
             table15.AddRow(new string[] {
                         "SortOrderingDropDownItemsCount",
                         "Equals",
-                        "3"});
+                        "4"});
             table15.AddRow(new string[] {
                         "SortOrderingDropDownItemsText",
                         "Equals",
-                        "Best Match,Closing Date,Distance"});
+                        "Best Match,Closing Date,Distance,Recently Added"});
             table15.AddRow(new string[] {
                         "SortOrderingDropDown",
                         "Equals",

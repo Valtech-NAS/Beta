@@ -164,5 +164,5 @@ Scenario: Different results per page
 		| ResultsPerPageDropDown | 50 per page |
 	Then I am on the TraineeshipSearchResultPage page
 	And I see
-        | Field                  | Rule   | Value |
-        | SearchResultItemsCount | Equals | 50    |
+        | Field                  | Rule         | Value |
+        | SearchResultItemsCount | Greater Than | 25    |

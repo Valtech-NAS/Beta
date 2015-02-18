@@ -585,8 +585,8 @@ this.FeatureBackground();
                         "Value"});
             table29.AddRow(new string[] {
                         "SearchResultItemsCount",
-                        "Equals",
-                        "50"});
+                        "Greater Than",
+                        "25"});
 #line 166
  testRunner.And("I see", ((string)(null)), table29, "And ");
 #line hidden

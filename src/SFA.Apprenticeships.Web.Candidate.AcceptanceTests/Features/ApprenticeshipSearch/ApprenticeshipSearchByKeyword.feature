@@ -36,11 +36,11 @@ Scenario: When searching by keyword the results are ordered by best match
 	And I choose Search
 	And I am on the ApprenticeshipSearchResultPage page
 	Then I see 
-        | Field                          | Rule         | Value                            |
-        | SearchResultItemsCount         | Greater Than | 0                                |
-        | SortOrderingDropDownItemsCount | Equals       | 3                                |
-        | SortOrderingDropDownItemsText  | Equals       | Best Match,Closing Date,Distance |
-        | SortOrderingDropDown           | Equals       | Best Match                       |
+        | Field                          | Rule         | Value                                           |
+        | SearchResultItemsCount         | Greater Than | 0                                               |
+        | SortOrderingDropDownItemsCount | Equals       | 4                                               |
+        | SortOrderingDropDownItemsText  | Equals       | Best Match,Closing Date,Distance,Recently Added |
+        | SortOrderingDropDown           | Equals       | Best Match                                      |
 
 @US449 @SmokeTests
 Scenario: When searching by keyword then removing keyword and searching again the results are ordered by distance
@@ -61,11 +61,11 @@ Scenario: When searching by keyword then removing keyword and searching again th
 	And I choose Search
 	Then I am on the ApprenticeshipSearchResultPage page
 	Then I see
-        | Field                          | Rule         | Value                 |
-        | SearchResultItemsCount         | Greater Than | 0                     |
-        | SortOrderingDropDownItemsCount | Equals       | 2                     |
-        | SortOrderingDropDownItemsText  | Equals       | Closing Date,Distance |
-        | SortOrderingDropDown           | Equals       | Distance              |
+        | Field                          | Rule         | Value                                |
+        | SearchResultItemsCount         | Greater Than | 0                                    |
+        | SortOrderingDropDownItemsCount | Equals       | 3                                    |
+        | SortOrderingDropDownItemsText  | Equals       | Closing Date,Distance,Recently Added |
+        | SortOrderingDropDown           | Equals       | Distance                             |
 
 @US449 @SmokeTests
 Scenario: When searching by keyword then changing keyword and searching again the new keyword is used
@@ -113,11 +113,11 @@ Scenario: When searching by location then adding keyword and searching again the
 	And I choose Search
 	Then I am on the ApprenticeshipSearchResultPage page
 	Then I see
-        | Field                          | Rule         | Value                            |
-        | SearchResultItemsCount         | Greater Than | 0                                |
-        | SortOrderingDropDownItemsCount | Equals       | 3                                |
-        | SortOrderingDropDownItemsText  | Equals       | Best Match,Closing Date,Distance |
-        | SortOrderingDropDown           | Equals       | Best Match                       |
+        | Field                          | Rule         | Value                                           |
+        | SearchResultItemsCount         | Greater Than | 0                                               |
+        | SortOrderingDropDownItemsCount | Equals       | 4                                               |
+        | SortOrderingDropDownItemsText  | Equals       | Best Match,Closing Date,Distance,Recently Added |
+        | SortOrderingDropDown           | Equals       | Best Match                                      |
 
 #Inclusion of nationwide vacancies in results superceeded by US500
 @US449 @SmokeTests

@@ -121,11 +121,11 @@ this.FeatureBackground();
             table2.AddRow(new string[] {
                         "SortOrderingDropDownItemsCount",
                         "Equals",
-                        "2"});
+                        "3"});
             table2.AddRow(new string[] {
                         "SortOrderingDropDownItemsText",
                         "Equals",
-                        "Closing Date,Distance"});
+                        "Closing Date,Distance,Recently Added"});
             table2.AddRow(new string[] {
                         "SortOrderingDropDown",
                         "Equals",

@@ -19,11 +19,11 @@ Scenario: When searching by location the results are ordered by distance and ord
 	And I choose Search
 	And I am on the TraineeshipSearchResultPage page
 	Then I see
-        | Field                          | Rule         | Value                 |
-        | SearchResultItemsCount         | Greater Than | 0                     |
-        | SortOrderingDropDownItemsCount | Equals       | 2                     |
-        | SortOrderingDropDownItemsText  | Equals       | Closing Date,Distance |
-        | SortOrderingDropDown           | Equals       | Distance              |
+        | Field                          | Rule         | Value                                |
+        | SearchResultItemsCount         | Greater Than | 0                                    |
+        | SortOrderingDropDownItemsCount | Equals       | 3                                    |
+        | SortOrderingDropDownItemsText  | Equals       | Closing Date,Distance,Recently Added |
+        | SortOrderingDropDown           | Equals       | Distance                             |
 
 @SmokeTests
 Scenario: When searching by location the results are ordered by distance and distance is shown

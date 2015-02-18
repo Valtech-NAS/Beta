@@ -100,13 +100,13 @@ Scenario: Nationwide apprenticeships found by keyword can be ordered
 	When I choose NationwideLocationTypeLink
 	Then I am on the ApprenticeshipSearchResultPage page
 	And I see
-        | Field                          | Rule           | Value                   |
-        | LocalLocationTypeLink          | Exists         |                         |
-        | NationwideLocationTypeLink     | Does Not Exist |                         |
-        | SortOrderingDropDownItemsCount | Equals         | 2                       |
-        | SortOrderingDropDownItemsText  | Equals         | Best Match,Closing Date |
-        | SortOrderingDropDown           | Equals         | Best Match              |
-        | ResultsAreInClosingDateOrder   | Equals         | False                   |
+        | Field                          | Rule           | Value                                  |
+        | LocalLocationTypeLink          | Exists         |                                        |
+        | NationwideLocationTypeLink     | Does Not Exist |                                        |
+        | SortOrderingDropDownItemsCount | Equals         | 3                                      |
+        | SortOrderingDropDownItemsText  | Equals         | Best Match,Closing Date,Recently Added |
+        | SortOrderingDropDown           | Equals         | Best Match                             |
+        | ResultsAreInClosingDateOrder   | Equals         | False                                  |
 
 @SmokeTests
 Scenario: When I'm seeing nationwide apprenticeships and I change the results per page I remain there
