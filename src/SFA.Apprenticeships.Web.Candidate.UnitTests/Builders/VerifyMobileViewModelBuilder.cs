@@ -12,7 +12,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Builders
         private bool _showTraineeshipsLink;
         private bool _showTraineeshipsPrompt;
 
-        public VerifyMobileViewModelBuilder MobileNumber(string mobileNumber)
+        public VerifyMobileViewModelBuilder PhoneNumber(string mobileNumber)
         {
             _mobileNumber = mobileNumber;
             return this;

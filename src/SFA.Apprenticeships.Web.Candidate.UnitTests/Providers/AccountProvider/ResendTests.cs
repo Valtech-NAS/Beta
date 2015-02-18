@@ -4,35 +4,35 @@
     using Application.Interfaces.Candidates;
     using Builders;
     using Candidate.ViewModels.Account;
-    using Common.Models.Application;
-    using Domain.Entities.Applications;
+    using Domain.Entities.Exceptions;
     using Domain.Entities.UnitTests.Builder;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
-    using Domain.Entities.Candidates;
-    using Domain.Entities.Exceptions;
 
     [TestFixture]
-    public class VerifyMobileTests
+    public class ResendTests
     {
         private const string PhoneNumber = "123456789";
-        private const string VerificationCode = "1234";
 
         [TestCase(Domain.Entities.ErrorCodes.EntityStateError, VerifyMobileState.MobileVerificationNotRequired)]
-        [TestCase(Application.Interfaces.Users.ErrorCodes.MobileCodeVerificationFailed, VerifyMobileState.VerifyMobileCodeInvalid)]
         [TestCase(Application.Interfaces.Users.ErrorCodes.UnknownUserError, VerifyMobileState.Error)]
         public void GivenEntityStateError_ThenValidViewModelIsReturned(string errorCode, VerifyMobileState verifyMobileState)
         {
             //Arrange
             var candidateId = Guid.NewGuid();
+            var candidateMock =
+                new CandidateBuilder(candidateId).AllowMobile(true).PhoneNumber(PhoneNumber).VerifiedMobile(false).Build();
+
             var candidateServiceMock = new Mock<ICandidateService>();
-            candidateServiceMock.Setup(cs => cs.VerifyMobileCode(candidateId, VerificationCode)).Throws(new CustomException(errorCode));
-            var viewModel = new VerifyMobileViewModelBuilder().PhoneNumber(PhoneNumber).MobileVerificationCode(VerificationCode).Build();
+            candidateServiceMock.Setup(cs => cs.GetCandidate(candidateId)).Returns(candidateMock);
+            candidateServiceMock.Setup(cs => cs.SendMobileVerificationCode(candidateMock)).Throws(new CustomException(errorCode));
+
+            var viewModel = new VerifyMobileViewModelBuilder().PhoneNumber(PhoneNumber).Build();
             var provider = new AccountProviderBuilder().With(candidateServiceMock).Build();
 
             //Act
-            var result = provider.VerifyMobile(candidateId, viewModel);
+            var result = provider.SendMobileVerificationCode(candidateId, viewModel);
 
             //Assert
             result.Status.Should().Be(verifyMobileState);
@@ -45,19 +45,23 @@
         {
             //Arrange
             var candidateId = Guid.NewGuid();
+            var candidateMock =
+                new CandidateBuilder(candidateId).AllowMobile(true).PhoneNumber(PhoneNumber).VerifiedMobile(false).Build();
+
             var candidateServiceMock = new Mock<ICandidateService>();
-            candidateServiceMock.Setup(cs => cs.VerifyMobileCode(candidateId, VerificationCode)); ;
-            var viewModel = new VerifyMobileViewModelBuilder().PhoneNumber(PhoneNumber).MobileVerificationCode(VerificationCode).Build();
+            candidateServiceMock.Setup(cs => cs.GetCandidate(candidateId)).Returns(candidateMock);
+            candidateServiceMock.Setup(cs => cs.SendMobileVerificationCode(candidateMock));
+
+            var viewModel = new VerifyMobileViewModelBuilder().PhoneNumber(PhoneNumber).Build();
             var provider = new AccountProviderBuilder().With(candidateServiceMock).Build();
 
             //Act
-            var result = provider.VerifyMobile(candidateId, viewModel);
+            var result = provider.SendMobileVerificationCode(candidateId, viewModel);
 
             //Assert
             result.Status.Should().Be(VerifyMobileState.Ok);
             result.HasError().Should().BeFalse();
             result.ViewModelMessage.Should().BeNullOrEmpty();
-            
         }
     }
 }

@@ -160,3 +160,9 @@ Scenario: As a candidate I cannot save invalid personal settings
 	| Field | Rule   | Value                     |
 	| Text  | Equals | Please enter phone number |
 	| Href  | Equals | #PhoneNumber              |
+
+@US616
+Scenario: As a candidate I can verify my mobile number
+	
+	Given I navigated to the SettingsPage page
+	When I am on the SettingsPage page

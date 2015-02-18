@@ -162,11 +162,13 @@
                         model.Status = VerifyMobileState.Error;
                         break;
                 }
+                model.ViewModelMessage = e.Message;
             }
             catch (Exception e)
             {
                 _logger.Error("Mobile code verification failed for candidateId {0} and Lme {1}", candidateId, model.PhoneNumber, e);
                 model.Status = VerifyMobileState.Error;
+                model.ViewModelMessage = e.Message;
             }
             return model;
         }

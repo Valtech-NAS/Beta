@@ -231,6 +231,7 @@
     <Compile Include="Mediators\TraineeshipSearch\TestsBase.cs" />
     <Compile Include="Providers\AccountProvider\AccountProviderBuilder.cs" />
     <Compile Include="Providers\AccountProvider\GetSettingsViewModelTests.cs" />
+    <Compile Include="Providers\AccountProvider\ResendTests.cs" />
     <Compile Include="Providers\AccountProvider\SaveSettingsTests.cs" />
     <Compile Include="Providers\AccountProvider\VerifyMobileTests.cs" />
     <Compile Include="Providers\ApplicationProvider\ApprenticeshipApplicationProviderBuilder.cs" />
