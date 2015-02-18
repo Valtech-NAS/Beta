@@ -103,7 +103,7 @@
             switch (ex.Code)
             {
                 case ApplicationsErrorCodes.ApplicationDuplicatedError:
-                    _logger.Warn("Apprenticeship application has already been submitted to legacy system: Application Id: \"{0}\"", request.ApplicationId);
+                    _logger.Info("Apprenticeship application has already been submitted to legacy system: Application Id: \"{0}\"", request.ApplicationId);
                     SetApplicationStateSubmitted(apprenticeshipApplication);
                     break;
 
@@ -116,7 +116,7 @@
                     break;
 
                 case VacanciesErrorCodes.LegacyVacancyStateError:
-                    _logger.Info("Legacy Vacancy was in an invalid state. Apprenticeship application cannot be processed: Application Id: \"{0}\"", request.ApplicationId);
+                    _logger.Info("Legacy vacancy was in an invalid state. Apprenticeship application cannot be processed: Application Id: \"{0}\"", request.ApplicationId);
                     SetStateExpiredOrWithdrawn(apprenticeshipApplication);
                     break;
 
