@@ -83,6 +83,7 @@
         {
             var tokens = new List<CommunicationToken>
             {
+                new CommunicationToken(CommunicationTokens.CandidateFirstName, "FirstName"),
                 new CommunicationToken(CommunicationTokens.ExpiringDraftsCount, Convert.ToString(numOfVacancies))
             };
 
