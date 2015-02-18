@@ -307,8 +307,8 @@ WriteLiteral(" id=\"category-load-failed\"");
 
 WriteLiteral(" class=\"field-validation-error\"");
 
-WriteLiteral(">TODO: Category search is currently unavailable, please either reload the page to" +
-" try again or use the keyword search</div>\r\n");
+WriteLiteral(">Category search is currently unavailable. Please try again or use the keyword se" +
+"arch</div>\r\n");
 
             
             #line 48 "..\..\Views\ApprenticeshipSearch\_categories.cshtml"
