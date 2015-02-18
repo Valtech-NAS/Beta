@@ -279,7 +279,7 @@
 
         private static string FormatErrorMessage(Guid candidateId, CreateApplicationRequest legacyRequest)
         {
-            return string.Format("Legacy.CreateCandidate failed for candidate id='{0}' and vacancy id='{1}'",
+            return string.Format("Legacy.CreateApplication failed for candidate id='{0}' and vacancy id='{1}'",
                 candidateId, legacyRequest.Application.VacancyId);
         }
 
