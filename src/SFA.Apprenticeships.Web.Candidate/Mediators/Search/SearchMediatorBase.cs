@@ -61,6 +61,8 @@
                 sortTypeOptions.Add(new { SortType = VacancySearchSortType.Distance, Name = "Distance" });
             }
 
+            sortTypeOptions.Add(new {SortType = VacancySearchSortType.RecentlyAdded, Name = "Recently Added"});
+
             var sortTypes = new SelectList(
                 sortTypeOptions,
                 "SortType",

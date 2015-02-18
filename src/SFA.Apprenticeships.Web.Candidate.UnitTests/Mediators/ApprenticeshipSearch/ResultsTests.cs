@@ -609,5 +609,21 @@
 
             response.ViewModel.VacancySearch.LocationType.Should().Be(ApprenticeshipLocationType.National);
         }
+
+        [Test]
+        public void RecentlyAddedSortOption()
+        {
+            var searchViewModel = new ApprenticeshipSearchViewModel
+            {
+                Location = ACityWithOneSuggestedLocation
+            };
+
+            var response = Mediator.Results(searchViewModel);
+
+            
+            var viewModel = response.ViewModel;
+            viewModel.SortTypes.Last().Text.Should().Be("Recently Added");
+            viewModel.SortTypes.Last().Value.Should().Be(VacancySearchSortType.RecentlyAdded.ToString());
+        }
     }
 }

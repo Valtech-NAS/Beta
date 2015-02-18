@@ -3,13 +3,12 @@
 
 @if (Model.TotalLocalHits > 0 || Model.TotalNationalHits > 0)
 {
-    var disableSortDropdownList = string.IsNullOrEmpty(Model.VacancySearch.Keywords) && Model.VacancySearch.LocationType == ApprenticeshipLocationType.National ? true : false;
     <fieldset>
         <legend class="visuallyhidden">Search items</legend>
         <div class="float-right-wrap">
             <div class="form-group form-group-compound">
                 <label for="sort-results" class="heading-medium inline">Sort results</label>
-                @Html.DropDownList("sortType", Model.SortTypes, disableSortDropdownList ? new { @id = "sort-results", @disabled = "disabled" } as object : new { @id = "sort-results" })
+                @Html.DropDownList("sortType", Model.SortTypes, new { @id = "sort-results" })
                 <noscript>
                     <button class="button show-nojs" name="SearchAction" value="Sort">Sort</button>
                 </noscript>

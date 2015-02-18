@@ -53,7 +53,8 @@
                 if (parameters.Location != null)
                 {
                     if (parameters.SortType == VacancySearchSortType.ClosingDate ||
-                        parameters.SortType == VacancySearchSortType.Distance)
+                        parameters.SortType == VacancySearchSortType.Distance ||
+                        parameters.SortType == VacancySearchSortType.RecentlyAdded)
                     {
                         r.Distance = double.Parse(hitMd.Sorts.Skip(hitMd.Sorts.Count() - 1).First().ToString());
                     }
@@ -211,6 +212,21 @@
 
                 switch (parameters.SortType)
                 {
+                    case VacancySearchSortType.RecentlyAdded:
+                        s.Sort(v => v.OnField(f => f.Id).Descending());
+                        if (parameters.Location == null)
+                        {
+                            break;
+                        }
+                        //Need this to get the distance from the sort.
+                        //Was trying to get distance in relevancy without this sort but can't .. yet
+                        s.SortGeoDistance(g =>
+                        {
+                            g.PinTo(parameters.Location.GeoPoint.Latitude, parameters.Location.GeoPoint.Longitude)
+                                .Unit(GeoUnit.Miles).OnField(f => f.Location);
+                            return g;
+                        });
+                        break;
                     case VacancySearchSortType.Distance:
                         s.SortGeoDistance(g =>
                         {

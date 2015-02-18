@@ -4,6 +4,7 @@
     {
         Relevancy,
         Distance,
-        ClosingDate
+        ClosingDate,
+        RecentlyAdded
     }
 }

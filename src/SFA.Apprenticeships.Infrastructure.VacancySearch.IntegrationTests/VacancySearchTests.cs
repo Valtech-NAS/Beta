@@ -91,6 +91,19 @@
             vacancies.Results.Where(r => r.Distance > 40).Should().NotBeEmpty();
         }
 
+        [Test, Category("Integration")]
+        public void ShouldSortByPostedDate()
+        {
+            var vacancySearchProvider = new ApprenticeshipsSearchProvider(_elasticsearchClientFactory, _mapper,
+                SearchConfiguration.Instance, _logger.Object);
+
+            var searchParameters = GetPostedDateSearchParameters();
+
+            var vacancies = vacancySearchProvider.FindVacancies(searchParameters);
+
+            vacancies.Results.Should().BeInDescendingOrder(r => r.Id);
+        }
+
         private static ApprenticeshipSearchParameters GetCommonSearchParameters()
         {
             return new ApprenticeshipSearchParameters
@@ -121,6 +134,14 @@
             searchParameters.ApprenticeshipLevel = string.Empty;
             searchParameters.PageSize = 50;
             searchParameters.SortType = VacancySearchSortType.Relevancy;
+
+            return searchParameters;
+        }
+
+        private static ApprenticeshipSearchParameters GetPostedDateSearchParameters()
+        {
+            var searchParameters = GetCommonSearchParameters();
+            searchParameters.SortType = VacancySearchSortType.RecentlyAdded;
 
             return searchParameters;
         }
