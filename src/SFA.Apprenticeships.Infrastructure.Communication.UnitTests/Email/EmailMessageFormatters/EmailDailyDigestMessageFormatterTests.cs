@@ -19,6 +19,7 @@
     {
         private const string ExpiryVacanciesCountTag = "-Expiry.Vacancies.Count-";
         private const string ExpiryVacanciesInfoTag = "-Expiry.Vacancies.Info-";
+        private const string CandidateFirstNameTag = "-Candidate.FirstName-";
         private const string Pipe = "|";
         private const char Tilda = '~';
 
@@ -32,8 +33,6 @@
             var emailMessageFormatter = new EmailDailyDigestMessageFormatter();
             emailMessageFormatter.PopulateMessage(emailRequest, sendGridMessage.Object);
 
-            sendGridMessageSubstitutions.Count.Should().Be(2);
-            sendGridMessageSubstitutions.Count(s => s.ReplacementTag == ExpiryVacanciesCountTag).Should().Be(1);
             var countSubstitution = sendGridMessageSubstitutions.Single(s => s.ReplacementTag == ExpiryVacanciesCountTag);
             countSubstitution.SubstitutionValues.Count.Should().Be(1);
             countSubstitution.SubstitutionValues.Single().Should().Be(EmailDailyDigestMessageFormatter.OneSavedApplicationAboutToExpire);
@@ -54,8 +53,6 @@
             var emailMessageFormatter = new EmailDailyDigestMessageFormatter();
             emailMessageFormatter.PopulateMessage(emailRequest, sendGridMessage.Object);
 
-            sendGridMessageSubstitutions.Count.Should().Be(2);
-            sendGridMessageSubstitutions.Count(s => s.ReplacementTag == ExpiryVacanciesCountTag).Should().Be(1);
             var countSubstitution = sendGridMessageSubstitutions.Single(s => s.ReplacementTag == ExpiryVacanciesCountTag);
             countSubstitution.SubstitutionValues.Count.Should().Be(1);
             countSubstitution.SubstitutionValues.Single().Should().Be(EmailDailyDigestMessageFormatter.MoreThanOneSaveApplicationAboutToExpire);
@@ -77,14 +74,42 @@
             var emailMessageFormatter = new EmailDailyDigestMessageFormatter();
             emailMessageFormatter.PopulateMessage(emailRequest, sendGridMessage.Object);
 
-            sendGridMessageSubstitutions.Count.Should().Be(2);
-            sendGridMessageSubstitutions.Count(s => s.ReplacementTag == ExpiryVacanciesCountTag).Should().Be(1);
             var countSubstitution = sendGridMessageSubstitutions.Single(s => s.ReplacementTag == ExpiryVacanciesCountTag);
             countSubstitution.SubstitutionValues.Count.Should().Be(1);
             countSubstitution.SubstitutionValues.Single().Should().Be(EmailDailyDigestMessageFormatter.MoreThanOneSaveApplicationAboutToExpire);
             sendGridMessageSubstitutions.Count(s => s.ReplacementTag == ExpiryVacanciesInfoTag).Should().Be(1);
             var infoSubstitution = sendGridMessageSubstitutions.Single(s => s.ReplacementTag == ExpiryVacanciesInfoTag);
             infoSubstitution.SubstitutionValues.Single().Should().Be(GetExpectedInfoSubstitution(expiringDrafts));
+        }
+
+        [TestCase(1)]
+        [TestCase(2)]
+        public void ShouldContainCandidateFirstNameSubstitution(int noOfDrafts)
+        {
+            var expiringDrafts = GetExpiringDraftsSpecialCharacters(noOfDrafts);
+            var emailRequest = GetEmailRequest(expiringDrafts);
+            List<SendGridMessageSubstitution> sendGridMessageSubstitutions;
+            var sendGridMessage = GetSendGridMessage(out sendGridMessageSubstitutions);
+
+            var emailMessageFormatter = new EmailDailyDigestMessageFormatter();
+            emailMessageFormatter.PopulateMessage(emailRequest, sendGridMessage.Object);
+
+            sendGridMessageSubstitutions.Any(s => s.ReplacementTag == CandidateFirstNameTag).Should().BeTrue();
+        }
+
+        [TestCase(1)]
+        [TestCase(2)]
+        public void ShouldContainExpiryVacanciesCountSubstitution(int noOfDrafts)
+        {
+            var expiringDrafts = GetExpiringDraftsSpecialCharacters(noOfDrafts);
+            var emailRequest = GetEmailRequest(expiringDrafts);
+            List<SendGridMessageSubstitution> sendGridMessageSubstitutions;
+            var sendGridMessage = GetSendGridMessage(out sendGridMessageSubstitutions);
+
+            var emailMessageFormatter = new EmailDailyDigestMessageFormatter();
+            emailMessageFormatter.PopulateMessage(emailRequest, sendGridMessage.Object);
+
+            sendGridMessageSubstitutions.Any(s => s.ReplacementTag == ExpiryVacanciesCountTag).Should().BeTrue();
         }
 
         public void GivenMultipleExpiringDrafts_ThenOrderedByClosingDate()

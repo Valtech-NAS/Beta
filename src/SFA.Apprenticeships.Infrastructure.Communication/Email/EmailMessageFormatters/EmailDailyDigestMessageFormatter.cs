@@ -17,9 +17,20 @@
 
         public override void PopulateMessage(EmailRequest request, ISendGrid message)
         {
+            PopulateCandidateName(request, message);
+
             PopulateItemCountData(request, message);
 
             PopulateHtmlData(request, message);
+        }
+
+        private static void PopulateCandidateName(EmailRequest request, ISendGrid message)
+        {
+            var candidateFirstNameToken = SendGridTokenManager.GetEmailTemplateTokenForCommunicationToken(CommunicationTokens.CandidateFirstName);
+
+            var substitutionText = request.Tokens.First(t => t.Key == CommunicationTokens.CandidateFirstName).Value;
+
+            AddSubstitutionTo(message, candidateFirstNameToken, substitutionText);
         }
 
         private static void PopulateItemCountData(EmailRequest request, ISendGrid message)
