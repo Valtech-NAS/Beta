@@ -74,6 +74,25 @@
             return CandidateOrNull(mongoEntity);
         }
 
+        public Candidate Get(int legacyCandidateId, bool errorIfNotFound = true)
+        {
+            _logger.Debug("Calling repository to get candidate with legacyCandidateId={0}", legacyCandidateId);
+
+            var mongoEntity = Collection.FindOne(Query<MongoCandidate>.EQ(o => o.LegacyCandidateId, legacyCandidateId));
+
+            if (mongoEntity == null && errorIfNotFound)
+            {
+                var message = string.Format("Unknown candidate with legacyCandidateId={0}", legacyCandidateId);
+                _logger.Debug(message);
+
+                throw new CustomException(message, CandidateErrorCodes.CandidateNotFoundError);
+            }
+
+            LogOutcome(legacyCandidateId, mongoEntity);
+
+            return CandidateOrNull(mongoEntity);
+        }
+
         public void Delete(Guid id)
         {
             _logger.Debug("Calling repository to delete candidate with Id={0}", id);
@@ -110,6 +129,13 @@
             var message = mongoEntity == null ? "Found no candidate with username={0}" : "Found candidate with username={0}";
 
             _logger.Debug(message, username);
+        }
+
+        private void LogOutcome(int legacyCandidateId, MongoCandidate mongoEntity)
+        {
+            var message = mongoEntity == null ? "Found no candidate with legacyCandidateId={0}" : "Found candidate with legacyCandidateId={0}";
+
+            _logger.Debug(message, legacyCandidateId);
         }
 
         private Candidate CandidateOrNull(MongoCandidate mongoEntity)
