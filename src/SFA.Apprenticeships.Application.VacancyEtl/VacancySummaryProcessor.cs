@@ -55,13 +55,13 @@
 
             var vacancySumaries = BuildVacancySummaryPages(scheduledQueueMessage.ExpectedExecutionTime, vacancyPageCount).ToList();
 
+            foreach (var vacancySummaryPage in vacancySumaries)
+            {
+                _messageBus.PublishMessage(vacancySummaryPage);
+            }
+                
             // Only delete from queue once we have all vacancies from the service without error.
             _processControlQueue.DeleteMessage(scheduledQueueMessage.MessageId, scheduledQueueMessage.PopReceipt);
-
-            Parallel.ForEach(
-                vacancySumaries,
-                new ParallelOptions { MaxDegreeOfParallelism = 5 },
-                vacancySummaryPage => _messageBus.PublishMessage(vacancySummaryPage));
 
             _logger.Info("Queued {0} vacancy summary pages", vacancySumaries.Count());
         }
