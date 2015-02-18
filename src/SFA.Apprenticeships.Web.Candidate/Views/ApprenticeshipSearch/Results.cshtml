@@ -7,7 +7,7 @@
     ViewBag.Title = "Apprenticeships - Results";
     Layout = "~/Views/Shared/_ApprenticeshipLayout.cshtml";
 
-    var locationTypeLink = Model.VacancySearch.LocationType == ApprenticeshipLocationType.National ? Url.Action("results", new ApprenticeshipSearchViewModel(Model.VacancySearch) { LocationType = ApprenticeshipLocationType.NonNational, SearchAction = SearchAction.LocationTypeChanged, PageNumber = 1 }) : Url.Action("results", new ApprenticeshipSearchViewModel(Model.VacancySearch) { LocationType = ApprenticeshipLocationType.National, SearchAction = SearchAction.LocationTypeChanged, /*SortType = VacancySearchSortType.Distance,*/ PageNumber = 1 });
+    var locationTypeLink = Model.VacancySearch.LocationType == ApprenticeshipLocationType.National ? Url.Action("results", new ApprenticeshipSearchViewModel(Model.VacancySearch) { LocationType = ApprenticeshipLocationType.NonNational, SearchAction = SearchAction.LocationTypeChanged, PageNumber = 1 }) : Url.Action("results", new ApprenticeshipSearchViewModel(Model.VacancySearch) { LocationType = ApprenticeshipLocationType.National, SearchAction = SearchAction.LocationTypeChanged, SortType = VacancySearchSortType.Distance, PageNumber = 1 });
 
     string resultMessage;
     string nationalResultsMessage;

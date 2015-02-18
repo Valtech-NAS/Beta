@@ -273,11 +273,11 @@
                 model.SortType = VacancySearchSortType.Distance;
             }
 
-            //if (model.LocationType == ApprenticeshipLocationType.National && string.IsNullOrWhiteSpace(model.Keywords) &&
-            //    model.SortType != VacancySearchSortType.ClosingDate)
-            //{
-            //    model.SortType = VacancySearchSortType.ClosingDate;
-            //}
+            if (model.LocationType == ApprenticeshipLocationType.National && string.IsNullOrWhiteSpace(model.Keywords) &&
+                model.SortType != VacancySearchSortType.ClosingDate && model.SearchAction != SearchAction.Sort)
+            {
+                model.SortType = VacancySearchSortType.ClosingDate;
+            }
 
             if (model.SearchAction == SearchAction.Search && !string.IsNullOrWhiteSpace(model.Keywords))
             {

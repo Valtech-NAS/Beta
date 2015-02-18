@@ -74,7 +74,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.ApprenticeshipSearch
     ViewBag.Title = "Apprenticeships - Results";
     Layout = "~/Views/Shared/_ApprenticeshipLayout.cshtml";
 
-    var locationTypeLink = Model.VacancySearch.LocationType == ApprenticeshipLocationType.National ? Url.Action("results", new ApprenticeshipSearchViewModel(Model.VacancySearch) { LocationType = ApprenticeshipLocationType.NonNational, SearchAction = SearchAction.LocationTypeChanged, PageNumber = 1 }) : Url.Action("results", new ApprenticeshipSearchViewModel(Model.VacancySearch) { LocationType = ApprenticeshipLocationType.National, SearchAction = SearchAction.LocationTypeChanged, /*SortType = VacancySearchSortType.Distance,*/ PageNumber = 1 });
+    var locationTypeLink = Model.VacancySearch.LocationType == ApprenticeshipLocationType.National ? Url.Action("results", new ApprenticeshipSearchViewModel(Model.VacancySearch) { LocationType = ApprenticeshipLocationType.NonNational, SearchAction = SearchAction.LocationTypeChanged, PageNumber = 1 }) : Url.Action("results", new ApprenticeshipSearchViewModel(Model.VacancySearch) { LocationType = ApprenticeshipLocationType.National, SearchAction = SearchAction.LocationTypeChanged, SortType = VacancySearchSortType.Distance, PageNumber = 1 });
 
     string resultMessage;
     string nationalResultsMessage;
@@ -154,14 +154,14 @@ WriteLiteral("\r\n    <meta");
 
 WriteLiteral(" name=\"WT.oss_r\"");
 
-WriteAttribute("content", Tuple.Create(" content=\"", 3567), Tuple.Create("\"", 3598)
+WriteAttribute("content", Tuple.Create(" content=\"", 3563), Tuple.Create("\"", 3594)
             
             #line 81 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
-, Tuple.Create(Tuple.Create("", 3577), Tuple.Create<System.Object, System.Int32>(Model.TotalLocalHits
+, Tuple.Create(Tuple.Create("", 3573), Tuple.Create<System.Object, System.Int32>(Model.TotalLocalHits
             
             #line default
             #line hidden
-, 3577), false)
+, 3573), false)
 );
 
 WriteLiteral(" />\r\n");

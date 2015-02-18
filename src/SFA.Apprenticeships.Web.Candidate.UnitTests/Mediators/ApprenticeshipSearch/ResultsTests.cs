@@ -165,7 +165,7 @@
                 Location = ACityWithOneSuggestedLocation,
                 LocationType = ApprenticeshipLocationType.National,
                 SortType = VacancySearchSortType.Distance,
-                SearchAction = SearchAction.Sort
+                SearchAction = SearchAction.LocationTypeChanged
             };
 
             var response = Mediator.Results(searchViewModel);
