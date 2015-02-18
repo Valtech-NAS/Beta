@@ -10,7 +10,6 @@
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
-    using FizzWare.NBuilder;
     using Interfaces.Logging;
     using Moq;
     using NUnit.Framework;
@@ -22,6 +21,7 @@
         private Mock<IApplicationStatusUpdateStrategy> _applicationStatusUpdateStrategy;
         private Mock<ILegacyApplicationStatusesProvider> _legacyApplicationStatusProvider;
         private Mock<IApprenticeshipApplicationReadRepository> _apprenticeshipApplicationReadMock;
+        private Mock<ICandidateReadRepository> _candidateReadMock;
         private Mock<ITraineeshipApplicationReadRepository> _traineeshipApplicationReadMock;
         private Mock<IConfigurationManager> _configurationManagerMock;
         private Mock<IMessageBus> _bus;
@@ -33,12 +33,13 @@
             _legacyApplicationStatusProvider = new Mock<ILegacyApplicationStatusesProvider>();
             _apprenticeshipApplicationReadMock = new Mock<IApprenticeshipApplicationReadRepository>();
             _traineeshipApplicationReadMock = new Mock<ITraineeshipApplicationReadRepository>();
+            _candidateReadMock = new Mock<ICandidateReadRepository>();
             _applicationStatusUpdateStrategy = new Mock<IApplicationStatusUpdateStrategy>();
             _bus = new Mock<IMessageBus>();
             _logger = new Mock<ILogService>();
             _configurationManagerMock = new Mock<IConfigurationManager>();
             _applicationStatusProcessor = new ApplicationStatusProcessor(_legacyApplicationStatusProvider.Object,
-                _apprenticeshipApplicationReadMock.Object, _traineeshipApplicationReadMock.Object,
+                _apprenticeshipApplicationReadMock.Object, _traineeshipApplicationReadMock.Object, _candidateReadMock.Object, 
                 _applicationStatusUpdateStrategy.Object, _bus.Object, _logger.Object, _configurationManagerMock.Object);
         }
 

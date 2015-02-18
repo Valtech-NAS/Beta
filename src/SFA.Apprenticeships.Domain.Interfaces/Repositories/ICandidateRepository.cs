@@ -7,6 +7,8 @@
     {
         Candidate Get(Guid id, bool errorIfNotFound);
         Candidate Get(string username, bool errorIfNotFound = true);
+
+        Candidate Get(int legacyCandidateId, bool errorIfNotFound = true);
     }
 
     public interface ICandidateWriteRepository : IWriteRepository<Candidate>

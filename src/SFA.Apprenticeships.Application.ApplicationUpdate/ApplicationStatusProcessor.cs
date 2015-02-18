@@ -19,6 +19,7 @@
         private readonly ILegacyApplicationStatusesProvider _legacyApplicationStatusesProvider;
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
         private readonly ITraineeshipApplicationReadRepository _traineeshipApplicationReadRepository;
+        private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly IApplicationStatusUpdateStrategy _applicationStatusUpdateStrategy;
         private readonly IMessageBus _messageBus;
         private int? _applicationStatusExtractWindow;
@@ -26,12 +27,14 @@
         public ApplicationStatusProcessor(ILegacyApplicationStatusesProvider legacyApplicationStatusesProvider,
             IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
             ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository,
-            IApplicationStatusUpdateStrategy applicationStatusUpdateStrategy, 
+            ICandidateReadRepository candidateReadRepository,
+            IApplicationStatusUpdateStrategy applicationStatusUpdateStrategy,
             IMessageBus messageBus, ILogService logger, IConfigurationManager configurationManager)
         {
             _legacyApplicationStatusesProvider = legacyApplicationStatusesProvider;
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
             _traineeshipApplicationReadRepository = traineeshipApplicationReadRepository;
+            _candidateReadRepository = candidateReadRepository;
             _applicationStatusUpdateStrategy = applicationStatusUpdateStrategy;
             _messageBus = messageBus;
             _logger = logger;
@@ -137,7 +140,6 @@
 
         private bool ProcessApprenticeshipApplication(ApplicationStatusSummary applicationStatusSummary)
         {
-            // TODO: 1.6: get application by LegacyCandidateId + LegacyVacancyId. This will enable LegacyApplicationId to be 'back-filled' if missing. REQUIRES DISCUSSION
             var apprenticeshipApplicationDetail = default(ApprenticeshipApplicationDetail);
 
             if (applicationStatusSummary.ApplicationId != Guid.Empty)
@@ -149,6 +151,13 @@
             {
                 apprenticeshipApplicationDetail = _apprenticeshipApplicationReadRepository.Get(applicationStatusSummary.LegacyApplicationId);
             }
+
+            if (apprenticeshipApplicationDetail == null && applicationStatusSummary.LegacyCandidateId != 0)
+            {
+                // in some cases the application can't be found using the application IDs so use legacy candidate and vacancy IDs
+                var candidate = _candidateReadRepository.Get(applicationStatusSummary.LegacyCandidateId);
+                apprenticeshipApplicationDetail = _apprenticeshipApplicationReadRepository.GetForCandidate(candidate.EntityId, applicationStatusSummary.LegacyVacancyId);
+            } 
 
             if (apprenticeshipApplicationDetail == null)
             {
@@ -162,8 +171,14 @@
 
         private bool ProcessTraineeshipApplication(ApplicationStatusSummary applicationStatusSummary)
         {
-            // TODO: 1.6: get application by LegacyCandidateId + LegacyVacancyId. This will enable LegacyApplicationId to be 'back-filled' if missing. REQUIRES DISCUSSION
             var traineeshipApplicationDetail = _traineeshipApplicationReadRepository.Get(applicationStatusSummary.LegacyApplicationId);
+
+            if (traineeshipApplicationDetail == null && applicationStatusSummary.LegacyCandidateId != 0)
+            {
+                // in some cases the application can't be found using the application IDs so use legacy candidate and vacancy IDs
+                var candidate = _candidateReadRepository.Get(applicationStatusSummary.LegacyCandidateId);
+                traineeshipApplicationDetail = _traineeshipApplicationReadRepository.GetForCandidate(candidate.EntityId, applicationStatusSummary.LegacyVacancyId);
+            }
 
             if (traineeshipApplicationDetail == null)
             {
