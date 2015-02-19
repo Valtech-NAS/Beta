@@ -4,10 +4,11 @@
     using AutoMapper;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
+    using Domain.Entities.Exceptions;
     using Domain.Entities.Users;
-    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Repositories;
+    using Interfaces.Vacancies;
     using Vacancy;
 
     public class CreateApprenticeshipApplicationStrategy : ICreateApprenticeshipApplicationStrategy
@@ -62,9 +63,14 @@
             var vacancyDetails = _vacancyDataProvider.GetVacancyDetails(vacancyId);
 
             if (vacancyDetails == null) return null;
-
+            
             var candidate = _candidateReadRepository.Get(candidateId);
             var applicationDetail = CreateApplicationDetail(candidate, vacancyDetails);
+
+            if (vacancyDetails.ApplyViaEmployerWebsite)
+            {
+                return applicationDetail;
+            }
 
             _apprenticeshipApplicationWriteRepository.Save(applicationDetail);
 
