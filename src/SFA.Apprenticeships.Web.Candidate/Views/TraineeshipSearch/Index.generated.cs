@@ -116,14 +116,14 @@ WriteLiteral(">\r\n");
             #line hidden
             
             #line 19 "..\..\Views\TraineeshipSearch\Index.cshtml"
-           Write(Html.FormTextFor(m => m.Location));
+           Write(Html.FormTextFor(m => m.Location, hintHtmlAttributes: new { id = "geoLocateContainer" }));
 
             
             #line default
             #line hidden
             
             #line 19 "..\..\Views\TraineeshipSearch\Index.cshtml"
-                                                  
+                                                                                                         
 
 
             
@@ -319,7 +319,24 @@ WriteLiteral("\',\r\n            latlonhash: \'#");
             
             #line default
             #line hidden
-WriteLiteral("\'\r\n        });\r\n    </script>\r\n");
+WriteLiteral("\'\r\n        });\r\n    </script>\r\n    <script");
+
+WriteLiteral(" type=\"text/javascript\"");
+
+WriteLiteral(" src=\"https://maps.googleapis.com/maps/api/js\"");
+
+WriteLiteral("></script>\r\n");
+
+WriteLiteral("    ");
+
+            
+            #line 64 "..\..\Views\TraineeshipSearch\Index.cshtml"
+Write(Scripts.Render("~/bundles/nas/geoLocater"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
 
 });
 

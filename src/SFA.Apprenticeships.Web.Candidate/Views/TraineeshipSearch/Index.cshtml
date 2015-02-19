@@ -16,7 +16,7 @@
             {
                 @Html.Partial("ValidationSummary", ViewData.ModelState)
 
-                @Html.FormTextFor(m => m.Location)
+                @Html.FormTextFor(m => m.Location, hintHtmlAttributes: new { id = "geoLocateContainer" })
 
                 <div class="form-group">
                     <button class="button" id="search-button">Search</button>
@@ -60,4 +60,6 @@
             latlonhash: '#@(Html.IdFor(m => m.Hash))'
         });
     </script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+    @Scripts.Render("~/bundles/nas/geoLocater")
 }

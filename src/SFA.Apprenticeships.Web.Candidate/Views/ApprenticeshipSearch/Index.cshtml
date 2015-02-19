@@ -38,7 +38,7 @@
                     }
                     <p class="visuallyhidden" id="keywordsHint">Try words that describe the type of apprenticeship you want, for example “carpentry” or “mechanics”.</p>
                     
-                    @Html.FormTextFor(m => m.Location, containerHtmlAttributes: new { @class = "tabbed-element tab1" + categoriesTabClass + elementControlClass })
+                    @Html.FormTextFor(m => m.Location, containerHtmlAttributes: new { @class = "tabbed-element tab1" + categoriesTabClass + elementControlClass }, hintHtmlAttributes: new { id = "geoLocateContainer" })
 
                     <div class="inline tabbed-element tab1 @categoriesTabClass @elementControlClass">
                         <div class="form-group">
@@ -87,6 +87,7 @@
 
 @section scripts
 {   
+
     @Scripts.Render("~/bundles/nas/locationsearch")
     <script>
         $("#Location").locationMatch({
@@ -104,4 +105,6 @@
             $("#SearchMode").val("Category");
         });
     </script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+    @Scripts.Render("~/bundles/nas/geoLocater")
 }

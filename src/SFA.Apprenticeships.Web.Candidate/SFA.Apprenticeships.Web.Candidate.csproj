@@ -219,6 +219,7 @@
     <Content Include="403.html" />
     <Content Include="Content\_assets\css\main-1.5.0.862.css" />
     <Content Include="Content\_assets\css\main-ie8-1.5.0.862.css" />
+    <Content Include="Content\_assets\js\nas\geoLocater.js" />
     <Content Include="TraineeshipNotFound.html" />
     <Content Include="Content\_assets\img\icon-external-hover.svg" />
     <Content Include="Content\_assets\img\icon-external.png" />
