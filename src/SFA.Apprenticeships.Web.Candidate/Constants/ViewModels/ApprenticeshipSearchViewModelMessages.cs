@@ -14,7 +14,7 @@
 
         public static class LocationMessages
         {
-            public const string LabelText = "Apprenticeship location";
+            public const string LabelText = "Location";
             public const string HintText = "Enter postcode, town or city";
             public const string RequiredErrorText = "Please enter location";
             public const string LengthErrorText = "Location must be 3 or more characters or a postcode";
