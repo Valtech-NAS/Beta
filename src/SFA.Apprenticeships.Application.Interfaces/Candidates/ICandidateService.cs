@@ -59,5 +59,7 @@
         void SendMobileVerificationCode(Candidate candidate);
 
         void VerifyMobileCode(Guid candidateId, string verificationCode);
+
+        //todo: 1.6: void SendContactMessage(ContactMessage contactMessage);
     }
 }

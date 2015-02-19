@@ -49,8 +49,7 @@
 
         public LocationsViewModel FindLocation(string placeNameOrPostcode)
         {
-            _logger.Debug("Calling SearchProvider to find the location for placename or postcode: {0}",
-                placeNameOrPostcode);
+            _logger.Debug("Calling SearchProvider to find the location for place name or postcode: {0}", placeNameOrPostcode);
 
             try
             {
@@ -86,7 +85,7 @@
             }
             catch (Exception e)
             {
-                var message = string.Format("Find location failed for placename or postcode {0}", placeNameOrPostcode);
+                var message = string.Format("Find location failed for place name or postcode {0}", placeNameOrPostcode);
                 _logger.Error(message, e);
                 throw;
             }

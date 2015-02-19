@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
     using System;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.Applications;
+    using ViewModels.Applications;
 
     public interface ITraineeshipApplicationProvider
     {

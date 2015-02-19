@@ -9,6 +9,7 @@
         ApprenticeshipApplicationSubmitted,
         TraineeshipApplicationSubmitted,
         PasswordChanged,
-        DailyDigest
+        DailyDigest,
+        ContactMessage
     }
 }
