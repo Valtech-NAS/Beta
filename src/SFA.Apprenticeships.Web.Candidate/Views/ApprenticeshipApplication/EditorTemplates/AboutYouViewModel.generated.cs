@@ -84,7 +84,7 @@ WriteLiteral(" aria-hidden=\"true\"");
 
 WriteLiteral(@">
                 Think carefully about how you answer these questions. Where possible,
-                keep the vacancy that you're applying for in mind, and tailor your
+                keep the apprenticeship that you're applying for in mind, and tailor your
                 answers to match the role.
             </p>
         </details>
