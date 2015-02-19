@@ -5,26 +5,28 @@
 
     internal static class TraineeshipApplicationDetailExtension
     {
-        internal static bool UpdateTraineeshipApplicationDetail(this TraineeshipApplicationDetail traineeshipApplication,
-            ApplicationStatusSummary applicationStatusSummary)
+        internal static bool UpdateTraineeshipApplicationDetail(this TraineeshipApplicationDetail traineeshipApplication, ApplicationStatusSummary applicationStatusSummary)
         {
             var updated = false;
 
-            if (traineeshipApplication.Status != applicationStatusSummary.ApplicationStatus)
+            if (applicationStatusSummary.IsLegacySystemUpdate())
             {
-                traineeshipApplication.Status = applicationStatusSummary.ApplicationStatus;
+                // Only update application status etc. if update originated from Legacy system.
+                if (traineeshipApplication.Status != applicationStatusSummary.ApplicationStatus)
+                {
+                    traineeshipApplication.Status = applicationStatusSummary.ApplicationStatus;
 
-                // Application status has changed, ensure it appears on the candidate's dashboard.
-                traineeshipApplication.IsArchived = false;
+                    // Application status has changed, ensure it appears on the candidate's dashboard.
+                    traineeshipApplication.IsArchived = false;
+                    updated = true;
+                }
 
-                updated = true;
-            }
-
-            if (traineeshipApplication.LegacyApplicationId != applicationStatusSummary.LegacyApplicationId)
-            {
-                // Ensure the application is linked to the legacy application.
-                traineeshipApplication.LegacyApplicationId = applicationStatusSummary.LegacyApplicationId;
-                updated = true;
+                if (traineeshipApplication.LegacyApplicationId != applicationStatusSummary.LegacyApplicationId)
+                {
+                    // Ensure the application is linked to the legacy application.
+                    traineeshipApplication.LegacyApplicationId = applicationStatusSummary.LegacyApplicationId;
+                    updated = true;
+                }
             }
 
             if (traineeshipApplication.VacancyStatus != applicationStatusSummary.VacancyStatus)

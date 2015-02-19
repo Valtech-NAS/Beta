@@ -156,6 +156,7 @@
             {
                 // in some cases the application can't be found using the application IDs so use legacy candidate and vacancy IDs
                 var candidate = _candidateReadRepository.Get(applicationStatusSummary.LegacyCandidateId);
+
                 apprenticeshipApplicationDetail = _apprenticeshipApplicationReadRepository.GetForCandidate(candidate.EntityId, applicationStatusSummary.LegacyVacancyId);
             } 
 
@@ -177,6 +178,7 @@
             {
                 // in some cases the application can't be found using the application IDs so use legacy candidate and vacancy IDs
                 var candidate = _candidateReadRepository.Get(applicationStatusSummary.LegacyCandidateId);
+
                 traineeshipApplicationDetail = _traineeshipApplicationReadRepository.GetForCandidate(candidate.EntityId, applicationStatusSummary.LegacyVacancyId);
             }
 
