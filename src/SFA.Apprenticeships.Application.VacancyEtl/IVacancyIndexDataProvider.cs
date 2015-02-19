@@ -6,6 +6,6 @@
     {
         int GetVacancyPageCount();
 
-        VacancySummaries GetVacancySummaries(int page);
+        VacancySummaries GetVacancySummaries(int pageNumber);
     }
 }

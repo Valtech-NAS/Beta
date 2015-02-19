@@ -10,7 +10,8 @@
     using Wcf;
 
     using CandidateErrorCodes = Application.Interfaces.Candidates.ErrorCodes;
-    
+    using CreateCandidateRequest = GatewayServiceProxy.CreateCandidateRequest;
+
     public class LegacyCandidateProvider : ILegacyCandidateProvider
     {
         private readonly ILogService _logger;
@@ -30,42 +31,32 @@
 
                 var legacyCandidateId = InternalCreateCandidate(candidate);
 
-                _logger.Debug(
-                    "Legacy.CreateCandidate succeeded for candidate id='{0}', legacy candidate id='{1}'",
-                    candidate.EntityId, legacyCandidateId);
+                _logger.Debug("Legacy.CreateCandidate succeeded for candidate id='{0}', legacy candidate id='{1}'", candidate.EntityId, legacyCandidateId);
 
                 return legacyCandidateId;
             }
+            catch (DomainException e)
+            {
+                _logger.Error(e);
+                throw;
+            }
+            catch (BoundaryException e)
+            {
+                var de = new DomainException(CandidateErrorCodes.CreateCandiateFailed, e, new { candidateId = candidate.EntityId });
+
+                _logger.Error(de);
+                throw de;
+            }
             catch (Exception e)
             {
-                _logger.Error("Legacy.CreateCandidate failed for candidate '{0}'",
-                    e, candidate.EntityId);
+                _logger.Error(e, new { candidateId = candidate.EntityId });
                 throw;
             }
         }
 
         private int InternalCreateCandidate(Domain.Entities.Candidates.Candidate candidate)
         {
-            var request = new GatewayServiceProxy.CreateCandidateRequest
-            {
-                Candidate = new Candidate
-                {
-                    EmailAddress = candidate.RegistrationDetails.EmailAddress,
-                    FirstName = candidate.RegistrationDetails.FirstName,
-                    MiddleName = candidate.RegistrationDetails.MiddleNames,
-                    Surname = candidate.RegistrationDetails.LastName,
-                    DateOfBirth = candidate.RegistrationDetails.DateOfBirth.Date,
-                    AddressLine1 = candidate.RegistrationDetails.Address.AddressLine1,
-                    AddressLine2 = candidate.RegistrationDetails.Address.AddressLine2,
-                    AddressLine3 = candidate.RegistrationDetails.Address.AddressLine3,
-                    AddressLine4 = candidate.RegistrationDetails.Address.AddressLine4,
-                    TownCity = "N/A",
-                    Postcode = candidate.RegistrationDetails.Address.Postcode,
-                    LandlineTelephone = candidate.RegistrationDetails.PhoneNumber,
-                    MobileTelephone = string.Empty
-                }
-            };
-
+            var request = CreateRequest(candidate);
             var response = default(CreateCandidateResponse);
 
             _service.Use("SecureService", client => response = client.CreateCandidate(request));
@@ -84,10 +75,33 @@
                         response.ValidationErrors.Count(), JsonConvert.SerializeObject(response, Formatting.None));
                 }
 
-                throw new CustomException(message, CandidateErrorCodes.CandidateCreationFailed);
+                throw new DomainException(CandidateErrorCodes.CreateCandiateFailed, new { message, candidateId = candidate.EntityId });
             }
 
             return response.CandidateId;
+        }
+
+        private static CreateCandidateRequest CreateRequest(Domain.Entities.Candidates.Candidate candidate)
+        {
+            return new CreateCandidateRequest
+            {
+                Candidate = new Candidate
+                {
+                    EmailAddress = candidate.RegistrationDetails.EmailAddress,
+                    FirstName = candidate.RegistrationDetails.FirstName,
+                    MiddleName = candidate.RegistrationDetails.MiddleNames,
+                    Surname = candidate.RegistrationDetails.LastName,
+                    DateOfBirth = candidate.RegistrationDetails.DateOfBirth.Date,
+                    AddressLine1 = candidate.RegistrationDetails.Address.AddressLine1,
+                    AddressLine2 = candidate.RegistrationDetails.Address.AddressLine2,
+                    AddressLine3 = candidate.RegistrationDetails.Address.AddressLine3,
+                    AddressLine4 = candidate.RegistrationDetails.Address.AddressLine4,
+                    TownCity = "N/A",
+                    Postcode = candidate.RegistrationDetails.Address.Postcode,
+                    LandlineTelephone = candidate.RegistrationDetails.PhoneNumber,
+                    MobileTelephone = string.Empty
+                }
+            };
         }
     }
 }

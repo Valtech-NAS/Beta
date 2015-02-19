@@ -93,8 +93,11 @@
     <Compile Include="Candidates\CommunicationPreferences.cs" />
     <Compile Include="Communication\ContactMessage.cs" />
     <Compile Include="Communication\ExpiringApprenticeshipApplicationDraft.cs" />
+    <Compile Include="Exceptions\BoundaryException.cs" />
     <Compile Include="Exceptions\CustomException.cs" />
     <Compile Include="ErrorCodes.cs" />
+    <Compile Include="Exceptions\DomainException.cs" />
+    <Compile Include="Exceptions\ExceptionExtensions.cs" />
     <Compile Include="ReferenceData\Category.cs" />
     <Compile Include="Users\UserCredentials.cs" />
     <Compile Include="Vacancies\Apprenticeships\ApprenticeshipVacancyDetail.cs" />

@@ -5,26 +5,27 @@
     using System.ServiceModel;
     using System.ServiceModel.Configuration;
     using Application.Interfaces.Logging;
+    using Domain.Entities.Exceptions;
     using Domain.Interfaces.Configuration;
 
     public class WcfService<T> : IWcfService<T>
     {
         private readonly ILogService _logger;
 
+        // ReSharper disable StaticFieldInGenericType
         private static Configuration _configuration;
-        private static readonly object _lock = new object();
+        private static readonly object Lock = new object();
+        // ReSharper restore StaticFieldInGenericType
 
         public WcfService(IConfigurationManager configurationManager, ILogService logger)
         {
             _logger = logger;
+
             if (_configuration != null) return;
 
-            lock (_lock)
+            lock (Lock)
             {
-                if (_configuration != null)
-                {
-                    return;
-                }
+                if (_configuration != null) return;
 
                 var configMap = new ExeConfigurationFileMap
                 {
@@ -43,12 +44,14 @@
         public void Use(string endpointConfigurationName, string endpointAddress, Action<T> action)
         {
             var factory = new ConfigurationChannelFactory<T>(endpointConfigurationName, _configuration, new EndpointAddress(endpointAddress));
+
             CallServiceAction(action, factory);
         }
 
         public void Use(string endpointConfigurationName, Action<T> action)
         {
             var configChannelFactory = new ConfigurationChannelFactory<T>(endpointConfigurationName, _configuration, null);
+
             CallServiceAction(action, configChannelFactory);
         }
 
@@ -65,49 +68,45 @@
                 ((IClientChannel)client).Close();
                 factory.Close();
                 success = true;
+
                 _logger.Debug("Call succeeded and client is now closed");
             }
-            catch (ServerTooBusyException ex)
+            catch (ServerTooBusyException e)
             {
-                _logger.Info("WCF ServerTooBusyException", (Exception)ex);
-                throw;
+                throw new BoundaryException(ErrorCodes.WebServiceFailed, e);
             }
-            catch (CommunicationException ex)
+            catch (CommunicationException e)
             {
-                _logger.Info("WCF CommunicationException", (Exception)ex);
-                throw;
+                throw new BoundaryException(ErrorCodes.WebServiceFailed, e);
             }
-            catch (TimeoutException ex)
+            catch (TimeoutException e)
             {
-                _logger.Info("WCF TimeoutException", (Exception)ex);
-                throw;
-            }
-            catch (Exception exception)
-            {
-                _logger.Info("Non-WCF Exception", exception);
-                throw;
+                throw new BoundaryException(ErrorCodes.WebServiceFailed, e);
             }
             finally
             {
-                if (!success)
-                {
-                    try
-                    {
-                        ((IClientChannel)client).Abort();
-                    }
-                    catch (Exception ex)
-                    {
-                        _logger.Info("Failed to abort client", ex);
-                    }
-                    try
-                    {
-                        factory.Abort();
-                    }
-                    catch (Exception ex)
-                    {
-                        _logger.Info("Failed to abort factory", ex);
-                    }
-                }
+                if (!success) AbortClient(factory, client);
+            }
+        }
+
+        private void AbortClient(ICommunicationObject factory, T client)
+        {
+            try
+            {
+                ((IClientChannel) client).Abort();
+            }
+            catch (Exception e)
+            {
+                _logger.Info("Failed to abort client", e);
+            }
+
+            try
+            {
+                factory.Abort();
+            }
+            catch (Exception e)
+            {
+                _logger.Info("Failed to abort factory", e);
             }
         }
     }

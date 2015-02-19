@@ -45,65 +45,66 @@
         public int CreateApplication(ApprenticeshipApplicationDetail apprenticeshipApplicationDetail)
         {
             var legacyCandidateId = GetLegacyCandidateId(apprenticeshipApplicationDetail.CandidateId);
-            var legacyRequest = MapApplicationToLegacyRequest(apprenticeshipApplicationDetail, legacyCandidateId);
+            var request = CreateRequest(apprenticeshipApplicationDetail, legacyCandidateId);
 
-            return InternalCreateApplication(apprenticeshipApplicationDetail.CandidateId, legacyRequest);
+            return InternalCreateApplication(apprenticeshipApplicationDetail.CandidateId, request);
         }
 
         public int CreateApplication(TraineeshipApplicationDetail traineeshipApplicationDetail)
         {
             var legacyCandidateId = GetLegacyCandidateId(traineeshipApplicationDetail.CandidateId);
-            var legacyRequest = MapApplicationToLegacyRequest(traineeshipApplicationDetail, legacyCandidateId);
+            var request = CreateRequest(traineeshipApplicationDetail, legacyCandidateId);
 
-            return InternalCreateApplication(traineeshipApplicationDetail.CandidateId, legacyRequest);
+            return InternalCreateApplication(traineeshipApplicationDetail.CandidateId, request);
         }
 
         #region Helpers
 
-        private int InternalCreateApplication(Guid candidateId, CreateApplicationRequest legacyRequest)
+        private int InternalCreateApplication(Guid candidateId, CreateApplicationRequest request)
         {
             try
             {
                 _logger.Debug(
                     "Calling Legacy.CreateApplication for candidate id='{0}' and apprenticeship vacancy id='{1}'",
-                    candidateId, legacyRequest.Application.VacancyId);
+                    candidateId, request.Application.VacancyId);
 
-                var legacyApplicationId = SendLegacyRequest(legacyRequest);
+                var legacyApplicationId = SendRequest(candidateId, request);
 
                 _logger.Debug(
                     "Legacy.CreateApplication succeeded for candidate id='{0}', apprenticeship vacancy id='{1}', legacy application id='{2}'",
-                    candidateId, legacyRequest.Application.VacancyId,
+                    candidateId, request.Application.VacancyId,
                     legacyApplicationId);
 
                 return legacyApplicationId;
             }
-            catch (CustomException e)
+            catch (DomainException e)
             {
-                var message = FormatErrorMessage(candidateId, legacyRequest);
-
                 if (e.Code == ApplicationErrorCodes.ApplicationCreationFailed)
-                {
-                    _logger.Error(message, e);
-                }
+                    _logger.Error(e);
                 else
-                {
-                    _logger.Warn(message, e);                    
-                }
+                    _logger.Warn(e);
 
                 throw;
             }
+            catch (BoundaryException e)
+            {
+                var de = new DomainException(ApplicationErrorCodes.ApplicationCreationFailed, e, new { candidateId, request.Application.VacancyId });
+
+                _logger.Error(de);
+                throw de;
+            }
             catch (Exception e)
             {
-                _logger.Error(FormatErrorMessage(candidateId, legacyRequest), e);
+                _logger.Error(e, new { candidateId, request.Application.VacancyId });
                 throw;
             }
         }
 
-        private int SendLegacyRequest(CreateApplicationRequest legacyRequest)
+        private int SendRequest(Guid candidateId, CreateApplicationRequest request)
         {
             CreateApplicationResponse response = null;
 
-            _service.Use("SecureService", client => response = client.CreateApplication(legacyRequest));
+            _service.Use("SecureService", client => response = client.CreateApplication(request));
 
             if (response == null || (response.ValidationErrors != null && response.ValidationErrors.Any()))
             {
@@ -117,7 +118,7 @@
                 }
                 else if (IsDuplicateError(response))
                 {
-                    message = string.Format("Duplicate application");
+                    message = "Duplicate application";
                     errorCode = ApplicationErrorCodes.ApplicationDuplicatedError;
                 }
                 else
@@ -125,7 +126,7 @@
                     ParseValidationError(response, out message, out errorCode);
                 }
 
-                throw new CustomException(message, errorCode);
+                throw new DomainException(errorCode, new { message, candidateId, request.Application.VacancyId });
             }
 
             return response.ApplicationId;
@@ -166,7 +167,7 @@
             errorCode = ApplicationErrorCodes.ApplicationCreationFailed;
         }
 
-        private static CreateApplicationRequest MapApplicationToLegacyRequest(
+        private static CreateApplicationRequest CreateRequest(
             ApprenticeshipApplicationDetail apprenticeshipApplicationDetail, int legacyCandidateId)
         {
             return new CreateApplicationRequest
@@ -189,7 +190,7 @@
             };
         }
 
-        private static CreateApplicationRequest MapApplicationToLegacyRequest(
+        private static CreateApplicationRequest CreateRequest(
             TraineeshipApplicationDetail traineeshipApplicationDetail, int legacyCandidateId)
         {
             return new CreateApplicationRequest
@@ -275,12 +276,6 @@
         private static DateTime MapYearToDate(int year)
         {
             return new DateTime(year, 1, 1);
-        }
-
-        private static string FormatErrorMessage(Guid candidateId, CreateApplicationRequest legacyRequest)
-        {
-            return string.Format("Legacy.CreateApplication failed for candidate id='{0}' and vacancy id='{1}'",
-                candidateId, legacyRequest.Application.VacancyId);
         }
 
         private int GetLegacyCandidateId(Guid candidateId)

@@ -10,6 +10,6 @@
 
         int GetApplicationStatusesPageCount(int applicationStatusExtractWindow);
 
-        IEnumerable<ApplicationStatusSummary> GetAllApplicationStatuses(int page, int applicationStatusExtractWindow);
+        IEnumerable<ApplicationStatusSummary> GetAllApplicationStatuses(int pageNumber, int applicationStatusExtractWindow);
     }
 }

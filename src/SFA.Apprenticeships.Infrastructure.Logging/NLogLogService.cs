@@ -42,6 +42,12 @@
             LogMessage(LogLevel.Warn, null, message, args);
         }
 
+        public void Warn(Exception e, object data)
+        {
+            e.AddData(data);
+            LogMessage(LogLevel.Warn, e, null, null);
+        }
+
         public void Error(string message, Exception exception, params object[] args)
         {
             LogMessage(LogLevel.Error, exception, message, args);
@@ -52,26 +58,35 @@
             LogMessage(LogLevel.Error, null, message, args);
         }
 
-        #region Helpers
-        private void LogMessage(LogLevel logLevel, Exception exception, string message, params object[] args)
+        public void Error(Exception e, object data)
         {
-            var logMessage = string.Format(message, args);
+            e.AddData(data);
+            LogMessage(LogLevel.Error, e);
+        }
+
+        #region Helpers
+
+        private void LogMessage(LogLevel logLevel, Exception e, string message = null, params object[] args)
+        {
+            var logMessage = message == null ? e.Message : string.Format(message, args);
+
             var logEvent = new LogEventInfo
             {
                 LoggerName = _logger.Name,
                 Level = logLevel,
-                Exception = exception,
+                Exception = e,
                 Message = logMessage
             };
 
-            if (exception is CustomException)
+            if (e is CustomException)
             {
-                logEvent.Properties["ErrorCode"] = (exception as CustomException).Code;
+                logEvent.Properties["ErrorCode"] = (e as CustomException).Code;
                 logEvent.Properties["Date"] = DateTime.UtcNow;
             }
 
             _logger.Log(logEvent);
         }
+
         #endregion
     }
 }
