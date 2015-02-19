@@ -67,6 +67,7 @@
             if (exception is CustomException)
             {
                 logEvent.Properties["ErrorCode"] = (exception as CustomException).Code;
+                logEvent.Properties["Date"] = DateTime.UtcNow;
             }
 
             _logger.Log(logEvent);
