@@ -15,9 +15,11 @@
         }
 
         public string VacancyTitle { get; set; }
-        
+
         public string VacancyReference { get; set; }
+
         public VacancyStatuses VacancyStatus { get; set; }
+
         public ApplicationStatuses Status { get; set; }
 
         public bool SentEmail { get; set; }

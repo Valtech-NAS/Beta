@@ -57,6 +57,11 @@
 
             var model = _apprenticeshipApplicationProvider.GetOrCreateApplicationViewModel(candidateId, vacancyId);
 
+            if (model.VacancyDetail.ApplyViaEmployerWebsite)
+            {
+                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Apply.OfflineVacancy);
+            }
+
             if (model.HasError())
             {
                 return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Apply.HasError);
@@ -77,6 +82,11 @@
             viewModel = StripApplicationViewModelBeforeValidation(viewModel);
 
             var savedModel = _apprenticeshipApplicationProvider.GetOrCreateApplicationViewModel(candidateId, vacancyId);
+
+            if (savedModel.VacancyDetail.ApplyViaEmployerWebsite)
+            {
+                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.OfflineVacancy);
+            }
 
             if (savedModel.HasError())
             {
@@ -114,6 +124,11 @@
             viewModel = StripApplicationViewModelBeforeValidation(viewModel);
 
             var savedModel = _apprenticeshipApplicationProvider.GetOrCreateApplicationViewModel(candidateId, vacancyId);
+
+            if (savedModel.VacancyDetail.ApplyViaEmployerWebsite)
+            {
+                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Save.OfflineVacancy);
+            }
 
             if (savedModel.Status == ApplicationStatuses.ExpiredOrWithdrawn)
             {
@@ -207,8 +222,6 @@
                 return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.Submit.ValidationError, savedModel, result);
             }
 
-            
-
             var model = _apprenticeshipApplicationProvider.SubmitApplication(candidateId, vacancyId);
 
             if (model.ViewModelStatus == ApplicationViewModelStatus.ApplicationInIncorrectState)
@@ -254,6 +267,11 @@
         {
             var model = _apprenticeshipApplicationProvider.GetOrCreateApplicationViewModel(candidateId, vacancyId);
 
+            if (model.VacancyDetail.ApplyViaEmployerWebsite)
+            {
+                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Preview.OfflineVacancy);
+            }
+
             if (model.HasError())
             {
                 return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Preview.HasError);
@@ -278,6 +296,7 @@
 
             var model = _apprenticeshipApplicationProvider.GetWhatHappensNextViewModel(candidateId, vacancyId);
 
+            
             if (model.HasError())
             {
                 model.VacancyReference = vacancyReference;

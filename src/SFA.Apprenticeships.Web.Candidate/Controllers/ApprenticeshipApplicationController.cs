@@ -56,6 +56,8 @@
 
                 switch (response.Code)
                 {
+                    case ApprenticeshipApplicationMediatorCodes.Apply.OfflineVacancy:
+                        return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new {id});
                     case ApprenticeshipApplicationMediatorCodes.Apply.VacancyNotFound:
                         return new ApprenticeshipNotFoundResult();
                     case ApprenticeshipApplicationMediatorCodes.Apply.HasError:
@@ -83,6 +85,8 @@
 
                 switch (response.Code)
                 {
+                    case ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.OfflineVacancy:
+                        return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new { id });
                     case ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.VacancyNotFound:
                         return new ApprenticeshipNotFoundResult();
                     case ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.IncorrectState:
@@ -119,6 +123,8 @@
 
                 switch (response.Code)
                 {
+                    case ApprenticeshipApplicationMediatorCodes.Save.OfflineVacancy:
+                        return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new { id });
                     case ApprenticeshipApplicationMediatorCodes.Save.VacancyNotFound:
                         return new ApprenticeshipNotFoundResult();
                     case ApprenticeshipApplicationMediatorCodes.Save.Error:
@@ -218,6 +224,8 @@
 
                 switch (response.Code)
                 {
+                    case ApprenticeshipApplicationMediatorCodes.Preview.OfflineVacancy:
+                        return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new { id });
                     case ApprenticeshipApplicationMediatorCodes.Preview.VacancyNotFound:
                         return new ApprenticeshipNotFoundResult();
                     case ApprenticeshipApplicationMediatorCodes.Preview.HasError:
@@ -244,7 +252,7 @@
 
                 switch (response.Code)
                 {
-                    case ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.ValidationError:
+                    case ApprenticeshipApplicationMediatorCodes.Submit.ValidationError:
                         ModelState.Clear();
                         response.ValidationResult.AddToModelState(ModelState, string.Empty);
                         return View("Apply", response.ViewModel);
@@ -275,6 +283,8 @@
 
                 switch (response.Code)
                 {
+                    case ApprenticeshipApplicationMediatorCodes.WhatHappensNext.OfflineVacancy:
+                        return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new { id });
                     case ApprenticeshipApplicationMediatorCodes.WhatHappensNext.VacancyNotFound:
                         return new ApprenticeshipNotFoundResult();
                     case ApprenticeshipApplicationMediatorCodes.WhatHappensNext.Ok:

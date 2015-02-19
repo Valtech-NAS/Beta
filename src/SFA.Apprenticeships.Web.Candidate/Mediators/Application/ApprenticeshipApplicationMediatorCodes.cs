@@ -7,6 +7,7 @@
             public const string Ok = "ApprenticeshipApplication.Apply.Ok";
             public const string HasError = "ApprenticeshipApplication.Apply.HasError";
             public const string VacancyNotFound = "ApprenticeshipApplication.Apply.VacancyNotFound";
+            public const string OfflineVacancy = "ApprenticeshipApplication.Apply.OfflineVacancy";
         }
 
         public class Submit
@@ -32,6 +33,7 @@
         {
             public const string VacancyNotFound = "ApprenticeshipApplication.WhatHappensNext.VacancyNotFound";
             public const string Ok = "ApprenticeshipApplication.WhatHappensNext.Ok";
+            public const string OfflineVacancy = "ApprenticeshipApplication.WhatHappensNext.OfflineVacancy";
         }
 
         public class Resume
@@ -42,6 +44,7 @@
 
         public class PreviewAndSubmit
         {
+            public const string OfflineVacancy = "ApprenticeshipApplication.PreviewAndSubmit.OfflineVacancy";
             public const string VacancyNotFound = "ApprenticeshipApplication.PreviewAndSubmit.VacancyNotFound";
             public const string IncorrectState = "ApprenticeshipApplication.PreviewAndSubmit.IncorrectState";
             public const string Error = "ApprenticeshipApplication.PreviewAndSubmit.Error";
@@ -54,10 +57,12 @@
             public const string Ok = "ApprenticeshipApplication.Preview.Ok";
             public const string HasError = "ApprenticeshipApplication.Preview.HasError";
             public const string VacancyNotFound = "ApprenticeshipApplication.Preview.VacancyNotFound";
+            public const string OfflineVacancy = "ApprenticeshipApplication.Preview.OfflineVacancy";
         }
 
         public class Save
         {
+            public const string OfflineVacancy = "ApprenticeshipApplication.Save.OfflineVacancy";
             public const string VacancyNotFound = "ApprenticeshipApplication.Save.VacancyNotFound";
             public const string Error = "ApprenticeshipApplication.Save.Error";
             public const string ValidationError = "ApprenticeshipApplication.Save.ValidationError";

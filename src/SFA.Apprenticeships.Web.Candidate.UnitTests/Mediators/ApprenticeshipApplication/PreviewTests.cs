@@ -66,5 +66,21 @@
 
             response.AssertCode(ApprenticeshipApplicationMediatorCodes.Preview.VacancyNotFound, false);
         }
+
+        [Test]
+        public void OfflineVacancy()
+        {
+            ApprenticeshipApplicationProvider.Setup(p => p.GetOrCreateApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel
+            {
+                VacancyDetail = new VacancyDetailViewModel
+                {
+                    ApplyViaEmployerWebsite = true
+                }
+            });
+
+            var response = Mediator.Preview(Guid.NewGuid(), ValidVacancyId);
+
+            response.AssertCode(ApprenticeshipApplicationMediatorCodes.Preview.OfflineVacancy, false);
+        }
     }
 }
