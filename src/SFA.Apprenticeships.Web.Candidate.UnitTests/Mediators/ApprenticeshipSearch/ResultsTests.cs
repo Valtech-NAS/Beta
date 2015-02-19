@@ -600,7 +600,7 @@
 
             
             var viewModel = response.ViewModel;
-            viewModel.SortTypes.Last().Text.Should().Be("Recently Added");
+            viewModel.SortTypes.Last().Text.Should().Be("Recently added");
             viewModel.SortTypes.Last().Value.Should().Be(VacancySearchSortType.RecentlyAdded.ToString());
         }
     }

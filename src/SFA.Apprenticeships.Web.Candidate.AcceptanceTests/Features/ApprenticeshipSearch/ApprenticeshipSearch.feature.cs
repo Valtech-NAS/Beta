@@ -136,7 +136,7 @@ this.FeatureBackground();
                         "Value"});
             table3.AddRow(new string[] {
                         "SortOrderingDropDown",
-                        "Closing Date"});
+                        "Closing date"});
 #line 30
  testRunner.And("I enter data", ((string)(null)), table3, "And ");
 #line 33

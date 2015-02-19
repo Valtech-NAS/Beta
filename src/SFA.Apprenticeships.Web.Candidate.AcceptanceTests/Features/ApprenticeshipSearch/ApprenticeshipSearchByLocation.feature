@@ -23,7 +23,7 @@ Scenario: When searching by location the results are ordered by distance and ord
         | Field                          | Rule         | Value                                |
         | SearchResultItemsCount         | Greater Than | 0                                    |
         | SortOrderingDropDownItemsCount | Equals       | 3                                    |
-        | SortOrderingDropDownItemsText  | Equals       | Closing Date,Distance,Recently Added |
+        | SortOrderingDropDownItemsText  | Equals       | Closing date,Distance,Recently added |
         | SortOrderingDropDown           | Equals       | Distance                             |
 
 @US449 @SmokeTests
@@ -208,7 +208,7 @@ Scenario: Find apprenticeships by location and change ordering to closing date
         | ResultsAreInDistanceOrder | Equals | True  |
 	And I enter data
 		| Field                | Value        |
-		| SortOrderingDropDown | Closing Date |
+		| SortOrderingDropDown | Closing date |
 	And I am on the ApprenticeshipSearchResultPage page
 	And I see
         | Field                        | Rule   | Value |
@@ -231,7 +231,7 @@ Scenario: Find apprenticeships by location and change ordering to closing date a
         | ResultsAreInDistanceOrder | Equals | True  |
 	And I enter data
 		| Field                | Value        |
-		| SortOrderingDropDown | Closing Date |
+		| SortOrderingDropDown | Closing date |
 	And I am on the ApprenticeshipSearchResultPage page
 	And I see
         | Field                        | Rule   | Value |

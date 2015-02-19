@@ -125,7 +125,7 @@ this.FeatureBackground();
             table2.AddRow(new string[] {
                         "SortOrderingDropDownItemsText",
                         "Equals",
-                        "Closing Date,Distance,Recently Added"});
+                        "Closing date,Distance,Recently added"});
             table2.AddRow(new string[] {
                         "SortOrderingDropDown",
                         "Equals",
@@ -714,7 +714,7 @@ this.FeatureBackground();
                         "Value"});
             table32.AddRow(new string[] {
                         "SortOrderingDropDown",
-                        "Closing Date"});
+                        "Closing date"});
 #line 203
  testRunner.And("I enter data", ((string)(null)), table32, "And ");
 #line 206
@@ -785,7 +785,7 @@ this.FeatureBackground();
                         "Value"});
             table36.AddRow(new string[] {
                         "SortOrderingDropDown",
-                        "Closing Date"});
+                        "Closing date"});
 #line 224
  testRunner.And("I enter data", ((string)(null)), table36, "And ");
 #line 227

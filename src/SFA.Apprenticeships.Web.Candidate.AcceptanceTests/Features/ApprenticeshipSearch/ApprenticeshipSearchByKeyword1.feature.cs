@@ -184,11 +184,11 @@ this.FeatureBackground();
             table4.AddRow(new string[] {
                         "SortOrderingDropDownItemsText",
                         "Equals",
-                        "Best Match,Closing Date,Distance,Recently Added"});
+                        "Best match,Closing date,Distance,Recently added"});
             table4.AddRow(new string[] {
                         "SortOrderingDropDown",
                         "Equals",
-                        "Best Match"});
+                        "Best match"});
 #line 38
  testRunner.Then("I see", ((string)(null)), table4, "Then ");
 #line hidden
@@ -246,7 +246,7 @@ this.FeatureBackground();
             table6.AddRow(new string[] {
                         "SortOrderingDropDown",
                         "Equals",
-                        "Best Match"});
+                        "Best match"});
 #line 56
  testRunner.Then("I see", ((string)(null)), table6, "Then ");
 #line 60
@@ -271,7 +271,7 @@ this.FeatureBackground();
             table7.AddRow(new string[] {
                         "SortOrderingDropDownItemsText",
                         "Equals",
-                        "Closing Date,Distance,Recently Added"});
+                        "Closing date,Distance,Recently added"});
             table7.AddRow(new string[] {
                         "SortOrderingDropDown",
                         "Equals",
@@ -450,11 +450,11 @@ this.FeatureBackground();
             table15.AddRow(new string[] {
                         "SortOrderingDropDownItemsText",
                         "Equals",
-                        "Best Match,Closing Date,Distance,Recently Added"});
+                        "Best match,Closing date,Distance,Recently added"});
             table15.AddRow(new string[] {
                         "SortOrderingDropDown",
                         "Equals",
-                        "Best Match"});
+                        "Best match"});
 #line 115
  testRunner.Then("I see", ((string)(null)), table15, "Then ");
 #line hidden
@@ -510,7 +510,7 @@ this.FeatureBackground();
             table17.AddRow(new string[] {
                         "SortOrderingDropDown",
                         "Equals",
-                        "Best Match"});
+                        "Best match"});
             table17.AddRow(new string[] {
                         "NationwideLocationTypeLink",
                         "Exists",
@@ -649,7 +649,7 @@ this.FeatureBackground();
                         "Value"});
             table24.AddRow(new string[] {
                         "SortOrderingDropDown",
-                        "Closing Date"});
+                        "Closing date"});
 #line 177
  testRunner.And("I enter data", ((string)(null)), table24, "And ");
 #line 180

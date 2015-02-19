@@ -51,17 +51,17 @@
 
             if (!string.IsNullOrWhiteSpace(keywords))
             {
-                sortTypeOptions.Add(new { SortType = VacancySearchSortType.Relevancy, Name = "Best Match" });
+                sortTypeOptions.Add(new { SortType = VacancySearchSortType.Relevancy, Name = "Best match" });
             }
 
-            sortTypeOptions.Add(new { SortType = VacancySearchSortType.ClosingDate, Name = "Closing Date" });
+            sortTypeOptions.Add(new { SortType = VacancySearchSortType.ClosingDate, Name = "Closing date" });
 
             if (isLocalLocationType)
             {
                 sortTypeOptions.Add(new { SortType = VacancySearchSortType.Distance, Name = "Distance" });
             }
 
-            sortTypeOptions.Add(new {SortType = VacancySearchSortType.RecentlyAdded, Name = "Recently Added"});
+            sortTypeOptions.Add(new {SortType = VacancySearchSortType.RecentlyAdded, Name = "Recently added"});
 
             var sortTypes = new SelectList(
                 sortTypeOptions,

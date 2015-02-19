@@ -24,7 +24,7 @@ Scenario: Find traineeships and test ordering
         | ResultsAreInDistanceOrder | Equals | True  |
 	And I enter data
 		| Field                | Value        |
-		| SortOrderingDropDown | Closing Date |
+		| SortOrderingDropDown | Closing date |
 	And I am on the TraineeshipSearchResultPage page
 	And I see
         | Field                        | Rule   | Value |

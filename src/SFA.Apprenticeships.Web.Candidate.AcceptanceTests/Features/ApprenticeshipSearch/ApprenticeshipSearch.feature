@@ -29,7 +29,7 @@ Scenario: Find apprenticeships and test ordering without keywords
         #| ResultsAreInBestMatchScoreOrder | Equals | False |
 	And I enter data
 		| Field                | Value        |
-		| SortOrderingDropDown | Closing Date |
+		| SortOrderingDropDown | Closing date |
 	And I am on the ApprenticeshipSearchResultPage page
 	And I see
         | Field                        | Rule   | Value |

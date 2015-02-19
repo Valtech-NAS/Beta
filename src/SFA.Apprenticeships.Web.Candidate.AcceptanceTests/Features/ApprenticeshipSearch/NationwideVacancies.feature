@@ -95,7 +95,7 @@ Scenario: Nationwide apprenticeships found by keyword can be ordered
 	Then I see 
         | Field                      | Rule         | Value        |
         | SearchResultItemsCount     | Greater Than | 0            |
-        | SortOrderingDropDown       | Equals       | Best Match   |
+        | SortOrderingDropDown       | Equals       | Best match   |
         | NationwideLocationTypeLink | Exists       |              |
 	When I choose NationwideLocationTypeLink
 	Then I am on the ApprenticeshipSearchResultPage page
@@ -104,8 +104,8 @@ Scenario: Nationwide apprenticeships found by keyword can be ordered
         | LocalLocationTypeLink          | Exists         |                                        |
         | NationwideLocationTypeLink     | Does Not Exist |                                        |
         | SortOrderingDropDownItemsCount | Equals         | 3                                      |
-        | SortOrderingDropDownItemsText  | Equals         | Best Match,Closing Date,Recently Added |
-        | SortOrderingDropDown           | Equals         | Best Match                             |
+        | SortOrderingDropDownItemsText  | Equals         | Best match,Closing date,Recently added |
+        | SortOrderingDropDown           | Equals         | Best match                             |
         | ResultsAreInClosingDateOrder   | Equals         | False                                  |
 
 @SmokeTests
@@ -144,7 +144,7 @@ Scenario: When I'm seeing nationwide apprenticeships and I change the sort order
 	Then I am on the ApprenticeshipSearchResultPage page
 	When I enter data
 		| Field                | Value        |
-		| SortOrderingDropDown | Closing Date |
+		| SortOrderingDropDown | Closing date |
 	Then I am on the ApprenticeshipSearchResultPage page
 	And I see
         | Field                      | Rule           | Value |

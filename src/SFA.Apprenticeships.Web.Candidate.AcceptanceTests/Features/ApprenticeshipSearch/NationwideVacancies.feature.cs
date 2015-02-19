@@ -348,7 +348,7 @@ this.FeatureBackground();
             table10.AddRow(new string[] {
                         "SortOrderingDropDown",
                         "Equals",
-                        "Best Match"});
+                        "Best match"});
             table10.AddRow(new string[] {
                         "NationwideLocationTypeLink",
                         "Exists",
@@ -379,11 +379,11 @@ this.FeatureBackground();
             table11.AddRow(new string[] {
                         "SortOrderingDropDownItemsText",
                         "Equals",
-                        "Best Match,Closing Date,Recently Added"});
+                        "Best match,Closing date,Recently added"});
             table11.AddRow(new string[] {
                         "SortOrderingDropDown",
                         "Equals",
-                        "Best Match"});
+                        "Best match"});
             table11.AddRow(new string[] {
                         "ResultsAreInClosingDateOrder",
                         "Equals",
@@ -509,7 +509,7 @@ this.FeatureBackground();
                         "Value"});
             table16.AddRow(new string[] {
                         "SortOrderingDropDown",
-                        "Closing Date"});
+                        "Closing date"});
 #line 145
  testRunner.When("I enter data", ((string)(null)), table16, "When ");
 #line 148

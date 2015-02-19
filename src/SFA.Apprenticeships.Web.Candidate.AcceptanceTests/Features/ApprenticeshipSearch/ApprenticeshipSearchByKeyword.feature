@@ -39,8 +39,8 @@ Scenario: When searching by keyword the results are ordered by best match
         | Field                          | Rule         | Value                                           |
         | SearchResultItemsCount         | Greater Than | 0                                               |
         | SortOrderingDropDownItemsCount | Equals       | 4                                               |
-        | SortOrderingDropDownItemsText  | Equals       | Best Match,Closing Date,Distance,Recently Added |
-        | SortOrderingDropDown           | Equals       | Best Match                                      |
+        | SortOrderingDropDownItemsText  | Equals       | Best match,Closing date,Distance,Recently added |
+        | SortOrderingDropDown           | Equals       | Best match                                      |
 
 @US449 @SmokeTests
 Scenario: When searching by keyword then removing keyword and searching again the results are ordered by distance
@@ -56,7 +56,7 @@ Scenario: When searching by keyword then removing keyword and searching again th
 	Then I see 
         | Field                  | Rule         | Value      |
         | SearchResultItemsCount | Greater Than | 0          |
-        | SortOrderingDropDown   | Equals       | Best Match |
+        | SortOrderingDropDown   | Equals       | Best match |
 	When I clear the Keywords field
 	And I choose Search
 	Then I am on the ApprenticeshipSearchResultPage page
@@ -64,7 +64,7 @@ Scenario: When searching by keyword then removing keyword and searching again th
         | Field                          | Rule         | Value                                |
         | SearchResultItemsCount         | Greater Than | 0                                    |
         | SortOrderingDropDownItemsCount | Equals       | 3                                    |
-        | SortOrderingDropDownItemsText  | Equals       | Closing Date,Distance,Recently Added |
+        | SortOrderingDropDownItemsText  | Equals       | Closing date,Distance,Recently added |
         | SortOrderingDropDown           | Equals       | Distance                             |
 
 @US449 @SmokeTests
@@ -116,8 +116,8 @@ Scenario: When searching by location then adding keyword and searching again the
         | Field                          | Rule         | Value                                           |
         | SearchResultItemsCount         | Greater Than | 0                                               |
         | SortOrderingDropDownItemsCount | Equals       | 4                                               |
-        | SortOrderingDropDownItemsText  | Equals       | Best Match,Closing Date,Distance,Recently Added |
-        | SortOrderingDropDown           | Equals       | Best Match                                      |
+        | SortOrderingDropDownItemsText  | Equals       | Best match,Closing date,Distance,Recently added |
+        | SortOrderingDropDown           | Equals       | Best match                                      |
 
 #Inclusion of nationwide vacancies in results superceeded by US500
 @US449 @SmokeTests
@@ -134,7 +134,7 @@ Scenario: Nationwide apprenticeships are included in keyword search results
 	Then I see 
         | Field                      | Rule         | Value      |
         | SearchResultItemsCount     | Greater Than | 0          |
-        | SortOrderingDropDown       | Equals       | Best Match |
+        | SortOrderingDropDown       | Equals       | Best match |
         | NationwideLocationTypeLink | Exists       |            |
 
 @SmokeTests
@@ -176,7 +176,7 @@ Scenario: Find apprenticeships by keyword and change ordering to closing date
         | SearchResultItemsCount          | Equals | 5     |
 	And I enter data
 		| Field                | Value        |
-		| SortOrderingDropDown | Closing Date |
+		| SortOrderingDropDown | Closing date |
 	And I am on the ApprenticeshipSearchResultPage page
 	And I see
         | Field                        | Rule   | Value |
