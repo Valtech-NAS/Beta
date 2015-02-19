@@ -29,16 +29,16 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var result = string.IsNullOrWhiteSpace(term)
-                    ? new LocationsViewModel(new List<LocationViewModel>())
-                    : _searchProvider.FindLocation(term);
-
                 if (Request.IsAjaxRequest())
                 {
+                    var result = string.IsNullOrWhiteSpace(term)
+                        ? new LocationsViewModel(new List<LocationViewModel>())
+                        : _searchProvider.FindLocation(term);
+
                     return Json(result.Locations.Take(_locationResultLimit), JsonRequestBehavior.AllowGet);
                 }
 
-                throw new NotSupportedException("Non-js not yet implemented!");
+                throw new NotSupportedException("Non-JS not yet implemented!");
             });
         }
 
@@ -49,13 +49,13 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var addresses = _searchProvider.FindAddresses(postcode);
                 if (Request.IsAjaxRequest())
                 {
+                    var addresses = _searchProvider.FindAddresses(postcode);
                     return Json(addresses, JsonRequestBehavior.AllowGet);
                 }
 
-                throw new NotSupportedException("Non-js not yet implemented!");
+                throw new NotSupportedException("Non-JS not yet implemented!");
             });
         }
     }
