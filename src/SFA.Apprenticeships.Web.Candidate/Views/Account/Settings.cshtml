@@ -43,8 +43,8 @@
             <div class="form-group form-group-compound">
                 <p class="form-label">Receive notifications?</p>
                 <span class="form-hint">If you don't select an option you won't receive notifications</span>
-                @Html.FormUnvalidatedCheckBoxFor(m => m.AllowEmailComms, labelHtmlAttributes: new { @class = "block-label selected" })
-                @Html.FormUnvalidatedCheckBoxFor(m => m.AllowSmsComms, labelHtmlAttributes: new { @class = "block-label selected" })
+                @Html.FormUnvalidatedCheckBoxFor(m => m.AllowEmailComms, labelHtmlAttributes: new { @class = "block-label" })
+                @Html.FormUnvalidatedCheckBoxFor(m => m.AllowSmsComms, labelHtmlAttributes: new { @class = "block-label" })
             </div>
 
             <div class="panel-indent text">
