@@ -21,6 +21,7 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
     using RabbitMq.Interfaces;
     using RabbitMq.IoC;
     using Repositories.Applications.IoC;
+    using Repositories.Candidates.IoC;
     using StructureMap;
 
     public class WorkerRole : RoleEntryPoint
@@ -118,6 +119,7 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
                 x.AddRegistry<RabbitMqRegistry>();
                 x.AddRegistry<ApplicationEtlRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
+                x.AddRegistry<CandidateRepositoryRegistry>();
             });
 
             _logger = _container.GetInstance<ILogService>();
