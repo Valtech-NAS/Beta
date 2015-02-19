@@ -57,14 +57,14 @@
 
             var model = _apprenticeshipApplicationProvider.GetOrCreateApplicationViewModel(candidateId, vacancyId);
 
-            if (model.VacancyDetail.ApplyViaEmployerWebsite)
-            {
-                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Apply.OfflineVacancy);
-            }
-
             if (model.HasError())
             {
                 return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Apply.HasError);
+            }
+
+            if (model.VacancyDetail.ApplyViaEmployerWebsite)
+            {
+                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Apply.OfflineVacancy);
             }
 
             if (model.IsExpiredOrWithdrawn())
@@ -83,14 +83,14 @@
 
             var savedModel = _apprenticeshipApplicationProvider.GetOrCreateApplicationViewModel(candidateId, vacancyId);
 
-            if (savedModel.VacancyDetail.ApplyViaEmployerWebsite)
-            {
-                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.OfflineVacancy);
-            }
-
             if (savedModel.HasError())
             {
                 return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.Error, viewModel, ApplicationPageMessages.PreviewFailed, UserMessageLevel.Warning);
+            }
+
+            if (savedModel.VacancyDetail.ApplyViaEmployerWebsite)
+            {
+                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.OfflineVacancy);
             }
 
             if (savedModel.IsExpiredOrWithdrawn())
@@ -125,11 +125,6 @@
 
             var savedModel = _apprenticeshipApplicationProvider.GetOrCreateApplicationViewModel(candidateId, vacancyId);
 
-            if (savedModel.VacancyDetail.ApplyViaEmployerWebsite)
-            {
-                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Save.OfflineVacancy);
-            }
-
             if (savedModel.Status == ApplicationStatuses.ExpiredOrWithdrawn)
             {
                 return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Save.VacancyNotFound);
@@ -140,6 +135,11 @@
             if (savedModel.HasError())
             {
                 return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.Save.Error, viewModel, ApplicationPageMessages.SaveFailed, UserMessageLevel.Warning);
+            }
+
+            if (savedModel.VacancyDetail.ApplyViaEmployerWebsite)
+            {
+                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Save.OfflineVacancy);
             }
 
             var result = _apprenticeshipApplicationViewModelSaveValidator.Validate(viewModel);
@@ -267,14 +267,14 @@
         {
             var model = _apprenticeshipApplicationProvider.GetOrCreateApplicationViewModel(candidateId, vacancyId);
 
-            if (model.VacancyDetail.ApplyViaEmployerWebsite)
-            {
-                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Preview.OfflineVacancy);
-            }
-
             if (model.HasError())
             {
                 return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Preview.HasError);
+            }
+
+            if (model.VacancyDetail.ApplyViaEmployerWebsite)
+            {
+                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Preview.OfflineVacancy);
             }
 
             if (model.IsExpiredOrWithdrawn())
