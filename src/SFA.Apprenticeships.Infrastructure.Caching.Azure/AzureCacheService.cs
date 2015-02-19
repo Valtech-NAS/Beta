@@ -54,7 +54,7 @@
                 }
                 else
                 {
-                    _logger.Warn("Attempt to store item in cache with key: " + key + " using cache default eveiction policy", cacheException);
+                    _logger.Warn("Attempt to store item in cache with key: " + key + " using cache default eviction policy", cacheException);
                 }
                 
                 return;
@@ -74,7 +74,7 @@
             }
             catch (Exception cacheException)
             {
-                var message = string.Format("Attempt to retreive item from cache with key {0} failed", key);
+                var message = string.Format("Attempt to retrieve item from cache with key {0} failed", key);
                 _logger.Warn(message, cacheException);
                 return null;
             }
