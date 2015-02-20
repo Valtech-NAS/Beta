@@ -28,7 +28,7 @@
             For<IEmailDispatcher>().Use<VoidEmailDispatcher>().Name = "VoidEmailDispatcher";
             For<ISmsDispatcher>().Use<VoidSmsDispatcher>().Name = "VoidSmsDispatcher";
             For<SendGridConfiguration>().Singleton().Use(SendGridConfiguration.Instance);
-            For<TwilioConfiguration>().Singleton().Use(TwilioConfiguration.Instance);
+            For<ITwillioConfiguration>().Singleton().Use(TwilioConfiguration.Instance);
 
             IEnumerable<KeyValuePair<MessageTypes, SmsMessageFormatter>> smsMessageFormatters = new[]
             {

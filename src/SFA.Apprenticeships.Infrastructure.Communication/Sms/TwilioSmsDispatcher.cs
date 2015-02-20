@@ -20,7 +20,7 @@
 
         private readonly IEnumerable<KeyValuePair<MessageTypes, SmsMessageFormatter>> _messageFormatters;
 
-        public TwilioSmsDispatcher(TwilioConfiguration twilioConfiguration, IEnumerable<KeyValuePair<MessageTypes, SmsMessageFormatter>> messageFormatters, ILogService logger)
+        public TwilioSmsDispatcher(ITwillioConfiguration twilioConfiguration, IEnumerable<KeyValuePair<MessageTypes, SmsMessageFormatter>> messageFormatters, ILogService logger)
         {
             _accountSid = twilioConfiguration.AccountSid;
             _authToken = twilioConfiguration.AuthToken;
