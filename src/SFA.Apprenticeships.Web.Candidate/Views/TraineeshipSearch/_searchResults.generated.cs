@@ -230,7 +230,7 @@ WriteLiteral(">");
 
             
             #line 35 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
-                                                                             Write(Html.DisplayFor(m => vacancy.StartDate, "Date"));
+                                                                              Write(Html.DisplayFor(m => vacancy.StartDate, "Date"));
 
             
             #line default

@@ -54,7 +54,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Register
             #line 2 "..\..\Views\Register\Complete.cshtml"
   
     ViewBag.Title = "Apprenticeships - Account created";
-    Layout = "~/Views/Shared/_ApprenticeshipLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 
             
             #line default

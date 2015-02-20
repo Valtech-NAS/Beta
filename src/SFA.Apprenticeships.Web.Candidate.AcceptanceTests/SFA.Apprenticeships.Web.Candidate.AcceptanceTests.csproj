@@ -193,6 +193,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BrowseBasedSearch.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\UserJourneyContext\UserJourneyContext.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserJourneyContext.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\Dashboard\ArchiveApprenticeshipApplications.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -401,6 +406,10 @@
     <None Include="Features\ApprenticeshipSearch\BrowseBasedSearch.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>BrowseBasedSearch.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\UserJourneyContext\UserJourneyContext.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>UserJourneyContext.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Dashboard\ArchiveApprenticeshipApplications.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

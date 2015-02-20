@@ -54,7 +54,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Home
             #line 1 "..\..\Views\Home\Privacy.cshtml"
   
     ViewBag.Title = "Apprenticeships - Privacy and cookies";
-    Layout = "~/Views/Shared/_ApprenticeshipLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 
             
             #line default

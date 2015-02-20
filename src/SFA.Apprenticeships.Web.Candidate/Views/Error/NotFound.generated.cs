@@ -54,7 +54,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Error
             #line 1 "..\..\Views\Error\NotFound.cshtml"
   
     ViewBag.Title = "Apprenticeship no longer available";
-    Layout = "~/Views/Shared/_ApprenticeshipLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 
             
             #line default
@@ -75,14 +75,14 @@ WriteLiteral(">\r\n    <p>The apprenticeship you’re applying for is no longer 
 "ld be because it’s already been filled or was removed by the employer.</p>\r\n</di" +
 "v>\r\n\r\n<p><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 420), Tuple.Create("\"", 482)
+WriteAttribute("href", Tuple.Create(" href=\"", 406), Tuple.Create("\"", 468)
             
             #line 14 "..\..\Views\Error\NotFound.cshtml"
-, Tuple.Create(Tuple.Create("", 427), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)
+, Tuple.Create(Tuple.Create("", 413), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)
             
             #line default
             #line hidden
-, 427), false)
+, 413), false)
 );
 
 WriteLiteral(">Find an apprenticeship</a></p>\r\n");

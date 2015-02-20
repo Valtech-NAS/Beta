@@ -54,7 +54,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.TraineeshipSearch
             #line 3 "..\..\Views\TraineeshipSearch\Results.cshtml"
   
     ViewBag.Title = "Find a traineeship - Results";
-    Layout = "~/Views/Shared/_TraineeshipLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 
             
             #line default
@@ -69,14 +69,14 @@ WriteLiteral("\r\n    <meta");
 
 WriteLiteral(" name=\"WT.oss_r\"");
 
-WriteAttribute("content", Tuple.Create(" content=\"", 280), Tuple.Create("\"", 306)
+WriteAttribute("content", Tuple.Create(" content=\"", 269), Tuple.Create("\"", 295)
             
             #line 11 "..\..\Views\TraineeshipSearch\Results.cshtml"
-, Tuple.Create(Tuple.Create("", 290), Tuple.Create<System.Object, System.Int32>(Model.TotalHits
+, Tuple.Create(Tuple.Create("", 279), Tuple.Create<System.Object, System.Int32>(Model.TotalHits
             
             #line default
             #line hidden
-, 290), false)
+, 279), false)
 );
 
 WriteLiteral(" />\r\n");

@@ -54,7 +54,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.TraineeshipSearch
             #line 2 "..\..\Views\TraineeshipSearch\Index.cshtml"
   
     ViewBag.Title = "Find a traineeship";
-    Layout = "~/Views/Shared/_TraineeshipLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 
             
             #line default

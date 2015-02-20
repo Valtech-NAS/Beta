@@ -8,7 +8,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Apprenticeships - @ViewBag.ErrorCode</title>
+    <title>@ViewBag.UserJourneyMainCaption - @ViewBag.ErrorCode</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--[if gt IE 8]><!-->@Styles.Render(Url.CdnContent("css/main-1.6.0.1098.css", "~/Content/_assets"))<!--<![endif]-->
     <!--[if lte IE 8]>@Styles.Render(Url.CdnContent("css/main-ie8-1.6.0.1098.css", "~/Content/_assets"))<![endif]-->
@@ -33,7 +33,7 @@
                 </a>
             </div>
             <div class="global-header__nav">
-                <h2 class="global-header__title beta">Apprenticeships</h2>
+                <h2 class="global-header__title beta">@ViewBag.UserJourneyMainCaption</h2>
             </div>
         </div>
     </header>

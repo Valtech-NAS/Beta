@@ -54,7 +54,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Login
             #line 3 "..\..\Views\Login\Index.cshtml"
   
     ViewBag.Title = "Apprenticeships - Sign in or create an account";
-    Layout = "~/Views/Shared/_ApprenticeshipLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 
             
             #line default
@@ -181,14 +181,14 @@ WriteLiteral("\r\n                \r\n                <a");
 
 WriteLiteral(" class=\"form-hint\"");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 1267), Tuple.Create("\'", 1318)
+WriteAttribute("href", Tuple.Create(" href=\'", 1253), Tuple.Create("\'", 1304)
             
             #line 31 "..\..\Views\Login\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 1274), Tuple.Create<System.Object, System.Int32>(Url.Action("ForgottenPassword", "Register")
+, Tuple.Create(Tuple.Create("", 1260), Tuple.Create<System.Object, System.Int32>(Url.Action("ForgottenPassword", "Register")
             
             #line default
             #line hidden
-, 1274), false)
+, 1260), false)
 );
 
 WriteLiteral(">I can\'t access my account</a>\r\n            </div>\r\n");

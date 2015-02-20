@@ -54,7 +54,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.ApprenticeshipSearch
             #line 2 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
   
     ViewBag.Title = "Apprenticeships - Find an apprenticeship";
-    Layout = "~/Views/Shared/_ApprenticeshipLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 
             
             #line default
@@ -234,24 +234,24 @@ WriteLiteral("                    ");
             #line hidden
 WriteLiteral("\r\n\r\n                    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 2865), Tuple.Create("\"", 2940)
-, Tuple.Create(Tuple.Create("", 2873), Tuple.Create("inline", 2873), true)
-, Tuple.Create(Tuple.Create(" ", 2879), Tuple.Create("tabbed-element", 2880), true)
-, Tuple.Create(Tuple.Create(" ", 2894), Tuple.Create("tab1", 2895), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 2851), Tuple.Create("\"", 2926)
+, Tuple.Create(Tuple.Create("", 2859), Tuple.Create("inline", 2859), true)
+, Tuple.Create(Tuple.Create(" ", 2865), Tuple.Create("tabbed-element", 2866), true)
+, Tuple.Create(Tuple.Create(" ", 2880), Tuple.Create("tab1", 2881), true)
             
             #line 43 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
-, Tuple.Create(Tuple.Create(" ", 2899), Tuple.Create<System.Object, System.Int32>(categoriesTabClass
+, Tuple.Create(Tuple.Create(" ", 2885), Tuple.Create<System.Object, System.Int32>(categoriesTabClass
             
             #line default
             #line hidden
-, 2900), false)
+, 2886), false)
             
             #line 43 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
-, Tuple.Create(Tuple.Create(" ", 2919), Tuple.Create<System.Object, System.Int32>(elementControlClass
+, Tuple.Create(Tuple.Create(" ", 2905), Tuple.Create<System.Object, System.Int32>(elementControlClass
             
             #line default
             #line hidden
-, 2920), false)
+, 2906), false)
 );
 
 WriteLiteral(">\r\n                        <div");
@@ -303,40 +303,40 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n                        <button");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 3734), Tuple.Create("\"", 3792)
-, Tuple.Create(Tuple.Create("", 3742), Tuple.Create("button", 3742), true)
-, Tuple.Create(Tuple.Create(" ", 3748), Tuple.Create("tabbed-element", 3749), true)
-, Tuple.Create(Tuple.Create(" ", 3763), Tuple.Create("tab1", 3764), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 3720), Tuple.Create("\"", 3778)
+, Tuple.Create(Tuple.Create("", 3728), Tuple.Create("button", 3728), true)
+, Tuple.Create(Tuple.Create(" ", 3734), Tuple.Create("tabbed-element", 3735), true)
+, Tuple.Create(Tuple.Create(" ", 3749), Tuple.Create("tab1", 3750), true)
             
             #line 55 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
-, Tuple.Create(Tuple.Create(" ", 3768), Tuple.Create<System.Object, System.Int32>(keywordTabControlClass
+, Tuple.Create(Tuple.Create(" ", 3754), Tuple.Create<System.Object, System.Int32>(keywordTabControlClass
             
             #line default
             #line hidden
-, 3769), false)
+, 3755), false)
 );
 
 WriteLiteral(" id=\"search-button\"");
 
 WriteLiteral(">Search</button>\r\n                        <button");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 3861), Tuple.Create("\"", 3941)
-, Tuple.Create(Tuple.Create("", 3869), Tuple.Create("button", 3869), true)
-, Tuple.Create(Tuple.Create(" ", 3875), Tuple.Create("tabbed-element", 3876), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 3847), Tuple.Create("\"", 3927)
+, Tuple.Create(Tuple.Create("", 3855), Tuple.Create("button", 3855), true)
+, Tuple.Create(Tuple.Create(" ", 3861), Tuple.Create("tabbed-element", 3862), true)
             
             #line 56 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
-, Tuple.Create(Tuple.Create(" ", 3890), Tuple.Create<System.Object, System.Int32>(categoriesTabClass
+, Tuple.Create(Tuple.Create(" ", 3876), Tuple.Create<System.Object, System.Int32>(categoriesTabClass
             
             #line default
             #line hidden
-, 3891), false)
+, 3877), false)
             
             #line 56 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
-, Tuple.Create(Tuple.Create(" ", 3910), Tuple.Create<System.Object, System.Int32>(categoriesElementControlClass
+, Tuple.Create(Tuple.Create(" ", 3896), Tuple.Create<System.Object, System.Int32>(categoriesElementControlClass
             
             #line default
             #line hidden
-, 3911), false)
+, 3897), false)
 );
 
 WriteLiteral(" id=\"browse-button\"");

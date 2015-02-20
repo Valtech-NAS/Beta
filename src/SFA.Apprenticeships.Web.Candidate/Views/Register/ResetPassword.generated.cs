@@ -54,7 +54,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Register
             #line 3 "..\..\Views\Register\ResetPassword.cshtml"
   
     ViewBag.Title = "Apprenticeships - Password reset";
-    Layout = "~/Views/Shared/_ApprenticeshipLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 
             
             #line default

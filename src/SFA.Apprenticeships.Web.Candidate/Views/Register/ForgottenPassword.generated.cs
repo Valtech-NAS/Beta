@@ -54,7 +54,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Register
             #line 3 "..\..\Views\Register\ForgottenPassword.cshtml"
   
     ViewBag.Title = "Apprenticeships - Forgotten password";
-    Layout = "~/Views/Shared/_ApprenticeshipLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 
             
             #line default
@@ -147,14 +147,14 @@ WriteLiteral(" class=\"heading-medium\"");
 WriteLiteral(">If your account is locked</h2>\r\n    <p>\r\n        If your account is locked and y" +
 "ou’ve been sent a code to unlock it, you\r\n        can <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1370), Tuple.Create("\"", 1407)
+WriteAttribute("href", Tuple.Create(" href=\"", 1356), Tuple.Create("\"", 1393)
             
             #line 37 "..\..\Views\Register\ForgottenPassword.cshtml"
-, Tuple.Create(Tuple.Create("", 1377), Tuple.Create<System.Object, System.Int32>(Url.Action("Unlock", "Login")
+, Tuple.Create(Tuple.Create("", 1363), Tuple.Create<System.Object, System.Int32>(Url.Action("Unlock", "Login")
             
             #line default
             #line hidden
-, 1377), false)
+, 1363), false)
 );
 
 WriteLiteral(">enter it</a> now.\r\n    </p>\r\n</div>\r\n");

@@ -54,7 +54,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Register
             #line 3 "..\..\Views\Register\Index.cshtml"
   
     ViewBag.Title = "Apprenticeships - Create an account";
-    Layout = "~/Views/Shared/_ApprenticeshipLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 
             
             #line default
@@ -258,15 +258,15 @@ WriteLiteral(">\r\n            <a");
 
 WriteLiteral(" class=\"inl-block inpage-focus\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2201), Tuple.Create("\"", 2241)
-, Tuple.Create(Tuple.Create("", 2208), Tuple.Create("#", 2208), true)
+WriteAttribute("href", Tuple.Create(" href=\"", 2187), Tuple.Create("\"", 2227)
+, Tuple.Create(Tuple.Create("", 2194), Tuple.Create("#", 2194), true)
             
             #line 44 "..\..\Views\Register\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 2209), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.EmailAddress)
+, Tuple.Create(Tuple.Create("", 2195), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.EmailAddress)
             
             #line default
             #line hidden
-, 2209), false)
+, 2195), false)
 );
 
 WriteLiteral(">Edit your email</a>\r\n        </div>\r\n        \r\n        <div");

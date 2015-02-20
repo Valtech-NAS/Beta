@@ -11,6 +11,7 @@
     using Mediators.Search;
     using ViewModels.VacancySearch;
 
+    [UserJourneyContext(UserJourney.Traineeship, Order = 2)]
     public class TraineeshipSearchController : CandidateControllerBase
     {
         private readonly ITraineeshipSearchMediator _traineeshipSearchMediator;

@@ -54,7 +54,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Home
             #line 1 "..\..\Views\Home\Terms.cshtml"
   
     ViewBag.Title = "Apprenticeships - Terms and conditions";
-    Layout = "~/Views/Shared/_ApprenticeshipLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 
             
             #line default

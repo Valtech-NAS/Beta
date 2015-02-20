@@ -58,7 +58,7 @@ WriteLiteral("\r\n");
     ViewBag.Title = "Apprenticeships - Cookies disabled";
     ViewBag.ShowEuCookieDirective = false;
 
-    Layout = "~/Views/Shared/_ApprenticeshipLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 
             
             #line default
@@ -87,14 +87,14 @@ WriteLiteral(" role=\"button\"");
 
 WriteLiteral(" class=\"button\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 604), Tuple.Create("\"", 629)
+WriteAttribute("href", Tuple.Create(" href=\"", 590), Tuple.Create("\"", 615)
             
             #line 18 "..\..\Views\Home\Cookies.cshtml"
-, Tuple.Create(Tuple.Create("", 611), Tuple.Create<System.Object, System.Int32>(ViewBag.ReturnUrl
+, Tuple.Create(Tuple.Create("", 597), Tuple.Create<System.Object, System.Int32>(ViewBag.ReturnUrl
             
             #line default
             #line hidden
-, 611), false)
+, 597), false)
 );
 
 WriteLiteral(">Re-check your browser settings</a>\r\n</div>");

@@ -591,14 +591,6 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>_searchUpdate.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\Shared\_TraineeshipLayout.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>_TraineeshipLayout.generated.cs</LastGenOutput>
-    </Content>
-    <Content Include="Views\Shared\_ApprenticeshipLayout.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>_ApprenticeshipLayout.generated.cs</LastGenOutput>
-    </Content>
     <Content Include="Views\TraineeshipSearch\Details.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Details.generated.cs</LastGenOutput>
@@ -708,6 +700,7 @@
     <Compile Include="Attributes\SiteRootRedirect.cs" />
     <Compile Include="Attributes\ApplyWebTrendsAttribute.cs" />
     <Compile Include="Attributes\AuthorizeCandidateAttribute.cs" />
+    <Compile Include="Attributes\UserJourneyContextAttribute.cs" />
     <Compile Include="Configuration\FeatureToggle.cs" />
     <Compile Include="Configuration\IFeatureToggle.cs" />
     <Compile Include="Constants\CacheProfiles.cs" />
@@ -1033,6 +1026,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>_searchUpdate.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ErrorBasePage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Views\Error\InternalServerError.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1138,11 +1134,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>_About.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Shared\_ApprenticeshipLayout.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>_ApprenticeshipLayout.cshtml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Shared\_ErrorLayout.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1162,11 +1153,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>_TermsAndConditions.cshtml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Shared\_TraineeshipLayout.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>_TraineeshipLayout.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\TraineeshipApplication\Apply.generated.cs">
       <AutoGen>True</AutoGen>

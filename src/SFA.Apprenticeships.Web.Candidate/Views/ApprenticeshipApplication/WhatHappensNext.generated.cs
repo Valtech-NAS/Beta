@@ -54,7 +54,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.ApprenticeshipApplication
             #line 2 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
   
     ViewBag.Title = "Apprenticeships - Apprenticeship application submitted";
-    Layout = "~/Views/Shared/_ApprenticeshipLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 
             
             #line default
@@ -143,14 +143,14 @@ WriteLiteral(" class=\"fa fa-envelope-o\"");
 WriteLiteral("></i>If you\'d like to receive email confirmation of applications, you can turn no" +
 "tifications on in the <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1012), Tuple.Create("\"", 1062)
+WriteAttribute("href", Tuple.Create(" href=\"", 1011), Tuple.Create("\"", 1067)
             
             #line 26 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-                                                                       , Tuple.Create(Tuple.Create("", 1019), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Settings)
+                                                                       , Tuple.Create(Tuple.Create("", 1018), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
             
             #line default
             #line hidden
-, 1019), false)
+, 1018), false)
 );
 
 WriteLiteral(">settings</a> section in your account.\r\n        </p>\r\n    </section>\r\n");
@@ -182,14 +182,14 @@ WriteLiteral(" class=\"text\"");
 
 WriteLiteral(">\r\n            <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1258), Tuple.Create("\"", 1289)
+WriteAttribute("href", Tuple.Create(" href=\"", 1263), Tuple.Create("\"", 1294)
             
             #line 35 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-, Tuple.Create(Tuple.Create("", 1265), Tuple.Create<System.Object, System.Int32>(ViewBag.SearchReturnUrl
+, Tuple.Create(Tuple.Create("", 1270), Tuple.Create<System.Object, System.Int32>(ViewBag.SearchReturnUrl
             
             #line default
             #line hidden
-, 1265), false)
+, 1270), false)
 );
 
 WriteLiteral(" title=\"Return to search results\"");
@@ -217,14 +217,14 @@ WriteLiteral(">\r\n    <p>\r\n        You’ll be contacted if you’ve been sho
 "ew. If you\r\n        haven’t been successful the training provider will let you k" +
 "now and\r\n        give you feedback.\r\n    </p>\r\n    <p>\r\n        You can also <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1739), Tuple.Create("\"", 1795)
+WriteAttribute("href", Tuple.Create(" href=\"", 1744), Tuple.Create("\"", 1800)
             
             #line 48 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-, Tuple.Create(Tuple.Create("", 1746), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
+, Tuple.Create(Tuple.Create("", 1751), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
             
             #line default
             #line hidden
-, 1746), false)
+, 1751), false)
 );
 
 WriteLiteral(">track the progress of your application</a> at any time.</p>\r\n    <p>\r\n        If" +
@@ -247,14 +247,14 @@ WriteLiteral(" role=\"button\"");
 
 WriteLiteral(" class=\"button\"");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 2217), Tuple.Create("\'", 2279)
+WriteAttribute("href", Tuple.Create(" href=\'", 2222), Tuple.Create("\'", 2284)
             
             #line 58 "..\..\Views\ApprenticeshipApplication\WhatHappensNext.cshtml"
-, Tuple.Create(Tuple.Create("", 2224), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)
+, Tuple.Create(Tuple.Create("", 2229), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)
             
             #line default
             #line hidden
-, 2224), false)
+, 2229), false)
 );
 
 WriteLiteral(">Find an apprenticeship</a>\r\n</div>");

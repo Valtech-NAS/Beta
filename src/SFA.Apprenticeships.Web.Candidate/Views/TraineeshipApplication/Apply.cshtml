@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Find a traineeship - Application form";
-    Layout = "~/Views/Shared/_TraineeshipLayout.cshtml";   
+    Layout = "~/Views/Shared/_Layout.cshtml";   
 }
 
 @using (Html.BeginForm(null, "TraineeshipApplication", new { id = Model.VacancyId }, FormMethod.Post, new { id = "application-form" }))

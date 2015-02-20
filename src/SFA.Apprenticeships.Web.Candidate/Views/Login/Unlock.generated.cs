@@ -54,7 +54,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Login
             #line 3 "..\..\Views\Login\Unlock.cshtml"
   
     ViewBag.Title = "Apprenticeships - Account locked";
-    Layout = "~/Views/Shared/_ApprenticeshipLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 
             
             #line default

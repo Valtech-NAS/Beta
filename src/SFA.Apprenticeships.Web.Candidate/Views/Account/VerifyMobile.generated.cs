@@ -54,7 +54,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Account
             #line 3 "..\..\Views\Account\VerifyMobile.cshtml"
   
     ViewBag.Title = "Apprenticeships - Verify Mobile";
-    Layout = "~/Views/Shared/_ApprenticeshipLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 
             
             #line default

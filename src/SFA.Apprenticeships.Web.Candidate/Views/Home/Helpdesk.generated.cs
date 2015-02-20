@@ -56,7 +56,7 @@ WriteLiteral("\r\n");
             #line 2 "..\..\Views\Home\Helpdesk.cshtml"
   
     ViewBag.Title = "Apprenticeships - Helpdesk";
-    Layout = "~/Views/Shared/_ApprenticeshipLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 
             
             #line default

@@ -54,7 +54,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.TraineeshipApplication
             #line 3 "..\..\Views\TraineeshipApplication\Apply.cshtml"
   
     ViewBag.Title = "Find a traineeship - Application form";
-    Layout = "~/Views/Shared/_TraineeshipLayout.cshtml";   
+    Layout = "~/Views/Shared/_Layout.cshtml";   
 
             
             #line default
@@ -165,14 +165,14 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n            <p>\r\n                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1046), Tuple.Create("\"", 1136)
+WriteAttribute("href", Tuple.Create(" href=\"", 1035), Tuple.Create("\"", 1125)
             
             #line 22 "..\..\Views\TraineeshipApplication\Apply.cshtml"
-, Tuple.Create(Tuple.Create("", 1053), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipDetails, new { id = Model.VacancyId })
+, Tuple.Create(Tuple.Create("", 1042), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipDetails, new { id = Model.VacancyId })
             
             #line default
             #line hidden
-, 1053), false)
+, 1042), false)
 );
 
 WriteLiteral(">View traineeship</a>\r\n            </p>\r\n        </div>\r\n    </section>\r\n");

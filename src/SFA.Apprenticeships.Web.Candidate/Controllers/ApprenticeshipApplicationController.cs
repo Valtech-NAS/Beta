@@ -12,6 +12,7 @@
     using Mediators.Application;
     using ViewModels.Applications;
 
+    [UserJourneyContext(UserJourney.Apprenticeship, Order = 2)]
     public class ApprenticeshipApplicationController : CandidateControllerBase
     {
         private readonly IApprenticeshipApplicationMediator _apprenticeshipApplicationMediator;

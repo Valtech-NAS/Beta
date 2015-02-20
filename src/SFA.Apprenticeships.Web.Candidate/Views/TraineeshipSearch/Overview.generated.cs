@@ -56,7 +56,7 @@ WriteLiteral("\r\n");
             #line 2 "..\..\Views\TraineeshipSearch\Overview.cshtml"
   
     ViewBag.Title = "Traineeship Overview";
-    Layout = "~/Views/Shared/_TraineeshipLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 
             
             #line default
@@ -171,14 +171,14 @@ WriteLiteral(">\r\n            <a");
 
 WriteLiteral(" id=\"prompt-traineeship-search-link\"");
 
-WriteAttribute("href", Tuple.Create(" href=", 2518), Tuple.Create("", 2576)
+WriteAttribute("href", Tuple.Create(" href=", 2507), Tuple.Create("", 2565)
             
             #line 62 "..\..\Views\TraineeshipSearch\Overview.cshtml"
-, Tuple.Create(Tuple.Create("", 2524), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipSearch)
+, Tuple.Create(Tuple.Create("", 2513), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipSearch)
             
             #line default
             #line hidden
-, 2524), false)
+, 2513), false)
 );
 
 WriteLiteral(" class=\"button\"");

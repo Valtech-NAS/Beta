@@ -50,5 +50,8 @@
 
         [ElementLocator(Id = "ErrorMessageText")]
         public IWebElement ErrorMessageText { get; set; }
+
+        [ElementLocator(Id="global-header-title")]
+        public IWebElement GlobalTitle { get; set; }
     }
 }
