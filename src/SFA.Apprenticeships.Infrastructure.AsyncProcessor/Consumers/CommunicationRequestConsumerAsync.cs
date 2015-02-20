@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor.Consumers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -26,6 +27,8 @@
         {
             return Task.Run(() =>
             {
+                //todo: 1.6: entity ID may not be populated so will be Guid.Empty. needs refactor to accommodate non-candidate recipient
+
                 // note, for now only candidate messages are being sent so assume entity ID is candidate ID
                 var candidateId = message.EntityId;
 

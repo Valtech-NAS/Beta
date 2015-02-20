@@ -5,6 +5,7 @@
     using CuttingEdge.Conditions;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
+    using Domain.Entities.Communication;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Repositories;
@@ -342,6 +343,13 @@
             _logger.Info("Calling CandidateService to verify the mobile number for candidateId {0} with code {1}", candidateId, verificationCode);
 
             _verifyMobileStrategy.VerifyMobile(candidateId, verificationCode);
+        }
+
+        public void SendContactMessage(ContactMessage contactMessage)
+        {
+            Condition.Requires(contactMessage);
+
+            //todo: 1.6: -> strategy -> communication service
         }
     }
 }

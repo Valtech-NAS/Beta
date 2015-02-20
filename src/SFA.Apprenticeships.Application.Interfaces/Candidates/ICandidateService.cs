@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
+    using Domain.Entities.Communication;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
 
@@ -60,6 +61,6 @@
 
         void VerifyMobileCode(Guid candidateId, string verificationCode);
 
-        //todo: 1.6: void SendContactMessage(ContactMessage contactMessage);
+        void SendContactMessage(ContactMessage contactMessage);
     }
 }
