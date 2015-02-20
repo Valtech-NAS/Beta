@@ -196,7 +196,6 @@
         {
             return await Task.Run(() =>
             {
-
                 var response = _registerMediator.ResetPassword(model);
 
                 switch (response.Code)

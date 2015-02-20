@@ -35,6 +35,7 @@
                 .GetServer()
                 .GetDatabase(mongoDbName);
             _collection = _database.GetCollection<MongoApprenticeshipApplicationExpiringDraft>("expiringdraftapplications");
+            _collection.Remove(Query.EQ("VacancyId", TestVacancyId));
         }
 
         [TearDown]
@@ -46,11 +47,13 @@
         [Test, Category("Integration")]
         public void TestMultiSaveGetAndDeleteCandidatesDailyDigest()
         {
+            var initialDailiDigestEmailscount = _expiringDraftRepository.GetCandidatesDailyDigest().Count;
+            const int expiringEmailsToAdd = 3;
             //Arrange
             var batchId = Guid.NewGuid();
             var sentDateTime = DateTime.Now;
             var expiringDrafts =
-                Builder<ExpiringApprenticeshipApplicationDraft>.CreateListOfSize(3)
+                Builder<ExpiringApprenticeshipApplicationDraft>.CreateListOfSize(expiringEmailsToAdd)
                     .All()
                     .With(ed => ed.VacancyId = TestVacancyId)
                     .With(ed => ed.BatchId = batchId)
@@ -69,18 +72,18 @@
             
             //Assert
             var candidatesDailyDigest = _expiringDraftRepository.GetCandidatesDailyDigest();
-            candidatesDailyDigest.Count().Should().Be(3);
+            candidatesDailyDigest.Count().Should().Be(expiringEmailsToAdd + initialDailiDigestEmailscount);
             var returnedExpiringDrafts = candidatesDailyDigest.SelectMany(cand => cand.Value.ToArray());
             returnedExpiringDrafts.Count(ed => ed.VacancyId == TestVacancyId && ed.BatchId == null && ed.SentDateTime == null)
                 .Should()
-                .Be(3);
+                .Be(expiringEmailsToAdd);
 
             //Act
             expiringDrafts.ForEach(_expiringDraftRepository.Delete);
 
             //Assert
             candidatesDailyDigest = _expiringDraftRepository.GetCandidatesDailyDigest();
-            candidatesDailyDigest.Count().Should().Be(0);
+            candidatesDailyDigest.Count().Should().Be(initialDailiDigestEmailscount);
         } 
     }
 }

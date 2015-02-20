@@ -188,6 +188,8 @@
             {
                 var response = _loginMediator.Resend(model);
 
+                UserData.Push(UserDataItemNames.UnlockEmailAddress, model.EmailAddress);
+
                 switch (response.Code)
                 {
                     case LoginMediatorCodes.Resend.ValidationError:
