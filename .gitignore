@@ -115,6 +115,9 @@ emailSettings.config
 *.azurePubxml
 diagnostics.wadcfg
 
+# App Insight Configuration Files
+ApplicationInsights.config
+
 # Windows Store app package directory
 AppPackages/
 
