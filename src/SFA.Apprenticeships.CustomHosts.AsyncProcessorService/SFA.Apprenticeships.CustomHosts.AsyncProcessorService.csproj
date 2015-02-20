@@ -155,6 +155,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Communications\SFA.Apprenticeships.Application.Communications.csproj">
+      <Project>{d91e4093-3348-43ed-b386-cf70000ffcb3}</Project>
+      <Name>SFA.Apprenticeships.Application.Communications</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.AsyncProcessor\SFA.Apprenticeships.Infrastructure.AsyncProcessor.csproj">
       <Project>{d1bc4a28-a7ab-475e-b73e-5564897550ba}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.AsyncProcessor</Name>

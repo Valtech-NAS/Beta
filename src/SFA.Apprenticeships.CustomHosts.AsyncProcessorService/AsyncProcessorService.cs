@@ -17,6 +17,7 @@
     using Infrastructure.Repositories.Users.IoC;
     using Infrastructure.AsyncProcessor.Consumers;
     using Infrastructure.AsyncProcessor.IoC;
+    using Infrastructure.Caching.Memory.IoC;
     using StructureMap;
 
     public partial class AsyncProcessorService : ServiceBase
@@ -72,6 +73,7 @@
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<LegacyWebServicesRegistry>();
+                x.AddRegistry<MemoryCacheRegistry>();
                 x.AddRegistry<AsyncProcessorRegistry>();
             });
         }
