@@ -17,7 +17,7 @@
         [TestCase(true, true, false)]
         [TestCase(false, true, true)]
         [TestCase(true, true, true)]
-        public void TestMappings(bool verifiedMobile, bool allowEmailComms, bool allowSmsComms)
+        public void TestCommunicationMappings(bool verifiedMobile, bool allowEmailComms, bool allowSmsComms)
         {
             var candidateId = Guid.NewGuid();
             const string phoneNumber = "0123456789";
@@ -38,6 +38,27 @@
             viewModel.VerifiedMobile.Should().Be(verifiedMobile);
             viewModel.AllowEmailComms.Should().Be(allowEmailComms);
             viewModel.AllowSmsComms.Should().Be(allowSmsComms);
+        }
+
+        [TestCase(false, false)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        public void TestMarketingMappings(bool allowEmailMarketing, bool allowSmsMarketing)
+        {
+            var candidateId = Guid.NewGuid();
+            var candidate = new CandidateBuilder(candidateId)
+                .AllowEmailMarketing(allowEmailMarketing)
+                .AllowMobileMarketing(allowSmsMarketing)
+                .Build();
+            var candidateService = new Mock<ICandidateService>();
+            candidateService.Setup(cs => cs.GetCandidate(candidateId)).Returns(candidate);
+            var provider = new AccountProviderBuilder().With(candidateService).Build();
+
+            var viewModel = provider.GetSettingsViewModel(candidateId);
+
+            viewModel.Should().NotBeNull();
+            viewModel.AllowEmailMarketing.Should().Be(allowEmailMarketing);
+            viewModel.AllowSmsMarketing.Should().Be(allowSmsMarketing);
         }
     }
 }

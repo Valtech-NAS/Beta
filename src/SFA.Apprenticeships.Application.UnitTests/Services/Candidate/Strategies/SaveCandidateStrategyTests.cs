@@ -92,9 +92,13 @@
 
         }
 
-        [TestCase(true)]
-        [TestCase(false)]
-        public void ShouldAssignAndSendMobileUserCodeIfVerificationIsRequired(bool verifiedMobile)
+        [TestCase(true, true, false)]
+        [TestCase(true, false, true)]
+        [TestCase(true, true, true)]
+        [TestCase(false, true, false)]
+        [TestCase(false, false, true)]
+        [TestCase(false, true, true)]
+        public void ShouldAssignAndSendMobileUserCodeIfVerificationIsRequired(bool verifiedMobile, bool allowMobile, bool allowMobileMarketing)
         {
             var candidateId = Guid.NewGuid();
             const string phoneNumber = "0123456789";
@@ -107,8 +111,9 @@
                 },
                 CommunicationPreferences = new CommunicationPreferences
                 {
-                    AllowMobile = true,
-                    VerifiedMobile = verifiedMobile
+                    AllowMobile = allowMobile,
+                    VerifiedMobile = verifiedMobile,
+                    AllowMobileMarketing = allowMobileMarketing
                 }
             };
 

@@ -25,14 +25,20 @@
 
         public bool VerifiedMobile { get; set; }
 
-        [Display(Name = SettingsViewModelMessages.AllowEmailCommsMessages.LabelText)]
+        [Display(Name = SettingsViewModelMessages.AllowEmailMessages.LabelText)]
         public bool AllowEmailComms { get; set; }
 
-        [Display(Name = SettingsViewModelMessages.AllowSmsCommsMessages.LabelText)]
+        [Display(Name = SettingsViewModelMessages.AllowSmsMessages.LabelText)]
         public bool AllowSmsComms { get; set; }
 
         public TraineeshipFeatureViewModel TraineeshipFeature { get; set; }
 
         public bool SmsEnabled { get; set; }
+
+        [Display(Name = SettingsViewModelMessages.AllowEmailMessages.LabelText)]
+        public bool AllowEmailMarketing { get; set; }
+
+        [Display(Name = SettingsViewModelMessages.AllowSmsMessages.LabelText)]
+        public bool AllowSmsMarketing { get; set; }
     }
 }

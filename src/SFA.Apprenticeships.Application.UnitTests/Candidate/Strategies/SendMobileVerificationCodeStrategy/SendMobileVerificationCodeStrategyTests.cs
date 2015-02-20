@@ -17,13 +17,15 @@
     [TestFixture]
     public class SendMobileVerificationCodeStrategyTests
     {
-        [TestCase(true, true)]
-        [TestCase(false, true)]
-        [TestCase(false, false)]
-        public void MobileVerificationNotRequired(bool allowMobile, bool verifiedMobile)
+        [TestCase(true, true, true)]
+        [TestCase(true, false, true)]
+        [TestCase(true, true, false)]
+        [TestCase(true, false, false)]
+        [TestCase(false, false, false)]
+        public void MobileVerificationNotRequired(bool verifiedMobile, bool allowMobile, bool allowMobileMarketing)
         {
             var candidateId = Guid.NewGuid();
-            var candidate = new CandidateBuilder(candidateId).AllowMobile(allowMobile).VerifiedMobile(verifiedMobile).Build();
+            var candidate = new CandidateBuilder(candidateId).AllowMobile(allowMobile).VerifiedMobile(verifiedMobile).AllowMobileMarketing(allowMobileMarketing).Build();
             var strategy = new SendMobileVerificationCodeStrategyBuilder().Build();
 
             Action action = () => { strategy.SendMobileVerificationCode(candidate); };

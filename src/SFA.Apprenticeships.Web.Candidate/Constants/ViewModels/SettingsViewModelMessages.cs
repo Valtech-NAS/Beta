@@ -31,12 +31,12 @@
             public const string WhiteListErrorText = "Phone number " + Whitelists.PhoneNumberWhitelist.ErrorText;
         }
 
-        public static class AllowEmailCommsMessages
+        public static class AllowEmailMessages
         {
             public const string LabelText = "Email";
         }
 
-        public static class AllowSmsCommsMessages
+        public static class AllowSmsMessages
         {
             public const string LabelText = "Text";
         }

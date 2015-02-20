@@ -58,6 +58,22 @@
                     <li>an apprenticeship is approaching its closing date</li>
                 </ul>
             </div>
+
+            <div class="form-group form-group-compound">
+                <p class="form-label">Receive updates on news and information?</p>
+                @Html.FormUnvalidatedCheckBoxFor(m => m.AllowEmailMarketing, labelHtmlAttributes: new { @class = "block-label" })
+                @if (Model.SmsEnabled)
+                {
+                    @Html.FormUnvalidatedCheckBoxFor(m => m.AllowSmsMarketing, labelHtmlAttributes: new { @class = "block-label" })
+                }
+            </div>
+
+            <div class="panel-indent text">
+                <p>
+                    We regularly send out latest careers news and information on upcoming
+                    events
+                </p>
+            </div>
         </div>
 
     </fieldset>

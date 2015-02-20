@@ -15,6 +15,8 @@
         private bool _showTraineeshipsLink;
         private bool _showTraineeshipsPrompt;
         private bool _smsEnabled;
+        private bool _allowEmailMarketing;
+        private bool _allowSmsMarketing;
 
         public SettingsViewModelBuilder Firstname(string firstname)
         {
@@ -70,6 +72,18 @@
             return this;
         }
 
+        public SettingsViewModelBuilder AllowEmailMarketing(bool allowEmailMarketing)
+        {
+            _allowEmailMarketing = allowEmailMarketing;
+            return this;
+        }
+
+        public SettingsViewModelBuilder AllowSmsMarketing(bool allowSmsMarketing)
+        {
+            _allowSmsMarketing = allowSmsMarketing;
+            return this;
+        }
+
         public SettingsViewModel Build()
         {
             var model = new SettingsViewModel
@@ -91,7 +105,9 @@
                     ShowTraineeshipsLink = _showTraineeshipsLink,
                     ShowTraineeshipsPrompt = _showTraineeshipsPrompt
                 },
-                SmsEnabled = _smsEnabled
+                SmsEnabled = _smsEnabled,
+                AllowEmailMarketing = _allowEmailMarketing,
+                AllowSmsMarketing = _allowSmsMarketing
             };
 
             return model;

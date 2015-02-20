@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.UnitTests.Builder
 {
     using System;
-    using Domain.Entities.Candidates;
-    using Domain.Entities.Users;
+    using Candidates;
+    using Users;
 
     public class CandidateBuilder
     {
@@ -12,6 +12,8 @@
         private bool _allowEmail;
         private bool _allowMobile;
         private bool _verifiedMobile;
+        private bool _allowEmailMarketing;
+        private bool _allowSmsMarketing;
 
         public CandidateBuilder(Guid candidateId)
         {
@@ -48,6 +50,18 @@
             return this;
         }
 
+        public CandidateBuilder AllowEmailMarketing(bool allowEmailMarketing)
+        {
+            _allowEmailMarketing = allowEmailMarketing;
+            return this;
+        }
+
+        public CandidateBuilder AllowMobileMarketing(bool allowSmsMarketing)
+        {
+            _allowSmsMarketing = allowSmsMarketing;
+            return this;
+        }
+
         public Candidate Build()
         {
             var candidate = new Candidate
@@ -62,7 +76,9 @@
                     AllowEmail = _allowEmail,
                     AllowMobile = _allowMobile,
                     VerifiedMobile = _verifiedMobile,
-                    MobileVerificationCode = _mobileVerificationCode
+                    MobileVerificationCode = _mobileVerificationCode,
+                    AllowEmailMarketing = _allowEmailMarketing,
+                    AllowMobileMarketing = _allowSmsMarketing
                 }
             };
 

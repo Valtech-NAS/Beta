@@ -186,6 +186,7 @@
     <Compile Include="Mediators\Account\DismissTests.cs" />
     <Compile Include="Mediators\Account\IndexTests.cs" />
     <Compile Include="Mediators\Account\ResendTests.cs" />
+    <Compile Include="Mediators\Account\SaveSettingsTests.cs" />
     <Compile Include="Mediators\Account\SettingsTests.cs" />
     <Compile Include="Mediators\Account\TrackTests.cs" />
     <Compile Include="Mediators\Account\TraineeshipVacancyDetailsTests.cs" />
@@ -276,6 +277,7 @@
     <Compile Include="Views\Dashboard\DashboardTraineeshipTests.cs" />
     <Compile Include="Views\Dashboard\MyApplicationsViewModelBuilder.cs" />
     <Compile Include="Views\Settings\CommunicationsPreferencesTests.cs" />
+    <Compile Include="Views\Settings\MarketingOptInTests.cs" />
     <Compile Include="Views\Settings\SettingsTests.cs" />
     <Compile Include="Views\Settings\SettingsViewBuilder.cs" />
     <Compile Include="Views\TraineeshipSearch\ApplyPartialTests.cs" />

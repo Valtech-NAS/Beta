@@ -13,11 +13,6 @@
     [TestFixture]
     public class IndexTests
     {
-        [TestFixtureSetUp]
-        public void SetUp()
-        {
-        }
-
         [Test]
         public void SuccessTest()
         {

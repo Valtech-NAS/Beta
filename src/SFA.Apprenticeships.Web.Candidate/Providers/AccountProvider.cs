@@ -41,6 +41,8 @@
                 settings.AllowSmsComms = candidate.CommunicationPreferences.AllowMobile;
                 settings.VerifiedMobile = candidate.CommunicationPreferences.VerifiedMobile;
                 settings.SmsEnabled = _featureToggle.IsActive(Feature.Sms);
+                settings.AllowEmailMarketing = candidate.CommunicationPreferences.AllowEmailMarketing;
+                settings.AllowSmsMarketing = candidate.CommunicationPreferences.AllowMobileMarketing;
                 return settings;
             }
             catch (Exception e)
@@ -67,6 +69,8 @@
                 {
                     candidate.CommunicationPreferences.VerifiedMobile = false;
                 }
+                candidate.CommunicationPreferences.AllowEmailMarketing = model.AllowEmailMarketing;
+                candidate.CommunicationPreferences.AllowMobileMarketing = model.AllowSmsMarketing;
                 
                 PatchRegistrationDetails(candidate.RegistrationDetails, model);
                 _candidateService.SaveCandidate(candidate);

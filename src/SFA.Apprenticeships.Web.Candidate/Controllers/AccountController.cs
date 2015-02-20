@@ -1,10 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
-    using System;
     using System.Globalization;
     using System.Net;
     using System.Threading.Tasks;
-    using System.Web;
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
@@ -15,9 +13,7 @@
     using FluentValidation.Mvc;
     using Mediators;
     using Mediators.Account;
-    using Mediators.Login;
     using ViewModels.Account;
-    using ViewModels.Login;
 
     public class AccountController : CandidateControllerBase
     {

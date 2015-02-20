@@ -42,16 +42,18 @@
             candidate.MobileVerificationRequired().Should().BeFalse();
         }
 
-        [TestCase(true, true)]
-        [TestCase(false, true)]
-        [TestCase(false, false)]
-        public void ErrorTest(bool allowMobile, bool verifiedMobile)
+        [TestCase(true, true, true)]
+        [TestCase(true, false, true)]
+        [TestCase(true, true, false)]
+        [TestCase(true, false, false)]
+        [TestCase(false, false, false)]
+        public void ErrorTest(bool verifiedMobile, bool allowMobile, bool allowMobileMarketing)
         {
             //Arrange
             Guid candidateId = Guid.NewGuid();
             string verificationCode = string.Empty;
 
-            Candidate candidate = new CandidateBuilder(candidateId).MobileVerificationCode(verificationCode).AllowMobile(allowMobile).VerifiedMobile(verifiedMobile).Build();
+            Candidate candidate = new CandidateBuilder(candidateId).MobileVerificationCode(verificationCode).AllowMobile(allowMobile).VerifiedMobile(verifiedMobile).AllowMobileMarketing(allowMobileMarketing).Build();
             var candidateReadRepository = new Mock<ICandidateReadRepository>();
             candidateReadRepository.Setup(r => r.Get(candidateId)).Returns(candidate);
 

@@ -20,7 +20,7 @@
         [TestCase("0123456789", true, true, false)]
         [TestCase("0123456789", true, false, true)]
         [TestCase("0123456789", true, true, true)]
-        public void MappingTest(string phoneNumber, bool verifiedMobile, bool allowEmailComms, bool allowSmsComms)
+        public void CommunicationMappingTest(string phoneNumber, bool verifiedMobile, bool allowEmailComms, bool allowSmsComms)
         {
             var candidateId = Guid.NewGuid();
             var candidateService = new Mock<ICandidateService>();
@@ -38,6 +38,28 @@
             candidate.CommunicationPreferences.AllowEmail.Should().Be(allowEmailComms);
             candidate.CommunicationPreferences.AllowMobile.Should().Be(allowSmsComms);
             candidate.CommunicationPreferences.VerifiedMobile.Should().Be(verifiedMobile);
+        }
+
+        [TestCase(false, false)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        [TestCase(true, true)]
+        public void MarketingMappingTest(bool allowEmailMarketing, bool allowSmsMarketing)
+        {
+            var candidateId = Guid.NewGuid();
+            var candidateService = new Mock<ICandidateService>();
+            candidateService.Setup(cs => cs.GetCandidate(candidateId)).Returns(new CandidateBuilder(candidateId).Build);
+            var viewModel = new SettingsViewModelBuilder().AllowEmailMarketing(allowEmailMarketing).AllowSmsMarketing(allowSmsMarketing).Build();
+            var provider = new AccountProviderBuilder().With(candidateService).Build();
+
+            Candidate candidate;
+            var result = provider.TrySaveSettings(candidateId, viewModel, out candidate);
+
+            result.Should().BeTrue();
+            candidate.RegistrationDetails.Should().NotBeNull();
+            candidate.CommunicationPreferences.Should().NotBeNull();
+            candidate.CommunicationPreferences.AllowEmailMarketing.Should().Be(allowEmailMarketing);
+            candidate.CommunicationPreferences.AllowMobileMarketing.Should().Be(allowSmsMarketing);
         }
 
         [TestCase("0123456789", false, false, false)]

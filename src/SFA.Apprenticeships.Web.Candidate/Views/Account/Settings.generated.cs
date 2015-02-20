@@ -289,10 +289,66 @@ WriteLiteral(">\r\n                    <li>you submit an application form</li>\r
 "   ");
 
 WriteLiteral("\r\n                    <li>an apprenticeship is approaching its closing date</li>\r" +
-"\n                </ul>\r\n            </div>\r\n        </div>\r\n\r\n    </fieldset>\r\n");
+"\n                </ul>\r\n            </div>\r\n\r\n            <div");
+
+WriteLiteral(" class=\"form-group form-group-compound\"");
+
+WriteLiteral(">\r\n                <p");
+
+WriteLiteral(" class=\"form-label\"");
+
+WriteLiteral(">Receive updates on news and information?</p>\r\n");
+
+WriteLiteral("                ");
 
             
             #line 64 "..\..\Views\Account\Settings.cshtml"
+           Write(Html.FormUnvalidatedCheckBoxFor(m => m.AllowEmailMarketing, labelHtmlAttributes: new { @class = "block-label" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+            
+            #line 65 "..\..\Views\Account\Settings.cshtml"
+                
+            
+            #line default
+            #line hidden
+            
+            #line 65 "..\..\Views\Account\Settings.cshtml"
+                 if (Model.SmsEnabled)
+                {
+                    
+            
+            #line default
+            #line hidden
+            
+            #line 67 "..\..\Views\Account\Settings.cshtml"
+               Write(Html.FormUnvalidatedCheckBoxFor(m => m.AllowSmsMarketing, labelHtmlAttributes: new { @class = "block-label" }));
+
+            
+            #line default
+            #line hidden
+            
+            #line 67 "..\..\Views\Account\Settings.cshtml"
+                                                                                                                                   
+                }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("            </div>\r\n\r\n            <div");
+
+WriteLiteral(" class=\"panel-indent text\"");
+
+WriteLiteral(">\r\n                <p>\r\n                    We regularly send out latest careers " +
+"news and information on upcoming\r\n                    events\r\n                </" +
+"p>\r\n            </div>\r\n        </div>\r\n\r\n    </fieldset>\r\n");
+
+            
+            #line 80 "..\..\Views\Account\Settings.cshtml"
 
 
             
@@ -311,7 +367,7 @@ WriteLiteral(" class=\"button\"");
 WriteLiteral(">Update details</button>\r\n    </div>\r\n");
 
             
-            #line 68 "..\..\Views\Account\Settings.cshtml"
+            #line 84 "..\..\Views\Account\Settings.cshtml"
 }
 
             
@@ -325,7 +381,7 @@ WriteLiteral("\r\n    <script>\r\n        $(function () {\r\n            $(\"#fi
 "Lookup({\r\n                url: \'");
 
             
-            #line 75 "..\..\Views\Account\Settings.cshtml"
+            #line 91 "..\..\Views\Account\Settings.cshtml"
                  Write(Url.Action("Addresses", "Location"));
 
             
