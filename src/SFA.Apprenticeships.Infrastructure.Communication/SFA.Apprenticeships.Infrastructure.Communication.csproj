@@ -114,7 +114,6 @@
     <Compile Include="Sms\SmsMessageFormatters\SmsSendMobileVerificationCodeFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsTraineeshipApplicationSubmittedMessageFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsAccountUnlockCodeMessageFormatter.cs" />
-    <Compile Include="Sms\SmsMessageFormatters\SmsActivationCodeMessageFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsApprenticeshipApplicationSubmittedMessageFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsPasswordChangedMessageFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsPasswordResetCodeMessageFormatter.cs" />

@@ -32,7 +32,6 @@
 
             IEnumerable<KeyValuePair<MessageTypes, SmsMessageFormatter>> smsMessageFormatters = new[]
             {
-                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.SendActivationCode, new SmsActivationCodeMessageFormatter(TwilioConfiguration.Instance) ),
                 new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.SendAccountUnlockCode, new SmsAccountUnlockCodeMessageFormatter(TwilioConfiguration.Instance)),
                 new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.SendPasswordResetCode, new SmsPasswordResetCodeMessageFormatter(TwilioConfiguration.Instance)),
                 new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.PasswordChanged, new SmsPasswordChangedMessageFormatter(TwilioConfiguration.Instance)),
