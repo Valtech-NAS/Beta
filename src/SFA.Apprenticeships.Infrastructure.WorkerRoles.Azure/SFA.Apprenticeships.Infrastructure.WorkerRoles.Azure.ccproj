@@ -119,27 +119,17 @@
     <Folder Include="SFA.Apprenticeships.Infrastructure.VacancyEtlContent\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="SFA.Apprenticeships.Infrastructure.ApplicationEtlContent\diagnostics.wadcfg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="SFA.Apprenticeships.Infrastructure.AsyncProcessorContent\diagnostics.wadcfg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="SFA.Apprenticeships.Infrastructure.CommunicationsContent\diagnostics.wadcfg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="SFA.Apprenticeships.Infrastructure.MonitorContent\diagnostics.wadcfg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="SFA.Apprenticeships.Infrastructure.VacancyEtlContent\diagnostics.wadcfg">
-      <SubType>Content</SubType>
-    </Content>
+    <DiagnosticsConfiguration Include="SFA.Apprenticeships.Infrastructure.ApplicationEtlContent\diagnostics.wadcfgx" />
+    <DiagnosticsConfiguration Include="SFA.Apprenticeships.Infrastructure.AsyncProcessorContent\diagnostics.wadcfgx" />
+    <DiagnosticsConfiguration Include="SFA.Apprenticeships.Infrastructure.CommunicationsContent\diagnostics.wadcfgx" />
+    <DiagnosticsConfiguration Include="SFA.Apprenticeships.Infrastructure.MonitorContent\diagnostics.wadcfgx" />
+    <DiagnosticsConfiguration Include="SFA.Apprenticeships.Infrastructure.VacancyEtlContent\diagnostics.wadcfgx" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>
     <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
-    <CloudExtensionsDir Condition=" '$(CloudExtensionsDir)' == '' ">$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Windows Azure Tools\2.4\</CloudExtensionsDir>
-    <ProductVersion>2.4</ProductVersion>
+    <CloudExtensionsDir Condition=" '$(CloudExtensionsDir)' == '' ">$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Windows Azure Tools\2.5\</CloudExtensionsDir>
+    <ProductVersion>2.5</ProductVersion>
     <ProjectGuid>{3f950894-ddc7-436f-9df7-8236c76cbcec}</ProjectGuid>
     <PackageEnableRemoteDebugger>False</PackageEnableRemoteDebugger>
     <UseWebProjectPorts>False</UseWebProjectPorts>
@@ -154,6 +144,6 @@
     <Copy SourceFiles="..\SFA.Apprenticeships.Infrastructure.Monitor\obj\$(Configuration)\SFA.Apprenticeships.Infrastructure.Monitor.dll.config" DestinationFolder="$(IntermediateOutputPath)\SFA.Apprenticeships.Infrastructure.Monitor" OverwriteReadOnlyFiles="true" />
     <Copy SourceFiles="..\SFA.Apprenticeships.Infrastructure.AsyncProcessor\obj\$(Configuration)\SFA.Apprenticeships.Infrastructure.AsyncProcessor.dll.config" DestinationFolder="$(IntermediateOutputPath)\SFA.Apprenticeships.Infrastructure.AsyncProcessor" OverwriteReadOnlyFiles="true" />
     <Copy SourceFiles="..\SFA.Apprenticeships.Infrastructure.ApplicationEtl\obj\$(Configuration)\SFA.Apprenticeships.Infrastructure.ApplicationEtl.dll.config" DestinationFolder="$(IntermediateOutputPath)\SFA.Apprenticeships.Infrastructure.ApplicationEtl" OverwriteReadOnlyFiles="true" />
-	<Copy SourceFiles="..\SFA.Apprenticeships.Infrastructure.Communications\obj\$(Configuration)\SFA.Apprenticeships.Infrastructure.Communications.dll.config" DestinationFolder="$(IntermediateOutputPath)\SFA.Apprenticeships.Infrastructure.Communications" OverwriteReadOnlyFiles="true" />
+    <Copy SourceFiles="..\SFA.Apprenticeships.Infrastructure.Communications\obj\$(Configuration)\SFA.Apprenticeships.Infrastructure.Communications.dll.config" DestinationFolder="$(IntermediateOutputPath)\SFA.Apprenticeships.Infrastructure.Communications" OverwriteReadOnlyFiles="true" />
   </Target>
 </Project>
