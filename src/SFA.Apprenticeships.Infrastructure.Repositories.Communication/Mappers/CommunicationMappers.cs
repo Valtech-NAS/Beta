@@ -8,10 +8,10 @@
     {
         public override void Initialise()
         {
-            InitialiseUserCredentialsMappers();
+            InitialiseCommunicationMappers();
         }
 
-        private void InitialiseUserCredentialsMappers()
+        private void InitialiseCommunicationMappers()
         {
             Mapper.CreateMap<ExpiringApprenticeshipApplicationDraft, MongoApprenticeshipApplicationExpiringDraft>();
             Mapper.CreateMap<MongoApprenticeshipApplicationExpiringDraft, ExpiringApprenticeshipApplicationDraft>();
