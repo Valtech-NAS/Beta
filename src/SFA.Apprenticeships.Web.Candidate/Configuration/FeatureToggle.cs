@@ -14,7 +14,8 @@
 
         private readonly Dictionary<Feature, string> _featureToggleKeys = new Dictionary<Feature, string>
         {
-            {Feature.SavedSearches, "SavedSearchesEnabled"}
+            {Feature.SavedSearches, "SavedSearchesEnabled"},
+            {Feature.Sms, "SmsEnabled"}
         };
 
         public bool IsActive(Feature feature)

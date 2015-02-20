@@ -32,5 +32,7 @@
         public bool AllowSmsComms { get; set; }
 
         public TraineeshipFeatureViewModel TraineeshipFeature { get; set; }
+
+        public bool SmsEnabled { get; set; }
     }
 }

@@ -1,11 +1,4 @@
-﻿using System.Threading.Tasks;
-using System.Web.Mvc;
-using System.Web.UI.WebControls;
-using SFA.Apprenticeships.Web.Candidate.Attributes;
-using SFA.Apprenticeships.Web.Candidate.Constants;
-using SFA.Apprenticeships.Web.Common.Providers;
-
-namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
+﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
 {
     using System;
     using Common.Constants;
@@ -14,11 +7,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
     using Domain.Entities.Candidates;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Configuration;
-    using Login;
     using Providers;
     using Validators;
     using ViewModels.Account;
-    using ViewModels.Login;
     using ViewModels.MyApplications;
 
     public class AccountMediator : MediatorBase, IAccountMediator

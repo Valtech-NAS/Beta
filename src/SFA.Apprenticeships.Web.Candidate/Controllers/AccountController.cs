@@ -88,6 +88,7 @@
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [ApplyWebTrends]
+        [SmsEnabledToggle]
         public async Task<ActionResult> VerifyMobile(string returnUrl)
         {
             return await Task.Run<ActionResult>(() =>
@@ -117,6 +118,7 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [MultipleFormActionsButton(Name = "VerifyMobileAction", Argument = "VerifyMobile")]
         [ApplyWebTrends]
+        [SmsEnabledToggle]
         public async Task<ActionResult> VerifyMobile(VerifyMobileViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
@@ -156,6 +158,7 @@
         [AllowReturnUrl(Allow = false)]
         [MultipleFormActionsButton(Name = "VerifyMobileAction", Argument = "Resend")]
         [ApplyWebTrends]
+        [SmsEnabledToggle]
         public async Task<ActionResult> Resend(VerifyMobileViewModel model)
         {
             return await Task.Run<ActionResult>(() =>

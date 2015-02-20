@@ -14,6 +14,7 @@
         private bool _allowSmsComms;
         private bool _showTraineeshipsLink;
         private bool _showTraineeshipsPrompt;
+        private bool _smsEnabled;
 
         public SettingsViewModelBuilder Firstname(string firstname)
         {
@@ -63,6 +64,12 @@
             return this;
         }
 
+        public SettingsViewModelBuilder SmsEnabled(bool smsEnabled)
+        {
+            _smsEnabled = smsEnabled;
+            return this;
+        }
+
         public SettingsViewModel Build()
         {
             var model = new SettingsViewModel
@@ -83,7 +90,8 @@
                 {
                     ShowTraineeshipsLink = _showTraineeshipsLink,
                     ShowTraineeshipsPrompt = _showTraineeshipsPrompt
-                }
+                },
+                SmsEnabled = _smsEnabled
             };
 
             return model;

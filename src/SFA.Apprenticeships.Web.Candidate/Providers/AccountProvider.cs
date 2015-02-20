@@ -3,6 +3,7 @@
     using System;
     using Application.Interfaces.Candidates;
     using Application.Interfaces.Logging;
+    using Configuration;
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;
@@ -14,15 +15,17 @@
     public class AccountProvider : IAccountProvider
     {
         private readonly ILogService _logger;
+        private readonly IFeatureToggle _featureToggle;
         private readonly ICandidateService _candidateService;
         private readonly IMapper _mapper;
 
         public AccountProvider(
             ICandidateService candidateService,
-            IMapper mapper, ILogService logger)
+            IMapper mapper, ILogService logger, IFeatureToggle featureToggle)
         {
             _mapper = mapper;
             _logger = logger;
+            _featureToggle = featureToggle;
             _candidateService = candidateService;
         }
 
@@ -37,6 +40,7 @@
                 settings.AllowEmailComms = candidate.CommunicationPreferences.AllowEmail;
                 settings.AllowSmsComms = candidate.CommunicationPreferences.AllowMobile;
                 settings.VerifiedMobile = candidate.CommunicationPreferences.VerifiedMobile;
+                settings.SmsEnabled = _featureToggle.IsActive(Feature.Sms);
                 return settings;
             }
             catch (Exception e)

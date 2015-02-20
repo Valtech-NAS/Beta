@@ -13,7 +13,7 @@
         [TestCase(true, true)]
         public void US616_AC2_AC3_CommunicationPreferences(bool allowEmailComms, bool allowSmsComms)
         {
-            var viewModel = new SettingsViewModelBuilder().AllowEmailComms(allowEmailComms).AllowSmsComms(allowSmsComms).Build();
+            var viewModel = new SettingsViewModelBuilder().SmsEnabled(true).AllowEmailComms(allowEmailComms).AllowSmsComms(allowSmsComms).Build();
 
             var result = new SettingsViewBuilder().With(viewModel).Render();
 
@@ -49,7 +49,7 @@
         [TestCase(false)]
         public void US616_AC4_PhoneVerifiedIndication(bool verifiedMobile)
         {
-            var viewModel = new SettingsViewModelBuilder().VerifiedMobile(verifiedMobile).Build();
+            var viewModel = new SettingsViewModelBuilder().SmsEnabled(true).VerifiedMobile(verifiedMobile).Build();
 
             var result = new SettingsViewBuilder().With(viewModel).Render();
 
@@ -69,7 +69,7 @@
         [Test]
         public void US616_EmailRadioButtonsRemoved()
         {
-            var viewModel = new SettingsViewModelBuilder().Build();
+            var viewModel = new SettingsViewModelBuilder().SmsEnabled(true).Build();
 
             var result = new SettingsViewBuilder().With(viewModel).Render();
 
@@ -78,6 +78,31 @@
 
             allowEmailCommsRadioButtonYes.Should().BeNull();
             allowEmailCommsRadioButtonNo.Should().BeNull();
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void SmsEnabledFeatureToggle(bool smsEnabled)
+        {
+            var viewModel = new SettingsViewModelBuilder().SmsEnabled(smsEnabled).Build();
+
+            var result = new SettingsViewBuilder().With(viewModel).Render();
+
+            var allowEmailCommsCheckBox = result.GetElementbyId("AllowEmailComms");
+            var allowSmsCommsCheckBox = result.GetElementbyId("AllowSmsComms");
+
+            allowEmailCommsCheckBox.Should().NotBeNull();
+            allowEmailCommsCheckBox.ParentNode.InnerText.Should().Be("Email");
+
+            if (smsEnabled)
+            {
+                allowSmsCommsCheckBox.Should().NotBeNull();
+                allowSmsCommsCheckBox.ParentNode.InnerText.Should().Be("Text");
+            }
+            else
+            {
+                allowSmsCommsCheckBox.Should().BeNull();
+            }
         }
     }
 }
