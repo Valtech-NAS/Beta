@@ -159,6 +159,10 @@
       <Project>{d1bc4a28-a7ab-475e-b73e-5564897550ba}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.AsyncProcessor</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Caching.Memory\SFA.Apprenticeships.Infrastructure.Caching.Memory.csproj">
+      <Project>{b1628369-3014-4a8b-bffd-49cb8adf3bd2}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Caching.Memory</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
       <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
