@@ -5,6 +5,7 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 ## Web layer ##
 
 - refactor: controllers should use providers to avoid containing orchestration logic
+- refactor providers (not quite right)
 - refactor: configuration service - use mongo collection with JSON fallback. This should periodically check for updates to allow in-situ config updates to running applications.
 - validation messages should be parameterised where possible (e.g. max length). See AddressMessages.cs for an example.
 - check all messages starting with "TODO" and 'TODO' (C# and JavaScript).
@@ -32,6 +33,8 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 - additional mongo indexes for app status and date updated (TBC: not sure how effective this would be - re. Alan)
 - Multiple PreFetchCount values for each queue. Intetrnal processes should be able to have a much higher value than ones that talk to the gateway
 - Enums should be serialized to strings into mongo (rather than numeric enum values)
+- Remove AutoMapper from web service proxy layer
+- Worker role rationalisation (reduce number and clean shutdown of rabbit subscribers)
 
 ## Cross cutting ##
 
@@ -42,6 +45,7 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 
 - Configure remote powershell from Build Servers to Deployment Server to use Certificates over file system stored encrypted user details.   
 - Merge build and management networks (See Simon)
+- Upgrade TeamCity
 
 
 ----------
