@@ -53,8 +53,8 @@
             var request = new SmsRequest
             {
                 ToNumber = TestToNumber,
-                Tokens = TokenGenerator.CreateActivationEmailTokens(),
-                MessageType = MessageTypes.SendActivationCode
+                Tokens = TokenGenerator.CreateAccountUnlockCodeTokens(),
+                MessageType = MessageTypes.SendAccountUnlockCode
             };
 
             _dispatcher.SendSms(request);
@@ -66,8 +66,8 @@
             var request = new SmsRequest
             {
                 ToNumber = TestToNumber,
-                Tokens = TokenGenerator.CreateActivationEmailTokens(),
-                MessageType = MessageTypes.SendActivationCode
+                Tokens = TokenGenerator.CreateAccountUnlockCodeTokens(),
+                MessageType = MessageTypes.SendAccountUnlockCode
             };
 
             _dispatcher.SendSms(request);
