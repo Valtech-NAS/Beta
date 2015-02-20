@@ -15,14 +15,14 @@ namespace SFA.Apprenticeships.Application.Communication.Strategies
         private readonly IVacancyDataProvider<TraineeshipVacancyDetail> _vacancyDataProvider;
         private readonly ITraineeshipApplicationReadRepository _traineeshipApplicationReadRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
-        private readonly ISendCandidateCommunicationStrategy _queueCommunicationRequestStrategy;
+        private readonly ISendCandidateCommunicationStrategy _sendCandidateCommunicationStrategy;
 
         public LegacyQueueTraineeshipApplicationSubmittedStrategy(IVacancyDataProvider<TraineeshipVacancyDetail> vacancyDataProvider, ICandidateReadRepository candidateReadRepository, ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository, ISendCandidateCommunicationStrategy queueCommunicationRequestStrategy)
         {
             _vacancyDataProvider = vacancyDataProvider;
             _candidateReadRepository = candidateReadRepository;
             _traineeshipApplicationReadRepository = traineeshipApplicationReadRepository;
-            _queueCommunicationRequestStrategy = queueCommunicationRequestStrategy;
+            _sendCandidateCommunicationStrategy = queueCommunicationRequestStrategy;
         }
 
         public void Send(Guid candidateId, IEnumerable<CommunicationToken> tokens)
@@ -40,7 +40,7 @@ namespace SFA.Apprenticeships.Application.Communication.Strategies
                 new CommunicationToken(CommunicationTokens.ProviderContact, vacancy.Contact)
             };
             
-            _queueCommunicationRequestStrategy.Send(candidateId, MessageTypes.TraineeshipApplicationSubmitted, applicationTokens);
+            _sendCandidateCommunicationStrategy.Send(candidateId, MessageTypes.TraineeshipApplicationSubmitted, applicationTokens);
         }
 
         private TraineeshipApplicationDetail GetApplication(IEnumerable<CommunicationToken> tokens)
