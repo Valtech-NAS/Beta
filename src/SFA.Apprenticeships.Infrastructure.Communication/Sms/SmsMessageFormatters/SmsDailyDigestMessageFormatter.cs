@@ -13,6 +13,7 @@
         private const string ExpiringDraftSummaryFormat = "{0}) With {1}, closing date {2}";
         private const char Pipe = '|';
         private const char Tilda = '~';
+        private const int MaxDraftCount = 3;
 
         public SmsDailyDigestMessageFormatter(ITwillioConfiguration configuration)
             : base(configuration)
@@ -30,14 +31,14 @@
             var sb = new StringBuilder();
 
             var expiringDrafts = expiringDraftsString.Split(Tilda);
-            for (var i = 0; i < expiringDrafts.Length; i++)
+            for (var i = 0; i < expiringDrafts.Length && i < MaxDraftCount; i++)
             {
                 var expiringDraft = expiringDrafts[i];
 
                 var expiringDraftSummary = GetExpiringDraftSummary(i + 1, expiringDraft);
 
                 sb.Append(expiringDraftSummary);
-                if (i < expiringDrafts.Length - 1)
+                if (i < expiringDrafts.Length - 1 && i < MaxDraftCount - 1)
                 {
                     sb.Append("\n");
                 }
