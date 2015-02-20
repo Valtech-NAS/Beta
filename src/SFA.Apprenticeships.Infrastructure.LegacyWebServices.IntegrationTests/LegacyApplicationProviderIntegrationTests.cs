@@ -129,27 +129,27 @@
 
         public void CheckForDuplicatedApplicationException( Exception ex )
         {
-            ex.Should().BeOfType<CustomException>();
+            ex.Should().BeOfType<DomainException>();
 
-            var cex = ex as CustomException;
+            var cex = ex as DomainException;
 // ReSharper disable once PossibleNullReferenceException
             cex.Code.Should().Be(Application.Interfaces.Applications.ErrorCodes.ApplicationDuplicatedError);
         }
 
         public void CheckForApplicationGatewayCreationException(Exception ex)
         {
-            ex.Should().BeOfType<CustomException>();
+            ex.Should().BeOfType<DomainException>();
 
-            var cex = ex as CustomException;
+            var cex = ex as DomainException;
 // ReSharper disable once PossibleNullReferenceException
             cex.Code.Should().Be(ApplicationErrorCodes.ApplicationCreationFailed);
         }
 
         public void CheckForLegacyCandidateNotFoundErrorException(Exception ex)
         {
-            ex.Should().BeOfType<CustomException>();
+            ex.Should().BeOfType<DomainException>();
 
-            var cex = ex as CustomException;
+            var cex = ex as DomainException;
 // ReSharper disable once PossibleNullReferenceException
             cex.Code.Should().Be(CandidateErrorCodes.CandidateNotFoundError);
         }
