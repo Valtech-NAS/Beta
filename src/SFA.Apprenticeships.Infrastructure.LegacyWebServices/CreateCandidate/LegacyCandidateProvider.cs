@@ -42,7 +42,7 @@
             }
             catch (BoundaryException e)
             {
-                var de = new DomainException(CandidateErrorCodes.CreateCandiateFailed, e, new { candidateId = candidate.EntityId });
+                var de = new DomainException(CandidateErrorCodes.CreateCandidateFailed, e, new { candidateId = candidate.EntityId });
 
                 _logger.Error(de);
                 throw de;
@@ -75,7 +75,7 @@
                         response.ValidationErrors.Count(), JsonConvert.SerializeObject(response, Formatting.None));
                 }
 
-                throw new DomainException(CandidateErrorCodes.CreateCandiateFailed, new { message, candidateId = candidate.EntityId });
+                throw new DomainException(CandidateErrorCodes.CreateCandidateFailed, new { message, candidateId = candidate.EntityId });
             }
 
             return response.CandidateId;
