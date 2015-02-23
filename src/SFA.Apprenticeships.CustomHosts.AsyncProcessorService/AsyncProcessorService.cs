@@ -77,5 +77,17 @@
                 x.AddRegistry<AsyncProcessorRegistry>();
             });
         }
+
+        public void RunConsole()
+        {
+            OnStart(null);
+
+            Console.WriteLine("AsyncProcessorService is running… Press any key to stop");
+
+            Console.ReadKey();
+
+            OnStop();
+            Environment.Exit(1);
+        }
     }
 }

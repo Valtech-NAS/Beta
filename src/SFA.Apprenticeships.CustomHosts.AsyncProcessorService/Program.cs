@@ -7,13 +7,20 @@
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        static void Main()
+        static void Main(params string[] parameters)
         {
-            var servicesToRun = new ServiceBase[] 
-            { 
-                new AsyncProcessorService() 
-            };
-            ServiceBase.Run(servicesToRun);
+            if (parameters.Length > 0 && parameters[0].ToLower() == "/c")
+            {
+                new AsyncProcessorService().RunConsole();
+            }
+            else
+            {
+                var servicesToRun = new ServiceBase[]
+                {
+                    new AsyncProcessorService()
+                };
+                ServiceBase.Run(servicesToRun);
+            }
         }
     }
 }
