@@ -519,7 +519,8 @@ WriteLiteral(@"'
 
 WriteLiteral(" type=\"text/javascript\"");
 
-WriteLiteral(" src=\"https://maps.googleapis.com/maps/api/js\"");
+WriteLiteral(" src=\"https://maps.googleapis.com/maps/api/js?v=3&client=gme-skillsfundingagency\"" +
+"");
 
 WriteLiteral("></script>\r\n");
 

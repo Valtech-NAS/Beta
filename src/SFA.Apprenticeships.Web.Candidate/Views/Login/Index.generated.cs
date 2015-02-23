@@ -256,6 +256,8 @@ WriteLiteral(" href=\"https://apprenticeshipvacancymatchingservice.lsc.gov.uk/na
 
 WriteLiteral(" rel=\"external\"");
 
+WriteLiteral(" target=\"_blank\"");
+
 WriteLiteral(">Sign in to old account</a>\r\n            </p>\r\n        </div>\r\n    </div>\r\n</div>" +
 "\r\n");
 

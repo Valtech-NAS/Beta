@@ -117,6 +117,8 @@ WriteLiteral(" href=\"http://www.mappit.org.uk/\"");
 
 WriteLiteral(" rel=\"external\"");
 
+WriteLiteral(" target=\"_blank\"");
+
 WriteLiteral(">Scotland</a>, <a");
 
 WriteLiteral(" href=\"http://www.nidirect.gov.uk/index/information-and-services/education-and-le" +
@@ -124,11 +126,15 @@ WriteLiteral(" href=\"http://www.nidirect.gov.uk/index/information-and-services/
 
 WriteLiteral(" rel=\"external\"");
 
+WriteLiteral(" target=\"_blank\"");
+
 WriteLiteral(">Northern Ireland</a> and <a");
 
 WriteLiteral(" href=\"https://ams.careerswales.com/Public/Default.aspx?mode=vacancy&type=ams\"");
 
 WriteLiteral(" rel=\"external\"");
+
+WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral(">Wales</a>.</p>\r\n            </div>\r\n\r\n            <h2");
 
@@ -147,6 +153,8 @@ WriteLiteral(" href=\"https://apprenticeshipvacancymatchingservice.lsc.gov.uk/na
 "ate/Apprenticeships.aspx\"");
 
 WriteLiteral(" rel=\"external\"");
+
+WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral(">Sign in to the original service.</a>\r\n            </p>\r\n\r\n            <h2");
 
@@ -195,6 +203,8 @@ WriteLiteral(" href=\"https://nationalcareersservice.direct.gov.uk/advice/course
 "g/Pages/apprenticeship-application-help.aspx\"");
 
 WriteLiteral(" rel=\"external\"");
+
+WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral(">Help with your application</a></p>\r\n        <p");
 

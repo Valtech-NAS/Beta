@@ -80,6 +80,8 @@ WriteLiteral(" href=\"http://www.aboutcookies.org/default.aspx?page=1\"");
 
 WriteLiteral(" rel=\"external\"");
 
+WriteLiteral(" target=\"_blank\"");
+
 WriteLiteral(">Find out how to enable cookies</a></p>\r\n\r\n    <p>Once you’ve enabled your cookie" +
 "s please refresh your browser to continue.</p>\r\n\r\n    <a");
 
@@ -87,14 +89,14 @@ WriteLiteral(" role=\"button\"");
 
 WriteLiteral(" class=\"button\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 590), Tuple.Create("\"", 615)
+WriteAttribute("href", Tuple.Create(" href=\"", 606), Tuple.Create("\"", 631)
             
             #line 18 "..\..\Views\Home\Cookies.cshtml"
-, Tuple.Create(Tuple.Create("", 597), Tuple.Create<System.Object, System.Int32>(ViewBag.ReturnUrl
+, Tuple.Create(Tuple.Create("", 613), Tuple.Create<System.Object, System.Int32>(ViewBag.ReturnUrl
             
             #line default
             #line hidden
-, 597), false)
+, 613), false)
 );
 
 WriteLiteral(">Re-check your browser settings</a>\r\n</div>");

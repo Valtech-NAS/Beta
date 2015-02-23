@@ -79,6 +79,8 @@ WriteLiteral(" href=\"https://nationalcareersservice.direct.gov.uk/Pages/Home.as
 
 WriteLiteral(" rel=\"external\"");
 
+WriteLiteral(" target=\"_blank\"");
+
 WriteLiteral(@">National Careers Service</a> (NCS) if you have a question about whether an apprenticeship is right for you.</p>
 
     <p>If you’re having problems applying for an apprenticeship or a traineeship, or have a complaint about our service, you can contact the helpline.</p>

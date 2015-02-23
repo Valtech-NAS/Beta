@@ -57,7 +57,6 @@
 
     }
 
-    //TODO: Have the "Use current location" link inside the hint, and hide with CSS if geolocation isn't supported.
     $('.geolocation #geoLocateContainer').append('. <span class="fake-link geolocater inl-block hide-nojs" id="getLocation">Use current location</span>');
 
     $('.geolocation').on('click', '#getLocation', function () {
