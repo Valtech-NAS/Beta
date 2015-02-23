@@ -18,6 +18,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
     {   
         private readonly ITokenManager _tokenManager;
         private readonly IUserReadRepository _userReadRepository;
+        private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly IWebDriver _driver;
         private readonly Dictionary<string, int> _positions = new Dictionary<string, int>
         {
@@ -30,6 +31,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
         {
             _tokenManager = tokenManager;
             _userReadRepository = WebTestRegistry.Container.GetInstance<IUserReadRepository>();
+            _candidateReadRepository = WebTestRegistry.Container.GetInstance<ICandidateReadRepository>();
             _driver = BindingUtils.Driver(browser);
         }
 
@@ -344,6 +346,18 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
             if (user != null)
             {
                 _tokenManager.SetToken(BindingData.ActivationCodeTokenName, user.ActivationCode);
+            }
+        }
+
+        [When("I get my mobile verification code")]
+        public void WhenIGetMyMobileVerificationCode()
+        {
+            var email = _tokenManager.GetTokenByKey(BindingData.UserEmailAddressTokenName);
+            var candidate = _candidateReadRepository.Get(email);
+
+            if (candidate != null)
+            {
+                _tokenManager.SetToken(BindingData.MobileVerificationCodeTokenName, candidate.CommunicationPreferences.MobileVerificationCode);
             }
         }
     }

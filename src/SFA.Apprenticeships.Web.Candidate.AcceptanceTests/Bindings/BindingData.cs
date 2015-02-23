@@ -28,6 +28,8 @@
         public const string VacancyIdToken = "VacancyId";
         public const string VacancyReferenceToken = "VacancyReference";
 
+        public const string MobileVerificationCodeTokenName = "MobileVerificationCodeToken";
+
         public const int ExistentVacancyId = 445650;
     }
 }

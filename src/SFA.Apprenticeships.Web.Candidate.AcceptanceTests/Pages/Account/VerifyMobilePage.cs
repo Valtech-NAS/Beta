@@ -1,9 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.Account
 {
     using OpenQA.Selenium;
-    using Registration;
     using SpecBind.Pages;
-    using Templates.EditorFor;
 
     [PageNavigation("/verifymobile")]
     [PageAlias("VerifyMobile")]
@@ -23,7 +21,7 @@
             }
         }
 
-        [ElementLocator(Id = "Verifymobilecode")]
+        [ElementLocator(Id = "VerifyMobileCode")]
         public IWebElement VerifyMobileCode { get; set; }
 
         [ElementLocator(Id = "PhoneNumber")]

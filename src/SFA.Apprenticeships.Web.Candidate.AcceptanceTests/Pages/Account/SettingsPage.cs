@@ -106,6 +106,9 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.Account
         [ElementLocator(Id = "AllowSmsComms")]
         public IWebElement AllowSmsComms { get; set; }
 
+        [ElementLocator(Id = "verifyContainer")]
+        public IWebElement VerifyContainer { get; set; }
+
         public string IsAllowEmailComms
         {
             get
