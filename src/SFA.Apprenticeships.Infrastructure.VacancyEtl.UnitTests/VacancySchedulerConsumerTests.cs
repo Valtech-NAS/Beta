@@ -38,22 +38,22 @@
         public void ShouldKeepPoppingAndRemovingScheduleMessagesFromQueueUntilLastMessage(int queuedScheduledMessages)
         {
             var scheduledMessageQueue = GetScheduledMessagesQueue(queuedScheduledMessages);
-            _messageServiceMock.Setup(x => x.GetMessage()).Returns(scheduledMessageQueue.Dequeue);
+            _messageServiceMock.Setup(x => x.GetMessage(null)).Returns(scheduledMessageQueue.Dequeue);
             var vacancyConsumer = new VacancyEtlControlQueueConsumer(_messageServiceMock.Object, _vacancySummaryProcessorMock.Object, _apprenticeshipIndexerService.Object, _traineeshipsIndexerService.Object, _logService.Object);
             var task = vacancyConsumer.CheckScheduleQueue();
             task.Wait();
 
-            _messageServiceMock.Verify(x => x.GetMessage(), Times.Exactly(queuedScheduledMessages + 1));
+            _messageServiceMock.Verify(x => x.GetMessage(null), Times.Exactly(queuedScheduledMessages + 1));
             _messageServiceMock.Verify(x => x.DeleteMessage(It.IsAny<string>(), It.IsAny<string>()), Times.Exactly(queuedScheduledMessages == 0 ? 0 : queuedScheduledMessages - 1));
             _apprenticeshipIndexerService.Verify(x => x.CreateScheduledIndex(It.Is<DateTime>(d => d == DateTime.Today)), Times.Exactly(queuedScheduledMessages > 0 ? 1 : 0));
             _vacancySummaryProcessorMock.Verify(x => x.QueueVacancyPages(It.IsAny<StorageQueueMessage>()), Times.Exactly(queuedScheduledMessages == 0 ? 0 : 1));
         }
 
-        private Queue<StorageQueueMessage> GetScheduledMessagesQueue(int count)
+        private static Queue<StorageQueueMessage> GetScheduledMessagesQueue(int count)
         {
             var queue = new Queue<StorageQueueMessage>();
 
-            for (int i = count; i > 0; i--)
+            for (var i = count; i > 0; i--)
             {
                 var storageScheduleMessage = new StorageQueueMessage
                 {
@@ -66,6 +66,7 @@
             }
 
             queue.Enqueue(null);
+
             return queue;
         }
     }

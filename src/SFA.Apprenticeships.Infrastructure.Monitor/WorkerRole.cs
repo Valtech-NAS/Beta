@@ -4,12 +4,17 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
     using System.Net;
     using System.ServiceModel;
     using System.Threading;
+    using System.Threading.Tasks;
     using Address.IoC;
     using Application.Interfaces.Logging;
     using Azure.Common.IoC;
     using Common.IoC;
     using Consumers;
     using Elastic.Common.IoC;
+    using Infrastructure.Repositories.Applications.IoC;
+    using Infrastructure.Repositories.Authentication.IoC;
+    using Infrastructure.Repositories.Candidates.IoC;
+    using Infrastructure.Repositories.Users.IoC;
     using IoC;
     using LegacyWebServices.IoC;
     using LocationLookup.IoC;
@@ -18,20 +23,20 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
     using Microsoft.WindowsAzure.ServiceRuntime;
     using Postcode.IoC;
     using RabbitMq.IoC;
-    using Repositories.Applications.IoC;
-    using Repositories.Authentication.IoC;
-    using Repositories.Candidates.IoC;
-    using Repositories.Users.IoC;
     using StructureMap;
     using UserDirectory.IoC;
     using VacancySearch.IoC;
 
     public class WorkerRole : RoleEntryPoint
     {
-        private static ILogService _logger;
         private const string ProcessName = "Monitor Process";
-        private MonitorControlQueueConsumer _monitorControlQueueConsumer;
+
+        private static ILogService _logger;
+
         private IContainer _container;
+
+        private MonitorControlQueueConsumer _monitorControlQueueConsumer;
+        private DailyMetricsControlQueueConsumer _dailyMetricsControlQueueConsumer;
 
         public override void Run()
         {
@@ -41,7 +46,13 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
             {
                 try
                 {
-                    _monitorControlQueueConsumer.CheckScheduleQueue().Wait();
+                    var tasks = new[]
+                    {
+                        _monitorControlQueueConsumer.CheckScheduleQueue(),
+                        _dailyMetricsControlQueueConsumer.CheckScheduleQueue()
+                    };
+
+                    Task.WaitAll(tasks);
                 }
                 catch (FaultException fe)
                 {
@@ -62,6 +73,8 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
 
                 Thread.Sleep(TimeSpan.FromMinutes(1));
             }
+            
+            // ReSharper disable once FunctionNeverReturns
         }
 
         public override bool OnStart()
@@ -86,7 +99,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
             try
             {
                 InitializeIoC();
-                InitialiseRabbitMQSubscribers();
+                InitialiseSubscribers();
             }
             catch (Exception ex)
             {
@@ -120,9 +133,10 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
             _logger = _container.GetInstance<ILogService>();
         }
 
-        private void InitialiseRabbitMQSubscribers()
+        private void InitialiseSubscribers()
         {
             _monitorControlQueueConsumer = _container.GetInstance<MonitorControlQueueConsumer>();
+            _dailyMetricsControlQueueConsumer = _container.GetInstance<DailyMetricsControlQueueConsumer>();
         }
     }
 }

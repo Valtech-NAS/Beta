@@ -192,7 +192,17 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Consumers\DailyMetricsControlQueueConsumer.cs" />
     <Compile Include="Consumers\MonitorControlQueueConsumer.cs" />
+    <Compile Include="Repositories\CommunicationMetricsRepository.cs" />
+    <Compile Include="Repositories\IApprenticeshipMetricsRepository.cs" />
+    <Compile Include="Repositories\ICommunicationMetricsRepository.cs" />
+    <Compile Include="Repositories\IUserMetricsRepository.cs" />
+    <Compile Include="Repositories\ITraineeshipMetricsRepository.cs" />
+    <Compile Include="Repositories\ApprenticeshipMetricsRepository.cs" />
+    <Compile Include="Repositories\UserMetricsRepository.cs" />
+    <Compile Include="Repositories\TraineeshipMetricsRepository.cs" />
+    <Compile Include="Tasks\SendDailyMetricsEmail.cs" />
     <Compile Include="Tasks\CheckTraineeshipApplicationRepository.cs" />
     <Compile Include="Tasks\CheckUserDirectory.cs" />
     <Compile Include="Tasks\CheckElasticsearchAliases.cs" />
@@ -208,8 +218,11 @@
     <Compile Include="Tasks\CheckUserRepository.cs" />
     <Compile Include="Tasks\CheckLocationLookup.cs" />
     <Compile Include="Tasks\CheckVacancySearch.cs" />
+    <Compile Include="Tasks\IDailyMetricsTask.cs" />
     <Compile Include="Tasks\IMonitorTask.cs" />
+    <Compile Include="Tasks\IDailyMetricsTasksRunner.cs" />
     <Compile Include="Tasks\IMonitorTasksRunner.cs" />
+    <Compile Include="Tasks\DailyMetricsTasksRunner.cs" />
     <Compile Include="Tasks\MonitorTasksRunner.cs" />
     <Compile Include="IoC\MonitorRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -363,6 +376,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Candidates\SFA.Apprenticeships.Infrastructure.Repositories.Candidates.csproj">
       <Project>{AA87BD85-5A33-46B8-B26F-C6B680876486}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Candidates</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Communication\SFA.Apprenticeships.Infrastructure.Repositories.Communication.csproj">
+      <Project>{B1278CE6-5670-49F4-85DF-350294EC151A}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Communication</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Users\SFA.Apprenticeships.Infrastructure.Repositories.Users.csproj">
       <Project>{4696D786-2F3C-4A12-BD6B-38E2981D6DF1}</Project>

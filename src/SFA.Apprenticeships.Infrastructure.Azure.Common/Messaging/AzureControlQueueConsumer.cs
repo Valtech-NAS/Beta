@@ -8,18 +8,21 @@
         private readonly ILogService _logger;
         protected readonly IProcessControlQueue<StorageQueueMessage> MessageService;
         private readonly string _processName;
+        private readonly string _queueName;
 
-        protected AzureControlQueueConsumer(IProcessControlQueue<StorageQueueMessage> messageService, ILogService logger, string processName)
+        protected AzureControlQueueConsumer(IProcessControlQueue<StorageQueueMessage> messageService, ILogService logger, string processName, string queueName = null)
         {
             MessageService = messageService;
             _processName = processName;
+            _queueName = queueName;
             _logger = logger;
         }
 
         protected StorageQueueMessage GetLatestQueueMessage()
         {
             _logger.Debug("Checking control queue for " + _processName + " process");
-            var queueMessage = MessageService.GetMessage();
+
+            var queueMessage = MessageService.GetMessage(_queueName);
 
             if (queueMessage == null)
             {
@@ -31,7 +34,8 @@
 
             while (true)
             {
-                var nextQueueMessage = MessageService.GetMessage();
+                var nextQueueMessage = MessageService.GetMessage(_queueName);
+
                 if (nextQueueMessage == null)
                 {
                     // We have the latest message on the queue.

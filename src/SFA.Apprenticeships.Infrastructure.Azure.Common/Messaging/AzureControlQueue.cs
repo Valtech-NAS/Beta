@@ -18,11 +18,13 @@
             _logger = logger;
         }
 
-        public StorageQueueMessage GetMessage()
+        public StorageQueueMessage GetMessage(string queueName)
         {
             _logger.Debug("Checking Azure control queue for control message");
 
-            var message = _azureCloudClient.GetMessage(_azureCloudConfig.QueueName);
+            // If queue name is not specified, get it from configuration.
+            var message = _azureCloudClient.GetMessage(queueName ?? _azureCloudConfig.QueueName);
+
             if (message == null)
             {
                 _logger.Debug("Azure control queue empty");

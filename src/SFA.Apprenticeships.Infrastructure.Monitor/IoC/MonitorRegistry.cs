@@ -4,6 +4,7 @@
     using Consumers;
     using Domain.Interfaces.Configuration;
     using Mongo.Common;
+    using Repositories;
     using StructureMap.Configuration.DSL;
     using Tasks;
 
@@ -27,7 +28,6 @@
                     x.Type<CheckLocationLookup>();
                     x.Type<CheckAddressSearch>();
                     x.Type<CheckPostcodeService>();
-                    //x.Type<CheckActiveDirectory>();
                     x.Type<CheckUserDirectory>();
                     x.Type<CheckRabbitMessageQueue>();
                     x.Type<CheckNasGateway>();
@@ -37,7 +37,15 @@
                     x.Type<CheckLogstashLogs>();
                 });
 
+            For<IDailyMetricsTasksRunner>().Use<DailyMetricsTasksRunner>()
+                .EnumerableOf<IDailyMetricsTask>()
+                .Contains(x => x.Type<SendDailyMetricsEmail>());
+
             For<IMongoAdminClient>().Use<MongoAdminClient>();
+            For<IApprenticeshipMetricsRepository>().Use<ApprenticeshipMetricsRepository>();
+            For<ICommunicationMetricsRepository>().Use<CommunicationMetricsRepository>();
+            For<ITraineeshipMetricsRepository>().Use<TraineeshipMetricsRepository>();
+            For<IUserMetricsRepository>().Use<UserMetricsRepository>();
         }
     }
 }

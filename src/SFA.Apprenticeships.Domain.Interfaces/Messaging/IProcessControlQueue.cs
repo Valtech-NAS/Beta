@@ -1,10 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Domain.Interfaces.Messaging
 {
-    using System;
-
     public interface IProcessControlQueue<T> where T : StorageQueueMessage
     {
-        T GetMessage();
+        T GetMessage(string queueName = null);
 
         void DeleteMessage(string messageId, string popReceipt);
     }

@@ -5,18 +5,22 @@
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
     using Azure.Common.Messaging;
+    using Repositories;
     using Tasks;
 
-    public class MonitorControlQueueConsumer : AzureControlQueueConsumer
+    public class DailyMetricsControlQueueConsumer : AzureControlQueueConsumer
     {
-        private readonly IMonitorTasksRunner _monitorTasksRunner;
+        private readonly IDailyMetricsTasksRunner _dailyMetricsTasksRunner;
         private readonly IConfigurationManager _configurationManager;
 
-        public MonitorControlQueueConsumer(IProcessControlQueue<StorageQueueMessage> messageService,
-            IMonitorTasksRunner monitorTasksRunner, IConfigurationManager configurationManager, ILogService logger)
-            : base(messageService, logger, "Monitor")
+        public DailyMetricsControlQueueConsumer(
+            IProcessControlQueue<StorageQueueMessage> messageService,
+            IDailyMetricsTasksRunner dailyMetricsTasksRunner,
+            IConfigurationManager configurationManager,
+            ILogService logger)
+            : base(messageService, logger, "DailyMetrics")
         {
-            _monitorTasksRunner = monitorTasksRunner;
+            _dailyMetricsTasksRunner = dailyMetricsTasksRunner;
             _configurationManager = configurationManager;
         }
 
@@ -28,9 +32,9 @@
 
                 if (monitorScheduleMessage != null)
                 {
-                    if (IsMonitorEnabled())
+                    if (IsDailyMetricsEnabled())
                     {
-                        _monitorTasksRunner.RunMonitorTasks();
+                        _dailyMetricsTasksRunner.RunDailyMetricsTasks();
                     }
 
                     MessageService.DeleteMessage(monitorScheduleMessage.MessageId, monitorScheduleMessage.PopReceipt);
@@ -38,9 +42,9 @@
             });
         }
 
-        private bool IsMonitorEnabled()
+        private bool IsDailyMetricsEnabled()
         {   
-            return _configurationManager.GetCloudAppSetting<bool>("MonitorEnabled");
+            return _configurationManager.GetCloudAppSetting<bool>("DailyMetricsEnabled");
         }
     }
 }
