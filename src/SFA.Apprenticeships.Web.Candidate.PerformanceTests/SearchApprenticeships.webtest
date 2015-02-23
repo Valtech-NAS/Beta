@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WebTest Name="SearchApprenticeships" Id="d54b8f39-a783-4ae1-a2b7-b1d9ca4db9e7" Owner="" Priority="2147483647" Enabled="True" CssProjectStructure="" CssIteration="" Timeout="0" WorkItemIds="" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010" Description="" CredentialUserName="" CredentialPassword="" PreAuthenticate="True" Proxy="default" StopOnError="False" RecordedResultFile="SearchApprenticeships.ffb3ba15-f9e4-4d96-8f84-513bbadf2ea3.rec.webtestresult" ResultsLocale="">
+  <Items>
+    <Request Method="GET" Guid="2712b922-6476-42ee-bdd0-c67d445d43dc" Version="1.1" Url="https://www.findapprenticeship.service.gov.uk/apprenticeshipsearch" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <DependentRequests>
+        <Request Method="GET" Guid="4a829944-2790-448c-bb9c-4f5521f9c1f8" Version="1.1" Url="https://az693499.vo.msecnd.net/prod/css/font-awesome/fonts/fontawesome-webfont.eot" ThinkTime="6" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+          <Headers>
+            <Header Name="Referer" Value="https://www.findapprenticeship.service.gov.uk/apprenticeshipsearch" />
+          </Headers>
+          <QueryStringParameters>
+            <QueryStringParameter Name="v" Value="4.1.0" RecordedValue="4.1.0" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+          </QueryStringParameters>
+        </Request>
+      </DependentRequests>
+      <Headers>
+        <Header Name="Referer" Value="https://www.gov.uk/apply-apprenticeship" />
+      </Headers>
+      <ExtractionRules>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractHiddenFields, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="1" DisplayName="Extract Hidden Fields" Description="Extract all hidden fields from the response and place them into the test context.">
+          <RuleParameters>
+            <RuleParameter Name="Required" Value="True" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+          </RuleParameters>
+        </ExtractionRule>
+      </ExtractionRules>
+    </Request>
+    <Request Method="GET" Guid="c340e3ad-f53b-4b87-bb0f-f2a700a456d6" Version="1.1" Url="https://www.findapprenticeship.service.gov.uk/location/location" ThinkTime="5" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Accept" Value="*/*" />
+        <Header Name="X-Requested-With" Value="XMLHttpRequest" />
+        <Header Name="Referer" Value="https://www.findapprenticeship.service.gov.uk/apprenticeshipsearch" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="term" Value="london" RecordedValue="london" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="16e7b989-810a-4702-87a5-bfc0256e0816" Version="1.1" Url="https://www.findapprenticeship.service.gov.uk/apprenticeships" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Referer" Value="https://www.findapprenticeship.service.gov.uk/apprenticeshipsearch" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="Keywords" Value="chef" RecordedValue="chef" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="Location" Value="London+%28City+of+London%2C+Greater+London%29" RecordedValue="London+%28City+of+London%2C+Greater+London%29" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="WithinDistance" Value="10" RecordedValue="10" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="ApprenticeshipLevel" Value="All" RecordedValue="All" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="Latitude" Value="51.51713" RecordedValue="51.51713" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="Longitude" Value="-0.10619" RecordedValue="-0.10619" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="Hash" Value="{{$HIDDEN1.Hash}}" RecordedValue="0" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="LocationType" Value="{{$HIDDEN1.LocationType}}" RecordedValue="NonNational" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="ResultsPerPage" Value="{{$HIDDEN1.ResultsPerPage}}" RecordedValue="5" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="13112693-3916-49f5-ba9d-9c0011ad4b12" Version="1.1" Url="https://az693499.vo.msecnd.net/prod/css/font-awesome/fonts/fontawesome-webfont.eot" ThinkTime="1" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Referer" Value="https://www.findapprenticeship.service.gov.uk/apprenticeships?Keywords=chef&amp;Location=London+%28City+of+London%2C+Greater+London%29&amp;WithinDistance=10&amp;ApprenticeshipLevel=All&amp;Latitude=51.51713&amp;Longitude=-0.10619&amp;Hash=0&amp;LocationType=NonNational&amp;ResultsPerPage=5" />
+      </Headers>
+      <QueryStringParameters>
+        <QueryStringParameter Name="v" Value="4.1.0" RecordedValue="4.1.0" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+    </Request>
+    <Request Method="GET" Guid="a44b9ffc-8675-4667-9400-846610464a2d" Version="1.1" Url="https://fonts.gstatic.com/s/roboto/v15/Hgo13k-tfSpn0qi1SFdUfT8E0i7KZn-EPnyo3HZu7kw.woff" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Referer" Value="https://www.findapprenticeship.service.gov.uk/apprenticeships?Keywords=chef&amp;Location=London+%28City+of+London%2C+Greater+London%29&amp;WithinDistance=10&amp;ApprenticeshipLevel=All&amp;Latitude=51.51713&amp;Longitude=-0.10619&amp;Hash=0&amp;LocationType=NonNational&amp;ResultsPerPage=5" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="f7e6e76e-7d1b-4150-b439-68542554824d" Version="1.1" Url="https://fonts.gstatic.com/s/roboto/v15/2UX7WLTfW3W8TclTUvlFyQ.woff" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Referer" Value="https://www.findapprenticeship.service.gov.uk/apprenticeships?Keywords=chef&amp;Location=London+%28City+of+London%2C+Greater+London%29&amp;WithinDistance=10&amp;ApprenticeshipLevel=All&amp;Latitude=51.51713&amp;Longitude=-0.10619&amp;Hash=0&amp;LocationType=NonNational&amp;ResultsPerPage=5" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="2d50cad8-4443-4e97-905b-9611a0053572" Version="1.1" Url="https://fonts.gstatic.com/s/roboto/v15/RxZJdnzeo3R5zSexge8UUT8E0i7KZn-EPnyo3HZu7kw.woff" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Referer" Value="https://www.findapprenticeship.service.gov.uk/apprenticeships?Keywords=chef&amp;Location=London+%28City+of+London%2C+Greater+London%29&amp;WithinDistance=10&amp;ApprenticeshipLevel=All&amp;Latitude=51.51713&amp;Longitude=-0.10619&amp;Hash=0&amp;LocationType=NonNational&amp;ResultsPerPage=5" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="f0d31146-e9a6-4144-a0b2-0bb7b92ba4a4" Version="1.1" Url="https://fonts.gstatic.com/s/roboto/v15/d-6IYplOFocCacKzxwXSOD8E0i7KZn-EPnyo3HZu7kw.woff" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <Headers>
+        <Header Name="Referer" Value="https://www.findapprenticeship.service.gov.uk/apprenticeships?Keywords=chef&amp;Location=London+%28City+of+London%2C+Greater+London%29&amp;WithinDistance=10&amp;ApprenticeshipLevel=All&amp;Latitude=51.51713&amp;Longitude=-0.10619&amp;Hash=0&amp;LocationType=NonNational&amp;ResultsPerPage=5" />
+      </Headers>
+    </Request>
+    <Request Method="GET" Guid="bb10fdc5-285d-4ca1-a7e2-5226d4a93028" Version="1.1" Url="https://www.findapprenticeship.service.gov.uk/apprenticeshipdetail/483268/2.7" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="https://www.findapprenticeship.service.gov.uk/apprenticeship/483268" ReportingName="" IgnoreHttpStatusCode="False">
+      <DependentRequests>
+        <Request Method="GET" Guid="09d83237-fad4-44eb-abdd-fc036aa5ec4d" Version="1.1" Url="https://www.google.com/maps/embed/v1/place" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+          <Headers>
+            <Header Name="Referer" Value="https://www.findapprenticeship.service.gov.uk/apprenticeship/483268" />
+          </Headers>
+          <QueryStringParameters>
+            <QueryStringParameter Name="q" Value="SE16+5QU,+United+Kingdom" RecordedValue="SE16+5QU,+United+Kingdom" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+            <QueryStringParameter Name="key" Value="AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8" RecordedValue="AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8" CorrelationBinding="{{QueryStringParam261.key}}" UrlEncode="False" UseToGroupResults="False" />
+          </QueryStringParameters>
+        </Request>
+        <Request Method="GET" Guid="c99489f5-143c-4b0d-8c24-b42c3ebb4798" Version="1.1" Url="https://az693499.vo.msecnd.net/prod/css/font-awesome/fonts/fontawesome-webfont.eot" ThinkTime="1" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+          <Headers>
+            <Header Name="Referer" Value="https://www.findapprenticeship.service.gov.uk/apprenticeship/483268" />
+          </Headers>
+          <QueryStringParameters>
+            <QueryStringParameter Name="v" Value="4.1.0" RecordedValue="4.1.0" CorrelationBinding="" UrlEncode="False" UseToGroupResults="False" />
+          </QueryStringParameters>
+        </Request>
+      </DependentRequests>
+      <Headers>
+        <Header Name="Referer" Value="https://www.findapprenticeship.service.gov.uk/apprenticeships?Keywords=chef&amp;Location=London+%28City+of+London%2C+Greater+London%29&amp;WithinDistance=10&amp;ApprenticeshipLevel=All&amp;Latitude=51.51713&amp;Longitude=-0.10619&amp;Hash=0&amp;LocationType=NonNational&amp;ResultsPerPage=5" />
+      </Headers>
+      <CorrelationExtractionRules>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="QueryStringParam254.key" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="&amp;amp;key=" />
+            <RuleParameter Name="EndsWith" Value="&quot;" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="QueryStringParam261.key" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="&amp;amp;key=" />
+            <RuleParameter Name="EndsWith" Value="&quot;" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+      </CorrelationExtractionRules>
+    </Request>
+  </Items>
+  <ValidationRules>
+    <ValidationRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ValidateResponseUrl, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" DisplayName="Response URL" Description="Validates that the response URL after redirects are followed is the same as the recorded response URL.  QueryString parameters are ignored." Level="Low" ExectuionOrder="BeforeDependents" />
+    <ValidationRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ValidationRuleResponseTimeGoal, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" DisplayName="Response Time Goal" Description="Validates that the response time for the request is less than or equal to the response time goal as specified on the request.  Response time goals of zero will be ignored." Level="Low" ExectuionOrder="AfterDependents">
+      <RuleParameters>
+        <RuleParameter Name="Tolerance" Value="0" />
+      </RuleParameters>
+    </ValidationRule>
+  </ValidationRules>
+</WebTest>
