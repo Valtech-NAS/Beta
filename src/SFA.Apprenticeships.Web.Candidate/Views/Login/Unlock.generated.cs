@@ -142,8 +142,6 @@ WriteLiteral(">\r\n        <button");
 
 WriteLiteral(" class=\"button hide-button\"");
 
-WriteLiteral(" id=\"verify-code-button\"");
-
 WriteLiteral(" type=\"submit\"");
 
 WriteLiteral(" name=\"LoginAction:Unlock\"");
