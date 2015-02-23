@@ -219,6 +219,18 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n        <button");
 
+WriteLiteral(" class=\"button hide-button\"");
+
+WriteLiteral(" id=\"verify-code-button\"");
+
+WriteLiteral(" type=\"submit\"");
+
+WriteLiteral(" name=\"VerifyMobileAction:VerifyMobile\"");
+
+WriteLiteral(" tabindex=\"-1\"");
+
+WriteLiteral(">Verify number</button>\r\n        <button");
+
 WriteLiteral(" id=\"ResendMobileVerificationCodeLink\"");
 
 WriteLiteral(" type=\"submit\"");
@@ -242,7 +254,7 @@ WriteLiteral(" name=\"VerifyMobileAction:VerifyMobile\"");
 WriteLiteral(">Verify number</button>\r\n        </p>\r\n    </div>\r\n");
 
             
-            #line 53 "..\..\Views\Account\VerifyMobile.cshtml"
+            #line 54 "..\..\Views\Account\VerifyMobile.cshtml"
 }
 
             
