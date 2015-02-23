@@ -4,11 +4,9 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 
 ## Web layer ##
 
-- refactor: controllers should use providers to avoid containing orchestration logic
 - refactor providers (not quite right)
 - refactor: configuration service - use mongo collection with JSON fallback. This should periodically check for updates to allow in-situ config updates to running applications.
 - validation messages should be parameterised where possible (e.g. max length). See AddressMessages.cs for an example.
-- check all messages starting with "TODO" and 'TODO' (C# and JavaScript).
 - usernamecheck should use remote validator
 - review ApplyWebTrends attribute - use on controller or apply globally  
 - increase the HSTS header to months or years in line with GDS recommendations when we're confident it works https://www.gov.uk/service-manual/operations/operating-servicegovuk-subdomains#transport-layer-security
@@ -16,7 +14,6 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
     - fix links to CDN to use "assets" sub-domain in production
     - solve issue with custom domain name being used with an Azure CDN over HTTPS (may move CDN off Azure or use 3rd party CDN)
 - refactor: _qualificationsJS.cshtml, _qualificationsNonJS.cshtml, _workExperiencesJS.cshtml, _workExperiencesNonJS.cshtml files are in ApprenticeshipApplication and TraineeshipApplication folders, but only differs in the model they receive. Tried to use the base class but HasQualification and HasWorkExperience property doesn't propagate correctly to the controller.
-- Razor view unit tests (Create example use)
 - Potentially remove IsWebsiteOffline/WebsiteOfflineMessage
 
 ## Service layer ##
@@ -39,7 +36,7 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 ## Cross cutting ##
 
 - Error codes are defined inconsistently across the services. Codes should be considered part of a service's interface/contract so should be defined close to where the interface is defined
-- Error logging is inconsistent between layers which leads to double logging/counting some errors/warnings. Need to decide on a consistent approach
+- Error logging is inconsistent between layers which leads to double logging/counting some errors/warnings
 
 ## WebOps
 
@@ -72,6 +69,8 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 - need to consider turning off integration tests against NAS Gateway services once we are hitting the live service
 - solution should be executable when disconnected from platform (i.e. standalone)
 - demo website should use separate configuration (e.g. databases, settings, etc.)
+- refactor: controllers should use providers to avoid containing orchestration logic
+- Razor view unit tests (Create example use)
 
 # Descoped #
 
