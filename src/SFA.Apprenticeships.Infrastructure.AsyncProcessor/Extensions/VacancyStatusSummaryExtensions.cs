@@ -16,7 +16,7 @@
         public static CacheDuration CacheDuration(this VacancyStatusSummary vacancyStatusSummary)
         {
             //todo: 1.6: move to config setting
-            return Domain.Interfaces.Caching.CacheDuration.FiveMinutes;
+            return Domain.Interfaces.Caching.CacheDuration.ThirtyMinutes;
         }
     }
 }
