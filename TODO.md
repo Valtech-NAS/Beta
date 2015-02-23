@@ -32,6 +32,7 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 - Enums should be serialized to strings into mongo (rather than numeric enum values)
 - Remove AutoMapper from web service proxy layer
 - Worker role rationalisation (reduce number and clean shutdown of rabbit subscribers)
+- Review and increase heap allocation for elasticsearch. Production is 1Gb and we have 4Gb of free memory available.
 
 ## Cross cutting ##
 
