@@ -23,25 +23,24 @@
 
             if (candidateController != null )
             {
-                if (candidateController.UserData.Get(UserJourneyKey) != null && UserJourney == UserJourney.None)
+                var userDataProvider = candidateController.UserData;
+                var userJourneyValue = userDataProvider.Get(UserJourneyKey);
+                if (userJourneyValue != null && UserJourney == UserJourney.None)
                 {
-                    candidateController.ViewBag.UserJourney =
-                        (UserJourney) Enum.Parse(typeof (UserJourney), candidateController.UserData.Get(UserJourneyKey));
+                    candidateController.ViewBag.UserJourney = (UserJourney) Enum.Parse(typeof (UserJourney), userJourneyValue);
                 }
-                else if (candidateController.UserData.Get(UserJourneyKey) == null && UserJourney == UserJourney.None)
+                else if (userJourneyValue == null && UserJourney == UserJourney.None)
                 {
-                    candidateController.UserData.Push(UserJourneyKey, UserJourney.Apprenticeship.ToString());
-                    candidateController.ViewBag.UserJourney =
-                        (UserJourney) Enum.Parse(typeof (UserJourney), candidateController.UserData.Get(UserJourneyKey));
+                    userDataProvider.Push(UserJourneyKey, UserJourney.Apprenticeship.ToString());
+                    candidateController.ViewBag.UserJourney = UserJourney.Apprenticeship;
                 }
                 else
                 {
-                    candidateController.UserData.Push(UserJourneyKey, UserJourney.ToString());
+                    userDataProvider.Push(UserJourneyKey, UserJourney.ToString());
                     candidateController.ViewBag.UserJourney = UserJourney;
                 }
 
-                candidateController.ViewBag.UserJourneyMainCaption =
-                        GetMainCaption(candidateController.ViewBag.UserJourney);
+                candidateController.ViewBag.UserJourneyMainCaption = GetMainCaption(candidateController.ViewBag.UserJourney);
             }
 
             base.OnActionExecuting(filterContext);
