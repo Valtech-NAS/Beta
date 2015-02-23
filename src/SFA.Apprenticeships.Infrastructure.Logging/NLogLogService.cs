@@ -82,6 +82,7 @@
             {
                 logEvent.Properties["ErrorCode"] = (e as CustomException).Code;
                 logEvent.Properties["Date"] = DateTime.UtcNow;
+                logEvent.Properties["Ticks"] = DateTime.UtcNow.Ticks;
             }
 
             _logger.Log(logEvent);
