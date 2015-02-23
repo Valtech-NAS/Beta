@@ -88,14 +88,14 @@
             }
             catch (BoundaryException e)
             {
-                var de = new DomainException(ApplicationErrorCodes.ApplicationCreationFailed, e, new { candidateId, request.Application.VacancyId });
+                var de = new DomainException(ApplicationErrorCodes.ApplicationCreationFailed, e, new { candidateId, vacancyId = request.Application.VacancyId });
 
                 _logger.Error(de);
                 throw de;
             }
             catch (Exception e)
             {
-                _logger.Error(e, new { candidateId, request.Application.VacancyId });
+                _logger.Error(e, new { candidateId, vacancyId = request.Application.VacancyId });
                 throw;
             }
         }

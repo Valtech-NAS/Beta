@@ -6,6 +6,7 @@
     using Application.Interfaces.Logging;
     using Application.ReferenceData;
     using Configuration;
+    using Domain.Entities.Exceptions;
     using Domain.Entities.ReferenceData;
     using LegacyReferenceDataProxy;
     using Wcf;
@@ -31,15 +32,30 @@
 
             try
             {
+                _logger.Debug("Calling ReferenceData.GetApprenticeshipFrameworks");
+
                 _service.Use("ReferenceData", client => response = client.GetApprenticeshipFrameworks(request));
+                var categories = GetCategories(response);
+                
+                _logger.Debug("ReferenceData.GetApprenticeshipFrameworks succeeded");
+
+                return categories;
+            }
+            catch (BoundaryException ex)
+            {
+                _logger.Warn(ex);
             }
             catch (Exception ex)
             {
-                _logger.Warn("Error retrieving apprenticeship frameworks from legacy gateway", ex);
-                // Must return null or could be put in cache.
-                return null;
+                _logger.Error(ex);
             }
 
+            // Must return null or could be put in cache.
+            return null;
+        }
+
+        private IEnumerable<Category> GetCategories(GetApprenticeshipFrameworksResponse response)
+        {
             if (response == null || response.ApprenticeshipFrameworks == null || response.ApprenticeshipFrameworks.Length == 0)
             {
                 _logger.Warn("No ApprenticeshipFrameworks data returned from the legacy GetApprenticeshipFrameworks service");
