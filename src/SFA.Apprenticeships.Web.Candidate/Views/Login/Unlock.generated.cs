@@ -140,6 +140,18 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n        <button");
 
+WriteLiteral(" class=\"button hide-button\"");
+
+WriteLiteral(" id=\"verify-code-button\"");
+
+WriteLiteral(" type=\"submit\"");
+
+WriteLiteral(" name=\"LoginAction:Unlock\"");
+
+WriteLiteral(" tabindex=\"-1\"");
+
+WriteLiteral(">Unlock account</button>\r\n        <button");
+
 WriteLiteral(" id=\"ResendAccountUnlockCodeLink\"");
 
 WriteLiteral(" type=\"submit\"");
@@ -163,7 +175,7 @@ WriteLiteral(" name=\"LoginAction:Unlock\"");
 WriteLiteral(">Unlock account</button>\r\n        </p>\r\n    </div>\r\n");
 
             
-            #line 35 "..\..\Views\Login\Unlock.cshtml"
+            #line 36 "..\..\Views\Login\Unlock.cshtml"
 }
 
             
