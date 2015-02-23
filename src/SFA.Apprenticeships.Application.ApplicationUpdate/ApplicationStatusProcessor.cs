@@ -108,7 +108,16 @@
             
             if (!ProcessApprenticeshipApplication(applicationStatusSummary) && !ProcessTraineeshipApplication(applicationStatusSummary))
             {
-                _logger.Warn("Unable to find/update apprenticeship or traineeship application status for application with legacy application ID '{0}' and application ID '{1}'", applicationStatusSummary.LegacyApplicationId, applicationStatusSummary.ApplicationId);
+                var message = string.Format("Unable to find/update apprenticeship or traineeship application status for application with legacy application ID '{0}' and application ID '{1}'", applicationStatusSummary.LegacyApplicationId, applicationStatusSummary.ApplicationId);
+
+                if (applicationStatusSummary.ApplicationId != Guid.Empty && applicationStatusSummary.LegacyApplicationId == 0)
+                {
+                    _logger.Info(message + ". It was likely a draft that was deleted by the candidate.");
+                }
+                else
+                {
+                    _logger.Warn(message);
+                }
             }
         }
 

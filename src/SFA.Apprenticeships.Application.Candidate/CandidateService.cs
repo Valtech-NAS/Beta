@@ -220,7 +220,7 @@
         {
             Condition.Requires(candidateId);
 
-            _logger.Debug(
+            _logger.Info(
                 "Calling CandidateService to unarchive the apprenticeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
                 candidateId, vacancyId);
 
@@ -231,7 +231,7 @@
         {
             Condition.Requires(candidateId);
 
-            _logger.Debug(
+            _logger.Info(
                 "Calling CandidateService to delete the apprenticeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
                 candidateId, vacancyId);
 
