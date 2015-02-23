@@ -17,7 +17,5 @@
         VerifyMobileViewModel VerifyMobile(Guid candidateId, VerifyMobileViewModel model);
 
         VerifyMobileViewModel SendMobileVerificationCode(Guid candidateId, VerifyMobileViewModel model);
-
-
     }
 }

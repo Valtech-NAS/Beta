@@ -350,6 +350,7 @@
             Condition.Requires(contactMessage);
 
             //todo: 1.6: -> strategy -> communication service
+            //strategy should set message type = CandidateContactMessage
         }
     }
 }
