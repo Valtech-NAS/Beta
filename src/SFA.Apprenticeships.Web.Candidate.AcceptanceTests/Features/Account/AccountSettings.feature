@@ -183,6 +183,7 @@ Scenario: As a candidate I can verify my mobile number
 	And I see
 	| Field           | Rule           | Value |
 	| VerifyContainer | Does Not Exist |       |
+	| IsAllowSmsComms | Equals         | False |
 	And I wait to see AllowSmsComms
 	When I choose AllowSmsComms
 	And I choose UpdateDetailsButton
@@ -196,3 +197,32 @@ Scenario: As a candidate I can verify my mobile number
 	And I see
 	| Field           | Rule   | Value |
 	| VerifyContainer | Exists |       |
+	| IsAllowSmsComms | Equals | True  |
+
+@US519
+Scenario: As a candidate I can opt into marketing messages
+	Given I have registered a new candidate
+	Given I navigated to the SettingsPage page
+	Then I am on the SettingsPage page
+	And I see
+	| Field                 | Rule           | Value |
+	| VerifyContainer       | Does Not Exist |       |
+	| IsAllowEmailMarketing | Equals         | True  |
+	| IsAllowSmsMarketing   | Equals         | False |
+	And I wait to see AllowEmailMarketing
+	And I wait to see AllowSmsMarketing
+	When I choose AllowEmailMarketing
+	When I choose AllowSmsMarketing
+	And I choose UpdateDetailsButton
+	Then I am on the VerifyMobile page
+	When I get my mobile verification code
+	And I enter data
+	| Field            | Value                         |
+	| VerifyMobileCode | {MobileVerificationCodeToken} |
+	And I choose VerifyNumberButton
+	Then I am on the SettingsPage page
+	And I see
+	| Field                 | Rule   | Value |
+	| VerifyContainer       | Exists |       |
+	| IsAllowEmailMarketing | Equals | False |
+	| IsAllowSmsMarketing   | Equals | True  |

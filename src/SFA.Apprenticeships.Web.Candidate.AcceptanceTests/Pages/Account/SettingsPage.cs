@@ -117,6 +117,36 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.Account
             }
         }
 
+        public string IsAllowSmsComms
+        {
+            get
+            {
+                return AllowSmsComms.GetAttribute("checked") != null ? bool.TrueString : bool.FalseString;
+            }
+        }
+
+        [ElementLocator(Id = "AllowEmailMarketing")]
+        public IWebElement AllowEmailMarketing { get; set; }
+
+        [ElementLocator(Id = "AllowSmsMarketing")]
+        public IWebElement AllowSmsMarketing { get; set; }
+
+        public string IsAllowEmailMarketing
+        {
+            get
+            {
+                return AllowEmailMarketing.GetAttribute("checked") != null ? bool.TrueString : bool.FalseString;
+            }
+        }
+
+        public string IsAllowSmsMarketing
+        {
+            get
+            {
+                return AllowSmsMarketing.GetAttribute("checked") != null ? bool.TrueString : bool.FalseString;
+            }
+        }
+
         [ElementLocator(Id = "find-apprenticeship-link")]
         public IWebElement FindApprenticeshipLink { get; set; }
 
