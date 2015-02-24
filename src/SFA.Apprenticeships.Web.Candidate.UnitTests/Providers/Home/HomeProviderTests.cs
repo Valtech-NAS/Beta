@@ -13,8 +13,14 @@
     [TestFixture]
     public class HomeProviderTests
     {
-        private readonly Mock<ICandidateService> _candidateServiceMock = new Mock<ICandidateService>();
+        private Mock<ICandidateService> _candidateServiceMock;
         private readonly Mock<IMapper> _mapperMock = new Mock<IMapper>();
+
+        [SetUp]
+        public void SetUp()
+        {
+            _candidateServiceMock = new Mock<ICandidateService>();
+        }
 
         [Test]
         public void SendMessageOk()
