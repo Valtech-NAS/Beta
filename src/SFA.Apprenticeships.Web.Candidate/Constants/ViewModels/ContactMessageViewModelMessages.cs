@@ -28,16 +28,16 @@
             public const string LabelText = "Briefly describe your question";
             public const string RequiredErrorText = "TODO: Please describe your question";
             public const string TooLongErrorText = "Enquiry mustn’t exceed 100 characters";
-            public const string WhiteListRegularExpression = Whitelists.NameWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "Email address " + Whitelists.FreetextWhitelist.ErrorText;
+            public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "Enquiry description " + Whitelists.FreetextWhitelist.ErrorText;
         }
 
         public class DetailsMessages
         {
             public const string LabelText = "More details about your question (optional)";
-            public const string TooLongErrorText = "Email address mustn’t exceed 100 characters";
-            public const string WhiteListRegularExpression = Whitelists.NameWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "Email address " + Whitelists.FreetextWhitelist.ErrorText;
+            public const string TooLongErrorText = "Your description mustn’t exceed 4000 characters";
+            public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "Enquiry details " + Whitelists.FreetextWhitelist.ErrorText;
         }
     }
 }
