@@ -31,7 +31,7 @@
         }
 
         [Test]
-        public void Us519_Ac1_DefaultMarketingPreferencesEmailOnly()
+        public void Us519_Ac1_DefaultMarketingPreferencesNone()
         {
             Candidate candidate = null;
             var candidateService = new Mock<ICandidateService>();
@@ -43,7 +43,7 @@
 
             candidate.Should().NotBeNull();
             candidate.CommunicationPreferences.Should().NotBeNull();
-            candidate.CommunicationPreferences.AllowEmailMarketing.Should().BeTrue();
+            candidate.CommunicationPreferences.AllowEmailMarketing.Should().BeFalse();
             candidate.CommunicationPreferences.AllowMobileMarketing.Should().BeFalse();
             candidate.CommunicationPreferences.VerifiedMobile.Should().BeFalse();
             candidate.CommunicationPreferences.MobileVerificationCode.Should().BeNullOrEmpty();

@@ -9,7 +9,7 @@
             VerifiedMobile = false;
             AllowTraineeshipPrompts = true;
             MobileVerificationCode = string.Empty;
-            AllowEmailMarketing = true;
+            AllowEmailMarketing = false;
             AllowMobileMarketing = false;
         }
 
