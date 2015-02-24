@@ -49,7 +49,7 @@
         public void ShouldGetFromNameConfiguration()
         {
             const int templateIndex = 0;
-            const string expectedName = "MessageTypes.SendActivationCode";
+            const string expectedName = "MessageTypes.SendPasswordResetCode";
 
             var template = TwilioConfiguration.Instance.Templates.ElementAt(templateIndex);
 
