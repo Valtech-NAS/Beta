@@ -123,7 +123,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.UnitTests
         }
 
         [Test]
-        public void MapNullAddress()
+        public void ShouldMapNullAddress()
         {
             // Arrange.
             var src = new GatewayServiceProxy.VacancySummary
@@ -140,6 +140,44 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.UnitTests
             dest.Should().NotBeNull();
             dest.Location.Latitude.Should().Be(0.0);
             dest.Location.Longitude.Should().Be(0.0);
+        }
+
+        [Test]
+        public void ShouldMapNonNullVacancyReference()
+        {
+            // Arrange.
+            var src = new GatewayServiceProxy.VacancySummary
+            {
+                VacancyReference = 42,
+                VacancyType = "IntermediateLevelApprenticeship",
+                VacancyLocationType = "MultipleLocation",
+            };
+
+            // Act.
+            var dest = new LegacyVacancySummaryMapper().Map<GatewayServiceProxy.VacancySummary, ApprenticeshipSummary>(src);
+
+            // Assert.
+            dest.Should().NotBeNull();
+            dest.VacancyReference.Should().Be("42");
+        }
+
+        [Test]
+        public void ShouldMapNullVacancyReference()
+        {
+            // Arrange.
+            var src = new GatewayServiceProxy.VacancySummary
+            {
+                VacancyReference = null,
+                VacancyType = "IntermediateLevelApprenticeship",
+                VacancyLocationType = "MultipleLocation",
+            };
+
+            // Act.
+            var dest = new LegacyVacancySummaryMapper().Map<GatewayServiceProxy.VacancySummary, ApprenticeshipSummary>(src);
+
+            // Assert.
+            dest.Should().NotBeNull();
+            dest.VacancyReference.Should().BeNull();
         }
     }
 }

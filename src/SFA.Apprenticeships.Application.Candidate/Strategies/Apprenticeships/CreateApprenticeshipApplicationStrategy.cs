@@ -90,8 +90,10 @@
                 Vacancy = new ApprenticeshipSummary
                 {
                     Id = vacancyDetails.Id,
+                    VacancyReference = vacancyDetails.VacancyReference,
                     Title = vacancyDetails.Title,
                     EmployerName = vacancyDetails.IsEmployerAnonymous ? vacancyDetails.AnonymousEmployerName : vacancyDetails.EmployerName,
+                    StartDate = vacancyDetails.StartDate,
                     ClosingDate = vacancyDetails.ClosingDate,
                     Description = vacancyDetails.Description,
                     Location = null, // NOTE: no equivalent in legacy vacancy details.

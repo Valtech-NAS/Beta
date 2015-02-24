@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
 {
-    using System;
     using Apprenticeships;
     using Common.Mappers;
     using Domain.Entities.Vacancies.Apprenticeships;
