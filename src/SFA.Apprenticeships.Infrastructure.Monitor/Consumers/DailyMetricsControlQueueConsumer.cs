@@ -18,7 +18,7 @@
             IDailyMetricsTasksRunner dailyMetricsTasksRunner,
             IConfigurationManager configurationManager,
             ILogService logger)
-            : base(messageService, logger, "DailyMetrics")
+            : base(messageService, logger, "DailyMetrics", "dailymetricsscheduler")
         {
             _dailyMetricsTasksRunner = dailyMetricsTasksRunner;
             _configurationManager = configurationManager;
