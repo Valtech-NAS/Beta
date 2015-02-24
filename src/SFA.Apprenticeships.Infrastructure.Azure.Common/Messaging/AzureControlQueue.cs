@@ -20,24 +20,27 @@
 
         public StorageQueueMessage GetMessage(string queueName)
         {
-            _logger.Debug("Checking Azure control queue for control message");
+            // Queue name can be overridden by caller but typically comes from cloud configuration.
+            queueName = queueName ?? _azureCloudConfig.QueueName;
+
+            _logger.Debug("Checking Azure control queue for control message: '{0}'", queueName);
 
             // If queue name is not specified, get it from configuration.
             var message = _azureCloudClient.GetMessage(queueName ?? _azureCloudConfig.QueueName);
 
             if (message == null)
             {
-                _logger.Debug("Azure control queue empty");
+                _logger.Debug("Azure control queue empty: '{0}'", queueName);
                 return null;
             }
 
-            _logger.Debug("Azure control queue item returned");
+            _logger.Debug("Azure control queue item returned: '{0}'", queueName);
 
             var storageMessage = AzureMessageHelper.DeserialiseQueueMessage<StorageQueueMessage>(message);
             storageMessage.MessageId = message.Id;
             storageMessage.PopReceipt = message.PopReceipt;
 
-            _logger.Debug("Azure control queue item deserialised");
+            _logger.Debug("Azure control queue item deserialised: '{0}'", queueName);
 
             return storageMessage;
         }
