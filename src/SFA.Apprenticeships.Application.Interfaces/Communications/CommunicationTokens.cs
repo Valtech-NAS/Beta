@@ -16,9 +16,13 @@
         ApplicationVacancyReference,
         ApplicationId,
         ProviderContact,
-        CandidateEmailAddress,
+        RecipientEmailAddress,
         CandidateMobileNumber,
         ExpiringDraftsCount,
-        ExpiringDrafts
+        ExpiringDrafts,
+        UserFullName,
+        UserEnquiry,
+        UserEnquiryDetails,
+        UserEmailAddress
     }
 }

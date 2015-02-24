@@ -193,6 +193,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BrowseBasedSearch.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\Home\Helpdesk.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Helpdesk.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\UserJourneyContext\UserJourneyContext.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -313,6 +318,7 @@
     <Compile Include="Pages\BaseValidationPage.cs" />
     <Compile Include="Pages\Dashboard\MyApplicationsPage.cs" />
     <Compile Include="Pages\Gds\GdsStartPage.cs" />
+    <Compile Include="Pages\Home\HelpdeskPage.cs" />
     <Compile Include="Pages\TraineeshipApplication\TraineeshipWhatsNextPage.cs" />
     <Compile Include="Pages\TraineeshipApplication\TraineeshipApplicationPage.cs" />
     <Compile Include="Pages\TraineeshipSearch\TraineeshipVacancyNotFound.cs" />
@@ -406,6 +412,10 @@
     <None Include="Features\ApprenticeshipSearch\BrowseBasedSearch.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>BrowseBasedSearch.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Home\Helpdesk.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Helpdesk.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\UserJourneyContext\UserJourneyContext.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

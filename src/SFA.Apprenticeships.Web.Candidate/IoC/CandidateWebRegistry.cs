@@ -28,6 +28,7 @@
     using Mappers;
     using Mediators.Account;
     using Mediators.Application;
+    using Mediators.Home;
     using Mediators.Login;
     using Mediators.Register;
     using Mediators.Search;
@@ -48,6 +49,7 @@
 
             For<IMapper>().Singleton().Use<ApprenticeshipCandidateWebMappers>().Name = "ApprenticeshipCandidateWebMappers";
             For<IMapper>().Singleton().Use<TraineeshipCandidateWebMappers>().Name = "TraineeshipCandidateWebMappers";
+            For<IMapper>().Singleton().Use<HomeWebMappers>().Name = "HomeWebMappers";
 
             For<IFeatureToggle>().Use<FeatureToggle>();
 
@@ -73,6 +75,7 @@
             For<ICandidateServiceProvider>().Use<CandidateServiceProvider>().Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");
             For<ITraineeshipVacancyDetailProvider>().Use<TraineeshipVacancyDetailProvider>().Ctor<IMapper>().Named("TraineeshipCandidateWebMappers");
             For<ITraineeshipApplicationProvider>().Use<TraineeshipApplicationProvider>();
+            For<IHomeProvider>().Use<HomeProvider>().Ctor<IMapper>().Named("HomeWebMappers");
         }
 
         private void RegisterServices()
@@ -124,6 +127,9 @@
             For<IDeleteApplicationStrategy>().Use<DeleteApprenticeshipApplicationStrategy>();
             For<IAuthenticateCandidateStrategy>().Use<AuthenticateCandidateStrategy>();
             For<IGetCandidateTraineeshipApplicationsStrategy>().Use<GetCandidateTraineeshipApplicationsStrategy>();
+            For<Application.Candidate.Strategies.ISendContactMessageStrategy>().Use<SendContactMessageStrategy>();
+            For<Application.Communication.Strategies.ISendContactMessageStrategy>()
+                .Use<QueueContactMessageCommunicationStrategy>();
         }
 
         private void RegisterMediators()
@@ -135,6 +141,7 @@
             For<IAccountMediator>().Use<AccountMediator>();
             For<IRegisterMediator>().Use<RegisterMediator>();
             For<ILoginMediator>().Use<LoginMediator>();
+            For<IHomeMediator>().Use<HomeMediator>();
         }
     }
 }

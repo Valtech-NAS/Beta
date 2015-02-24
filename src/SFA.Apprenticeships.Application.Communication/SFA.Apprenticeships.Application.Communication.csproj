@@ -84,6 +84,8 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="CommunicationService.cs" />
+    <Compile Include="Strategies\ISendContactMessageStrategy.cs" />
+    <Compile Include="Strategies\QueueContactMessageCommunicationStrategy.cs" />
     <Compile Include="Strategies\QueueCandidateCommunicationStrategy.cs" />
     <Compile Include="Strategies\ISendCandidateCommunicationStrategy.cs" />
     <Compile Include="Strategies\ISendTraineeshipApplicationSubmittedStrategy.cs" />

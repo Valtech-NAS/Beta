@@ -3,6 +3,7 @@
     using Application.ApplicationUpdate;
     using Application.ApplicationUpdate.Strategies;
     using Application.Interfaces.Communications;
+    using Consumers.Commands;
     using Microsoft.WindowsAzure;
     using Consumers;
     using StructureMap.Configuration.DSL;
@@ -19,6 +20,10 @@
             For<SubmitApprenticeshipApplicationRequestConsumerAsync>().Use<SubmitApprenticeshipApplicationRequestConsumerAsync>();
             For<SubmitTraineeshipApplicationRequestConsumerAsync>().Use<SubmitTraineeshipApplicationRequestConsumerAsync>();
             For<CreateCandidateRequestConsumerAsync>().Use<CreateCandidateRequestConsumerAsync>();
+
+            For<CommunicationCommand>().Use<CandidateCommunicationCommand>();
+            For<CommunicationCommand>().Use<HelpDeskCommunicationCommand>();
+
             For<CommunicationRequestConsumerAsync>().Use<CommunicationRequestConsumerAsync>();
             For<IApplicationStatusProcessor>().Use<ApplicationStatusProcessor>();
             For<IApplicationStatusUpdateStrategy>().Use<ApplicationStatusUpdateStrategy>();

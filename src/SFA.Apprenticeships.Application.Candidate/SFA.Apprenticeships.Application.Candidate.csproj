@@ -98,11 +98,13 @@
     <Compile Include="CreateCandidateRequest.cs" />
     <Compile Include="Strategies\Apprenticeships\ArchiveApprenticeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\ILegacyGetCandidateVacancyDetailStrategy.cs" />
+    <Compile Include="Strategies\ISendContactMessageStrategy.cs" />
     <Compile Include="Strategies\ISendMobileVerificationCodeStrategy.cs" />
     <Compile Include="Strategies\IVerifyMobileStrategy.cs" />
     <Compile Include="Strategies\LegacyGetCandidateVacancyDetailStrategy.cs" />
     <Compile Include="Strategies\Apprenticeships\LegacySubmitApprenticeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\ISubmitTraineeshipApplicationStrategy.cs" />
+    <Compile Include="Strategies\SendContactMessageStrategy.cs" />
     <Compile Include="Strategies\SendMobileVerificationCodeStrategy.cs" />
     <Compile Include="Strategies\Traineeships\CreateTraineeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\IArchiveApplicationStrategy.cs" />
@@ -128,7 +130,7 @@
     <Compile Include="Strategies\LegacyResetForgottenPasswordStrategy.cs" />
     <Compile Include="Strategies\Traineeships\GetCandidateTraineeshipApplicationsStrategy.cs" />
     <Compile Include="Strategies\Traineeships\LegacySubmitTraineeshipApplicationStrategy.cs" />
-    <Compile Include="Strategies\LegacyUnlockAccountStrategy .cs" />
+    <Compile Include="Strategies\LegacyUnlockAccountStrategy.cs" />
     <Compile Include="Strategies\QueuedLegacyActivateCandidateStrategy.cs" />
     <Compile Include="Strategies\RegisterCandidateStrategy.cs" />
     <Compile Include="Strategies\Apprenticeships\DeleteApprenticeshipApplicationStrategy.cs" />

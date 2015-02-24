@@ -292,12 +292,25 @@ $(function() {
   $('.select-inject').on('change', function () {
       var $this = $(this),
           $selectedOption = $this.find('option:selected'),
-          $thisOptionText = $selectedOption.text();
+          $thisOptionText = $selectedOption.text(),
+          $nextInput;
 
-      $this.next('.select-injected').val($thisOptionText);
+
+      if ($this.next('.select-injected').length > 0) {
+          $this.next('.select-injected').val($thisOptionText);
+          $nextInput = $this.next('.select-injected');
+      } else {
+          var $sibling = $this.next();
+          $sibling.find('.select-injected').val($thisOptionText);
+          $nextInput = $sibling.find('.select-injected');
+      }
 
       if ($selectedOption.val() == "noSelect") {
-          $this.next('.select-injected').val("");
+          $nextInput.val("");
+      }
+
+      if ($nextInput) {
+          $nextInput.focusout();
       }
   });
 

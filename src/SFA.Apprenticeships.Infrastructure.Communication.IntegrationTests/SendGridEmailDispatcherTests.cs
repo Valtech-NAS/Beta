@@ -186,5 +186,21 @@
 
             _logServiceMock.Verify(l => l.Error(It.IsAny<string>(), It.IsAny<Exception>()), Times.Never);
         }
+
+        [Test, Category("Integration")]
+        public void ShouldSendContactMessage()
+        {
+            var request = new EmailRequest
+            {
+                ToEmail = TestToEmail,
+                Tokens = TokenGenerator.CreateContactMessageTokens(),
+                MessageType = MessageTypes.CandidateContactMessage
+            };
+
+            _dispatcher.SendEmail(request);
+
+            _logServiceMock.Verify(l => l.Error(It.IsAny<string>(), It.IsAny<Exception>()), Times.Never);
+
+        }
     }
 }

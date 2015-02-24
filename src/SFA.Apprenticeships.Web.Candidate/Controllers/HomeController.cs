@@ -4,9 +4,19 @@
     using System.Web.Mvc;
     using Attributes;
     using Constants;
+    using Mediators;
+    using Mediators.Home;
+    using ViewModels.Home;
 
     public class HomeController : CandidateControllerBase
     {
+        private readonly IHomeMediator _homeMediator;
+
+        public HomeController(IHomeMediator homeMediator)
+        {
+            _homeMediator = homeMediator;
+        }
+
         [OutputCache(CacheProfile = CacheProfiles.Long)]
         [ApplyWebTrends]
         [SiteRootRedirect]
@@ -34,7 +44,37 @@
         [ApplyWebTrends]
         public async Task<ActionResult> Helpdesk()
         {
-            return await Task.Run<ActionResult>(() => View());
+            return await Task.Run<ActionResult>(() =>
+            {
+                var candidateId = GetCandidateId();
+                var response = _homeMediator.GetContactMessageViewModel(candidateId);
+                return View(response.ViewModel);
+            });
+        }
+
+        [HttpPost]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
+        [ApplyWebTrends]
+        public async Task<ActionResult> Helpdesk(ContactMessageViewModel model)
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                var candidateId = GetCandidateId();
+                var response = _homeMediator.SendContactMessage(candidateId, model);
+
+                switch (response.Code)
+                {
+                    case HomeMediatorCodes.SendContactMessage.SuccessfullySent:
+                        ModelState.Clear();
+                        return View();
+                    case HomeMediatorCodes.SendContactMessage.Error:
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        return View(response.ViewModel);
+                }
+
+                throw new InvalidMediatorCodeException(response.Code);
+            });
+
         }
 
         [OutputCache(CacheProfile = CacheProfiles.Long)]

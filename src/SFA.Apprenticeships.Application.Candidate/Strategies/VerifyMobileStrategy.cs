@@ -9,7 +9,7 @@ namespace SFA.Apprenticeships.Application.Candidate.Strategies
     public class VerifyMobileStrategy : IVerifyMobileStrategy
     {
         private readonly ICandidateReadRepository _candidateReadRepository;
-        private ICandidateWriteRepository _candidateWriteRepository;
+        private readonly ICandidateWriteRepository _candidateWriteRepository;
 
         public VerifyMobileStrategy(ICandidateReadRepository candidateReadRepository, ICandidateWriteRepository candidateWriteRepository)
         {

@@ -1,21 +1,61 @@
-﻿
+﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.Home.ContactMessageViewModel
+
 @{
     ViewBag.Title = "Apprenticeships - Helpdesk";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<section class="text">
     <div class="hgroup">
         <h1 class="heading-xlarge">Contact us</h1>
     </div>
 
-    <p>Contact <a href="https://nationalcareersservice.direct.gov.uk/Pages/Home.aspx" rel="external" target="_blank">National Careers Service</a> (NCS) if you have a question about whether an apprenticeship is right for you.</p>
+    @using (Html.BeginForm("HelpDesk", "Home", FormMethod.Post))
+    {
+            <h2 class="heading-medium">Contact form</h2>
+            @Html.FormTextFor(
+                m => m.Name,
+                containerHtmlAttributes: new { @class = "form-group-compound" },
+                controlHtmlAttributes: new { type = "text", autocorrect = "off" })
 
-    <p>If you’re having problems applying for an apprenticeship or a traineeship, or have a complaint about our service, you can contact the helpline.</p>
+            @Html.FormTextFor(
+                m => m.Email,
+                containerHtmlAttributes: new { @class = "form-group-compound" },
+                controlHtmlAttributes: new { type = "email", spellcheck = "false" },
+                hintHtmlAttributes: new { @class = "text" })
 
-    <h2 class="heading-medium">Service helpline</h2>
+            <div class="form-group">
+                    <label for="contact-subject" class="form-label">Briefly describe your question</label>
+                    @Html.DropDownListFor(m => m.SelectedEnquiry, Model.Enquiries, new { @id = "contact-subject", @class="hide-nojs small-btm-margin select-inject" })
 
-    <p>Phone: 0800 015 0400 or 02476 826482</p>
-
-    <p><a href="mailto:nationalhelpdesk@findapprenticeship.service.gov.uk">nationalhelpdesk@findapprenticeship.service.gov.uk</a></p>
-</section>
+                @Html.FormTextFor(
+                m => m.Enquiry,
+                containerHtmlAttributes: new { @class = "form-group-compound" },
+             controlHtmlAttributes: new { type = "text", autocorrect = "off", @class = "select-injected" },labelText:string.Empty)
+            </div>
+            @Html.FormTextAreaFor(m => m.Details,
+                controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4", role = "textbox", aria_multiline = "true" },
+                hintHtmlAttributes: new { @class = "text" })
+            <div class="form-group">
+                <button id="send-contact-form-button" class="button">Send</button>
+            </div>
+    }
+    <section class="text">
+        <h2 class="heading-medium">Apprenticeship helpline</h2>
+        <p>
+            Contact the helpline if you’d prefer to speak to somebody, or if
+            you're having difficulty with the contact form.
+        </p>
+        <p>
+            Phone:
+            <br>0800 015 0400
+            <br>02476 826482
+        </p>
+        <p>
+            Email: <a href="mailto:nationalhelpdesk@findapprenticeship.service.gov.uk">nationalhelpdesk@findapprenticeship.service.gov.uk</a>
+        </p>
+        <p>
+            Contact <a href="https://nationalcareersservice.direct.gov.uk/Pages/Home.aspx"
+                       rel="external">National Careers Service</a> (NCS) if you have a
+            question about whether an apprenticeship is right for you.
+        </p>
+    </section>

@@ -43,17 +43,15 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Home
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Home/Helpdesk.cshtml")]
-    public partial class Helpdesk : System.Web.Mvc.WebViewPage<dynamic>
+    public partial class Helpdesk : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Candidate.ViewModels.Home.ContactMessageViewModel>
     {
         public Helpdesk()
         {
         }
         public override void Execute()
         {
-WriteLiteral("\r\n");
-
             
-            #line 2 "..\..\Views\Home\Helpdesk.cshtml"
+            #line 3 "..\..\Views\Home\Helpdesk.cshtml"
   
     ViewBag.Title = "Apprenticeships - Helpdesk";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -61,11 +59,7 @@ WriteLiteral("\r\n");
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n<section");
-
-WriteLiteral(" class=\"text\"");
-
-WriteLiteral(">\r\n    <div");
+WriteLiteral("\r\n\r\n    <div");
 
 WriteLiteral(" class=\"hgroup\"");
 
@@ -73,28 +67,183 @@ WriteLiteral(">\r\n        <h1");
 
 WriteLiteral(" class=\"heading-xlarge\"");
 
-WriteLiteral(">Contact us</h1>\r\n    </div>\r\n\r\n    <p>Contact <a");
+WriteLiteral(">Contact us</h1>\r\n    </div>\r\n\r\n");
 
-WriteLiteral(" href=\"https://nationalcareersservice.direct.gov.uk/Pages/Home.aspx\"");
-
-WriteLiteral(" rel=\"external\"");
-
+            
+            #line 12 "..\..\Views\Home\Helpdesk.cshtml"
+    
 WriteLiteral(" target=\"_blank\"");
 
-WriteLiteral(@">National Careers Service</a> (NCS) if you have a question about whether an apprenticeship is right for you.</p>
+            
+            #line default
+            #line hidden
+            
+            #line 12 "..\..\Views\Home\Helpdesk.cshtml"
+     using (Html.BeginForm("HelpDesk", "Home", FormMethod.Post))
+    {
 
-    <p>If you’re having problems applying for an apprenticeship or a traineeship, or have a complaint about our service, you can contact the helpline.</p>
-
-    <h2");
+            
+            #line default
+            #line hidden
+WriteLiteral("            <h2");
 
 WriteLiteral(" class=\"heading-medium\"");
 
-WriteLiteral(">Service helpline</h2>\r\n\r\n    <p>Phone: 0800 015 0400 or 02476 826482</p>\r\n\r\n    " +
-"<p><a");
+WriteLiteral(">Contact form</h2>\r\n");
+
+            
+            #line 15 "..\..\Views\Home\Helpdesk.cshtml"
+            
+            
+            #line default
+            #line hidden
+            
+            #line 15 "..\..\Views\Home\Helpdesk.cshtml"
+       Write(Html.FormTextFor(
+                m => m.Name,
+                containerHtmlAttributes: new { @class = "form-group-compound" },
+                controlHtmlAttributes: new { type = "text", autocorrect = "off" }));
+
+            
+            #line default
+            #line hidden
+            
+            #line 18 "..\..\Views\Home\Helpdesk.cshtml"
+                                                                                  
+
+            
+            
+            #line default
+            #line hidden
+            
+            #line 20 "..\..\Views\Home\Helpdesk.cshtml"
+       Write(Html.FormTextFor(
+                m => m.Email,
+                containerHtmlAttributes: new { @class = "form-group-compound" },
+                controlHtmlAttributes: new { type = "email", spellcheck = "false" },
+                hintHtmlAttributes: new { @class = "text" }));
+
+            
+            #line default
+            #line hidden
+            
+            #line 24 "..\..\Views\Home\Helpdesk.cshtml"
+                                                            
+
+
+            
+            #line default
+            #line hidden
+WriteLiteral("            <div");
+
+WriteLiteral(" class=\"form-group\"");
+
+WriteLiteral(">\r\n                    <label");
+
+WriteLiteral(" for=\"contact-subject\"");
+
+WriteLiteral(" class=\"form-label\"");
+
+WriteLiteral(">Briefly describe your question</label>\r\n");
+
+WriteLiteral("                    ");
+
+            
+            #line 28 "..\..\Views\Home\Helpdesk.cshtml"
+               Write(Html.DropDownListFor(m => m.SelectedEnquiry, Model.Enquiries, new { @id = "contact-subject", @class="hide-nojs small-btm-margin select-inject" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n\r\n");
+
+WriteLiteral("                ");
+
+            
+            #line 30 "..\..\Views\Home\Helpdesk.cshtml"
+           Write(Html.FormTextFor(
+                m => m.Enquiry,
+                containerHtmlAttributes: new { @class = "form-group-compound" },
+             controlHtmlAttributes: new { type = "text", autocorrect = "off", @class = "select-injected" },labelText:string.Empty));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n            </div>\r\n");
+
+            
+            #line 35 "..\..\Views\Home\Helpdesk.cshtml"
+            
+            
+            #line default
+            #line hidden
+            
+            #line 35 "..\..\Views\Home\Helpdesk.cshtml"
+       Write(Html.FormTextAreaFor(m => m.Details,
+                controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4", role = "textbox", aria_multiline = "true" },
+                hintHtmlAttributes: new { @class = "text" }));
+
+            
+            #line default
+            #line hidden
+            
+            #line 37 "..\..\Views\Home\Helpdesk.cshtml"
+                                                            
+
+            
+            #line default
+            #line hidden
+WriteLiteral("            <div");
+
+WriteLiteral(" class=\"form-group\"");
+
+WriteLiteral(">\r\n                <button");
+
+WriteLiteral(" id=\"send-contact-form-button\"");
+
+WriteLiteral(" class=\"button\"");
+
+WriteLiteral(">Send</button>\r\n            </div>\r\n");
+
+            
+            #line 41 "..\..\Views\Home\Helpdesk.cshtml"
+    }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("    <section");
+
+WriteLiteral(" class=\"text\"");
+
+WriteLiteral(">\r\n        <h2");
+
+WriteLiteral(" class=\"heading-medium\"");
+
+WriteLiteral(@">Apprenticeship helpline</h2>
+        <p>
+            Contact the helpline if you’d prefer to speak to somebody, or if
+            you're having difficulty with the contact form.
+        </p>
+        <p>
+            Phone:
+            <br>0800 015 0400
+            <br>02476 826482
+        </p>
+        <p>
+            Email: <a");
 
 WriteLiteral(" href=\"mailto:nationalhelpdesk@findapprenticeship.service.gov.uk\"");
 
-WriteLiteral(">nationalhelpdesk@findapprenticeship.service.gov.uk</a></p>\r\n</section>\r\n");
+WriteLiteral(">nationalhelpdesk@findapprenticeship.service.gov.uk</a>\r\n        </p>\r\n        <p" +
+">\r\n            Contact <a");
+
+WriteLiteral(" href=\"https://nationalcareersservice.direct.gov.uk/Pages/Home.aspx\"");
+
+WriteLiteral("\r\n                       rel=\"external\"");
+
+WriteLiteral(">National Careers Service</a> (NCS) if you have a\r\n            question about whe" +
+"ther an apprenticeship is right for you.\r\n        </p>\r\n    </section>\r\n");
 
         }
     }

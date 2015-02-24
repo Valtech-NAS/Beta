@@ -42,7 +42,8 @@
         private readonly ILegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail> _candidateApprenticeshipVacancyDetailStrategy;
         private readonly ILegacyGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail> _candidateTraineeshipVacancyDetailStrategy;
         private readonly ISendMobileVerificationCodeStrategy _sendMobileVerificationCodeStrategy;
-        private IVerifyMobileStrategy _verifyMobileStrategy;
+        private readonly IVerifyMobileStrategy _verifyMobileStrategy;
+        private readonly ISendContactMessageStrategy _sendContactMessageStrategy;
 
         public CandidateService(
             ICandidateReadRepository candidateReadRepository,
@@ -67,7 +68,8 @@
             ILegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail> candidateApprenticeshipVacancyDetailStrategy,
             ILegacyGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail> candidateTraineeshipVacancyDetailStrategy,
             ISendMobileVerificationCodeStrategy sendMobileVerificationCodeStrategy,
-            ILogService logService, IVerifyMobileStrategy verifyMobileStrategy)
+            ILogService logService, IVerifyMobileStrategy verifyMobileStrategy, 
+            ISendContactMessageStrategy sendContactMessageStrategy)
         {
             _candidateReadRepository = candidateReadRepository;
             _activateCandidateStrategy = activateCandidateStrategy;
@@ -93,6 +95,7 @@
             _sendMobileVerificationCodeStrategy = sendMobileVerificationCodeStrategy;
             _logger = logService;
             _verifyMobileStrategy = verifyMobileStrategy;
+            _sendContactMessageStrategy = sendContactMessageStrategy;
         }
 
         public Candidate Register(Candidate newCandidate, string password)
@@ -349,8 +352,9 @@
         {
             Condition.Requires(contactMessage);
 
-            //todo: 1.6: -> strategy -> communication service
-            //strategy should set message type = CandidateContactMessage
+            _logger.Info("Calling CandidateService to send a contact message.");
+
+            _sendContactMessageStrategy.SendMessage(contactMessage);
         }
     }
 }

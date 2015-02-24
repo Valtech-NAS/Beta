@@ -8,7 +8,7 @@
     /// </summary>
     public class CommunicationRequest
     {
-        public Guid EntityId { get; set; }
+        public Guid? EntityId { get; set; }
 
         public MessageTypes MessageType { get; set; }
 

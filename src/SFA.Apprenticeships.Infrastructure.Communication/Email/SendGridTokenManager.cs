@@ -57,6 +57,18 @@ namespace SFA.Apprenticeships.Infrastructure.Communication.Email
                 case CommunicationTokens.ExpiringDrafts:
                     emailTemplateToken = "Expiry.Vacancies.Info";
                     break;
+                case CommunicationTokens.UserEmailAddress:
+                    emailTemplateToken = "User.EmailAddress";
+                    break;
+                case CommunicationTokens.UserFullName:
+                    emailTemplateToken = "User.FullName";
+                    break;
+                case CommunicationTokens.UserEnquiry:
+                    emailTemplateToken = "User.Enquiry";
+                    break;
+                case CommunicationTokens.UserEnquiryDetails:
+                    emailTemplateToken = "User.EnquiryDetails";
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException("key");
             }

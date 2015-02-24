@@ -93,5 +93,16 @@
 
             return tokens;
         }
+
+        public static IEnumerable<CommunicationToken> CreateContactMessageTokens()
+        {
+            return new[]
+            {
+                    new CommunicationToken(CommunicationTokens.UserEmailAddress, "User email address"),
+                    new CommunicationToken(CommunicationTokens.UserFullName, "User full name"),
+                    new CommunicationToken(CommunicationTokens.UserEnquiry, "User enquiry"),
+                    new CommunicationToken(CommunicationTokens.UserEnquiryDetails, "User enquiry details")
+            };
+        }
     }
 }
