@@ -253,8 +253,8 @@
   <ItemGroup>
     <Content Include="403.aspx" />
     <Content Include="403.html" />
-    <Content Include="Content\_assets\css\main-1.6.0.1098.css" />
-    <Content Include="Content\_assets\css\main-ie8-1.6.0.1098.css" />
+    <Content Include="Content\_assets\css\main-1.6.0.1147.css" />
+    <Content Include="Content\_assets\css\main-ie8-1.6.0.1147.css" />
     <Content Include="Content\_assets\js\nas\geoLocater.js" />
     <None Include="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
