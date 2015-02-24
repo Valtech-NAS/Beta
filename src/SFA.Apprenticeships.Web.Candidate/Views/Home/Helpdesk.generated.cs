@@ -72,8 +72,6 @@ WriteLiteral(">Contact us</h1>\r\n    </div>\r\n\r\n");
             
             #line 12 "..\..\Views\Home\Helpdesk.cshtml"
     
-WriteLiteral(" target=\"_blank\"");
-
             
             #line default
             #line hidden

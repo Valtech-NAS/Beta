@@ -132,14 +132,14 @@ WriteLiteral("<!--<![endif]-->\r\n    <link");
 
 WriteLiteral(" rel=\"shortcut icon\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1015), Tuple.Create("\"", 1077)
+WriteAttribute("href", Tuple.Create(" href=\"", 1017), Tuple.Create("\"", 1079)
             
             #line 17 "..\..\Views\Shared\_ErrorLayout.cshtml"
-, Tuple.Create(Tuple.Create("", 1022), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/favicon.ico", "~/Content/_assets")
+, Tuple.Create(Tuple.Create("", 1024), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/favicon.ico", "~/Content/_assets")
             
             #line default
             #line hidden
-, 1022), false)
+, 1024), false)
 );
 
 WriteLiteral(" type=\"image/x-icon\"");
@@ -200,14 +200,14 @@ WriteLiteral(" class=\"govuk-logo\"");
 
 WriteLiteral(">\r\n                    <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 1665), Tuple.Create("\"", 1740)
+WriteAttribute("src", Tuple.Create(" src=\"", 1667), Tuple.Create("\"", 1742)
             
             #line 31 "..\..\Views\Shared\_ErrorLayout.cshtml"
-, Tuple.Create(Tuple.Create("", 1671), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/gov.uk_logotype_crown.png", "~/Content/_assets")
+, Tuple.Create(Tuple.Create("", 1673), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/gov.uk_logotype_crown.png", "~/Content/_assets")
             
             #line default
             #line hidden
-, 1671), false)
+, 1673), false)
 );
 
 WriteLiteral(" alt=\"Crown\"");
@@ -367,14 +367,14 @@ WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral(">\r\n                    <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 3742), Tuple.Create("\"", 3810)
+WriteAttribute("src", Tuple.Create(" src=\"", 3744), Tuple.Create("\"", 3812)
             
             #line 65 "..\..\Views\Shared\_ErrorLayout.cshtml"
-, Tuple.Create(Tuple.Create("", 3748), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/govuk-crest-2x.png", "~/Content/_assets")
+, Tuple.Create(Tuple.Create("", 3750), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/govuk-crest-2x.png", "~/Content/_assets")
             
             #line default
             #line hidden
-, 3748), false)
+, 3750), false)
 );
 
 WriteLiteral(" width=\"125\"");
