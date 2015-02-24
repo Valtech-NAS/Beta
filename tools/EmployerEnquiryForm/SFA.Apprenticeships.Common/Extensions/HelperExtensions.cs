@@ -1,8 +1,8 @@
-﻿namespace SFA.Apprenticeships.Web.Employer.Extensions
+﻿namespace SFA.Apprenticeships.Common.Extensions
 {
     using System;
-using System.Collections.Generic;
-using System.Linq;
+    using System.Collections.Generic;
+    using System.Linq;
 
     public static class HelperExtensions
     {
@@ -11,15 +11,13 @@ using System.Linq;
             return enumerable == null || !enumerable.Any();
         }
 
-        public static void ThrowIfNull<T>(this Object targetObject, string parameterName, string message)
-                            where T : class
+        public static void ThrowIfNull(this Object targetObject, string parameterName, string message)
         {
             if (targetObject == null)
             {
                 throw new ArgumentNullException(parameterName, message);
             }
         }
-
         public static void ThrowIfNull<T>(this T? targetObject, string parameterName, string message)
                                  where T : struct
         {

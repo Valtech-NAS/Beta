@@ -7,10 +7,8 @@
 
     public interface IEmployerEnquiryProvider
     {
-        IEnumerable<AddressViewModel> FindAddress(string postcode);
+        ReferenceDataListViewModel GetReferenceData(ReferenceDataTypes type);
 
-        IEnumerable<ReferenceDataViewModel> GetReferenceData(ReferenceDataTypes type);
-
-        void SubmitEnquiry(EmployerEnquiryViewModel message);
+        SubmitQueryStatus SubmitEnquiry(EmployerEnquiryViewModel message);
     }
 }

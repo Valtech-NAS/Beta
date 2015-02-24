@@ -1,0 +1,33 @@
+﻿@using SFA.Apprenticeships.Web.Employer.Framework
+@model SFA.Apprenticeships.Web.Employer.ViewModels.AddressViewModel
+
+<div id="address-lookup" class="hide-nojs">
+    <div class="form-group form-group-compound">
+        <label for="postcode-search" class="form-label">Postcode</label>
+        <span class="form-hint">For example, BN1 8NH</span>
+        <input id="postcode-search" type="text" class="form-control form-control-large" autocapitalize="characters" autocorrect="off" value="">
+        <span id="addressesFound" class="visuallyhidden" aria-live="polite"></span>
+        <span id="postcode-search-validation-error" class="field-validation-valid" aria-live="polite"></span>
+    </div>
+    <div class="form-group form-group-compound">
+        <a role="button" id="find-addresses" class="button address-find-btn" onclick="" >Find address</a>
+    </div>
+    <div id="address-list" class="address-find-select form-group toggle-content" hidden>
+        <label id="address-select-label" for="address-select" class="form-label">Select your address</label>
+        <select id="address-select" aria-describedby="address-select-label">
+        </select>
+    </div>
+    <div id="address-manual" class="form-group form-group-compound">
+        <span class="form-hint">Or enter address manually</span>
+    </div>
+</div>
+
+<div id="address-details" class="address-manual-input">
+    @Html.FormTextFor(m => m.AddressLine1, containerHtmlAttributes: new { @class = "form-group-compound address-item" }, controlHtmlAttributes: new { type = "text", autocorrect = "off" })
+    @Html.FormTextFor(m => m.AddressLine2, containerHtmlAttributes: new { @class = "form-group-compound address-item" }, controlHtmlAttributes: new { type = "text", autocorrect = "off" }, labelHtmlAttributes: new { @class = "visuallyhidden" })
+    @Html.FormTextFor(m => m.AddressLine3, containerHtmlAttributes: new { @class = "form-group-compound address-item" }, controlHtmlAttributes: new { type = "text", autocorrect = "off" }, labelHtmlAttributes: new { @class = "visuallyhidden" })
+    @Html.FormTextFor(m => m.City, containerHtmlAttributes: new { @class = "form-group-compound address-item" }, controlHtmlAttributes: new { type = "text", autocorrect = "off" })
+    @Html.FormTextFor(m => m.Postcode, containerHtmlAttributes: new { @class = "address-item" }, controlHtmlAttributes: new { @class = "form-control-large", type = "text", autocapitalize = "characters", autocorrect = "off" })
+    @Html.HiddenFor(m => m.Latitude)
+    @Html.HiddenFor(m => m.Longitude)
+</div>

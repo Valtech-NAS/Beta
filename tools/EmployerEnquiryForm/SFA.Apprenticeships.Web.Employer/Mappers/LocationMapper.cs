@@ -1,48 +1,43 @@
 ﻿namespace SFA.Apprenticeships.Web.Employer.Mappers
 {
     using System.Collections.Generic;
+    using Apprenticeships.Common.Extensions;
     using Domain.Entities;
     using Interfaces;
     using ViewModels;
-    using SFA.Apprenticeships.Web.Employer.Extensions;
 
-    public class LocationMapper : IDomainToViewModelMapper<Location, AddressViewModel>, IViewModelToDomainMapper<AddressViewModel, Location>
+    public class LocationMapper : IDomainToViewModelMapper<Location, LocationViewModel>, IViewModelToDomainMapper<LocationViewModel, Location>
     {
-        public AddressViewModel ConvertToViewModel(Location domain)
-        {
-            domain.ThrowIfNull<Location>("Location", "Location can't be null");
+        private IDomainToViewModelMapper<Address, AddressViewModel> _addressDomainToViewModelMapper;
+        private IViewModelToDomainMapper<AddressViewModel, Address> _addressViewModelToDomainMapper;
 
-            return new AddressViewModel()
+        public LocationMapper(IDomainToViewModelMapper<Address, AddressViewModel> addressDomainToViewModelMapper, IViewModelToDomainMapper<AddressViewModel, Address> addressViewModelToDomainMapper)
+        {
+            _addressDomainToViewModelMapper = addressDomainToViewModelMapper;
+            _addressViewModelToDomainMapper = addressViewModelToDomainMapper;
+        }
+
+        public LocationViewModel ConvertToViewModel(Location domain)
+        {
+            domain.ThrowIfNull("Location", "domain object of type Location can't be null");
+
+            return new LocationViewModel()
             {
-                AddressLine1 = domain.AddressLine1,
-                AddressLine2 = domain.AddressLine2,
-                AddressLine3 = domain.AddressLine3,
-                City = domain.City,
-                Country = domain.Country,
-                County = domain.County,
+                Address = _addressDomainToViewModelMapper.ConvertToViewModel(domain.Address),
                 Latitude = domain.Latitude,
-                Longitude = domain.Longitude,
-                Postcode = domain.Postcode,
-                Street = domain.Street
+                Longitude = domain.Longitude
             };
         }
         
-        public Location ConvertToDomain(AddressViewModel viewModel)
+        public Location ConvertToDomain(LocationViewModel viewModel)
         {
-            viewModel.ThrowIfNull<AddressViewModel>("AddressViewModel", "AddressViewModel can't be null");
+            viewModel.ThrowIfNull("LocationViewModel", "viewModel object of type LocationViewModel can't be null");
 
             return new Location()
             {
-                AddressLine1 = viewModel.AddressLine1,
-                AddressLine2 = viewModel.AddressLine2,
-                AddressLine3 = viewModel.AddressLine3,
-                City = viewModel.City,
-                Country = viewModel.Country,
-                County = viewModel.County,
+                Address = _addressViewModelToDomainMapper.ConvertToDomain(viewModel.Address),
                 Latitude = viewModel.Latitude,
-                Longitude = viewModel.Longitude,
-                Postcode = viewModel.Postcode,
-                Street = viewModel.Street
+                Longitude = viewModel.Longitude
             };
         }
     }

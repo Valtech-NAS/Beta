@@ -41,9 +41,26 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CuttingEdge.Conditions">
+      <HintPath>..\packages\CuttingEdge.Conditions.1.2.0.0\lib\NET35\CuttingEdge.Conditions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FluentValidation">
+      <HintPath>..\packages\FluentValidation.5.5.0.0\lib\Net40\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation.Mvc">
+      <HintPath>..\packages\FluentValidation.MVC5.5.5.0.0\lib\Net45\FluentValidation.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.3.2.0.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="RazorGenerator.Mvc">
+      <HintPath>..\packages\RazorGenerator.Mvc.2.2.3\lib\net40\RazorGenerator.Mvc.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.3.1.1.134\lib\net40\StructureMap.dll</HintPath>
@@ -128,42 +145,194 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\StructuremapMvc.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Constants\CommonConstants.cs" />
+    <Compile Include="Controllers\LocationController.cs" />
+    <Compile Include="Constants\AddressViewModelMessages.cs" />
+    <Compile Include="Constants\EmployerEnquiryViewModelMessages.cs" />
+    <Compile Include="Constants\EmployerRouteNames.cs" />
+    <Compile Include="Constants\MessageConstants.cs" />
+    <Compile Include="Constants\Pages\EmployerEnquiryPageMessages.cs" />
+    <Compile Include="Constants\UserMessageLevel.cs" />
+    <Compile Include="Constants\Whitelists.cs" />
+    <Compile Include="Controllers\EmployerControllerBase.cs" />
+    <Compile Include="Controllers\EmployerEnquiryController.cs" />
     <Compile Include="DependencyResolution\ControllerConvention.cs" />
     <Compile Include="DependencyResolution\DefaultRegistry.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
     <Compile Include="DependencyResolution\StructureMapDependencyScope.cs" />
     <Compile Include="DependencyResolution\StructureMapScopeModule.cs" />
+    <Compile Include="Framework\Attributes\HoneypotCaptchaAttribute.cs" />
+    <Compile Include="Framework\Binders\TrimModelBinder.cs" />
+    <Compile Include="Framework\HtmlExtensions.cs" />
+    <Compile Include="Framework\HttpServerUtilityExtensions.cs" />
+    <Compile Include="Framework\Models\Common\ReferenceDataViewModel.cs" />
+    <Compile Include="Framework\RuntimeHelper.cs" />
+    <Compile Include="Framework\SpanLabelExtensions.cs" />
+    <Compile Include="Framework\UrlHelperExtensions.cs" />
+    <Compile Include="Framework\Validations\EqualToValueFluentValidationPropertyValidator.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Ioc\EmployerWebRegistry.cs" />
+    <Compile Include="Mappers\AddressMapper.cs" />
     <Compile Include="Mappers\Interfaces\IDomainToViewModelMapper.cs" />
     <Compile Include="Mappers\Interfaces\IViewModelToDomainMapper.cs" />
     <Compile Include="Mappers\EmployerEnquiryMapper.cs" />
     <Compile Include="Mappers\LocationMapper.cs" />
     <Compile Include="Mappers\ReferenceDataMapper.cs" />
-    <Compile Include="Mediators\EmployerEnquiryMediator.cs" />
+    <Compile Include="Mediators\EmployerEnquiry\EmployerEnquiryMediatorCodes.cs" />
+    <Compile Include="Mediators\EmployerEnquiry\EmployerEnquiryMediator.cs" />
     <Compile Include="Mediators\Interfaces\IEmployerEnquiryMediator.cs" />
+    <Compile Include="Mediators\Interfaces\ILocationMediator.cs" />
+    <Compile Include="Mediators\Location\LocationMediator.cs" />
+    <Compile Include="Mediators\MediatorBase.cs" />
+    <Compile Include="Mediators\MediatorException.cs" />
+    <Compile Include="Mediators\MediatorResponse.cs" />
+    <Compile Include="Mediators\MediatorResponseMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\EmployerEnquiryProvider.cs" />
     <Compile Include="Providers\Interfaces\IEmployerEnquiryProvider.cs" />
+    <Compile Include="Providers\Interfaces\ILocationProvider.cs" />
+    <Compile Include="Providers\LocationProvider.cs" />
+    <Compile Include="Validators\AddressViewModelValidators.cs" />
+    <Compile Include="Validators\EmployerEnquiryViewModelValidators.cs" />
     <Compile Include="ViewModels\AddressViewModel.cs" />
+    <Compile Include="ViewModels\ReferenceDataListViewModel.cs" />
+    <Compile Include="ViewModels\LocationsViewModel.cs" />
     <Compile Include="ViewModels\EmployerEnquiryViewModel.cs" />
+    <Compile Include="ViewModels\LocationViewModel.cs" />
     <Compile Include="ViewModels\ReferenceDataViewModel.cs" />
+    <Compile Include="ViewModels\SubmitQueryStatus.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\EmployerEnquiry\SubmitEmployerEnquiry.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SubmitEmployerEnquiry.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EmployerEnquiry\ThankYou.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ThankYou.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Error\InternalServerError.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InternalServerError.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Error\NotFound.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NotFound.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\EditorTemplates\AddressViewModel.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AddressViewModel.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\ValidationSummary.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ValidationSummary.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\_Layout.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_Layout.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\_ViewStart.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_ViewStart.cshtml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\Lookups.xml" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="App_Data\ReferenceData\Lookups.xml" />
+    <Content Include="Content\_assets\css\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\_assets\css\fonts-ie8.css" />
+    <Content Include="Content\_assets\css\fonts.css" />
+    <Content Include="Content\_assets\css\main-1.5.0.862.css" />
+    <Content Include="Content\_assets\css\main-1.6.0.1098.css" />
+    <Content Include="Content\_assets\css\main-ie8-1.5.0.862.css" />
+    <Content Include="Content\_assets\css\main-ie8-1.6.0.1098.css" />
+    <Content Include="Content\_assets\css\main-ie8.css" />
+    <Content Include="Content\_assets\css\main.css" />
+    <Content Include="Content\_assets\img\apple-touch-icon-114x114.png" />
+    <Content Include="Content\_assets\img\apple-touch-icon-144x144.png" />
+    <Content Include="Content\_assets\img\apple-touch-icon-57x57.png" />
+    <Content Include="Content\_assets\img\apple-touch-icon-72x72.png" />
+    <Content Include="Content\_assets\img\arrow.png" />
+    <Content Include="Content\_assets\img\favicon.ico" />
+    <Content Include="Content\_assets\img\gov.uk_logotype_crown.png" />
+    <Content Include="Content\_assets\img\govuk-crest-2x.png" />
+    <Content Include="Content\_assets\img\icon-external-hover.svg" />
+    <Content Include="Content\_assets\img\icon-external.png" />
+    <Content Include="Content\_assets\img\icon-external.svg" />
+    <Content Include="Content\_assets\img\icon-location-selected.png" />
+    <Content Include="Content\_assets\img\icon-location.png" />
+    <Content Include="Content\_assets\img\icon-pointer-2x.png" />
+    <Content Include="Content\_assets\img\icon-pointer.png" />
+    <Content Include="Content\_assets\img\logo-ticks.gif" />
+    <Content Include="Content\_assets\img\open-government-licence.png" />
+    <Content Include="Content\_assets\img\open-government-licence_2x.png" />
+    <Content Include="Content\_assets\img\performance-icon-2x.png" />
+    <Content Include="Content\_assets\img\performance-icon.png" />
+    <Content Include="Content\_assets\js\nas\applicationform.js" />
+    <Content Include="Content\_assets\js\nas\dirtyFormDialog.js" />
+    <Content Include="Content\_assets\js\nas\geoLocater.js" />
+    <Content Include="Content\_assets\js\nas\locationAutocomplete.js" />
+    <Content Include="Content\_assets\js\nas\lookupService.js" />
+    <Content Include="Content\_assets\js\nas\resultsMap.js" />
+    <Content Include="Content\_assets\js\nas\validationscripts.js" />
+    <Content Include="Content\_assets\js\nas\webTrendsInlineTrack.js" />
+    <Content Include="Content\_assets\js\scripts.js" />
+    <Content Include="Content\_assets\js\vendor\fastclick-1.0.3.js" />
+    <Content Include="Content\_assets\js\vendor\fastclick-1.0.3.min.js" />
+    <Content Include="Content\_assets\js\vendor\goog\webfont-debug.js" />
+    <Content Include="Content\_assets\js\vendor\jquery-1.11.1.js" />
+    <Content Include="Content\_assets\js\vendor\jquery-1.11.1.min.js" />
+    <Content Include="Content\_assets\js\vendor\jquery-ui-1.10.4.custom.min.js" />
+    <Content Include="Content\_assets\js\vendor\jquery.cookie.js" />
+    <Compile Include="Constants\ValidatorConstants.cs" />
+    <None Include="Content\_assets\js\vendor\jquery.validate-vsdoc.js" />
+    <Content Include="Content\_assets\js\vendor\jquery.validate.js" />
+    <Content Include="Content\_assets\js\vendor\jquery.validate.min.js" />
+    <Content Include="Content\_assets\js\vendor\jquery.validate.unobtrusive.custom.js" />
+    <Content Include="Content\_assets\js\vendor\jquery.validate.unobtrusive.js" />
+    <Content Include="Content\_assets\js\vendor\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Content\_assets\js\vendor\knockout-3.1.0.debug.js" />
+    <Content Include="Content\_assets\js\vendor\knockout-3.1.0.js" />
+    <Content Include="Content\_assets\js\vendor\knockout.validation.debug.js" />
+    <Content Include="Content\_assets\js\vendor\knockout.validation.js" />
+    <Content Include="Content\_assets\js\vendor\modernizr-custom.js" />
+    <Content Include="Content\_assets\js\vendor\underscore-1.7.0.js" />
+    <Content Include="Content\_assets\js\vendor\underscore-1.7.0.min.js" />
+    <Content Include="Content\_assets\js\vendor\zxcvbn-async.js" />
+    <Content Include="Content\_assets\js\vendor\zxcvbn.js" />
+    <Content Include="Content\_assets\js\webtrends\webtrends.load.js" />
+    <Content Include="Content\_assets\js\webtrends\webtrends.min.js" />
+    <Content Include="Content\_assets\js\webtrends\webtrends.stub.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\_assets\css\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="Content\_assets\fonts\NTA-Bold-20130221.eot" />
+    <Content Include="Content\_assets\fonts\NTA-Bold-20130221.woff" />
+    <Content Include="Content\_assets\fonts\NTA-Light-20130221.eot" />
+    <Content Include="Content\_assets\fonts\NTA-Light-20130221.woff" />
+    <Content Include="Content\_assets\fonts\NTATabularNumbers-Bold.eot" />
+    <Content Include="Content\_assets\fonts\NTATabularNumbers-Bold.woff" />
+    <Content Include="Content\_assets\fonts\NTATabularNumbers-Light.eot" />
+    <Content Include="Content\_assets\fonts\NTATabularNumbers-Light.woff" />
+    <None Include="Properties\PublishProfiles\EmployerEnquiry.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -184,25 +353,50 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_ViewStart.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\_Layout.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_Layout.generated.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>SubmitEmployerEnquiry.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Error\InternalServerError.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>InternalServerError.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Error\NotFound.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>NotFound.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\ValidationSummary.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ValidationSummary.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\EditorTemplates\AddressViewModel.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>AddressViewModel.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\_Scripts.cshtml" />
+    <Content Include="Views\EmployerEnquiry\ThankYou.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ThankYou.generated.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Constants\" />
-    <Folder Include="Models\" />
-    <Folder Include="Validators\" />
+    <Folder Include="Configs\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
-    <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application\SFA.Apprenticeships.Application.csproj">

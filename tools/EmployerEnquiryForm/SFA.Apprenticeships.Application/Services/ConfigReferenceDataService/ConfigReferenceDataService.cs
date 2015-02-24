@@ -7,19 +7,24 @@
     using System.Web;
     using System.Xml.Linq;
     using System.Xml.XPath;
+    using Common.AppSettings;
     using Domain.Entities;
     using Domain.Enums;
     using Interfaces;
 
     public class ConfigReferenceDataService : IReferenceDataService
     {
-         private readonly Lazy<XDocument> _data;
+        private readonly Lazy<XDocument> _data;
 
-         public ConfigReferenceDataService()
+        public ConfigReferenceDataService()
         {
             _data = new Lazy<XDocument>(() =>
             {
-                var dataFilename = HttpContext.Current.Server.MapPath("~/App_Data/Lookups.xml");
+                string dataFilename = BaseAppSettingValues.IsReferenceDataFileInDataDirectory
+                    ? Path.Combine(Convert.ToString(AppDomain.CurrentDomain.GetData("DataDirectory")),
+                        BaseAppSettingValues.ReferenceDataPathWithFile)
+                    : BaseAppSettingValues.ReferenceDataPathWithFile;
+
 
                 if (!File.Exists(dataFilename))
                     throw new Exception(string.Format("Reference data file not found ({0})", dataFilename));
@@ -45,7 +50,7 @@
             var items = from data in referenceData.Descendants("data")
                         where (string)data.Attribute("key") == key
                         from item in data.Descendants("item")
-                        select new ReferenceData 
+                        select new ReferenceData
                         {
                             Id = item.Attribute("id").Value,
                             Description = item.Attribute("value").Value
