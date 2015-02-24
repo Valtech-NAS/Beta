@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
-    using System;
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Mvc;
@@ -72,7 +71,7 @@
                 {
 
                     var mobileVerificationRequiredMessage = string.Format(LoginPageMessages.MobileVerificationRequiredText, Url.Action("VerifyMobile", "Account",
-                        new RouteValueDictionary(){
+                        new RouteValueDictionary{
                             {"ReturnUrl", viewModel.ReturnUrl}
                         }));
                     SetUserMessage(mobileVerificationRequiredMessage, UserMessageLevel.Info);
@@ -214,6 +213,8 @@
         [ApplyWebTrends]
         public ActionResult SignOut(string returnUrl)
         {
+            const string userJourneyKey = "UserJourney";
+            var userJourneyValue = UserData.Get(userJourneyKey);
             FormsAuthentication.SignOut();
 
             if (UserData.Get(UserMessageConstants.WarningMessage) == SignOutPageMessages.MustAcceptUpdatedTermsAndConditions)
@@ -227,6 +228,8 @@
                 SetUserMessage(SignOutPageMessages.SignOutMessageText);
             }
 
+            UserData.Push(userJourneyKey, userJourneyValue);
+
             return !string.IsNullOrEmpty(returnUrl)
                 ? RedirectToRoute(RouteNames.SignIn, new { ReturnUrl = returnUrl })
                 : RedirectToRoute(RouteNames.SignIn);
@@ -237,10 +240,15 @@
         [ApplyWebTrends]
         public ActionResult SessionTimeout(string returnUrl)
         {
+            const string userJourneyKey = "UserJourney";
+            var userJourneyValue = UserData.Get(userJourneyKey);
+
             var userContext = UserData.GetUserContext();
 
             FormsAuthentication.SignOut();
             UserData.Clear();
+
+            UserData.Push(userJourneyKey, userJourneyValue);
 
             if (userContext != null)
             {
