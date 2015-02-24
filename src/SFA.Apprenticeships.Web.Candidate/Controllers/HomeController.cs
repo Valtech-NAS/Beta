@@ -66,7 +66,8 @@
                 {
                     case HomeMediatorCodes.SendContactMessage.SuccessfullySent:
                         ModelState.Clear();
-                        return View();
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        return View(response.ViewModel);
                     case HomeMediatorCodes.SendContactMessage.Error:
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return View(response.ViewModel);

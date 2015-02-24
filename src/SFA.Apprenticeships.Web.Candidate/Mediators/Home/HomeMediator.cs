@@ -18,37 +18,43 @@
             _homeProvider = homeProvider;
         }
 
-        public MediatorResponse<ContactMessageViewModel> SendContactMessage(Guid? candidateId, ContactMessageViewModel contactMessageViewModel)
+        public MediatorResponse<ContactMessageViewModel> SendContactMessage(Guid? candidateId,
+            ContactMessageViewModel contactMessageViewModel)
         {
-            PopulateEnquiries(contactMessageViewModel);
-
             if (_homeProvider.SendContactMessage(candidateId, contactMessageViewModel))
             {
+                var viewModel = GetViewModel(candidateId);
+                PopulateEnquiries(viewModel);
                 return GetMediatorResponse(HomeMediatorCodes.SendContactMessage.SuccessfullySent,
-                    new ContactMessageViewModel());
+                    viewModel, ApplicationPageMessages.SendContactMessageSucceeded, UserMessageLevel.Success);
             }
-            else
-            {
-                return GetMediatorResponse(HomeMediatorCodes.SendContactMessage.Error, contactMessageViewModel,
-                    ApplicationPageMessages.SendContactMessageFailed, UserMessageLevel.Warning);
-            }
+
+            PopulateEnquiries(contactMessageViewModel);
+            return GetMediatorResponse(HomeMediatorCodes.SendContactMessage.Error, contactMessageViewModel,
+                ApplicationPageMessages.SendContactMessageFailed, UserMessageLevel.Warning);
         }
 
         public MediatorResponse<ContactMessageViewModel> GetContactMessageViewModel(Guid? candidateId)
         {
+            var viewModel = GetViewModel(candidateId);
+            
+            return GetMediatorResponse(HomeMediatorCodes.GetContactMessageViewModel.Successful, viewModel);
+        }
+
+        private ContactMessageViewModel GetViewModel(Guid? candidateId)
+        {
             var viewModel = new ContactMessageViewModel();
             PopulateEnquiries(viewModel);
 
-            if (!candidateId.HasValue)
-                return GetMediatorResponse(HomeMediatorCodes.GetContactMessageViewModel.Successful, viewModel);
+            if (candidateId.HasValue)
+            {
+                var candidate = _candidateServiceProvider.GetCandidate(candidateId.Value);
+                viewModel.Email = candidate.RegistrationDetails.EmailAddress;
+                viewModel.Name = string.Format("{0} {1}", candidate.RegistrationDetails.FirstName,
+                    candidate.RegistrationDetails.LastName);
+            }
 
-
-            var candidate = _candidateServiceProvider.GetCandidate(candidateId.Value);
-            viewModel.Email = candidate.RegistrationDetails.EmailAddress;
-            viewModel.Name = string.Format("{0} {1}", candidate.RegistrationDetails.FirstName,
-                candidate.RegistrationDetails.LastName);
-
-            return GetMediatorResponse(HomeMediatorCodes.GetContactMessageViewModel.Successful, viewModel);
+            return viewModel;
         }
 
         private static void PopulateEnquiries(ContactMessageViewModel contactMessageViewModel)
