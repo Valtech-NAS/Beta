@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.TraineeshipApplication
 {
     using System;
+    using Builders;
     using Candidate.Mediators.Application;
     using Candidate.ViewModels.Applications;
     using Candidate.ViewModels.Candidate;
@@ -35,7 +36,19 @@
         }
 
         [Test]
-        public void Error()
+        public void GetApplicationViewModelError()
+        {
+            var getApplicationViewModel = new TraineeshipApplicationViewModelBuilder().WithMessage(ApplicationPageMessages.SubmitApplicationFailed).Build();
+            TraineeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(getApplicationViewModel);
+
+            var viewModel = new TraineeshipApplicationViewModelBuilder().Build();
+            var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId, viewModel);
+
+            response.AssertMessage(TraineeshipApplicationMediatorCodes.Submit.Error, ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning, true, true);
+        }
+
+        [Test]
+        public void SubmitApplicationError()
         {
             var viewModel = new TraineeshipApplicationViewModel
             {

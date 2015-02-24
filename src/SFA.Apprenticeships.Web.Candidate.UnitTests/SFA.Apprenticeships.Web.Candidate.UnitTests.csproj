@@ -171,6 +171,7 @@
     <Compile Include="Builders\LoginViewModelBuilder.cs" />
     <Compile Include="Builders\RegisterViewModelBuilder.cs" />
     <Compile Include="Builders\SettingsViewModelBuilder.cs" />
+    <Compile Include="Builders\TraineeshipApplicationViewModelBuilder.cs" />
     <Compile Include="Builders\VacancyDetailViewModelBuilder.cs" />
     <Compile Include="Builders\VerifyMobileViewModelBuilder.cs" />
     <Compile Include="Extensions\CollectionExtensionsTests.cs" />
@@ -257,6 +258,8 @@
     <Compile Include="Providers\CandidateServiceProvider\VerifyAccountUnlockCodeTests.cs" />
     <Compile Include="Providers\SearchProviderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\Traineeships\PatchApplicationViewModelTests.cs" />
+    <Compile Include="Providers\Traineeships\TraineeshipApplicationProviderBuilder.cs" />
     <Compile Include="Providers\Traineeships\TraineeshipApplicationProviderTest.cs" />
     <Compile Include="Validators\ApprenticeshipSearchViewModelServerValidatorTests.cs" />
     <Compile Include="Validators\EmployerQuestionsViewModelValidatorTests.cs" />

@@ -48,6 +48,12 @@
 
             var savedModel = _traineeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
 
+            if (savedModel.HasError())
+            {
+                // TODO: change this to something specific to traineeships?
+                return GetMediatorResponse(TraineeshipApplicationMediatorCodes.Submit.Error, viewModel, ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning, new { id = vacancyId });
+            }
+
             viewModel = _traineeshipApplicationProvider.PatchApplicationViewModel(candidateId, savedModel, viewModel);
 
             var submittedApplicationModel = _traineeshipApplicationProvider.SubmitApplication(candidateId, vacancyId, viewModel);
