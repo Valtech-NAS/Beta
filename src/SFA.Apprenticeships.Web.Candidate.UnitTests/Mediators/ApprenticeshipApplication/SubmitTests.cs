@@ -56,7 +56,33 @@
         }
 
         [Test]
-        public void Error()
+        public void GetApplicationViewModelError()
+        {
+            var getApplicationViewModel = new ApprenticeshipApplicationViewModel
+            {
+                Candidate = new ApprenticeshipCandidateViewModel(),
+                VacancyDetail = new VacancyDetailViewModel
+                {
+                    VacancyStatus = VacancyStatuses.Live
+                }
+            };
+            var submitApplicationViewModel = new ApprenticeshipApplicationViewModel
+            {
+                Candidate = new ApprenticeshipCandidateViewModel(),
+                VacancyDetail = new VacancyDetailViewModel(),
+                ViewModelStatus = ApplicationViewModelStatus.Error,
+                ViewModelMessage = "An error message"
+            };
+            ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(getApplicationViewModel);
+            ApprenticeshipApplicationProvider.Setup(p => p.SubmitApplication(It.IsAny<Guid>(), It.IsAny<int>())).Returns(submitApplicationViewModel);
+            
+            var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId);
+
+            response.AssertMessage(ApprenticeshipApplicationMediatorCodes.Submit.Error, ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning, false, true);
+        }
+
+        [Test]
+        public void SubmitApplicationError()
         {
             var viewModel = new ApprenticeshipApplicationViewModel
             {
