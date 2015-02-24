@@ -209,6 +209,7 @@
     <Compile Include="Mediators\ApprenticeshipSearch\ResultsTests.cs" />
     <Compile Include="Mediators\ApprenticeshipSearch\SearchValidationTests.cs" />
     <Compile Include="Mediators\ApprenticeshipSearch\TestsBase.cs" />
+    <Compile Include="Mediators\Home\HomeMediatorTests.cs" />
     <Compile Include="Mediators\Login\IndexTests.cs" />
     <Compile Include="Mediators\Login\LoginMediatorBuilder.cs" />
     <Compile Include="Mediators\Login\ResendTests.cs" />
@@ -256,6 +257,7 @@
     <Compile Include="Providers\CandidateServiceProvider\RegisterTests.cs" />
     <Compile Include="Providers\CandidateServiceProvider\RequestAccountUnlockCodeTests.cs" />
     <Compile Include="Providers\CandidateServiceProvider\VerifyAccountUnlockCodeTests.cs" />
+    <Compile Include="Providers\Home\HomeProviderTests.cs" />
     <Compile Include="Providers\SearchProviderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\Traineeships\PatchApplicationViewModelTests.cs" />

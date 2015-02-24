@@ -104,6 +104,7 @@
   <ItemGroup>
     <Compile Include="Applications\ApplicationStatusProcessorTests.cs" />
     <Compile Include="Candidate\Strategies\CreateApplicationStrategy\GivenAFaultedServer.cs" />
+    <Compile Include="Candidate\Strategies\SendContactMessageStrategy\SendContactMessageStrategyTests.cs" />
     <Compile Include="Candidate\Strategies\SendMobileVerificationCodeStrategy\SendMobileVerificationCodeStrategyBuilder.cs" />
     <Compile Include="Candidate\Strategies\SendMobileVerificationCodeStrategy\SendMobileVerificationCodeStrategyTests.cs" />
     <Compile Include="Candidate\Strategies\VerifyMobileStrategy\VerifyMobileStrategyBuilder.cs" />

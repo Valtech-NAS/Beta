@@ -48,10 +48,16 @@
 
             if (candidateId.HasValue)
             {
-                var candidate = _candidateServiceProvider.GetCandidate(candidateId.Value);
-                viewModel.Email = candidate.RegistrationDetails.EmailAddress;
-                viewModel.Name = string.Format("{0} {1}", candidate.RegistrationDetails.FirstName,
-                    candidate.RegistrationDetails.LastName);
+                try
+                {
+                    var candidate = _candidateServiceProvider.GetCandidate(candidateId.Value);
+                    viewModel.Email = candidate.RegistrationDetails.EmailAddress;
+                    viewModel.Name = string.Format("{0} {1}", candidate.RegistrationDetails.FirstName,
+                        candidate.RegistrationDetails.LastName);
+                }
+                catch
+                {
+                }
             }
 
             return viewModel;
