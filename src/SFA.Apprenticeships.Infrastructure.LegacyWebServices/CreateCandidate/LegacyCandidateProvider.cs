@@ -25,6 +25,8 @@
 
         public int CreateCandidate(Domain.Entities.Candidates.Candidate candidate)
         {
+            var context = new {candidateId = candidate.EntityId};
+
             try
             {
                 _logger.Debug("Calling Legacy.CreateCandidate for candidate id='{0}'", candidate.EntityId);
@@ -42,14 +44,12 @@
             }
             catch (BoundaryException e)
             {
-                var de = new DomainException(CandidateErrorCodes.CreateCandidateFailed, e, new { candidateId = candidate.EntityId });
-
-                _logger.Error(de);
-                throw de;
+                _logger.Error(e, context);
+                throw new DomainException(CandidateErrorCodes.CreateCandidateFailed, e, context);
             }
             catch (Exception e)
             {
-                _logger.Error(e, new { candidateId = candidate.EntityId });
+                _logger.Error(e, context);
                 throw;
             }
         }

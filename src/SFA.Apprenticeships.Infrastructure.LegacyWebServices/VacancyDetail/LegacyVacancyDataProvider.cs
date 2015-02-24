@@ -33,6 +33,8 @@
 
         public TVacancyDetail GetVacancyDetails(int vacancyId, bool errorIfNotFound)
         {
+            var context = new { vacancyId };
+
             try
             {
                 _logger.Debug("Calling Legacy.GetVacancyDetails for vacancy details with vacancy id='{0}'", vacancyId);
@@ -52,14 +54,12 @@
             }
             catch (BoundaryException e)
             {
-                var de = new DomainException(VacancyErrorCodes.GetVacancyDetailsFailed, e, new { vacancyId });
-
-                _logger.Error(de);
-                throw de;
+                _logger.Error(e, context);
+                throw new DomainException(VacancyErrorCodes.GetVacancyDetailsFailed, e, context);
             }
             catch (Exception e)
             {
-                _logger.Error(e, new { vacancyId });
+                _logger.Error(e, context);
                 throw;
             }
         }

@@ -47,10 +47,8 @@
             }
             catch (BoundaryException e)
             {
-                var de = new DomainException(ErrorCodes.GetVacancySummariesServiceFailed, e);
-
-                _logger.Error(de);
-                throw de;
+                _logger.Error(e);
+                throw new DomainException(ErrorCodes.GetVacancySummariesServiceFailed, e);
             }
             catch (Exception e)
             {
@@ -61,6 +59,8 @@
 
         public VacancySummaries GetVacancySummaries(int pageNumber)
         {
+            var context = new { pageNumber };
+
             try
             {
                 _logger.Info("Calling Legacy.GetVacancySummaries for page {0}", pageNumber);
@@ -79,14 +79,12 @@
             }
             catch (BoundaryException e)
             {
-                var de = new DomainException(ErrorCodes.GetVacancySummariesServiceFailed, e, new { pageNumber });
-
-                _logger.Error(de);
-                throw de;
+                _logger.Error(e, context);
+                throw new DomainException(ErrorCodes.GetVacancySummariesServiceFailed, e, context);
             }
             catch (Exception e)
             {
-                _logger.Error(e, new { pageNumber });
+                _logger.Error(e, context);
                 throw;
             }
         }

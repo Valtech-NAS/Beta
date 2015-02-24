@@ -62,6 +62,8 @@
 
         private int InternalCreateApplication(Guid candidateId, CreateApplicationRequest request)
         {
+            var context = new {candidateId, vacancyId = request.Application.VacancyId};
+
             try
             {
                 _logger.Debug(
@@ -88,14 +90,12 @@
             }
             catch (BoundaryException e)
             {
-                var de = new DomainException(ApplicationErrorCodes.ApplicationCreationFailed, e, new { candidateId, vacancyId = request.Application.VacancyId });
-
-                _logger.Error(de);
-                throw de;
+                _logger.Error(e, context);
+                throw new DomainException(ApplicationErrorCodes.ApplicationCreationFailed, e, context);
             }
             catch (Exception e)
             {
-                _logger.Error(e, new { candidateId, vacancyId = request.Application.VacancyId });
+                _logger.Error(e, context);
                 throw;
             }
         }
@@ -126,7 +126,7 @@
                     ParseValidationError(response, out message, out errorCode);
                 }
 
-                throw new DomainException(errorCode, new { message, candidateId, request.Application.VacancyId });
+                throw new DomainException(errorCode, new { message, candidateId, vacancyId = request.Application.VacancyId });
             }
 
             return response.ApplicationId;

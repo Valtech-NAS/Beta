@@ -30,6 +30,8 @@
 
         public IEnumerable<ApplicationStatusSummary> GetCandidateApplicationStatuses(Candidate candidate)
         {
+            var context = new { candidateId = candidate.EntityId };
+
             try
             {
                 _logger.Debug("Calling Legacy.GetCandidateInfo for candidate '{0}'", candidate.EntityId);
@@ -47,20 +49,20 @@
             }
             catch (BoundaryException e)
             {
-                var de = new DomainException(ErrorCodes.GetCandidateInfoServiceFailed, e, new { candidateId = candidate.EntityId });
-
-                _logger.Error(de);
-                throw de;
+                _logger.Error(e, context);
+                throw new DomainException(ErrorCodes.GetCandidateInfoServiceFailed, e, context);
             }
             catch (Exception e)
             {
-                _logger.Error(e, new { candidateId = candidate.EntityId });
+                _logger.Error(e, context);
                 throw;
             }
         }
 
         public int GetApplicationStatusesPageCount(int applicationStatusExtractWindow)
         {
+            var context = new { applicationStatusExtractWindow };
+
             try
             {
                 _logger.Debug("Calling Legacy.GetApplicationsStatus for page count");
@@ -78,20 +80,20 @@
             }
             catch (BoundaryException e)
             {
-                var de = new DomainException(ErrorCodes.GetApplicationsStatusServiceFailed, e, new { applicationStatusExtractWindow });
-
-                _logger.Error(de);
-                throw de;
+                _logger.Error(e, context);
+                throw new DomainException(ErrorCodes.GetApplicationsStatusServiceFailed, e, context);
             }
             catch (Exception e)
             {
-                _logger.Error(e, new { applicationStatusExtractWindow });
+                _logger.Error(e, context);
                 throw;
             }
         }
 
         public IEnumerable<ApplicationStatusSummary> GetAllApplicationStatuses(int pageNumber, int applicationStatusExtractWindow)
         {
+            var context = new { applicationStatusExtractWindow };
+
             try
             {
                 _logger.Debug("Calling Legacy.GetApplicationsStatus for page {0}", pageNumber);
@@ -109,14 +111,12 @@
             }
             catch (BoundaryException e)
             {
-                var de = new DomainException(ErrorCodes.GetApplicationsStatusServiceFailed, e, new { applicationStatusExtractWindow });
-
-                _logger.Error(de);
-                throw de;
+                _logger.Error(e, context);
+                throw new DomainException(ErrorCodes.GetApplicationsStatusServiceFailed, e, context);
             }
             catch (Exception e)
             {
-                _logger.Error(e, new { applicationStatusExtractWindow });
+                _logger.Error(e, context);
                 throw;
             }
         }
