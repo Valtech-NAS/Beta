@@ -34,7 +34,7 @@
                 </a>
             </div>
             <div class="global-header__nav">
-                <h2 class="global-header__title beta"><a href="/">Apprenticeships</a></h2>
+                <h2 class="global-header__title beta"><a href="/apprenticeshipsearch">Find an apprenticeship</a></h2>
             </div>
         </div>
     </header>
