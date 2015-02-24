@@ -1,11 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Constants.Pages
 {
-    using FluentValidation.Results;
-
     public class ApplicationPageMessages
     {
-        public const string SendContactMessageSucceeded = "TODO: Message successfully sent. Thank you.";
-        public const string SendContactMessageFailed = "TODO: There’s been a problem sending your contact request. Please try again.";
+        public const string SendContactMessageSucceeded = "Your question has been successfully sent. Thank you.";
+        public const string SendContactMessageFailed = "There’s been a problem sending your question. Please try again.";
         public const string ArchiveFailed = "There’s been a problem saving your application. Please try again.";
         public const string UnarchiveFailed = "TODO: There's been a problem processing your request. Please try again.";
         public const string DeleteFailed = "There’s been a problem deleting your application. Please try again.";
