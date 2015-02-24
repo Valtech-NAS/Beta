@@ -38,12 +38,20 @@
         [Test]
         public void VacancyNotFound_GatewayError()
         {
+            var getApplicationViewModel = new ApprenticeshipApplicationViewModel
+            {
+                Candidate = new ApprenticeshipCandidateViewModel(),
+                VacancyDetail = new VacancyDetailViewModel
+                {
+                    VacancyStatus = VacancyStatuses.Live
+                }
+            };
             var viewModel = new ApprenticeshipApplicationViewModel(ApprenticeshipVacancyDetailPageMessages.GetVacancyDetailFailed)
             {
                 Candidate = new ApprenticeshipCandidateViewModel(),
                 VacancyDetail = new VacancyDetailViewModel(ApprenticeshipVacancyDetailPageMessages.GetVacancyDetailFailed)
             };
-            ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(viewModel);
+            ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(getApplicationViewModel);
             ApprenticeshipApplicationProvider.Setup(p => p.SubmitApplication(It.IsAny<Guid>(), It.IsAny<int>())).Returns(viewModel);
             
             var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId);

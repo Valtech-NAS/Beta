@@ -228,7 +228,7 @@
             {
                 return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Submit.IncorrectState);
             }
-            if (model.ViewModelStatus == ApplicationViewModelStatus.Error)
+            if (model.ViewModelStatus == ApplicationViewModelStatus.Error || model.HasError())
             {
                 return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Submit.Error, null, ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning, new { id = vacancyId });
             }
