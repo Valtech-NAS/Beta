@@ -34,6 +34,22 @@
 
             response.AssertCode(ApprenticeshipApplicationMediatorCodes.Submit.VacancyNotFound, false);
         }
+        
+        [Test]
+        public void VacancyNotFound_GatewayError()
+        {
+            var viewModel = new ApprenticeshipApplicationViewModel(ApprenticeshipVacancyDetailPageMessages.GetVacancyDetailFailed)
+            {
+                Candidate = new ApprenticeshipCandidateViewModel(),
+                VacancyDetail = new VacancyDetailViewModel(ApprenticeshipVacancyDetailPageMessages.GetVacancyDetailFailed)
+            };
+            ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(viewModel);
+            ApprenticeshipApplicationProvider.Setup(p => p.SubmitApplication(It.IsAny<Guid>(), It.IsAny<int>())).Returns(viewModel);
+            
+            var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId);
+
+            response.AssertMessage(ApprenticeshipApplicationMediatorCodes.Submit.Error, ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning, false, true);
+        }
 
         [Test]
         public void IncorrectState()
