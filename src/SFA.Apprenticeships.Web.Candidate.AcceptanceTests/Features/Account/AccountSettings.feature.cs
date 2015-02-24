@@ -590,7 +590,7 @@ this.ScenarioSetup(scenarioInfo);
             table21.AddRow(new string[] {
                         "IsAllowEmailMarketing",
                         "Equals",
-                        "True"});
+                        "False"});
             table21.AddRow(new string[] {
                         "IsAllowSmsMarketing",
                         "Equals",
@@ -636,7 +636,7 @@ this.ScenarioSetup(scenarioInfo);
             table23.AddRow(new string[] {
                         "IsAllowEmailMarketing",
                         "Equals",
-                        "False"});
+                        "True"});
             table23.AddRow(new string[] {
                         "IsAllowSmsMarketing",
                         "Equals",

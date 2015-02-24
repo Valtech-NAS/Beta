@@ -207,7 +207,7 @@ Scenario: As a candidate I can opt into marketing messages
 	And I see
 	| Field                 | Rule           | Value |
 	| VerifyContainer       | Does Not Exist |       |
-	| IsAllowEmailMarketing | Equals         | True  |
+	| IsAllowEmailMarketing | Equals         | False |
 	| IsAllowSmsMarketing   | Equals         | False |
 	And I wait to see AllowEmailMarketing
 	And I wait to see AllowSmsMarketing
@@ -224,5 +224,5 @@ Scenario: As a candidate I can opt into marketing messages
 	And I see
 	| Field                 | Rule   | Value |
 	| VerifyContainer       | Exists |       |
-	| IsAllowEmailMarketing | Equals | False |
+	| IsAllowEmailMarketing | Equals | True  |
 	| IsAllowSmsMarketing   | Equals | True  |
