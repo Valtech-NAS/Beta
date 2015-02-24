@@ -256,7 +256,15 @@ WriteLiteral(" class=\"list-text\"");
 WriteLiteral(">\r\n                        <li>0800 015 0400</li>\r\n                        <li><a" +
 "");
 
-WriteLiteral(" href=\"mailto:nationalhelpdesk@findapprenticeship.service.gov.uk\"");
+WriteAttribute("href", Tuple.Create(" href=\'", 1551), Tuple.Create("\'", 1601)
+            
+            #line 39 "..\..\Views\TraineeshipSearch\Index.cshtml"
+, Tuple.Create(Tuple.Create("", 1558), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Helpdesk)
+            
+            #line default
+            #line hidden
+, 1558), false)
+);
 
 WriteLiteral(">Send us an email</a></li>\r\n                    </ul>\r\n                    <ul");
 
