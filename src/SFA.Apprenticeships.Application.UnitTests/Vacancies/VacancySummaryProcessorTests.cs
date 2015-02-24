@@ -60,7 +60,7 @@
             _messagingServiceMock.Verify(
                 x =>
                     x.DeleteMessage(It.Is<string>(mid => mid == scheduledMessage.MessageId),
-                        It.Is<string>(pr => pr == scheduledMessage.PopReceipt)), Times.Once);
+                        It.Is<string>(pr => pr == scheduledMessage.PopReceipt), null), Times.Once);
             _busMock.Verify(x => x.PublishMessage(It.IsAny<VacancySummaryPage>()), Times.Exactly(vancanyPages));
         }
 

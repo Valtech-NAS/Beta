@@ -5,11 +5,12 @@
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
     using Azure.Common.Messaging;
-    using Repositories;
     using Tasks;
 
     public class DailyMetricsControlQueueConsumer : AzureControlQueueConsumer
     {
+        private const string QueueName = "dailymetricsscheduler";
+
         private readonly IDailyMetricsTasksRunner _dailyMetricsTasksRunner;
         private readonly IConfigurationManager _configurationManager;
 
@@ -18,7 +19,7 @@
             IDailyMetricsTasksRunner dailyMetricsTasksRunner,
             IConfigurationManager configurationManager,
             ILogService logger)
-            : base(messageService, logger, "DailyMetrics", "dailymetricsscheduler")
+            : base(messageService, logger, "DailyMetrics", QueueName)
         {
             _dailyMetricsTasksRunner = dailyMetricsTasksRunner;
             _configurationManager = configurationManager;
@@ -37,7 +38,7 @@
                         _dailyMetricsTasksRunner.RunDailyMetricsTasks();
                     }
 
-                    MessageService.DeleteMessage(monitorScheduleMessage.MessageId, monitorScheduleMessage.PopReceipt);
+                    MessageService.DeleteMessage(monitorScheduleMessage.MessageId, monitorScheduleMessage.PopReceipt, QueueName);
                 }
             });
         }

@@ -42,7 +42,7 @@
                     break;
                 }
 
-                MessageService.DeleteMessage(queueMessage.MessageId, queueMessage.PopReceipt);
+                MessageService.DeleteMessage(queueMessage.MessageId, queueMessage.PopReceipt, _queueName);
                 queueMessage = nextQueueMessage;
                 foundSurplusMessages = true;
             }

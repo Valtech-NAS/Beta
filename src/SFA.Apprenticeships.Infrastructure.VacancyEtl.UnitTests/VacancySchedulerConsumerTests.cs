@@ -44,7 +44,7 @@
             task.Wait();
 
             _messageServiceMock.Verify(x => x.GetMessage(null), Times.Exactly(queuedScheduledMessages + 1));
-            _messageServiceMock.Verify(x => x.DeleteMessage(It.IsAny<string>(), It.IsAny<string>()), Times.Exactly(queuedScheduledMessages == 0 ? 0 : queuedScheduledMessages - 1));
+            _messageServiceMock.Verify(x => x.DeleteMessage(It.IsAny<string>(), It.IsAny<string>(), null), Times.Exactly(queuedScheduledMessages == 0 ? 0 : queuedScheduledMessages - 1));
             _apprenticeshipIndexerService.Verify(x => x.CreateScheduledIndex(It.Is<DateTime>(d => d == DateTime.Today)), Times.Exactly(queuedScheduledMessages > 0 ? 1 : 0));
             _vacancySummaryProcessorMock.Verify(x => x.QueueVacancyPages(It.IsAny<StorageQueueMessage>()), Times.Exactly(queuedScheduledMessages == 0 ? 0 : 1));
         }

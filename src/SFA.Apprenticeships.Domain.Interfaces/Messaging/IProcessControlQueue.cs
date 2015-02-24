@@ -4,6 +4,6 @@
     {
         T GetMessage(string queueName = null);
 
-        void DeleteMessage(string messageId, string popReceipt);
+        void DeleteMessage(string messageId, string popReceipt, string queueName = null);
     }
 }

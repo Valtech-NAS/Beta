@@ -20,13 +20,12 @@
 
         public StorageQueueMessage GetMessage(string queueName)
         {
-            // Queue name can be overridden by caller but typically comes from cloud configuration.
-            queueName = queueName ?? _azureCloudConfig.QueueName;
+            queueName = DefaultQueueName(queueName);
 
             _logger.Debug("Checking Azure control queue for control message: '{0}'", queueName);
 
             // If queue name is not specified, get it from configuration.
-            var message = _azureCloudClient.GetMessage(queueName ?? _azureCloudConfig.QueueName);
+            var message = _azureCloudClient.GetMessage(queueName);
 
             if (message == null)
             {
@@ -37,6 +36,7 @@
             _logger.Debug("Azure control queue item returned: '{0}'", queueName);
 
             var storageMessage = AzureMessageHelper.DeserialiseQueueMessage<StorageQueueMessage>(message);
+
             storageMessage.MessageId = message.Id;
             storageMessage.PopReceipt = message.PopReceipt;
 
@@ -45,13 +45,21 @@
             return storageMessage;
         }
 
-        public void DeleteMessage(string messageId, string popReceipt)
+        public void DeleteMessage(string messageId, string popReceipt, string queueName)
         {
-            _logger.Debug("Deleting Azure control queue item");
+            queueName = DefaultQueueName(queueName);
 
-            _azureCloudClient.DeleteMessage(_azureCloudConfig.QueueName, messageId, popReceipt);
+            _logger.Debug("Deleting Azure control queue item: '{0}'", queueName);
 
-            _logger.Debug("Deleted Azure control queue item");
+            _azureCloudClient.DeleteMessage(queueName, messageId, popReceipt);
+
+            _logger.Debug("Deleted Azure control queue item: '{0}'", queueName);
+        }
+
+        private string DefaultQueueName(string queueName)
+        {
+            // Queue name can be overridden by callers but defaults to cloud configuration.
+            return queueName ?? _azureCloudConfig.QueueName;
         }
     }
 }
