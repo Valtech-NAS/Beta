@@ -34,8 +34,6 @@
             // invoked because the status of the apprenticeshipApplication / vacancy *may* have changed
             if (apprenticeshipApplication.UpdateApprenticeshipApplicationDetail(applicationStatusSummary))
             {
-                // note, this flow will be extended to include a call to outbound communication later (when we do notifications)
-                // note, may subsequently consolidate status updates for a candidate (when we do notifications) but may be done in another component
                 const string format =
                     "Updating apprenticeship application (id='{0}', vacancy id='{1}', candidate='{2})" +
                     " from legacy application id='{3}' to '{4}'," +
@@ -66,6 +64,10 @@
                     applicationStatusSummary.UnsuccessfulReason); // 12
 
                 _apprenticeshipApplicationWriteRepository.Save(apprenticeshipApplication);
+
+                //todo: 1.7: 
+                // note, this flow will be extended to include a call to outbound communication later (when we do notifications)
+                // note, may subsequently consolidate status updates for a candidate (when we do notifications) but may be done in another component
             }
         }
 
