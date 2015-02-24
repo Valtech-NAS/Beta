@@ -37,7 +37,7 @@
             countSubstitution.SubstitutionValues.Single().Should().Be(EmailDailyDigestMessageFormatter.OneSavedApplicationAboutToExpire);
             sendGridMessageSubstitutions.Count(s => s.ReplacementTag == ExpiryVacanciesInfoTag).Should().Be(1);
             var infoSubstitution = sendGridMessageSubstitutions.Single(s => s.ReplacementTag == ExpiryVacanciesInfoTag);
-            infoSubstitution.SubstitutionValues.Single().Should().Be(GetExpectedInfoSubstitution(1));
+            infoSubstitution.SubstitutionValues.Single().Should().Be(GetExpectedInfoSubstitution(expiringDrafts));
         }
 
         [TestCase(2)]
@@ -58,7 +58,7 @@
             countSubstitution.SubstitutionValues.Single().Should().Be(EmailDailyDigestMessageFormatter.MoreThanOneSaveApplicationAboutToExpire);
             sendGridMessageSubstitutions.Count(s => s.ReplacementTag == ExpiryVacanciesInfoTag).Should().Be(1);
             var infoSubstitution = sendGridMessageSubstitutions.Single(s => s.ReplacementTag == ExpiryVacanciesInfoTag);
-            infoSubstitution.SubstitutionValues.Single().Should().Be(GetExpectedInfoSubstitution(noOfDrafts));
+            infoSubstitution.SubstitutionValues.Single().Should().Be(GetExpectedInfoSubstitution(expiringDrafts));
         }
 
         [TestCase(2)]
@@ -154,12 +154,6 @@
 
             sendGridMessageSubstitutions = substitutions;
             return sendGridMessage;
-        }
-
-        private static string GetExpectedInfoSubstitution(int noOfDrafts)
-        {
-            var drafts = new ExpiringApprenticeshipApplicationDraftsBuilder().WithExpiringDrafts(noOfDrafts).Build();
-            return GetExpectedInfoSubstitution(drafts);
         }
 
         private static string GetExpectedInfoSubstitution(IEnumerable<ExpiringApprenticeshipApplicationDraft> expiringDrafts)

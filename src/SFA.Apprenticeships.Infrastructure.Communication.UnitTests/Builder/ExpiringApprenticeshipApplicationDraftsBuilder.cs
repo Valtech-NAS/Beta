@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Domain.Entities.Communication;
-    using FizzWare.NBuilder;
+    using Ploeh.AutoFixture;
 
     public class ExpiringApprenticeshipApplicationDraftsBuilder
     {
@@ -17,26 +17,24 @@
 
         public ExpiringApprenticeshipApplicationDraftsBuilder WithExpiringDrafts(int noOfDrafts)
         {
-            _expiringDrafts = Builder<ExpiringApprenticeshipApplicationDraft>
-                .CreateListOfSize(noOfDrafts)
-                .All()
-                .With(ed => ed.ClosingDate = new DateTime(2015, 01, 31))
-                .Build()
+            _expiringDrafts = new Fixture().Build<ExpiringApprenticeshipApplicationDraft>()
+                .With(ed => ed.ClosingDate, new DateTime(2015, 01, 31))
+                .CreateMany(noOfDrafts)
                 .OrderBy(p => p.ClosingDate)
                 .ToList();
+
             return this;
         }
 
         public ExpiringApprenticeshipApplicationDraftsBuilder WithSpecialCharacterExpiringDrafts(int noOfDrafts)
         {
-            _expiringDrafts = Builder<ExpiringApprenticeshipApplicationDraft>
-                .CreateListOfSize(noOfDrafts)
-                .All()
-                .With(ed => ed.Title = "Tit|e with sp~cial ch@r$ in \"t")
-                .With(ed => ed.EmployerName = "\"Emp|ov~r N@m€\"")
-                .With(ed => ed.ClosingDate = new DateTime(2015, 01, 31))
-                .Build()
+            _expiringDrafts = new Fixture().Build<ExpiringApprenticeshipApplicationDraft>()
+                .With(ed => ed.Title, "Tit|e with sp~cial ch@r$ in \"t")
+                .With(ed => ed.EmployerName, "\"Emp|ov~r N@m€\"")
+                .With(ed => ed.ClosingDate, new DateTime(2015, 01, 31))
+                .CreateMany(noOfDrafts)
                 .ToList();
+
             return this;
         }
 
