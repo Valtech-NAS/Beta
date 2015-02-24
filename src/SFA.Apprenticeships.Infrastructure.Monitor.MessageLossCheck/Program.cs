@@ -4,13 +4,13 @@
     using Common.IoC;
     using EasyNetQ;
     using Elastic.Common.IoC;
+    using Infrastructure.Repositories.Applications.IoC;
+    using Infrastructure.Repositories.Candidates.IoC;
+    using Infrastructure.Repositories.Users.IoC;
     using IoC;
     using LegacyWebServices.IoC;
     using Logging.IoC;
     using RabbitMq.IoC;
-    using Repositories.Applications.IoC;
-    using Repositories.Candidates.IoC;
-    using Repositories.Users.IoC;
     using StructureMap;
     using Tasks;
     using VacancySearch.IoC;

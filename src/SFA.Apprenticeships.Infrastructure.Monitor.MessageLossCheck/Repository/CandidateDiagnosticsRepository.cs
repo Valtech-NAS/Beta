@@ -8,9 +8,9 @@
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
+    using Infrastructure.Repositories.Candidates.Entities;
     using Mongo.Common;
     using MongoDB.Driver.Linq;
-    using Repositories.Candidates.Entities;
 
     public class CandidateDiagnosticsRepository : GenericMongoClient<MongoCandidate>, ICandidateDiagnosticsRepository
     {

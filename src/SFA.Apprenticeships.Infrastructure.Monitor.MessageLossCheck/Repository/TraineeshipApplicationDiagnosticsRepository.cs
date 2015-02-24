@@ -9,12 +9,12 @@
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
     using Entities;
+    using Infrastructure.Repositories.Applications.Entities;
     using Mongo.Common;
     using MongoDB.Bson;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;
     using MongoDB.Driver.Linq;
-    using Repositories.Applications.Entities;
 
     public class TraineeshipApplicationDiagnosticsRepository : GenericMongoClient<MongoTraineeshipApplicationDetail>, ITraineeshipApplicationDiagnosticsRepository
     {
