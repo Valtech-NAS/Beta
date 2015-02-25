@@ -4,6 +4,7 @@
     using System.Web.Mvc;
     using Attributes;
     using Constants;
+    using FluentValidation.Mvc;
     using Mediators;
     using Mediators.Home;
     using ViewModels.Home;
@@ -64,6 +65,10 @@
 
                 switch (response.Code)
                 {
+                    case HomeMediatorCodes.SendContactMessage.ValidationError:
+                        ModelState.Clear();
+                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                        return View(model);
                     case HomeMediatorCodes.SendContactMessage.SuccessfullySent:
                         ModelState.Clear();
                         SetUserMessage(response.Message.Text, response.Message.Level);

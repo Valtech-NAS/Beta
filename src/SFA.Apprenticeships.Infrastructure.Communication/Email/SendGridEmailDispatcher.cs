@@ -60,7 +60,7 @@
             return message;
         }
 
-        private static SendGridMessage CreateMessage(EmailRequest request)
+        private static SendGridMessage  CreateMessage(EmailRequest request)
         {
             const string emptyHtml = "<span></span>";
             const string emptyText = "";

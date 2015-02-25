@@ -4,6 +4,7 @@
     using Candidate.Mediators;
     using Candidate.Mediators.Home;
     using Candidate.Providers;
+    using Candidate.Validators;
     using Candidate.ViewModels.Home;
     using Common.Constants;
     using Constants.Pages;
@@ -18,12 +19,15 @@
     {
         private readonly Mock<ICandidateServiceProvider> _candidateServiceProviderMock = new Mock<ICandidateServiceProvider>();
         private readonly Mock<IHomeProvider> _homeProviderMock = new Mock<IHomeProvider>();
+
+        private readonly Mock<ContactMessageServerViewModelValidator> _contactMessageServerViewModelValidatorMock =
+            new Mock<ContactMessageServerViewModelValidator>();
         private const string AString = "A string";
             
         [Test]
         public void GetContactMessageViewModelWithoutCandidateId()
         {
-            var homeMediator = new HomeMediator(_candidateServiceProviderMock.Object, _homeProviderMock.Object);
+            var homeMediator = new HomeMediator(_candidateServiceProviderMock.Object, _homeProviderMock.Object, _contactMessageServerViewModelValidatorMock.Object);
 
             var response = homeMediator.GetContactMessageViewModel(null);
 
@@ -35,7 +39,7 @@
         [Test]
         public void GetContactMessageViewModelWithCandidateId()
         {
-            var homeMediator = new HomeMediator(_candidateServiceProviderMock.Object, _homeProviderMock.Object);
+            var homeMediator = new HomeMediator(_candidateServiceProviderMock.Object, _homeProviderMock.Object, _contactMessageServerViewModelValidatorMock.Object);
             var candidateId = Guid.NewGuid();
             const string candidateFirstName = "John";
             const string candidateLastName = "Doe";
@@ -61,7 +65,7 @@
         [Test]
         public void GetContactMessageViewModelWithoError()
         {
-            var homeMediator = new HomeMediator(_candidateServiceProviderMock.Object, _homeProviderMock.Object);
+            var homeMediator = new HomeMediator(_candidateServiceProviderMock.Object, _homeProviderMock.Object, _contactMessageServerViewModelValidatorMock.Object);
             var candidateId = Guid.NewGuid();
             _candidateServiceProviderMock.Setup(csp => csp.GetCandidate(candidateId)).Throws<ArgumentException>();
 
@@ -75,7 +79,7 @@
         [Test]
         public void SendContactMessage()
         {
-            var homeMediator = new HomeMediator(_candidateServiceProviderMock.Object, _homeProviderMock.Object);
+            var homeMediator = new HomeMediator(_candidateServiceProviderMock.Object, _homeProviderMock.Object, _contactMessageServerViewModelValidatorMock.Object);
             var viewModel = new ContactMessageViewModel
             {
                 Details = AString,
@@ -95,7 +99,7 @@
         [Test]
         public void SendContactMessageFail()
         {
-            var homeMediator = new HomeMediator(_candidateServiceProviderMock.Object, _homeProviderMock.Object);
+            var homeMediator = new HomeMediator(_candidateServiceProviderMock.Object, _homeProviderMock.Object, _contactMessageServerViewModelValidatorMock.Object);
             var viewModel = new ContactMessageViewModel
             {
                 Details = AString,

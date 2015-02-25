@@ -6,6 +6,7 @@
         {
             public const string Error = "HomeMediatorCodes.SendContactMessage.Error";
             public const string SuccessfullySent = "HomeMediatorCodes.SendContactMessage.SuccessfullySent";
+            public const string ValidationError = "HomeMediatorCodes.SendContactMessage.ValidationError";
         }
 
         public class GetContactMessageViewModel
