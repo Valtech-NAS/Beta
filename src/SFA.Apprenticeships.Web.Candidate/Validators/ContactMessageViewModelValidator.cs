@@ -4,9 +4,17 @@
     using FluentValidation;
     using ViewModels.Home;
 
-    public class ContactMessageViewModelValidator : AbstractValidator<ContactMessageViewModel>
+    public class ContactMessageClientViewModelValidator : AbstractValidator<ContactMessageViewModel>
     {
-        public ContactMessageViewModelValidator()
+        public ContactMessageClientViewModelValidator()
+        {
+            this.AddCommonRules();
+        }
+    }
+
+    public class ContactMessageServerViewModelValidator : AbstractValidator<ContactMessageViewModel>
+    {
+        public ContactMessageServerViewModelValidator()
         {
             this.AddCommonRules();
         }

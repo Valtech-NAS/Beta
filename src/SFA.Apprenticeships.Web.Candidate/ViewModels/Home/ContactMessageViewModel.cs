@@ -6,7 +6,7 @@
     using FluentValidation.Attributes;
     using Validators;
 
-    [Validator(typeof(ContactMessageViewModelValidator))]
+    [Validator(typeof(ContactMessageClientViewModelValidator))]
     public class ContactMessageViewModel
     {
         [Display(Name = ContactMessageViewModelMessages.FullNameMessages.LabelText)]
