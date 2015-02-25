@@ -11,6 +11,7 @@
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
     using FluentAssertions;
+    using FluentValidation.Results;
     using Moq;
     using NUnit.Framework;
 
@@ -23,6 +24,7 @@
         private readonly Mock<ContactMessageServerViewModelValidator> _contactMessageServerViewModelValidatorMock =
             new Mock<ContactMessageServerViewModelValidator>();
         private const string AString = "A string";
+        private const string AnEmail = "valtechnas@gmail.com";
             
         [Test]
         public void GetContactMessageViewModelWithoutCandidateId()
@@ -83,11 +85,14 @@
             var viewModel = new ContactMessageViewModel
             {
                 Details = AString,
-                Email = AString,
+                Email = AnEmail,
                 Enquiry = AString,
                 Name = AString,
                 SelectedEnquiry = AString
             };
+
+            _contactMessageServerViewModelValidatorMock.Setup(v => v.Validate(It.IsAny<ContactMessageViewModel>()))
+                .Returns(new ValidationResult());
 
             _homeProviderMock.Setup(hp => hp.SendContactMessage(null, viewModel)).Returns(true);
             var response = homeMediator.SendContactMessage(null, viewModel);
@@ -103,17 +108,42 @@
             var viewModel = new ContactMessageViewModel
             {
                 Details = AString,
-                Email = AString,
+                Email = AnEmail,
                 Enquiry = AString,
                 Name = AString,
                 SelectedEnquiry = AString
             };
+
+            _contactMessageServerViewModelValidatorMock.Setup(v => v.Validate(It.IsAny<ContactMessageViewModel>()))
+                .Returns(new ValidationResult());
 
             _homeProviderMock.Setup(hp => hp.SendContactMessage(null, viewModel)).Returns(false);
             var response = homeMediator.SendContactMessage(null, viewModel);
 
             response.AssertMessage(HomeMediatorCodes.SendContactMessage.Error,
                 ApplicationPageMessages.SendContactMessageFailed, UserMessageLevel.Warning, true);
+        }
+
+        [Test]
+        public void SendContactMessageWithValidationErrors()
+        {
+            var homeMediator = new HomeMediator(_candidateServiceProviderMock.Object, _homeProviderMock.Object, _contactMessageServerViewModelValidatorMock.Object);
+            var viewModel = new ContactMessageViewModel
+            {
+                Details = AString,
+                Email = AnEmail,
+                Enquiry = AString,
+                Name = AString,
+                SelectedEnquiry = AString
+            };
+
+            _contactMessageServerViewModelValidatorMock.Setup(v => v.Validate(It.IsAny<ContactMessageViewModel>()))
+                .Returns(new ValidationResult(new []{new ValidationFailure("Name", "Error") }));
+
+            _homeProviderMock.Setup(hp => hp.SendContactMessage(null, viewModel)).Returns(false);
+            var response = homeMediator.SendContactMessage(null, viewModel);
+
+            response.AssertValidationResult(HomeMediatorCodes.SendContactMessage.ValidationError, true);
         }
     }
 }
