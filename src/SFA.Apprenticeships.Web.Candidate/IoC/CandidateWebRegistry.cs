@@ -74,7 +74,7 @@
             For<IAccountProvider>().Use<AccountProvider>().Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");
             For<ICandidateServiceProvider>().Use<CandidateServiceProvider>().Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");
             For<ITraineeshipVacancyDetailProvider>().Use<TraineeshipVacancyDetailProvider>().Ctor<IMapper>().Named("TraineeshipCandidateWebMappers");
-            For<ITraineeshipApplicationProvider>().Use<TraineeshipApplicationProvider>();
+            For<ITraineeshipApplicationProvider>().Use<TraineeshipApplicationProvider>().Ctor<IMapper>().Named("TraineeshipCandidateWebMappers");
             For<IHomeProvider>().Use<HomeProvider>().Ctor<IMapper>().Named("HomeWebMappers");
         }
 
