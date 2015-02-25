@@ -105,9 +105,12 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Email\EmailFromResolvers\CandidateMessageEmailFromResolver.cs" />
     <Compile Include="Email\EmailMessageFormatter.cs" />
     <Compile Include="Email\EmailMessageFormatters\EmailDailyDigestMessageFormatter.cs" />
     <Compile Include="Email\EmailMessageFormatters\EmailSimpleMessageFormatter.cs" />
+    <Compile Include="Email\EmailFromResolvers\HelpDeskMessageEmailFromResolver.cs" />
+    <Compile Include="Email\EmailFromResolvers\IEmailFromResolver.cs" />
     <Compile Include="Sms\ITwillioConfiguration.cs" />
     <Compile Include="Sms\SmsMessageFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsDailyDigestMessageFormatter.cs" />

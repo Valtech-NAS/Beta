@@ -9,6 +9,7 @@
     using Application.Interfaces.Communications;
     using Application.Interfaces.Logging;
     using Domain.Entities.Exceptions;
+    using EmailFromResolvers;
     using SendGrid;
     using ErrorCodes = Application.Interfaces.Communications.ErrorCodes;
 
@@ -20,11 +21,15 @@
         private readonly SendGridTemplateConfiguration[] _templates;
         private readonly string _userName;
         private readonly IEnumerable<KeyValuePair<MessageTypes, EmailMessageFormatter>> _messageFormatters;
+        private readonly IEnumerable<IEmailFromResolver> _emailFromResolvers;
 
-        public SendGridEmailDispatcher(SendGridConfiguration configuration, IEnumerable<KeyValuePair<MessageTypes, EmailMessageFormatter>> messageFormatters, ILogService logger)
+        public SendGridEmailDispatcher(SendGridConfiguration configuration, 
+            IEnumerable<KeyValuePair<MessageTypes, EmailMessageFormatter>> messageFormatters, 
+            ILogService logger, IEnumerable<IEmailFromResolver> emailFromResolvers)
         {
             _messageFormatters = messageFormatters;
             _logger = logger;
+            _emailFromResolvers = emailFromResolvers;
             _userName = configuration.UserName;
             _password = configuration.Password;
             _templates = configuration.Templates.ToArray();
@@ -93,7 +98,7 @@
         {
             var templateName = GetTemplateName(request.MessageType);
             var template = GetTemplateConfiguration(templateName);
-            var fromEmail = template.FromEmail;
+            var fromEmail = _emailFromResolvers.First(er => er.CanResolve(request.MessageType)).Resolve(request, template.FromEmail);
 
             message.From = new MailAddress(fromEmail);
             message.EnableTemplateEngine(template.Id);
