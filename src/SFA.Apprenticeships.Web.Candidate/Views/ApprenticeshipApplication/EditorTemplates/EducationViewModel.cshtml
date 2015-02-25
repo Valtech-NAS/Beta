@@ -5,7 +5,7 @@
     @Html.FormTextFor(m => m.NameOfMostRecentSchoolCollege)
     <fieldset class="form-group inline-fixed">
         <legend class="form-label">Years attended</legend>
-        @Html.FormTextFor(m => m.FromYear, controlHtmlAttributes: new { @class = "form-control-medium", maxlength = "4" }, labelHtmlAttributes: new { @class = "form-hint" }, containerHtmlAttributes: new { @class="form-group-compound" })
-        @Html.FormTextFor(m => m.ToYear, controlHtmlAttributes: new { @class = "form-control-medium", maxlength = "4" }, labelHtmlAttributes: new { @class = "form-hint" }, containerHtmlAttributes: new { @class = "form-group-compound" })
+        @Html.FormTextFor(m => m.FromYear, controlHtmlAttributes: new { @class = "form-control-medium", maxlength = "4", type = "tel", pattern = "[0-9]*" }, labelHtmlAttributes: new { @class = "form-hint" }, containerHtmlAttributes: new { @class = "form-group-compound" })
+        @Html.FormTextFor(m => m.ToYear, controlHtmlAttributes: new { @class = "form-control-medium", maxlength = "4", type = "tel", pattern = "[0-9]*" }, labelHtmlAttributes: new { @class = "form-hint" }, containerHtmlAttributes: new { @class = "form-group-compound" })
     </fieldset>
 </fieldset>

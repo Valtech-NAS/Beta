@@ -85,7 +85,7 @@ WriteLiteral("        ");
 
             
             #line 8 "..\..\Views\ApprenticeshipApplication\EditorTemplates\EducationViewModel.cshtml"
-   Write(Html.FormTextFor(m => m.FromYear, controlHtmlAttributes: new { @class = "form-control-medium", maxlength = "4" }, labelHtmlAttributes: new { @class = "form-hint" }, containerHtmlAttributes: new { @class="form-group-compound" }));
+   Write(Html.FormTextFor(m => m.FromYear, controlHtmlAttributes: new { @class = "form-control-medium", maxlength = "4", type = "tel", pattern = "[0-9]*" }, labelHtmlAttributes: new { @class = "form-hint" }, containerHtmlAttributes: new { @class = "form-group-compound" }));
 
             
             #line default
@@ -96,7 +96,7 @@ WriteLiteral("        ");
 
             
             #line 9 "..\..\Views\ApprenticeshipApplication\EditorTemplates\EducationViewModel.cshtml"
-   Write(Html.FormTextFor(m => m.ToYear, controlHtmlAttributes: new { @class = "form-control-medium", maxlength = "4" }, labelHtmlAttributes: new { @class = "form-hint" }, containerHtmlAttributes: new { @class = "form-group-compound" }));
+   Write(Html.FormTextFor(m => m.ToYear, controlHtmlAttributes: new { @class = "form-control-medium", maxlength = "4", type = "tel", pattern = "[0-9]*" }, labelHtmlAttributes: new { @class = "form-hint" }, containerHtmlAttributes: new { @class = "form-group-compound" }));
 
             
             #line default
