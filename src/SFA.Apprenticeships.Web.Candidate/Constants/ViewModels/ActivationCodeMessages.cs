@@ -1,5 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Constants.ViewModels
 {
+    using Common.Constants;
+
     public static class ActivationCodeMessages
     {
         public static class ActivationCode
@@ -8,8 +10,8 @@
             public const string HintText = "";
             public const string RequiredErrorText = "Please enter an activation code";
             public const string LengthErrorText = "Activation code must be 6 characters";
-            public const string WhiteListRegularExpression = "^[A-Za-z0-9]+$";
-            public const string WhiteListErrorText = "Activation code contains invalid characters";
+            public const string WhiteListRegularExpression = Whitelists.CodeWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "Activation code " + Whitelists.CodeWhitelist.ErrorText;
         }
 
         public static class EmailAddressMessages

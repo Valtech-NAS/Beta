@@ -10,8 +10,8 @@
             public const string HintText = "";
             public const string RequiredErrorText = "Please enter password reset code";
             public const string LengthErrorText = "Password reset code must be 6 characters";
-            public const string WhiteListRegularExpression = "^[A-Za-z0-9]+$";
-            public const string WhiteListErrorText = "Password reset code contains invalid characters";
+            public const string WhiteListRegularExpression = Whitelists.CodeWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "Password reset code " + Whitelists.CodeWhitelist.ErrorText;
         }
 
         public static class PasswordMessages

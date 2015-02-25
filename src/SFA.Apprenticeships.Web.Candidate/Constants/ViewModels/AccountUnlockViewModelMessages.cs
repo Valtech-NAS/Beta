@@ -1,5 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Constants.ViewModels
 {
+    using Common.Constants;
+
     public static class AccountUnlockViewModelMessages
     {
         public static class AccountUnlockCodeMessages
@@ -9,8 +11,8 @@
             public const string RequiredErrorText = "Please enter your unlock code";
             public const string LengthErrorText = "Unlock code must be 6 characters";
             public const string EmailLabelText = "Email address";
-            public const string WhiteListRegularExpression = "^[A-Za-z0-9]+$";
-            public const string WhiteListErrorText = "Unlock code contains invalid characters";
+            public const string WhiteListRegularExpression = Whitelists.CodeWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "Unlock code " + Whitelists.CodeWhitelist.ErrorText;
         }
     }
 }
