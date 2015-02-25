@@ -89,7 +89,7 @@
                 {
                     new {Id="noSelect", Enquiry = "-- Or choose from one of these questions --" },
                     new {Id="changeEmailAddress", Enquiry = "I need to change my email address" },
-                    new {Id="forgottenEmailAddress", Enquiry = "I’ve forgotten my email address"},
+                    new {Id="forgottenEmailAddress", Enquiry = "I've forgotten my email address"},
                     new {Id="knowMore", Enquiry = "I would like to know more about eligibility and funding"},
                     new {Id="problemsSubmitting", Enquiry = "I'm having problems submitting my application"},
                     new {Id="noApplication", Enquiry = "I can't see my application"},

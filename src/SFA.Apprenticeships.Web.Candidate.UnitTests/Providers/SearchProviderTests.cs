@@ -120,6 +120,8 @@
             var vacancies = searchProvider.FindVacancies(search);
 
             vacancies.VacancySearch.LocationType.Should().Be(ApprenticeshipLocationType.National);
+            vacancies.VacancySearch.SortType.Should().NotBe(VacancySearchSortType.Distance);
+            vacancies.VacancySearch.SortType.Should().Be(VacancySearchSortType.ClosingDate);
         }
 
         [Test]
@@ -150,6 +152,10 @@
                 ResultsPerPage = PageSize,
                 LocationType = locationType
             };
+
+            if (locationType == ApprenticeshipLocationType.NonNational)
+                search.SortType = VacancySearchSortType.Distance;
+
             return search;
         }
 

@@ -151,6 +151,7 @@
                     if (nonNationalResults.Total == 0 && nationalResults.Total > 0)
                     {
                         nonNationlResponse.Vacancies = nationalResponse.Vacancies;
+                        nonNationlResponse.VacancySearch.SortType = VacancySearchSortType.ClosingDate;
                         nonNationlResponse.VacancySearch.LocationType = ApprenticeshipLocationType.National;
                         SetAggregationResults(nonNationlResponse, nationalResults.AggregationResults);
                     }

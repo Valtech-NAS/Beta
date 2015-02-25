@@ -209,6 +209,7 @@
             var results = _searchProvider.FindVacancies(searchModel);
             if (results.VacancySearch != null)
             {
+                model.SortType = results.VacancySearch.SortType;
                 model.LocationType = results.VacancySearch.LocationType;
             }
             results.VacancySearch = model;

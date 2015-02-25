@@ -2,18 +2,25 @@
 {
     using System;
 
-    public class BoundaryException : Exception
+    public class BoundaryException : CustomException
     {
         public BoundaryException(string code)
+            : base(code)
         {
             Code = code;
         }
 
-        public BoundaryException(string code, Exception innerException) : base(code, innerException)
+        public BoundaryException(string code, object data)
+            : base(code)
+        {
+            Code = code;
+            this.AddData(data);
+        }
+
+        public BoundaryException(string code, Exception innerException)
+            : base(code, innerException, code)
         {
             Code = code;
         }
-
-        public string Code { get; private set; }
     }
 }
