@@ -21,7 +21,9 @@
 
         public override void Handle(CommunicationRequest message)
         {
-            var candidateId = message.EntityId;
+            var candidateId = message.EntityId.Value;
+
+            var candidate = _candidateReadRepository.Get(candidateId);
 
             // note, some messages are mandatory - determined by type
             var isOptionalMessageType = message.MessageType == MessageTypes.TraineeshipApplicationSubmitted ||
@@ -29,8 +31,6 @@
 
             // note, some messages are channel specific
             var isSmsOnly = message.MessageType == MessageTypes.SendMobileVerificationCode;
-
-            var candidate = _candidateReadRepository.Get(candidateId.Value);
 
             if ((!isOptionalMessageType || candidate.CommunicationPreferences.AllowEmail) && !isSmsOnly)
             {

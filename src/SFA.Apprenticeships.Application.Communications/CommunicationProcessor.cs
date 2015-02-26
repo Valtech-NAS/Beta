@@ -20,6 +20,7 @@
 
         public void SendDailyDigests(Guid batchId)
         {
+            //todo: 1.7: this should accommodate more than just expiring drafts...
             var candidatesDailyDigest = _expiringDraftRepository.GetCandidatesDailyDigest();
 
             foreach (var candidateDailyDigest in candidatesDailyDigest)

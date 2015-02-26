@@ -26,9 +26,10 @@
                 new CommunicationToken(CommunicationTokens.ExpiringDraftsCount, candidateDailyDigest.Count().ToString(CultureInfo.InvariantCulture))
             };
 
+            //todo: for review. consider dealing with raw data here, not custom serialisation
             var drafts = string.Join("~", candidateDailyDigest
                 .OrderBy(p => p.ClosingDate)
-                .Select(d => string.Join("|",d.VacancyId,  WebUtility.UrlEncode(d.Title), WebUtility.UrlEncode(d.EmployerName), d.ClosingDate.ToLongDateString())));
+                .Select(d => string.Join("|", d.VacancyId, WebUtility.UrlEncode(d.Title), WebUtility.UrlEncode(d.EmployerName), d.ClosingDate.ToLongDateString())));
 
             commTokens.Add(new CommunicationToken(CommunicationTokens.ExpiringDrafts, drafts));
 
