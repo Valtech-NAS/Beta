@@ -37,6 +37,10 @@
                     DateOfBirth = 
                         new DateTime(viewModel.DateOfBirth.Year.Value, viewModel.DateOfBirth.Month.Value,
                             viewModel.DateOfBirth.Day.Value)
+                },
+                CommunicationPreferences = new CommunicationPreferences
+                {
+                    AllowEmailMarketing = viewModel.AcceptUpdates
                 }
             };
 

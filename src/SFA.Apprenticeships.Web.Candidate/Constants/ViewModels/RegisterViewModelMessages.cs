@@ -54,6 +54,11 @@
             public const string PasswordsDoNotMatchErrorText = "Sorry, your passwords don’t match";
         }
 
+        public static class AcceptUpdates
+        {
+            public const string LabelText = "I would like to receive the latest careers news and updates";
+        }
+
         public static class TermsAndConditions
         {
             public const string LabelText = "I accept the <a href='/terms' target='_blank' onclick=\"Webtrends.multiTrack({ element: this, argsa: ['DCS.dcsuri', '/register/readterms', 'WT.dl', '99', 'WT.ti', 'Read Terms and Conditions'] });\">terms and conditions</a>";

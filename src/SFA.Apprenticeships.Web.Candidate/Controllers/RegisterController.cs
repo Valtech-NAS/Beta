@@ -39,7 +39,7 @@
         [AllowReturnUrl(Allow = false)]
         public async Task<ActionResult> Index()
         {
-            return await Task.Run<ActionResult>(() => View());
+            return await Task.Run<ActionResult>(() => View(new RegisterViewModel()));
         }
 
         [HttpPost]

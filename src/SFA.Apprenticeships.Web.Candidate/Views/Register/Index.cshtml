@@ -54,6 +54,8 @@
         </div>
     </fieldset>
 
+    @Html.FormUnvalidatedCheckBoxFor(m => m.AcceptUpdates, labelHtmlAttributes: new { @class = "block-label" })
+    
     @Html.FormCheckBoxFor(m => m.HasAcceptedTermsAndConditions, labelHtmlAttributes: new { @class = "block-label" })
 
     <div class="form-group">
