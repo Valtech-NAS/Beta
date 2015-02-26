@@ -174,6 +174,12 @@
                     return new TraineeshipApplicationViewModel(ApplicationPageMessages.SubmitApplicationFailed);
                 }
 
+                savedModel.Candidate.HasQualifications = submittedModel.Candidate.HasQualifications;
+                savedModel.Candidate.Qualifications = submittedModel.Candidate.Qualifications;
+                savedModel.Candidate.HasWorkExperience = submittedModel.Candidate.HasWorkExperience;
+                savedModel.Candidate.WorkExperience = submittedModel.Candidate.WorkExperience;
+                savedModel.Candidate.EmployerQuestionAnswers = submittedModel.Candidate.EmployerQuestionAnswers;
+
                 return savedModel;
             }
             catch (Exception e)
