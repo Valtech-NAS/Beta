@@ -4,7 +4,7 @@
 
     public interface ICommunciationService
     {
-        void SubmitEnquiry(EmployerEnquiry message);
+        void SubmitEnquiry(EmployerEnquiry enquiryData);
     }
 
 }

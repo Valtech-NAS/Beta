@@ -40,7 +40,7 @@
                  .WithMessage(EmployerEnquiryViewModelMessages.LastnameMessages.RequiredErrorText)
                  .Matches(EmployerEnquiryViewModelMessages.LastnameMessages.WhiteListRegularExpression)
                  .WithMessage(EmployerEnquiryViewModelMessages.LastnameMessages.WhiteListErrorText);
-            
+
             validator.RuleFor(x => x.Companyname)
                 .Length(0, 35)
                 .WithMessage(EmployerEnquiryViewModelMessages.CompanynameMessages.TooLongErrorText)
@@ -48,7 +48,7 @@
                 .WithMessage(EmployerEnquiryViewModelMessages.CompanynameMessages.RequiredErrorText)
                 .Matches(EmployerEnquiryViewModelMessages.CompanynameMessages.WhiteListRegularExpression)
                 .WithMessage(EmployerEnquiryViewModelMessages.CompanynameMessages.WhiteListErrorText);
-            
+
             validator.RuleFor(x => x.Email)
                 .Length(0, 100)
                 .WithMessage(EmployerEnquiryViewModelMessages.EmailAddressMessages.TooLongErrorText)
@@ -56,34 +56,36 @@
                 .WithMessage(EmployerEnquiryViewModelMessages.EmailAddressMessages.RequiredErrorText)
                 .Matches(EmployerEnquiryViewModelMessages.EmailAddressMessages.WhiteListRegularExpression)
                 .WithMessage(EmployerEnquiryViewModelMessages.EmailAddressMessages.WhiteListErrorText);
-            
-             validator.RuleFor(x => x.WorkPhoneNumber)
+
+            validator.RuleFor(x => x.WorkPhoneNumber)
+               .Length(8, 16)
+               .WithMessage(EmployerEnquiryViewModelMessages.WorkPhoneNumberMessages.LengthErrorText)
+               .NotEmpty()
+               .WithMessage(EmployerEnquiryViewModelMessages.WorkPhoneNumberMessages.RequiredErrorText)
+               .Matches(EmployerEnquiryViewModelMessages.WorkPhoneNumberMessages.WhiteListRegularExpression)
+               .WithMessage(EmployerEnquiryViewModelMessages.WorkPhoneNumberMessages.WhiteListErrorText);
+
+            validator.RuleFor(x => x.MobileNumber)
                 .Length(8, 16)
-                .WithMessage(EmployerEnquiryViewModelMessages.WorkPhoneNumberMessages.LengthErrorText)
+                .WithMessage(EmployerEnquiryViewModelMessages.MobileNumberMessages.LengthErrorText)
+                .Matches(EmployerEnquiryViewModelMessages.MobileNumberMessages.WhiteListRegularExpression)
+                .WithMessage(EmployerEnquiryViewModelMessages.MobileNumberMessages.WhiteListErrorText);
+
+            validator.RuleFor(x => x.Position)
+                .Length(0, 35)
+                .WithMessage(EmployerEnquiryViewModelMessages.PositionMessages.TooLongErrorText)
                 .NotEmpty()
-                .WithMessage(EmployerEnquiryViewModelMessages.WorkPhoneNumberMessages.RequiredErrorText)
-                .Matches(EmployerEnquiryViewModelMessages.WorkPhoneNumberMessages.WhiteListRegularExpression)
-                .WithMessage(EmployerEnquiryViewModelMessages.WorkPhoneNumberMessages.WhiteListErrorText);
+                .WithMessage(EmployerEnquiryViewModelMessages.PositionMessages.RequiredErrorText)
+                .Matches(EmployerEnquiryViewModelMessages.PositionMessages.WhiteListRegularExpression)
+                .WithMessage(EmployerEnquiryViewModelMessages.PositionMessages.WhiteListErrorText);
 
-             validator.RuleFor(x => x.MobileNumber)
-                 .Length(8, 16)
-                 .WithMessage(EmployerEnquiryViewModelMessages.MobileNumberMessages.LengthErrorText)
-                 .Matches(EmployerEnquiryViewModelMessages.MobileNumberMessages.WhiteListRegularExpression)
-                 .WithMessage(EmployerEnquiryViewModelMessages.MobileNumberMessages.WhiteListErrorText);
-
-             validator.RuleFor(x => x.Position)
-                 .Length(0, 35)
-                 .WithMessage(EmployerEnquiryViewModelMessages.PositionMessages.TooLongErrorText)
-                 .NotEmpty()
-                 .WithMessage(EmployerEnquiryViewModelMessages.PositionMessages.RequiredErrorText)
-                 .Matches(EmployerEnquiryViewModelMessages.PositionMessages.WhiteListRegularExpression)
-                 .WithMessage(EmployerEnquiryViewModelMessages.PositionMessages.WhiteListErrorText);
- 
             validator.RuleFor(x => x.EnquiryDescription)
-                .Length(0, 2000)
+                .Length(0, 4000)
                 .WithMessage(EmployerEnquiryViewModelMessages.EnquiryDescriptionMessages.TooLongErrorText)
                 .NotEmpty()
-                .WithMessage(EmployerEnquiryViewModelMessages.EnquiryDescriptionMessages.RequiredErrorText);
+                .WithMessage(EmployerEnquiryViewModelMessages.EnquiryDescriptionMessages.RequiredErrorText)
+                .Matches(EmployerEnquiryViewModelMessages.EnquiryDescriptionMessages.WhiteListRegularExpression)
+                 .WithMessage(EmployerEnquiryViewModelMessages.EnquiryDescriptionMessages.WhiteListErrorText);
 
             validator.RuleFor(x => x.WorkSector)
                 .NotEmpty()
@@ -96,11 +98,11 @@
             validator.RuleFor(x => x.PreviousExperienceType)
                 .NotEmpty()
                 .WithMessage(EmployerEnquiryViewModelMessages.PreviousExperienceTypeMessages.RequiredErrorText);
-            
+
             validator.RuleFor(x => x.EmployeesCount)
                 .NotEmpty()
                 .WithMessage(EmployerEnquiryViewModelMessages.EmployeCountMessages.RequiredErrorText);
-            
+
             validator.RuleFor(x => x.EnquirySource)
                 .NotEmpty()
                 .WithMessage(EmployerEnquiryViewModelMessages.EnquirySourceMessages.RequiredErrorText);

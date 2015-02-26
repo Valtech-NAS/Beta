@@ -73,17 +73,24 @@ WriteLiteral(">\r\n    If you are interested in finding out more about employing
 "se complete the following form.\r\n</p>\r\n\r\n<p>\r\n    Different organisations deal w" +
 "ith apprenticeships in <a");
 
-WriteLiteral(" href=\"#\"");
+WriteLiteral(" href=\"http://www.mappit.org.uk/\"");
 
-WriteLiteral(">Scotland</a> |  <a");
+WriteLiteral(" rel=\"external\"");
 
-WriteLiteral(" href=\"#\"");
+WriteLiteral(">Scotland</a>, <a");
 
-WriteLiteral(">Wales</a> | <a");
+WriteLiteral(" href=\"http://www.nidirect.gov.uk/index/information-and-services/education-and-le" +
+"arning/14-19/starter-skills-16-18/apprenticeships.htm\"");
 
-WriteLiteral(" href=\"#\"");
+WriteLiteral(" rel=\"external\"");
 
-WriteLiteral(">Northern Ireland</a>\r\n</p>\r\n\r\n\r\n");
+WriteLiteral(">Northern Ireland</a> and <a");
+
+WriteLiteral(" href=\"https://ams.careerswales.com/Public/Default.aspx?mode=vacancy&type=ams\"");
+
+WriteLiteral(" rel=\"external\"");
+
+WriteLiteral(">Wales</a>\r\n</p>\r\n\r\n\r\n");
 
             
             #line 25 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
