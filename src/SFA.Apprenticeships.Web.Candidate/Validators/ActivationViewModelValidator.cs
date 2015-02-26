@@ -1,5 +1,4 @@
-﻿using System;
-using FluentValidation;
+﻿using FluentValidation;
 using SFA.Apprenticeships.Web.Candidate.Constants.ViewModels;
 using SFA.Apprenticeships.Web.Candidate.ViewModels.Register;
 
@@ -32,7 +31,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Validators
                 .NotEmpty()
                 .WithMessage(ActivationCodeMessages.ActivationCode.RequiredErrorText)
                 .Length(6, 6)
-                .WithMessage(ActivationCodeMessages.ActivationCode.LengthErrorText);
+                .WithMessage(ActivationCodeMessages.ActivationCode.LengthErrorText)
+                .Matches(ActivationCodeMessages.ActivationCode.WhiteListRegularExpression)
+                .WithMessage(ActivationCodeMessages.ActivationCode.WhiteListErrorText);
         }
 
         public static void AddServerRules(this AbstractValidator<ActivationViewModel> validator)

@@ -34,6 +34,8 @@
 
             _dispatcher = container.GetInstance<IEmailDispatcher>("SendGridEmailDispatcher");
             _voidEmailDispatcher = container.GetInstance<IEmailDispatcher>("VoidEmailDispatcher");
+
+            _logServiceMock.ResetCalls();
         }
 
         [Test, Category("Integration"), Category("SmokeTests")]

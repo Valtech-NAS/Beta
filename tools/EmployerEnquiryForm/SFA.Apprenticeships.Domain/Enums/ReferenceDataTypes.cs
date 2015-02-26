@@ -6,6 +6,6 @@
         EmployeeCountTypes,
         WorkSectorTypes,
         PreviousExperienceTypes,
-        EnquiryReasonTypes
+        EnquirySourceTypes
     }
 }

@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using Application.Interfaces.Communications;
     using Email;
+    using Email.EmailFromResolvers;
     using Email.EmailMessageFormatters;
     using Sms;
     using Sms.SmsMessageFormatters;
@@ -25,6 +26,9 @@
             };
             For<IEmailDispatcher>().Use<SendGridEmailDispatcher>().Named("SendGridEmailDispatcher")
                 .Ctor<IEnumerable<KeyValuePair<MessageTypes, EmailMessageFormatter>>>().Is(emailMessageFormatters);
+
+            For<IEmailFromResolver>().Use<CandidateMessageEmailFromResolver>();
+            For<IEmailFromResolver>().Use<HelpDeskMessageEmailFromResolver>();
 
             For<IEmailDispatcher>().Use<VoidEmailDispatcher>().Name = "VoidEmailDispatcher";
             For<ISmsDispatcher>().Use<VoidSmsDispatcher>().Name = "VoidSmsDispatcher";

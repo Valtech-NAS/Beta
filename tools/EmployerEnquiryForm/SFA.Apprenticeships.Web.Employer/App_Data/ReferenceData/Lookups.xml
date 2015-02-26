@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<referenceData>
+  <data key="Titles">
+    <item id="Mr" value="Mr" />
+    <item id="Miss" value="Miss" />
+    <item id="Mrs" value="Mrs" />
+    <item id="Ms" value="Ms" />
+    <item id="Dr" value="Dr" />
+    <item id="Other" value="Other" />
+  </data>
+  <data key="EmployeeCountTypes">
+    <item id="" value="Please select" />
+    <item id="Less_Than_9" value="&lt;9" />
+    <item id="9_TO_49" value="9-49" />
+    <item id="50_TO_249" value="50-249" />
+    <item id="250_TO_999" value="250-999" />
+    <item id="1000_TO_4999" value="1000-4999" />
+    <item id="5000_PLUS" value="5000+" />
+    <item id="DO_NOT_KNOW" value="Don&apos;t Know" />
+  </data>
+  <data key="WorkSectorTypes">
+    <item id="" value="Please select" />
+    <item id="Administration &amp; Human Resources" value="Administration &amp; Human Resources" />
+    <item id="Logistics" value="Logistics" />
+  </data>
+  <data key="PreviousExperienceTypes">
+    <item id="" value="Please select" />
+    <item id="Yes" value="Yes" />
+    <item id="No" value="No" />
+    <item id="DO_NOT_KNOW" value="Don&apos;t Know" />
+  </data>
+  <data key="EnquirySourceTypes">
+    <item id="" value="Please select" />
+    <item id="Telephone_Call" value="Telephone Call" />
+    <item id="Radio" value="Radio" />
+    <item id="Other" value="Other" />
+  </data>
+</referenceData>

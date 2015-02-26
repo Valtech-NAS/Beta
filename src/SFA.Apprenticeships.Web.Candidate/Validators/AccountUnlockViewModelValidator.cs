@@ -28,7 +28,7 @@
         }
     }
 
-    internal static class AccountUnlockValidationRules
+    public static class AccountUnlockValidationRules
     {
         internal static void AddCommonRules(this AbstractValidator<AccountUnlockViewModel> validator)
         {
@@ -36,7 +36,9 @@
                 .NotEmpty()
                 .WithMessage(AccountUnlockViewModelMessages.AccountUnlockCodeMessages.RequiredErrorText)
                 .Length(6, 6)
-                .WithMessage(ActivationCodeMessages.ActivationCode.LengthErrorText);
+                .WithMessage(AccountUnlockViewModelMessages.AccountUnlockCodeMessages.LengthErrorText)
+                .Matches(AccountUnlockViewModelMessages.AccountUnlockCodeMessages.WhiteListRegularExpression)
+                .WithMessage(AccountUnlockViewModelMessages.AccountUnlockCodeMessages.WhiteListErrorText);
 
             AddEmailRules(validator);
         }

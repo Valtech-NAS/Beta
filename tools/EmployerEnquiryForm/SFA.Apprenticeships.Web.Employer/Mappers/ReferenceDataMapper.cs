@@ -6,29 +6,29 @@ namespace SFA.Apprenticeships.Web.Employer.Mappers
     using SFA.Apprenticeships.Web.Employer.ViewModels;
     using System;
     using System.Collections.Generic;
-    using SFA.Apprenticeships.Web.Employer.Extensions;
+    using Apprenticeships.Common.Extensions;
 
     public class ReferenceDataMapper : IDomainToViewModelMapper<ReferenceData, ReferenceDataViewModel>, IViewModelToDomainMapper<ReferenceDataViewModel, ReferenceData>
     {
         public ReferenceDataViewModel ConvertToViewModel(ReferenceData domain)
         {
-            domain.ThrowIfNull<ReferenceData>("ReferenceData", "ReferenceData object can't be null");            
+            domain.ThrowIfNull("ReferenceData", "domain object of type ReferenceData object can't be null");            
 
             return new ReferenceDataViewModel()
             {
-                Key = domain.Id,
-                Value = domain.Description
+                Id = domain.Id,
+                Description = domain.Description
             };
         }
                  
         public ReferenceData ConvertToDomain(ReferenceDataViewModel viewModel)
         {
-            viewModel.ThrowIfNull <ReferenceDataViewModel>("ReferenceDataViewModel", "ReferenceDataViewModel can't be null");
+            viewModel.ThrowIfNull("ReferenceDataViewModel", "viewModel object of type ReferenceDataViewModel can't be null");
 
             return new ReferenceData()
             {
-                Id = viewModel.Key,
-                Description = viewModel.Value
+                Id = viewModel.Id,
+                Description = viewModel.Description
             };
         }
     }

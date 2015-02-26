@@ -6,10 +6,10 @@
 
     public interface IEmployerEnquiryMediator
     {
-        IEnumerable<AddressViewModel> FindAddress(string postcode);
+        MediatorResponse<ReferenceDataListViewModel> GetReferenceData(ReferenceDataTypes type);
 
-        IEnumerable<ReferenceDataViewModel> GetReferenceData(ReferenceDataTypes type);
+        MediatorResponse<EmployerEnquiryViewModel> SubmitEnquiry(EmployerEnquiryViewModel message);
 
-        void SubmitEnquiry(EmployerEnquiryViewModel message);
+        MediatorResponse<EmployerEnquiryViewModel> SubmitEnquiry();
     }
 }

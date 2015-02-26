@@ -263,8 +263,11 @@
     <Compile Include="Providers\Traineeships\PatchApplicationViewModelTests.cs" />
     <Compile Include="Providers\Traineeships\TraineeshipApplicationProviderBuilder.cs" />
     <Compile Include="Providers\Traineeships\TraineeshipApplicationProviderTest.cs" />
+    <Compile Include="Validators\ActivationViewModelValidatorTests.cs" />
+    <Compile Include="Validators\ContactMessageViewModelValidatorTests.cs" />
     <Compile Include="Validators\ApprenticeshipSearchViewModelServerValidatorTests.cs" />
     <Compile Include="Validators\EmployerQuestionsViewModelValidatorTests.cs" />
+    <Compile Include="Validators\AccountUnlockViewModelValidatorTests.cs" />
     <Compile Include="Validators\PasswordResetViewModelValidatorTests.cs" />
     <Compile Include="Validators\EducationViewModelValidatorTests.cs" />
     <Compile Include="Validators\AboutYouViewModelValidatorTests.cs" />

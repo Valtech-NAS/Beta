@@ -1,0 +1,112 @@
+﻿@using SFA.Apprenticeships.Web.Employer.Framework
+@model SFA.Apprenticeships.Web.Employer.ViewModels.EmployerEnquiryViewModel
+
+@{
+    ViewBag.Title = "Employer - Enquiry form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="grid-wrapper">
+    <div class="grid grid-1-2">
+        <h1 class="heading-xlarge">Enquiry form</h1>
+    </div>
+</div>
+
+
+<p class="text">
+    If you are interested in finding out more about employing apprentices please complete the following form.
+</p>
+
+<p>
+    Different organisations deal with apprenticeships in <a href="#">Scotland</a> |  <a href="#">Wales</a> | <a href="#">Northern Ireland</a>
+</p>
+
+
+@using (Html.BeginForm("SubmitEmployerEnquiry", "EmployerEnquiry", FormMethod.Post))
+{
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+
+    <fieldset>
+        <legend class="heading-large">Your details</legend>
+
+        <div class="form-group">
+            @Html.FormLabelFor(m => m.Title)
+            @Html.DropDownListFor(m => m.Title, Model.TitleList)
+            @Html.ValidationMessageFor(model => model.Title)
+        </div>
+        @Html.FormTextFor(
+            m => m.Firstname,
+            controlHtmlAttributes: new { @class = "form-control" })
+
+        @Html.FormTextFor(
+            m => m.Lastname,
+            controlHtmlAttributes: new { @class = "form-control" })
+
+        @Html.FormTextFor(
+            m => m.Position,
+            controlHtmlAttributes: new { @class = "form-control" })
+        
+        @Html.FormTextFor(
+            m => m.WorkPhoneNumber, controlHtmlAttributes: new { @class = "form-control", type = "tel" })
+
+        @Html.FormTextFor(
+            m => m.MobileNumber, controlHtmlAttributes: new { @class = "form-control", type = "tel" })
+
+        @Html.FormTextFor(
+            m => m.Email,
+            controlHtmlAttributes: new { @class = "form-control", type = "email" })
+
+        <legend class="heading-large">Company details</legend>
+
+        @Html.FormTextFor(
+            m => m.Companyname,
+            controlHtmlAttributes: new { @class = "form-control" })
+
+        @Html.EditorFor(a => a.Address)
+
+        <div class="form-group">
+            @Html.FormLabelFor(m => m.EmployeesCount)
+            @Html.DropDownListFor(m => m.EmployeesCount, Model.EmployeesCountList)
+            @Html.ValidationMessageFor(model => model.EmployeesCount)
+        </div>
+        <div class="form-group">
+            @Html.FormLabelFor(m => m.WorkSector)
+            @Html.DropDownListFor(m => m.WorkSector, Model.WorkSectorList)
+            @Html.ValidationMessageFor(model => model.WorkSector)
+        </div>
+        <legend class="heading-large">Your enquiry</legend>
+        <div class="form-group">
+            @Html.FormLabelFor(m => m.PreviousExperienceType)
+            @Html.DropDownListFor(m => m.PreviousExperienceType, Model.PreviousExperienceTypeList)
+            @Html.ValidationMessageFor(model => model.PreviousExperienceType)
+        </div>
+
+        @Html.FormTextAreaFor(
+            m => m.EnquiryDescription,
+             controlHtmlAttributes: new { @class = "form-control", @rows = 7 })
+        <div class="form-group">
+            @Html.FormLabelFor(m => m.EnquirySource)
+            @Html.DropDownListFor(m => m.EnquirySource, Model.EnquirySourceList)
+            @Html.ValidationMessageFor(model => model.EnquirySource)
+        </div>
+        <div class="hidden"><strong>@Html.Honeypot("UserName")</strong></div>
+    </fieldset>
+    <br />
+    <div class="form-group">
+        <p>
+            <button class="button" id="submit-query-button" type="submit" name="EmployerEnquiryAction:SubmitEnquiry">Send Enquiry</button>
+        </p>
+    </div>
+}
+@section scripts
+{
+    <script>
+        $(function () {
+
+            $("#find-addresses").addressLookup({
+                url: '@Url.Action("Addresses", "Location")',
+                selectlist: '#address-select'
+            });
+        });
+    </script>
+}

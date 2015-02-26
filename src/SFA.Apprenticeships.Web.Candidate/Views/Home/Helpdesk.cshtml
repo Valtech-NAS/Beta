@@ -15,12 +15,12 @@
             @Html.FormTextFor(
                 m => m.Name,
                 containerHtmlAttributes: new { @class = "form-group-compound" },
-                controlHtmlAttributes: new { type = "text", autocorrect = "off" })
+                controlHtmlAttributes: new { type = "text", autocorrect = "off", maxlength = "71" })
 
             @Html.FormTextFor(
                 m => m.Email,
                 containerHtmlAttributes: new { @class = "form-group-compound" },
-                controlHtmlAttributes: new { type = "email", spellcheck = "false" },
+                 controlHtmlAttributes: new { type = "email", spellcheck = "false", maxlength = "100" },
                 hintHtmlAttributes: new { @class = "text" })
 
             <div class="form-group">
@@ -30,7 +30,7 @@
                 @Html.FormTextFor(
                 m => m.Enquiry,
                 containerHtmlAttributes: new { @class = "form-group-compound" },
-             controlHtmlAttributes: new { type = "text", autocorrect = "off", @class = "select-injected" },labelText:string.Empty)
+          controlHtmlAttributes: new { type = "text", autocorrect = "off", @class = "select-injected", maxlength = "100" }, labelText: string.Empty)
             </div>
             @Html.FormTextAreaFor(m => m.Details,
                 controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4", role = "textbox", aria_multiline = "true" },

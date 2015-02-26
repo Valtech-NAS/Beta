@@ -5,22 +5,35 @@
     using Common.Constants;
     using Constants.Pages;
     using Providers;
+    using Validators;
     using ViewModels.Home;
 
     public class HomeMediator : MediatorBase, IHomeMediator
     {
         private readonly ICandidateServiceProvider _candidateServiceProvider;
         private readonly IHomeProvider _homeProvider;
+        private readonly ContactMessageServerViewModelValidator _contactMessageServerViewModelValidator;
 
-        public HomeMediator(ICandidateServiceProvider candidateServiceProvider, IHomeProvider homeProvider)
+        public HomeMediator(ICandidateServiceProvider candidateServiceProvider, 
+            IHomeProvider homeProvider, 
+            ContactMessageServerViewModelValidator contactMessageServerViewModelValidator)
         {
             _candidateServiceProvider = candidateServiceProvider;
             _homeProvider = homeProvider;
+            _contactMessageServerViewModelValidator = contactMessageServerViewModelValidator;
         }
 
         public MediatorResponse<ContactMessageViewModel> SendContactMessage(Guid? candidateId,
             ContactMessageViewModel contactMessageViewModel)
         {
+            var validationResult = _contactMessageServerViewModelValidator.Validate(contactMessageViewModel);
+
+            if (!validationResult.IsValid)
+            {
+                PopulateEnquiries(contactMessageViewModel);
+                return GetMediatorResponse(HomeMediatorCodes.SendContactMessage.ValidationError, contactMessageViewModel, validationResult);
+            }
+
             if (_homeProvider.SendContactMessage(candidateId, contactMessageViewModel))
             {
                 var viewModel = GetViewModel(candidateId);
@@ -76,7 +89,7 @@
                 {
                     new {Id="noSelect", Enquiry = "-- Or choose from one of these questions --" },
                     new {Id="changeEmailAddress", Enquiry = "I need to change my email address" },
-                    new {Id="forgottenEmailAddress", Enquiry = "I’ve forgotten my email address"},
+                    new {Id="forgottenEmailAddress", Enquiry = "I've forgotten my email address"},
                     new {Id="knowMore", Enquiry = "I would like to know more about eligibility and funding"},
                     new {Id="problemsSubmitting", Enquiry = "I'm having problems submitting my application"},
                     new {Id="noApplication", Enquiry = "I can't see my application"},

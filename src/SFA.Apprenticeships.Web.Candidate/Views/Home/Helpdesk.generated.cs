@@ -100,14 +100,14 @@ WriteLiteral(">Contact form</h2>\r\n");
        Write(Html.FormTextFor(
                 m => m.Name,
                 containerHtmlAttributes: new { @class = "form-group-compound" },
-                controlHtmlAttributes: new { type = "text", autocorrect = "off" }));
+                controlHtmlAttributes: new { type = "text", autocorrect = "off", maxlength = "71" }));
 
             
             #line default
             #line hidden
             
             #line 18 "..\..\Views\Home\Helpdesk.cshtml"
-                                                                                  
+                                                                                                    
 
             
             
@@ -118,7 +118,7 @@ WriteLiteral(">Contact form</h2>\r\n");
        Write(Html.FormTextFor(
                 m => m.Email,
                 containerHtmlAttributes: new { @class = "form-group-compound" },
-                controlHtmlAttributes: new { type = "email", spellcheck = "false" },
+                 controlHtmlAttributes: new { type = "email", spellcheck = "false", maxlength = "100" },
                 hintHtmlAttributes: new { @class = "text" }));
 
             
@@ -162,7 +162,7 @@ WriteLiteral("                ");
            Write(Html.FormTextFor(
                 m => m.Enquiry,
                 containerHtmlAttributes: new { @class = "form-group-compound" },
-             controlHtmlAttributes: new { type = "text", autocorrect = "off", @class = "select-injected" },labelText:string.Empty));
+          controlHtmlAttributes: new { type = "text", autocorrect = "off", @class = "select-injected", maxlength = "100" }, labelText: string.Empty));
 
             
             #line default

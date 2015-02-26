@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{302C063E-D300-4B92-8CEF-E9E3F7E478DD}"
 	ProjectSection(SolutionItems) = preProject
@@ -18,9 +18,24 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrast
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Web.Employer", "SFA.Apprenticeships.Web.Employer\SFA.Apprenticeships.Web.Employer.csproj", "{D9246563-2874-47DA-9EE6-690C54F3EB03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Web.Employer.Tests", "SFA.Apprenticeships.Web.Employer.Tests\SFA.Apprenticeships.Web.Employer.Tests.csproj", "{EEE2663C-AEB9-48EF-8096-8A2D61EA811F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Web.Employer.UnitTests", "SFA.Apprenticeships.Web.Employer.Tests\SFA.Apprenticeships.Web.Employer.UnitTests.csproj", "{EEE2663C-AEB9-48EF-8096-8A2D61EA811F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Common", "SFA.Apprenticeships.Common\SFA.Apprenticeships.Common.csproj", "{1BEDEBBC-1489-49D8-A472-7A56C0835E4E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PublishScripts", "PublishScripts", "{CDBDAF04-7F68-45BB-9CAC-DA565A29E2AA}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\AzureWebsitePublishModule.psm1 = PublishScripts\AzureWebsitePublishModule.psm1
+		PublishScripts\Publish-WebApplicationWebsite.ps1 = PublishScripts\Publish-WebApplicationWebsite.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configurations", "Configurations", "{870B2423-8028-4B63-A1EA-A3F9C7933B32}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\Configurations\WebApplication1-WAWS-dev.json = PublishScripts\Configurations\WebApplication1-WAWS-dev.json
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Web.Employer.AcceptanceTests", "SFA.Apprenticeships.Web.Employer.AcceptanceTests\SFA.Apprenticeships.Web.Employer.AcceptanceTests.csproj", "{24F8EFFC-616B-48CB-A093-5AEBAAC00CE9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Application.UnitTests", "SFA.Apprenticeships.Application.UnitTests\SFA.Apprenticeships.Application.UnitTests.csproj", "{B0797881-4666-4B2F-BD68-CBC39380630A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,8 +67,19 @@ Global
 		{1BEDEBBC-1489-49D8-A472-7A56C0835E4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1BEDEBBC-1489-49D8-A472-7A56C0835E4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1BEDEBBC-1489-49D8-A472-7A56C0835E4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24F8EFFC-616B-48CB-A093-5AEBAAC00CE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24F8EFFC-616B-48CB-A093-5AEBAAC00CE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24F8EFFC-616B-48CB-A093-5AEBAAC00CE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24F8EFFC-616B-48CB-A093-5AEBAAC00CE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0797881-4666-4B2F-BD68-CBC39380630A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0797881-4666-4B2F-BD68-CBC39380630A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0797881-4666-4B2F-BD68-CBC39380630A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0797881-4666-4B2F-BD68-CBC39380630A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{870B2423-8028-4B63-A1EA-A3F9C7933B32} = {CDBDAF04-7F68-45BB-9CAC-DA565A29E2AA}
 	EndGlobalSection
 EndGlobal

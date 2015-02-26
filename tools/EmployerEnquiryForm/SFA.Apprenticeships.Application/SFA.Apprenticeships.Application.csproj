@@ -51,6 +51,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Common\SFA.Apprenticeships.Common.csproj">
+      <Project>{1bedebbc-1489-49d8-a472-7a56c0835e4e}</Project>
+      <Name>SFA.Apprenticeships.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain\SFA.Apprenticeships.Domain.csproj">
       <Project>{4d8b35fc-5eef-4bdd-9520-a74f70edf821}</Project>
       <Name>SFA.Apprenticeships.Domain</Name>

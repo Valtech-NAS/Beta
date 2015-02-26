@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SFA.Apprenticeships.Web.Employer.Mappers.Interfaces
 {
-    interface IDomainToViewModelMapper<TSource, TDestination>
+    public interface IDomainToViewModelMapper<TSource, TDestination>
     {
         TDestination ConvertToViewModel(TSource domain);        
     }
