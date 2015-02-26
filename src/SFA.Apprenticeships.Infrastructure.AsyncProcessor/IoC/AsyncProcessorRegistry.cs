@@ -27,6 +27,7 @@
             For<CommunicationRequestConsumerAsync>().Use<CommunicationRequestConsumerAsync>();
             For<IApplicationStatusProcessor>().Use<ApplicationStatusProcessor>();
             For<IApplicationStatusUpdateStrategy>().Use<ApplicationStatusUpdateStrategy>();
+            For<IApplicationStatusChangedStrategy>().Use<ApplicationStatusChangedStrategy>();
         }
     }
 }

@@ -13,6 +13,7 @@
             For<ApplicationStatusSummaryConsumerAsync>().Use<ApplicationStatusSummaryConsumerAsync>();
             For<IApplicationStatusProcessor>().Use<ApplicationStatusProcessor>();
             For<IApplicationStatusUpdateStrategy>().Use<ApplicationStatusUpdateStrategy>();
+            For<IApplicationStatusChangedStrategy>().Use<ApplicationStatusChangedStrategy>();
         }
     }
 }
