@@ -10,7 +10,7 @@
 
         void ProcessApplicationStatuses(ApplicationStatusSummary applicationStatusSummary);
 
-        //TODO: 1.6: This should probably be in a separate interface as it's used outside of Application ETL
+        //TODO: 1.6: This should probably be in a separate interface as it's also used outside of Application ETL
         void ProcessApplicationStatuses(VacancyStatusSummary vacancyStatusSummary);
     }
 }

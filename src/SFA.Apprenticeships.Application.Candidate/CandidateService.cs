@@ -43,7 +43,7 @@
         private readonly ILegacyGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail> _candidateTraineeshipVacancyDetailStrategy;
         private readonly ISendMobileVerificationCodeStrategy _sendMobileVerificationCodeStrategy;
         private readonly IVerifyMobileStrategy _verifyMobileStrategy;
-        private readonly ISendContactMessageStrategy _sendContactMessageStrategy;
+        private readonly ISubmitContactMessageStrategy _submitContactMessageStrategy;
 
         public CandidateService(
             ICandidateReadRepository candidateReadRepository,
@@ -69,7 +69,7 @@
             ILegacyGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail> candidateTraineeshipVacancyDetailStrategy,
             ISendMobileVerificationCodeStrategy sendMobileVerificationCodeStrategy,
             ILogService logService, IVerifyMobileStrategy verifyMobileStrategy, 
-            ISendContactMessageStrategy sendContactMessageStrategy)
+            ISubmitContactMessageStrategy submitContactMessageStrategy)
         {
             _candidateReadRepository = candidateReadRepository;
             _activateCandidateStrategy = activateCandidateStrategy;
@@ -95,7 +95,7 @@
             _sendMobileVerificationCodeStrategy = sendMobileVerificationCodeStrategy;
             _logger = logService;
             _verifyMobileStrategy = verifyMobileStrategy;
-            _sendContactMessageStrategy = sendContactMessageStrategy;
+            _submitContactMessageStrategy = submitContactMessageStrategy;
         }
 
         public Candidate Register(Candidate newCandidate, string password)
@@ -348,13 +348,13 @@
             _verifyMobileStrategy.VerifyMobile(candidateId, verificationCode);
         }
 
-        public void SendContactMessage(ContactMessage contactMessage)
+        public void SubmitContactMessage(ContactMessage contactMessage)
         {
             Condition.Requires(contactMessage);
 
             _logger.Info("Calling CandidateService to send a contact message.");
 
-            _sendContactMessageStrategy.SendMessage(contactMessage);
+            _submitContactMessageStrategy.SubmitMessage(contactMessage);
         }
     }
 }

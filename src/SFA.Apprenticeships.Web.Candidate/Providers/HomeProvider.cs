@@ -23,7 +23,7 @@
             {
                 var candidate = _mapper.Map<ContactMessageViewModel, ContactMessage>(viewModel);
                 candidate.UserId = candidateId;
-                _candidateService.SendContactMessage(candidate);
+                _candidateService.SubmitContactMessage(candidate);
                 return true;
             }
             catch

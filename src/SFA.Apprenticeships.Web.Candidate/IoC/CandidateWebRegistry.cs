@@ -3,6 +3,7 @@
     using System.Web;
     using Application.Address;
     using Application.ApplicationUpdate;
+    using Application.ApplicationUpdate.Strategies;
     using Application.Authentication;
     using Application.Candidate;
     using Application.Candidate.Strategies;
@@ -127,9 +128,9 @@
             For<IDeleteApplicationStrategy>().Use<DeleteApprenticeshipApplicationStrategy>();
             For<IAuthenticateCandidateStrategy>().Use<AuthenticateCandidateStrategy>();
             For<IGetCandidateTraineeshipApplicationsStrategy>().Use<GetCandidateTraineeshipApplicationsStrategy>();
-            For<Application.Candidate.Strategies.ISendContactMessageStrategy>().Use<SendContactMessageStrategy>();
-            For<Application.Communication.Strategies.ISendContactMessageStrategy>()
-                .Use<QueueContactMessageCommunicationStrategy>();
+            For<ISubmitContactMessageStrategy>().Use<SubmitContactMessageStrategy>();
+            For<ISendContactMessageStrategy>().Use<QueueContactMessageStrategy>();
+            For<IApplicationStatusChangedStrategy>().Use<ApplicationStatusChangedStrategy>();
         }
 
         private void RegisterMediators()

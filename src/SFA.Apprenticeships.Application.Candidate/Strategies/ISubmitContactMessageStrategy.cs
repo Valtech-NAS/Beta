@@ -2,8 +2,8 @@
 {
     using Domain.Entities.Communication;
 
-    public interface ISendContactMessageStrategy
+    public interface ISubmitContactMessageStrategy
     {
-        void SendMessage(ContactMessage message);
+        void SubmitMessage(ContactMessage message);
     }
 }

@@ -10,6 +10,7 @@
         TraineeshipApplicationSubmitted,
         PasswordChanged,
         DailyDigest,
-        CandidateContactMessage
+        CandidateContactMessage,
+        //EmployerContactMessage
     }
 }

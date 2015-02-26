@@ -4,8 +4,9 @@
     using System.Collections.Generic;
     using Interfaces.Communications;
 
+    //todo: rename to less message type specific. maybe ISendUserMessageStrategy
     public interface ISendContactMessageStrategy
     {
-        void Send(Guid? candidateId, MessageTypes messageType, IEnumerable<CommunicationToken> tokens);
+        void Send(Guid? userId, MessageTypes messageType, IEnumerable<CommunicationToken> tokens);
     }
 }

@@ -61,6 +61,6 @@
 
         void VerifyMobileCode(Guid candidateId, string verificationCode);
 
-        void SendContactMessage(ContactMessage contactMessage);
+        void SubmitContactMessage(ContactMessage contactMessage);
     }
 }

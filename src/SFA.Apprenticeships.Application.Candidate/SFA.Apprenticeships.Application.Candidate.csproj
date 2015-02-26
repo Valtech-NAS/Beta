@@ -98,13 +98,13 @@
     <Compile Include="CreateCandidateRequest.cs" />
     <Compile Include="Strategies\Apprenticeships\ArchiveApprenticeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\ILegacyGetCandidateVacancyDetailStrategy.cs" />
-    <Compile Include="Strategies\ISendContactMessageStrategy.cs" />
+    <Compile Include="Strategies\ISubmitContactMessageStrategy.cs" />
     <Compile Include="Strategies\ISendMobileVerificationCodeStrategy.cs" />
     <Compile Include="Strategies\IVerifyMobileStrategy.cs" />
     <Compile Include="Strategies\LegacyGetCandidateVacancyDetailStrategy.cs" />
     <Compile Include="Strategies\Apprenticeships\LegacySubmitApprenticeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\ISubmitTraineeshipApplicationStrategy.cs" />
-    <Compile Include="Strategies\SendContactMessageStrategy.cs" />
+    <Compile Include="Strategies\SubmitContactMessageStrategy.cs" />
     <Compile Include="Strategies\SendMobileVerificationCodeStrategy.cs" />
     <Compile Include="Strategies\Traineeships\CreateTraineeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\IArchiveApplicationStrategy.cs" />

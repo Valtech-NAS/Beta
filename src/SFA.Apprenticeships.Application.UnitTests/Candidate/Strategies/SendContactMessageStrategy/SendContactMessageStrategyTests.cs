@@ -20,12 +20,12 @@
         {
             const string helpdeskAddress = "helpdesk@gmail.com";
 
-            var strategy = new Application.Candidate.Strategies.SendContactMessageStrategy(
+            var strategy = new Application.Candidate.Strategies.SubmitContactMessageStrategy(
                 _communicationService.Object, _configurationManager.Object);
 
             _configurationManager.Setup(cm => cm.GetAppSetting<string>("HelpdeskEmailAddress")).Returns(helpdeskAddress);
 
-            strategy.SendMessage(new ContactMessage());
+            strategy.SubmitMessage(new ContactMessage());
 
             _communicationService.Verify(cs => cs.SendContactMessage(
                 It.IsAny<Nullable<Guid>>(), 

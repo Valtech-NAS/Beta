@@ -34,7 +34,7 @@
             var result = homeProvider.SendContactMessage(candidateId, new ContactMessageViewModel());
 
             result.Should().BeTrue();
-            _candidateServiceMock.Verify(cs => cs.SendContactMessage(It.Is<ContactMessage>(cm => cm.UserId == candidateId)));
+            _candidateServiceMock.Verify(cs => cs.SubmitContactMessage(It.Is<ContactMessage>(cm => cm.UserId == candidateId)));
         }
 
         [Test]
@@ -46,7 +46,7 @@
             _mapperMock.Setup(m => m.Map<ContactMessageViewModel, ContactMessage>(It.IsAny<ContactMessageViewModel>()))
                 .Returns(new ContactMessage());
 
-            _candidateServiceMock.Setup(cs => cs.SendContactMessage(It.IsAny<ContactMessage>()))
+            _candidateServiceMock.Setup(cs => cs.SubmitContactMessage(It.IsAny<ContactMessage>()))
                 .Throws<ArgumentException>();
 
             var result = homeProvider.SendContactMessage(candidateId, new ContactMessageViewModel());

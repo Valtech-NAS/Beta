@@ -12,14 +12,17 @@
 
         private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
         private readonly ITraineeshipApplicationWriteRepository _traineeshipApplicationWriteRepository;
+        private readonly IApplicationStatusChangedStrategy _applicationStatusChangedStrategy;
 
         public ApplicationStatusUpdateStrategy(
             IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository,
             ITraineeshipApplicationWriteRepository traineeshipApplicationWriteRepository,
+            IApplicationStatusChangedStrategy applicationStatusChangedStrategy,
             ILogService logger)
         {
             _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
             _traineeshipApplicationWriteRepository = traineeshipApplicationWriteRepository;
+            _applicationStatusChangedStrategy = applicationStatusChangedStrategy;
             _logger = logger;
         }
 
@@ -64,10 +67,7 @@
                     applicationStatusSummary.UnsuccessfulReason); // 12
 
                 _apprenticeshipApplicationWriteRepository.Save(apprenticeshipApplication);
-
-                //todo: 1.7: 
-                // note, this flow will be extended to include a call to outbound communication later (when we do notifications)
-                // note, may subsequently consolidate status updates for a candidate (when we do notifications) but may be done in another component
+                _applicationStatusChangedStrategy.Send(applicationStatusSummary);
             }
         }
 

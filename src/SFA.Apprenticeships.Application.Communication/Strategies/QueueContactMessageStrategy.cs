@@ -4,21 +4,21 @@
     using System.Collections.Generic;
     using Interfaces.Communications;
     using Domain.Interfaces.Messaging;
-    
-    public class QueueContactMessageCommunicationStrategy : ISendContactMessageStrategy
+
+    public class QueueContactMessageStrategy : ISendContactMessageStrategy
     {
         private readonly IMessageBus _messageBus;
 
-        public QueueContactMessageCommunicationStrategy(IMessageBus messageBus)
+        public QueueContactMessageStrategy(IMessageBus messageBus)
         {
             _messageBus = messageBus;
         }
 
-        public void Send(Guid? candidateId, MessageTypes messageType, IEnumerable<CommunicationToken> tokens)
+        public void Send(Guid? userId, MessageTypes messageType, IEnumerable<CommunicationToken> tokens)
         {
             var request = new CommunicationRequest
             {
-                EntityId = candidateId,
+                EntityId = userId,
                 MessageType = messageType,
                 Tokens = tokens
             };
