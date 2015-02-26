@@ -60,7 +60,7 @@
 
 @{ Html.RenderPartial("_pagination", Model); }
 
-@if (Model.TotalLocalHits > 5)
+@if (Model.TotalLocalHits > 5 || Model.TotalNationalHits > 5)
 {
 <div class="form-group">
     <label for="results-per-page" class="heading-small inline">Display results</label>

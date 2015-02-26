@@ -1,7 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Views.ApprenticeshipSearch
 {
-    using System.Collections.Generic;
-    using System.Web.Mvc;
     using Candidate.ViewModels.VacancySearch;
     using Candidate.Views.ApprenticeshipSearch;
     using Domain.Entities.Vacancies.Apprenticeships;

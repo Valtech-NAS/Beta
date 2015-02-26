@@ -45,7 +45,7 @@
             return distances;
         }
 
-        protected SelectList GetSortTypes(VacancySearchSortType selectedSortType = VacancySearchSortType.Distance, string keywords = null, bool isLocalLocationType = true)
+        public static SelectList GetSortTypes(VacancySearchSortType selectedSortType = VacancySearchSortType.Distance, string keywords = null, bool isLocalLocationType = true)
         {
             var sortTypeOptions = new ArrayList();
 
@@ -73,7 +73,7 @@
             return sortTypes;
         }
 
-        protected static SelectList GetResultsPerPageSelectList(int selectedValue)
+        public static SelectList GetResultsPerPageSelectList(int selectedValue)
         {
             var resultsPerPage = new SelectList(
                 new[]
