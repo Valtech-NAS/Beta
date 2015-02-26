@@ -46,23 +46,21 @@
                     {
                         _apprenticeshipApplicationWriteRepository.Save(apprenticeshipApplication);
                     }
+                    return;
                 }
-                else
-                {
-                    var traineeshipApplication = _traineeshipApplicationReadRepository.GetForCandidate(candidate.EntityId, legacyVacancyId);
 
-                    if (traineeshipApplication != null)
+                var traineeshipApplication = _traineeshipApplicationReadRepository.GetForCandidate(candidate.EntityId, legacyVacancyId);
+
+                if (traineeshipApplication != null)
+                {
+                    if (traineeshipApplication.UpdateTraineeshipApplicationDetail(applicationStatusSummary))
                     {
-                        if (traineeshipApplication.UpdateTraineeshipApplicationDetail(applicationStatusSummary))
-                        {
-                            _traineeshipApplicationWriteRepository.Save(traineeshipApplication);
-                        }
+                        _traineeshipApplicationWriteRepository.Save(traineeshipApplication);
                     }
-                    else
-                    {
-                        _logger.Warn("Unable to find apprenticeship or traineeship application with legacy ID \"{0}\".", applicationStatusSummary.LegacyApplicationId);   
-                    }
+                    return;
                 }
+
+                _logger.Warn("Unable to find apprenticeship or traineeship application with legacy ID \"{0}\".", applicationStatusSummary.LegacyApplicationId);
             }
         }
     }
