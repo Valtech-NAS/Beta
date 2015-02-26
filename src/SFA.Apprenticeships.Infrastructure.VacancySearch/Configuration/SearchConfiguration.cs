@@ -21,13 +21,6 @@
             get { return (SearchTermFactorCollection)this[""]; }
         }
 
-        [ConfigurationProperty(UseJobTitleTermsConst, IsRequired = true, DefaultValue = false)]
-        public bool UseJobTitleTerms
-        {
-            get { return (bool)this[UseJobTitleTermsConst]; }
-            set { this[UseJobTitleTermsConst] = value; }
-        }
-
         [ConfigurationProperty(SearchJobTitleFieldConst, IsRequired = true, DefaultValue = true)]
         public bool SearchJobTitleField
         {

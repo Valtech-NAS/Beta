@@ -17,7 +17,6 @@
             var config = SearchConfiguration.Instance;
 
             config.Should().NotBeNull();
-            config.UseJobTitleTerms.Should().BeTrue();
             config.SearchJobTitleField.Should().BeFalse();
             config.SearchDescriptionField.Should().BeFalse();
             config.SearchEmployerNameField.Should().BeTrue();

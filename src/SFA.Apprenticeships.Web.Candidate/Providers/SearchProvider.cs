@@ -16,6 +16,7 @@
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Mapping;
+    using StructureMap.Graph;
     using ViewModels;
     using ViewModels.Locations;
     using ViewModels.VacancySearch;
@@ -100,7 +101,8 @@
             try
             {
                 string vacancyReference;
-                if (VacancyHelper.TryGetVacancyReference(search.Keywords, out vacancyReference))
+                if ((search.SearchField == ApprenticeshipSearchField.All.ToString() || search.SearchField == ApprenticeshipSearchField.ReferenceNumber.ToString())
+                    && VacancyHelper.TryGetVacancyReference(search.Keywords, out vacancyReference))
                 {
                     var searchParameters = new ApprenticeshipSearchParameters
                     {
@@ -312,6 +314,7 @@
             {
                 new ApprenticeshipSearchParameters
                 {
+                    SearchField = (ApprenticeshipSearchField)Enum.Parse(typeof(ApprenticeshipSearchField), search.SearchField),
                     Keywords = search.Keywords,
                     Location = null,
                     PageNumber = nationalPageNumber,
@@ -325,6 +328,7 @@
                 },
                 new ApprenticeshipSearchParameters
                 {
+                    SearchField = (ApprenticeshipSearchField)Enum.Parse(typeof(ApprenticeshipSearchField), search.SearchField),
                     Keywords = search.Keywords,
                     Location = searchLocation,
                     PageNumber = nonNationalPageNumber,

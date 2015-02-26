@@ -9,7 +9,7 @@
         [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
         public int Id { get; set; }
 
-        [ElasticProperty(Index = FieldIndexOption.Analyzed, Analyzer = "snowball")]
+        [ElasticProperty(Index = FieldIndexOption.Analyzed, Analyzer = "snowballStopwordsBase")]
         public string Title { get; set; }
 
         [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
@@ -21,7 +21,7 @@
         [ElasticProperty(Index = FieldIndexOption.Analyzed, Analyzer = "keywordlowercase")]
         public string EmployerName { get; set; }
 
-        [ElasticProperty(Index = FieldIndexOption.Analyzed, Analyzer = "snowball")]
+        [ElasticProperty(Index = FieldIndexOption.Analyzed, Analyzer = "snowballStopwordsExtended")]
         public string Description { get; set; }
 
         [ElasticProperty(Index = FieldIndexOption.Analyzed)]

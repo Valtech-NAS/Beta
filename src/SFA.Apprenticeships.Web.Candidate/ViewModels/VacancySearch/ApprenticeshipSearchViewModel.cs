@@ -14,7 +14,6 @@
     {
         public ApprenticeshipSearchViewModel()
         {
-
         }
 
         public ApprenticeshipSearchViewModel(ApprenticeshipSearchViewModel viewModel) : base (viewModel)
@@ -40,6 +39,16 @@
         public SelectList ApprenticeshipLevels { get; set; }
 
         public string ApprenticeshipLevel { get; set; }
+
+        public string SearchField
+        {
+            get
+            {
+                //TODO: wire up to UI once agreed
+                return "All";
+            }
+            set { }
+        }
 
         public IList<Category> Categories { get; set; }
 

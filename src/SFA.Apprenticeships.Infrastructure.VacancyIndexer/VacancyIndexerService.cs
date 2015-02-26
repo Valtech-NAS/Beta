@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using Application.Interfaces.Logging;
     using Application.VacancyEtl.Entities;
@@ -9,7 +10,8 @@
     using Elastic.Common.Configuration;
     using Elastic.Common.Entities;
     using Nest;
-    
+    using StructureMap.AutoMocking;
+
     public class VacancyIndexerService<TSourceSummary, TDestinationSummary> : IVacancyIndexerService<TSourceSummary, TDestinationSummary>
         where TSourceSummary : Domain.Entities.Vacancies.VacancySummary, IVacancyUpdate
         where TDestinationSummary : class, IVacancySummary
@@ -81,17 +83,24 @@
             {
                 var indexSettings = new IndexSettings();
 
-                //Standard snowball analyser
-                //indexSettings.Analysis.Analyzers.Add("snowball", new SnowballAnalyzer { Language = "English" });
+                //Token filters
+                var snowballTokenFilter = new SnowballTokenFilter { Language = "English" };
+                indexSettings.Analysis.TokenFilters.Add("snowball", snowballTokenFilter);
 
-                //Custom snowball analyser without stop words being removed
-                var snowballFilter = new SnowballTokenFilter { Language = "English" };
-                indexSettings.Analysis.TokenFilters.Add("snowball", snowballFilter);
-                indexSettings.Analysis.Analyzers.Add("snowball", new CustomAnalyzer { Tokenizer = "standard", Filter = new[] { "standard", "lowercase", "snowball" } });
+                var baseStopwords = GetStopwords("StopwordsBase");
+                var extendedStopwords = baseStopwords.Concat(GetStopwords("StopwordsExtended"));
 
+                var stopwordsBaseFilter = new StopTokenFilter { Stopwords = baseStopwords };
+                indexSettings.Analysis.TokenFilters.Add("stopwordsBaseFilter", stopwordsBaseFilter);
+
+                var stopwordsExtendedFilter = new StopTokenFilter { Stopwords = extendedStopwords };
+                indexSettings.Analysis.TokenFilters.Add("stopwordsExtendedFilter", stopwordsExtendedFilter);
+
+                //Analysers
+                indexSettings.Analysis.Analyzers.Add("snowballStopwordsBase", new CustomAnalyzer { Tokenizer = "standard", Filter = new[] { "standard", "lowercase", "stopwordsBaseFilter", "snowball" } });
+                indexSettings.Analysis.Analyzers.Add("snowballStopwordsExtended", new CustomAnalyzer { Tokenizer = "standard", Filter = new[] { "standard", "lowercase", "stopwordsExtendedFilter", "snowball" } });
                 //Matches whole phrases ignoring case
-                var keywordLowercaseCustomAnalyzer = new CustomAnalyzer { Tokenizer = "keyword", Filter = new[] { "lowercase" } };
-                indexSettings.Analysis.Analyzers.Add("keywordlowercase", keywordLowercaseCustomAnalyzer);
+                indexSettings.Analysis.Analyzers.Add("keywordlowercase", new CustomAnalyzer {Tokenizer = "keyword", Filter = new[] {"lowercase"}});
 
                 client.CreateIndex(i => i.Index(newIndexName).InitializeUsing(indexSettings));
 
@@ -104,6 +113,20 @@
                 _logger.Error(string.Format("Vacancy search index already created: {0}", newIndexName));
             }
         }
+
+        private IEnumerable<string> GetStopwords(string stopwordsList)
+        {
+            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Configs", stopwordsList + ".txt");
+
+            if (!File.Exists(filePath))
+            {
+                _logger.Warn("Elasticsearch stopword file '{0}' does not exist.", filePath);
+                return Enumerable.Empty<string>();
+            }
+
+            var stopwords = File.ReadAllLines(filePath).Where(w => !string.IsNullOrEmpty(w));
+            return stopwords;
+        } 
 
         public void SwapIndex(DateTime scheduledRefreshDateTime)
         {

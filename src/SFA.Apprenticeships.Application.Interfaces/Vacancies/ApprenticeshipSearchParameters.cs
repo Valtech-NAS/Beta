@@ -15,6 +15,7 @@
 
         public ApprenticeshipLocationType VacancyLocationType { get; set; }
 
+        public ApprenticeshipSearchField SearchField { get; set; }
         public override string ToString()
         {
             var joinedFrameworks = (Frameworks == null || Frameworks.Length == 0)

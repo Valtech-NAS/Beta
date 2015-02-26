@@ -126,31 +126,22 @@
                     QueryContainer queryVacancyLocation = null;
                     QueryContainer query = null;
 
-                    if (_searchConfiguration.SearchJobTitleField)
+                    if (_searchConfiguration.SearchJobTitleField 
+                        && !string.IsNullOrWhiteSpace(parameters.Keywords)
+                        && (parameters.SearchField == ApprenticeshipSearchField.All || parameters.SearchField == ApprenticeshipSearchField.JobTitle))
                     {
-                        if (_searchConfiguration.UseJobTitleTerms && !string.IsNullOrWhiteSpace(parameters.Keywords))
+                        var queryClause = q.Match(m =>
                         {
-                            var queryClause = q.Match(m =>
-                            {
-                                m.OnField(f => f.Title).Query(parameters.Keywords);
-                                BuildFieldQuery(m, _searchConfiguration.SearchTermParameters.JobTitleFactors);
-                            });
+                            m.OnField(f => f.Title).Query(parameters.Keywords);
+                            BuildFieldQuery(m, _searchConfiguration.SearchTermParameters.JobTitleFactors);
+                        });
 
-                            query = BuildContainer(null, queryClause);
-                        }
-                        else
-                        {
-                            var queryClause = q.Match(m =>
-                            {
-                                m.OnField(f => f.Title).Query(parameters.Keywords);
-                                BuildFieldQuery(m, _searchConfiguration.SearchTermParameters.JobTitleFactors);
-                            });
-
-                            query = BuildContainer(null, queryClause);
-                        }
+                        query = BuildContainer(null, queryClause);
                     }
 
-                    if (_searchConfiguration.SearchDescriptionField && !string.IsNullOrWhiteSpace(parameters.Keywords))
+                    if (_searchConfiguration.SearchDescriptionField 
+                        && !string.IsNullOrWhiteSpace(parameters.Keywords)
+                        && (parameters.SearchField == ApprenticeshipSearchField.All || parameters.SearchField == ApprenticeshipSearchField.Description))
                     {
                         var queryClause = q.Match(m =>
                         {
@@ -160,7 +151,9 @@
                         query = BuildContainer(query, queryClause);
                     }
 
-                    if (_searchConfiguration.SearchEmployerNameField && !string.IsNullOrWhiteSpace(parameters.Keywords))
+                    if (_searchConfiguration.SearchEmployerNameField 
+                        && !string.IsNullOrWhiteSpace(parameters.Keywords)
+                        && (parameters.SearchField == ApprenticeshipSearchField.All || parameters.SearchField == ApprenticeshipSearchField.Employer))
                     {
                         var exactMatchClause = q.Match(m =>
                         {
@@ -168,13 +161,6 @@
                             BuildFieldQuery(m, _searchConfiguration.SearchTermParameters.EmployerFactors);
                         });
                         query = BuildContainer(query, exactMatchClause);
-
-                        //Uncomment to resolve Prindiville Prestige Ltd from Prindiville Prestige
-                        /*var prefixClause = q.Prefix(m =>
-                        {
-                            m.OnField(f => f.EmployerName).Value(parameters.Keywords.ToLower());
-                        });
-                        query = BuildContainer(query, prefixClause);*/
                     }
 
                     if (!string.IsNullOrWhiteSpace(parameters.Sector))
@@ -183,16 +169,16 @@
                         query = query && querySector;
                     }
 
-                    queryVacancyLocation =
-                        q.Match(
-                            m => m.OnField(f => f.VacancyLocationType).Query(parameters.VacancyLocationType.ToString()));
+                    queryVacancyLocation = q
+                        .Match(m => m.OnField(f => f.VacancyLocationType)
+                            .Query(parameters.VacancyLocationType.ToString()));
                     query = query && queryVacancyLocation;
 
-                    if (!string.IsNullOrWhiteSpace(parameters.ApprenticeshipLevel) &&
-                        parameters.ApprenticeshipLevel != "All")
+                    if (!string.IsNullOrWhiteSpace(parameters.ApprenticeshipLevel) && parameters.ApprenticeshipLevel != "All")
                     {
-                        var queryClause =
-                            q.Match(m => m.OnField(f => f.ApprenticeshipLevel).Query(parameters.ApprenticeshipLevel));
+                        var queryClause = q
+                            .Match(m => m.OnField(f => f.ApprenticeshipLevel)
+                                .Query(parameters.ApprenticeshipLevel));
                         query = query && queryClause;
                     }
 
