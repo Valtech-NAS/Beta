@@ -169,11 +169,13 @@
     <Compile Include="Builders\ApprenticeshipSummaryBuilder.cs" />
     <Compile Include="Builders\LoginResultViewModelBuilder.cs" />
     <Compile Include="Builders\LoginViewModelBuilder.cs" />
+    <Compile Include="Builders\QualificationsViewModelBuilder.cs" />
     <Compile Include="Builders\RegisterViewModelBuilder.cs" />
     <Compile Include="Builders\SettingsViewModelBuilder.cs" />
     <Compile Include="Builders\TraineeshipApplicationViewModelBuilder.cs" />
     <Compile Include="Builders\VacancyDetailViewModelBuilder.cs" />
     <Compile Include="Builders\VerifyMobileViewModelBuilder.cs" />
+    <Compile Include="Builders\WorkExperienceViewModelBuilder.cs" />
     <Compile Include="Extensions\CollectionExtensionsTests.cs" />
     <Compile Include="Helpers\BaseExtensionTests.cs" />
     <Compile Include="Helpers\FormTextForTests.cs" />
