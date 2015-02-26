@@ -287,6 +287,8 @@
     <Compile Include="Views\Dashboard\DashboardTestsHelper.cs" />
     <Compile Include="Views\Dashboard\DashboardTraineeshipTests.cs" />
     <Compile Include="Views\Dashboard\MyApplicationsViewModelBuilder.cs" />
+    <Compile Include="Views\Register\IndexViewBuilder.cs" />
+    <Compile Include="Views\Register\MarketingOptInConsent.cs" />
     <Compile Include="Views\Settings\CommunicationsPreferencesTests.cs" />
     <Compile Include="Views\Settings\MarketingOptInTests.cs" />
     <Compile Include="Views\Settings\SettingsTests.cs" />

@@ -43,7 +43,6 @@ Scenario: As a candidate I can change my personal settings
 	And I wait to see Postcode
 
 	And I wait to see AllowEmailComms
-	And I wait to see AllowSmsComms
 
 	And I wait to see UpdateDetailsButton
 
@@ -210,7 +209,6 @@ Scenario: As a candidate I can opt into marketing messages
 	| IsAllowEmailMarketing | Equals         | True  |
 	| IsAllowSmsMarketing   | Equals         | False |
 	And I wait to see AllowEmailMarketing
-	And I wait to see AllowSmsMarketing
 	When I choose AllowEmailMarketing
 	When I choose AllowSmsMarketing
 	And I choose UpdateDetailsButton

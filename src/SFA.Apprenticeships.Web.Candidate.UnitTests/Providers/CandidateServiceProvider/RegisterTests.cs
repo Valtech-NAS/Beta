@@ -49,5 +49,23 @@
             candidate.CommunicationPreferences.MobileVerificationCode.Should().BeNullOrEmpty();
             registered.Should().BeTrue();
         }
+
+        [Test]
+        public void Us738_DoesNotAcceptUpdates()
+        {
+            Candidate candidate = null;
+            var candidateService = new Mock<ICandidateService>();
+            candidateService.Setup(cs => cs.Register(It.IsAny<Candidate>(), It.IsAny<string>())).Callback<Candidate, string>((c, s) => { candidate = c; });
+            var provider = new CandidateServiceProviderBuilder().With(candidateService).Build();
+            var viewModel = new RegisterViewModelBuilder().DoesNotAcceptUpdates().Build();
+
+            var registered = provider.Register(viewModel);
+
+            candidate.Should().NotBeNull();
+            candidate.CommunicationPreferences.Should().NotBeNull();
+            candidate.CommunicationPreferences.AllowEmailMarketing.Should().BeFalse();
+            candidate.CommunicationPreferences.AllowMobileMarketing.Should().BeFalse();
+            registered.Should().BeTrue();
+        }
     }
 }

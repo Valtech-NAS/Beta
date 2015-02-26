@@ -9,6 +9,11 @@
     [Validator(typeof(RegisterViewModelClientValidator))]
     public class RegisterViewModel : ViewModelBase
     {
+        public RegisterViewModel()
+        {
+            AcceptUpdates = true;
+        }
+
         [Display(Name = RegisterViewModelMessages.FirstnameMessages.LabelText)]
         public string Firstname { get; set; }
 
@@ -30,6 +35,9 @@
 
         [Display(Name = RegisterViewModelMessages.ConfirmPasswordMessages.LabelText)]
         public string ConfirmPassword { get; set; }
+
+        [Display(Name = RegisterViewModelMessages.AcceptUpdates.LabelText)]
+        public bool AcceptUpdates { get; set; }
 
         [Display(Name = RegisterViewModelMessages.TermsAndConditions.LabelText)]
         public bool HasAcceptedTermsAndConditions { get; set; }
