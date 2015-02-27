@@ -125,7 +125,7 @@ Scenario: Nationwide apprenticeships are included in keyword search results
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
 		 | Field               | Value      |
-		 | Keywords            | it         |
+		 | Keywords            | Nationwide |
 		 | Location            | London     |
 		 | WithInDistance      | 40 miles   |
 		 | ApprenticeshipLevel | All levels |
