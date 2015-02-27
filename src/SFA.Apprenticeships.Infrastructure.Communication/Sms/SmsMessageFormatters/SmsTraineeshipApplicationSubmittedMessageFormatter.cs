@@ -14,7 +14,10 @@
 
         public override string GetMessage(IEnumerable<CommunicationToken> communicationTokens)
         {
-            return string.Format(Message, communicationTokens.First(ct => ct.Key == CommunicationTokens.ApplicationVacancyReference).Value);
+            var commTokens = communicationTokens as IList<CommunicationToken> ?? communicationTokens.ToList();
+            var vacancyTitle = commTokens.First(ct => ct.Key == CommunicationTokens.ApplicationVacancyTitle).Value;
+            var employerName = commTokens.First(ct => ct.Key == CommunicationTokens.ApplicationVacancyEmployerName).Value;
+            return string.Format(Message, vacancyTitle, employerName);
         }
     }
 }

@@ -61,7 +61,9 @@
                 new CommunicationToken(CommunicationTokens.ApplicationVacancyTitle,
                     "Application Vacancy Title"),
                 new CommunicationToken(CommunicationTokens.ApplicationVacancyReference,
-                    "Application Vacancy Reference")
+                    "Application Vacancy Reference"),
+                new CommunicationToken(CommunicationTokens.ApplicationVacancyEmployerName,
+                    "Application Vacancy Employer Name")
             };
         }
 
@@ -74,6 +76,8 @@
                     "Application Vacancy Title"),
                 new CommunicationToken(CommunicationTokens.ApplicationVacancyReference,
                     "Application Vacancy Reference"),
+                new CommunicationToken(CommunicationTokens.ApplicationVacancyEmployerName,
+                    "Application Vacancy Employer Name"),
                 new CommunicationToken(CommunicationTokens.ProviderContact,
                     "Provider Contact")
             };

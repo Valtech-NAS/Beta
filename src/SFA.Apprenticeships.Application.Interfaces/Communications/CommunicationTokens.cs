@@ -14,6 +14,7 @@
         MobileVerificationCode,
         ApplicationVacancyTitle,
         ApplicationVacancyReference,
+        ApplicationVacancyEmployerName,
         ApplicationId,
         ProviderContact,
         RecipientEmailAddress,

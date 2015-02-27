@@ -36,7 +36,8 @@ namespace SFA.Apprenticeships.Application.Communication.Strategies
             {
                 new CommunicationToken(CommunicationTokens.CandidateFirstName, candidate.RegistrationDetails.FirstName), 
                 new CommunicationToken(CommunicationTokens.ApplicationVacancyTitle, vacancy.Title),
-                new CommunicationToken(CommunicationTokens.ApplicationVacancyReference, vacancy.VacancyReference)
+                new CommunicationToken(CommunicationTokens.ApplicationVacancyReference, vacancy.VacancyReference),
+                new CommunicationToken(CommunicationTokens.ApplicationVacancyEmployerName, vacancy.EmployerName)
             };
 
             _sendCandidateCommunicationStrategy.Send(candidateId, MessageTypes.ApprenticeshipApplicationSubmitted, applicationTokens);
