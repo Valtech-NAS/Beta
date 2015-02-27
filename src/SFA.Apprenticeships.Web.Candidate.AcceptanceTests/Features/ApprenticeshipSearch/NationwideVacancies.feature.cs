@@ -292,9 +292,9 @@ this.FeatureBackground();
                         "Rule",
                         "Value"});
             table8.AddRow(new string[] {
-                        "ResultsAreInClosingDateOrder",
+                        "ResultsAreInBestMatchScoreOrder",
                         "Equals",
-                        "False"});
+                        "True"});
 #line 80
  testRunner.And("I see", ((string)(null)), table8, "And ");
 #line hidden
@@ -385,9 +385,9 @@ this.FeatureBackground();
                         "Equals",
                         "Best match"});
             table11.AddRow(new string[] {
-                        "ResultsAreInClosingDateOrder",
+                        "ResultsAreInBestMatchScoreOrder",
                         "Equals",
-                        "False"});
+                        "True"});
 #line 102
  testRunner.And("I see", ((string)(null)), table11, "And ");
 #line hidden
