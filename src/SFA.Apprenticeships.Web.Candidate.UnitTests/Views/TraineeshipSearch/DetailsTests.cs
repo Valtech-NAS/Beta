@@ -45,7 +45,7 @@
 
             var view = details.RenderAsHtml(vacancyDetailViewModel);
             view.GetElementbyId("lnk-return-search-results").Should().BeNull("Return to search results should not be shown.");
-            view.GetElementbyId("lnk-find-traineeship").Should().NotBeNull("Find an traineeship link should be shown.");
+            view.GetElementbyId("lnk-find-traineeship").Should().NotBeNull("Find a traineeship link should be shown.");
         }
 
         [Test]
